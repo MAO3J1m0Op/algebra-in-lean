@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  check:
+  lake-build:
     runs-on: ubuntu-latest
     steps:
 
