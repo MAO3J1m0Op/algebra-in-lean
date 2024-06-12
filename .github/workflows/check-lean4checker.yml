@@ -1,0 +1,57 @@
+name: lean4checker
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+    
+      # Below steps are adapted from Mathlib
+      # https://github.com/leanprover-community/mathlib4/blob/master/.github/workflows/lean4checker.yml
+      - name: install elan
+        run: |
+          set -o pipefail
+          curl -sSfL https://github.com/leanprover/elan/releases/download/v3.1.1/elan-x86_64-unknown-linux-gnu.tar.gz | tar xz
+          ./elan-init -y --default-toolchain none
+          echo "$HOME/.elan/bin" >> "${GITHUB_PATH}"
+
+      - name: checkout the branch
+        uses: actions/checkout@v4
+
+      - name: print lean and lake versions
+        run: |
+          lean --version
+          lake --version
+
+      - name: get cache
+        run: lake exe cache get
+
+      - name: prune ProofWidgets .lake
+        run: |
+          # The ProofWidgets release contains not just the `.js` (which we need in order to build)
+          # but also `.oleans`, which may have been built with the wrong toolchain.
+          # This removes them.
+          # See discussion at https://leanprover.zulipchat.com/#narrow/stream/287929-mathlib4/topic/nightly-testing/near/411225235
+          rm -rf .lake/packages/proofwidgets/.lake/build/lib
+          rm -rf .lake/packages/proofwidgets/.lake/build/ir
+          lake build ProofWidgets
+
+      - name: Check using lean4checker
+        run: |
+          git clone https://github.com/leanprover/lean4checker
+          cd lean4checker
+          git checkout v4.8.0
+          # Now that the git hash is embedded in each olean,
+          # we need to compile lean4checker on the same toolchain
+          cp ../lean-toolchain .
+          lake build
+          ./test.sh
+          cd ..
+          lake env lean4checker/.lake/build/bin/lean4checker
