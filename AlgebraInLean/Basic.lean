@@ -4,6 +4,7 @@ namespace Defs
   class Magma (G : Type*) where
     op : G → G → G
 
+  -- FIXME: is this actually helpful/necessary
   attribute [always_inline] Magma.op
 
   infixl:75 " ⋆ " => Magma.op
