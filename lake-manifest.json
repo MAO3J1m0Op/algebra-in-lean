@@ -64,5 +64,5 @@
    "inputRev": "v4.8.0",
    "inherited": false,
    "configFile": "lakefile.lean"}],
- "name": "«formalization-of-mathematics-2024»",
+ "name": "«algebra-in-lean»",
  "lakeDir": ".lake"}
