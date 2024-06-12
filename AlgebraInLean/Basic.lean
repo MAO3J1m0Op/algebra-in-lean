@@ -45,13 +45,6 @@ namespace Defs
   @[simp]
   theorem inv_mul [Group G] (a : G) : a⁻¹ ⋆ a = 𝕖 := Group.inv_mul a
 
-  @[simp]
-  theorem mul_inv [Group G] (a : G) : a ⋆ a⁻¹ = 𝕖 := by
-    -- apply Group.cancel_left a⁻¹
-    -- rw [←assoc, inv_mul, mul_id, id_mul]
-    -- done
-    sorry
-
   class AbelianGroup (G : Type*) extends Group G, CommMonoid G
 
 end Defs
