@@ -17,16 +17,16 @@ namespace Defs
 
   class Monoid (G : Type*) extends Semigroup G where
     protected id : G
-    protected mul_id : ∀ a : G, a ⋆ id = a
-    protected id_mul : ∀ a : G, id ⋆ a = a
+    protected op_id : ∀ a : G, a ⋆ id = a
+    protected id_op : ∀ a : G, id ⋆ a = a
 
   notation:max "𝕖" => Monoid.id
 
   @[simp]
-  theorem mul_id [Monoid M] (a : M) : a ⋆ 𝕖 = a := Monoid.mul_id a
+  theorem op_id [Monoid M] (a : M) : a ⋆ 𝕖 = a := Monoid.op_id a
 
   @[simp]
-  theorem id_mul [Monoid M] (a : M) : 𝕖 ⋆ a = a := Monoid.id_mul a
+  theorem id_op [Monoid M] (a : M) : 𝕖 ⋆ a = a := Monoid.id_op a
 
   class CommMonoid (G : Type*) extends Monoid G where
     protected comm : ∀ a b : G, a ⋆ b = b ⋆ a
@@ -36,14 +36,14 @@ namespace Defs
 
   class Group (G : Type*) extends Monoid G where
     protected inv : G → G
-    protected inv_mul : ∀ a : G, (inv a) ⋆ a = 𝕖
-    -- protected mul_inv : ∀ a : G, a ⋆ (inv a) = 𝕖
+    protected inv_op : ∀ a : G, (inv a) ⋆ a = 𝕖
+    -- protected op_inv : ∀ a : G, a ⋆ (inv a) = 𝕖
 
   -- TODO: solve notational debate
   postfix:1023 "⁻¹" => Group.inv
 
   @[simp]
-  theorem inv_mul [Group G] (a : G) : a⁻¹ ⋆ a = 𝕖 := Group.inv_mul a
+  theorem inv_op [Group G] (a : G) : a⁻¹ ⋆ a = 𝕖 := Group.inv_op a
 
   class AbelianGroup (G : Type*) extends Group G, CommMonoid G
 
