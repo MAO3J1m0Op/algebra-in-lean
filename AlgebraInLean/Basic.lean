@@ -7,10 +7,10 @@ namespace Defs
   def μ [Magma G] : G → G → G := Magma.op
 
   class Semigroup (G : Type*) extends Magma G where
-    protected assoc : ∀ a b c : G, μ (μ a b) c = μ a (μ b c)
+    protected op_assoc : ∀ a b c : G, μ (μ a b) c = μ a (μ b c)
 
   @[simp]
-  theorem assoc [Semigroup G] (a b c : G) : μ (μ a b) c = μ a (μ b c) := Semigroup.assoc a b c
+  theorem op_assoc [Semigroup G] (a b c : G) : μ (μ a b) c = μ a (μ b c) := Semigroup.op_assoc a b c
 
   class Monoid (G : Type*) extends Semigroup G where
     protected id : G
@@ -26,10 +26,10 @@ namespace Defs
   theorem id_op [Monoid M] (a : M) : μ 𝕖 a = a := Monoid.id_op a
 
   class CommMonoid (G : Type*) extends Monoid G where
-    protected comm : ∀ a b : G, μ a b = μ b a
+    protected op_comm : ∀ a b : G, μ a b = μ b a
 
   @[simp]
-  theorem comm [CommMonoid M] (a b : M) : μ a b = μ b a := CommMonoid.comm a b
+  theorem op_comm [CommMonoid M] (a b : M) : μ a b = μ b a := CommMonoid.op_comm a b
 
   class Group (G : Type*) extends Monoid G where
     protected inv : G → G
