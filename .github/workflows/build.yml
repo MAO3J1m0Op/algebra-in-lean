@@ -41,4 +41,4 @@ jobs:
           lake build ProofWidgets
 
       - name: Build project
-        run: lake build
+        run: lake build --wfail
