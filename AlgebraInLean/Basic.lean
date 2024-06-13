@@ -7,43 +7,42 @@ namespace Defs
   -- FIXME: is this actually helpful/necessary
   attribute [always_inline] Magma.op
 
-  infixl:75 " ⋆ " => Magma.op
+  def μ [Magma G] : G → G → G := Magma.op
 
   class Semigroup (G : Type*) extends Magma G where
-    protected assoc : ∀ a b c : G, (a ⋆ b) ⋆ c = a ⋆ (b ⋆ c)
+    protected assoc : ∀ a b c : G, μ (μ a b) c = μ a (μ b c)
 
   @[simp]
-  theorem assoc [Semigroup G] (a b c : G) : (a ⋆ b) ⋆ c = a ⋆ (b ⋆ c) := Semigroup.assoc a b c
+  theorem assoc [Semigroup G] (a b c : G) : μ (μ a b) c = μ a (μ b c) := Semigroup.assoc a b c
 
   class Monoid (G : Type*) extends Semigroup G where
     protected id : G
-    protected op_id : ∀ a : G, a ⋆ id = a
-    protected id_op : ∀ a : G, id ⋆ a = a
+    protected op_id : ∀ a : G, μ a id = a
+    protected id_op : ∀ a : G, μ id a = a
 
   notation:max "𝕖" => Monoid.id
 
   @[simp]
-  theorem op_id [Monoid M] (a : M) : a ⋆ 𝕖 = a := Monoid.op_id a
+  theorem op_id [Monoid M] (a : M) : μ a 𝕖 = a := Monoid.op_id a
 
   @[simp]
-  theorem id_op [Monoid M] (a : M) : 𝕖 ⋆ a = a := Monoid.id_op a
+  theorem id_op [Monoid M] (a : M) : μ 𝕖 a = a := Monoid.id_op a
 
   class CommMonoid (G : Type*) extends Monoid G where
-    protected comm : ∀ a b : G, a ⋆ b = b ⋆ a
+    protected comm : ∀ a b : G, μ a b = μ b a
 
   @[simp]
-  theorem comm [CommMonoid M] (a b : M) : a ⋆ b = b ⋆ a := CommMonoid.comm a b
+  theorem comm [CommMonoid M] (a b : M) : μ a b = μ b a := CommMonoid.comm a b
 
   class Group (G : Type*) extends Monoid G where
     protected inv : G → G
-    protected inv_op : ∀ a : G, (inv a) ⋆ a = 𝕖
-    -- protected op_inv : ∀ a : G, a ⋆ (inv a) = 𝕖
+    protected inv_op : ∀ a : G, μ (inv a) a = 𝕖
+    -- protected op_inv : ∀ a : G, μ a (inv a) = 𝕖
 
-  -- TODO: solve notational debate
-  postfix:1023 "⁻¹" => Group.inv
+  def ι [Group G] : G → G := Group.inv
 
   @[simp]
-  theorem inv_op [Group G] (a : G) : a⁻¹ ⋆ a = 𝕖 := Group.inv_op a
+  theorem inv_op [Group G] (a : G) : μ (ι a) a = 𝕖 := Group.inv_op a
 
   class AbelianGroup (G : Type*) extends Group G, CommMonoid G
 
