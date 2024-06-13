@@ -20,7 +20,7 @@ namespace Defs
     protected op_id : ∀ a : G, μ a id = a
     protected id_op : ∀ a : G, μ id a = a
 
-  notation:max "𝕖" => Monoid.id
+  def 𝕖 [Monoid G] : G := Monoid.id
 
   @[simp]
   theorem op_id [Monoid M] (a : M) : μ a 𝕖 = a := Monoid.op_id a
