@@ -4,9 +4,6 @@ namespace Defs
   class Magma (G : Type*) where
     op : G → G → G
 
-  -- FIXME: is this actually helpful/necessary
-  attribute [always_inline] Magma.op
-
   def μ [Magma G] : G → G → G := Magma.op
 
   class Semigroup (G : Type*) extends Magma G where
