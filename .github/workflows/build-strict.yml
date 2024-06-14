@@ -1,8 +1,10 @@
-name: build
+name: build-strict
 
 on:
   push:
+    branches: [ "master" ]
   pull_request:
+    branches: [ "master" ]
   workflow_dispatch:
 
 jobs:
@@ -41,4 +43,4 @@ jobs:
           lake build ProofWidgets
 
       - name: build project
-        run: lake build
+        run: lake build --wfail
