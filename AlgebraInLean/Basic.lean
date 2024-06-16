@@ -50,29 +50,4 @@ namespace Defs
 
   class AbelianGroup (G : Type*) extends Group G, CommMonoid G
 
-  namespace Morphisms
-
-    /- Bijectivity & injectivity of maps -/
-    def Injective {α : Sort u₁} {β : Sort u₂} (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
-    
-    def Surjective {α : Sort u₁} {β : Sort u₂} (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
-
-    def Bijective {α : Sort u₁} {β : Sort u₂} (f : α → β) : Prop := Injective f ∧ Surjective f
-
-    /- Morphisms -/
-    def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
-    a) (φ b) = φ (μ a b)
-
-    def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := Homomorphism φ ∧ Bijective φ
-
-    /- i.e., to prove that a map is isomorphic, we must first show that it is a homomorphism, then show that it is a bijection. -/
-    
-    /- An endomorphism is a homomorphism from a group to itself. An automorphism is an isomorphism from a group to itself. -/
-
-    -- theorem hom_id_to_id [Group G] [Group H] (φ : G → H) (hh : Homomorphism φ) : Prop := by sorry
-
-    -- theorem hom_inv_to_inv [Group G] [Group H] (φ : G → H) (hh : Homomorphism φ) : Prop := by sorry
-
-  end Morphisms
-
 end Defs
