@@ -4,6 +4,7 @@ namespace Defs
 
 namespace Morphisms
 
+  section Maps
   universe u₁ u₂ u₃
   /- In Lean's type theory, the Calculus of Constructions, there is an infinite
   hierarchy of types that contain one another. Type 0 (or simply just "Type" is
@@ -33,6 +34,22 @@ namespace Morphisms
 
   -- def (WIP)
 
+   end Maps
+
+   /- Given a group G and a group H, a homomorphism is a map φ from G to H which
+   "preserves the group structure", i.e., given an element g ∈ G and h ∈ H,
+   
+   φ(gh) = φ(g)φ(h).
+
+   An isomorphism has a slightly stricter definition in that φ is required to be
+   a bijection. When two groups are isomorphic to each other, they are
+   indisguishable from each other by structure alone. There are various examples
+   of this correspondence: for example, homomorphisms (and therefore
+   isomorphisms) map inverses elements of group G to corresponding inverse
+   elements of group H. We will explore this and examples like these in the
+   following exercise.
+   -/
+
    -- Morphisms
    def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
    a) (φ b) = φ (μ a b)
@@ -44,6 +61,7 @@ namespace Morphisms
    closely parallels pen-and-paper proofs: you split the definition of an
    isomorphism into its respective parts via a logical conjunction: (1) it is a
    homomorphism, and (2) it is a bijection, and then prove each part. -/
+
 
    /- Below are some basic proofs of homomorphisms: that they map inverses to
    inverses, and identities to identities. -/
@@ -66,3 +84,5 @@ namespace Morphisms
    /- TODO: More exercises wrt surj/inj/bij, more basic exercise about homs? -/
 
   end Morphisms
+
+end Defs
