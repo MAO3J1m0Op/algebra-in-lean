@@ -161,7 +161,39 @@ namespace Defs
         rw [op_assoc, op_assoc a, ←op_assoc s, ←op_assoc b, ←op_assoc b]
         rw [hb s hs, ←op_assoc, ha s hs]
       inv_closure := by
-        sorry
+        intro a ha b hb
+        have inv_inv_eq_self : ∀ g : G, ι (ι g) = g := by
+          intro x
+          have h1 : ∀ g : G, μ (ι (ι g)) (ι g) = 𝕖 := by
+            intro y
+            rw[inv_op]
+          have h2 : ∀ g : G, μ (g) (ι g) = 𝕖 := by
+            intro z
+            rw[op_inv] --ONLY VALID WITH op_inv PROOF
+          have h1_x := h1 x
+          have h2_x := h2 x
+          rw [← h2_x] at h1_x
+          sorry -- FIXME do we have a uniqe inverse theorem?
+        have h3_a := inv_inv_eq_self a
+        rw [h3_a]
+        have h3 : μ (μ a b) (ι a) = b → μ (μ (ι a) b) a = b := by
+          intro ht
+          have hp : μ (μ a b) (ι a) = b → μ (ι a) (μ (μ a b) (ι a)) = μ (ι a) b := by
+            intro hu
+            rw [hu]
+          apply hp at ht
+          rw [op_assoc, ← op_assoc, inv_op, id_op] at ht
+          have hq : μ b (ι a) = μ (ι a) b → μ (μ b (ι a)) a = μ (μ (ι a) b) a := by
+            intro hu
+            rw [hu]
+          apply hq at ht
+          rw [op_assoc, inv_op, op_id] at ht
+          symm
+          exact ht
+        rw [h3]
+        have ha_b := ha b
+        apply ha_b at hb
+        exact hb
 
     structure NormalSubgroup (G : Type*) [Group G] extends Subgroup G where
       normal : ∀ g h : G, h ∈ carrier → μ (μ g h) (ι g) = h
