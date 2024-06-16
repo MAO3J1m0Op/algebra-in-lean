@@ -63,4 +63,6 @@ namespace Morphisms
    inverse or the identity to an arbitrary element of the group, to exploit the
    "multiplicativity" of homomorphisms. -/
 
+   /- TODO: More exercises wrt surj/inj/bij, more basic exercise about homs? -/
+
   end Morphisms
