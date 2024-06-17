@@ -220,12 +220,11 @@ namespace Defs
 
     def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
-    def Kernel [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) : NormalSubgroup G where
+    def Kernel [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) : Subgroup G where
       carrier := {g | φ g = 𝕖}
       nonempty := sorry
       mul_closure := sorry
       inv_closure := sorry
-      normal := sorry
 
   end Subgroups
 
