@@ -195,11 +195,13 @@ namespace Defs
         apply ha_b at hb
         exact hb
 
-    structure NormalSubgroup (G : Type*) [Group G] extends Subgroup G where
-      normal : ∀ g h : G, h ∈ carrier → μ (μ g h) (ι g) = h
-      -- normal : (Normalizer carrier).carrier = Set.univ
-
     variable {G : Type*} [Group G]
+
+    -- We define a subgroup to be _normal_ if the subgroup is closed under
+    -- conjugation with any element of G.
+    -- TODO: include conjugation in the definition?
+    def normal [Group G] (H : Subgroup G) : Prop :=
+      ∀ g h : G, h ∈ H → μ (μ g h) (ι g) = h
 
     theorem foldml_append [Monoid M] (xs ys : List M)
         : List.foldl μ 𝕖 (xs ++ ys) = μ (List.foldl μ 𝕖 xs) (List.foldl μ 𝕖 ys) := by
