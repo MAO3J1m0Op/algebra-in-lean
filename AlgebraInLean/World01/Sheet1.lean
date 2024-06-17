@@ -1,5 +1,5 @@
 import Mathlib.Tactic
-namespace sheet1
+namespace Sheet1
 
 /- Algebra primarily concerns how different mathematical objects combine.
 For example, understanding how different integers interact through addition
