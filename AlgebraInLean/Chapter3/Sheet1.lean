@@ -93,6 +93,7 @@ namespace Defs
         apply inv_op
 
     -- The largest possible subgroup of G contains every element of G.
+    -- TODO: rename to Maximal
     def Complete [Group G] : Subgroup G where
       carrier := Set.univ
 
@@ -109,6 +110,7 @@ namespace Defs
 
     -- The smallest possible subgroup of G is called _trivial_ subgroup. What
     -- would this smallest subgroup be?
+    -- TODO: rename to Minimal
     def Trivial [Group G] : Subgroup G where
       -- BELOW ARE SOLUTIONS
       carrier := {𝕖}
