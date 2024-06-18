@@ -44,7 +44,6 @@ theorem inv_op [Group G] (a : G) : μ (ι a) a = 𝕖 := Group.inv_op a
 /- Now, we can start writing proofs with groups-/
 
 -- This is a proof that multiplying by the inverse gives the identity
-theorem op_inv [Group G] : ∀ a : G, μ a (ι a) = 𝕖 := by
-  intro a
+theorem op_inv [Group G] (a : G) : μ a (ι a) = 𝕖 := by
   rw[(id_op (μ a (ι a))).symm, (inv_op (ι a)).symm]
   rw[op_assoc, (op_assoc (ι a) a (ι a)).symm, inv_op, id_op]
