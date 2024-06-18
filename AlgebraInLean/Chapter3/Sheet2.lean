@@ -1,0 +1,4 @@
+-- Subgroup lattice
+-- What is a poset? lattice?
+-- Define LE for subgroups
+-- Intersection, generation, lub, glb

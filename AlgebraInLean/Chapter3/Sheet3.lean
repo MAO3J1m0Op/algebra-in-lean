@@ -1,0 +1,4 @@
+-- Subgroup examples
+  -- Image, kernel
+  -- Normal subgroup
+  -- Centralizer, normalizer
