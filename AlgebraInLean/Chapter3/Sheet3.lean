@@ -8,25 +8,37 @@ namespace Defs
     -- TODO: will be imported
     def Homomorphism (φ : G → G') : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
+    -- TODO: import from Chapter 2
+    section FromChapter2
+
+      variable (φ : G → G') (hφ : Homomorphism φ)
+
+      theorem homomorphism_id_map_id : φ 𝕖 = 𝕖 := sorry
+
+      theorem homomorphism_id_inv : ∀ a : G, φ (ι a) = ι (φ a) := sorry
+
+    end FromChapter2
+
     def Kernel (φ : G → G') (h : Homomorphism φ) : Subgroup G where
       carrier := {g | φ g = 𝕖}
       -- EXERCISES
       nonempty := by
-        sorry
+        suffices : φ 𝕖 = 𝕖
+        · exact this
+        exact homomorphism_id_map_id φ
       mul_closure := by
         intro a b ha hb
         rw [Set.mem_setOf_eq, ←h, ha, hb, id_op]
       inv_closure := by
         intro a ha
-        rw [Set.mem_setOf_eq]
-        sorry -- Need φ (ι x) = ι (φ x) for homomorphisms
+        rw [Set.mem_setOf_eq, homomorphism_id_inv φ, ha, inv_id]
 
     def Image [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) : Subgroup H where
       carrier := {x : H | ∃ g, φ g = x}
       -- EXERCISES
       nonempty := by
         use 𝕖
-        sorry -- Need φ 𝕖 = 𝕖 for homomorphisms
+        rw [homomorphism_id_map_id φ]
       mul_closure := by
         intro a b ⟨x, hx⟩ ⟨y, hy⟩
         use μ x y
@@ -34,8 +46,7 @@ namespace Defs
       inv_closure := by
         intro a ⟨x, hx⟩
         use ι x
-        rw [←hx]
-        sorry -- Need φ (ι x) = ι (φ x) for homomorphisms
+        rw [←hx, homomorphism_id_inv φ]
 
     def conjugate (n g : G) : G := μ (μ n g) (ι g)
 
@@ -61,8 +72,7 @@ namespace Defs
       intro g k hk
       suffices : φ (μ (μ g k) (ι g)) = 𝕖
       · exact this
-      rw [←h, ←h, hk, op_id, h, op_inv]
-      sorry -- Need φ 𝕖 = 𝕖
+      rw [←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ]
 
     def Normalizer (S : Set G) : Subgroup G where
       carrier := {g | ∀ s ∈ S, μ (μ g s) (ι g) = s}
