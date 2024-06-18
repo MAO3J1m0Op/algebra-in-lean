@@ -1,4 +1,4 @@
-import Mathlib.tactic
+import AlgebraInLean.World01.Sheet1
 namespace Sheet2
 
 /- Groups aren't the only important structures in algebra. By adding or

@@ -5,6 +5,13 @@ open Defs
 inverse function that gives one output gives the impression that the
 identity and inverses are unique. This can be proven-/
 
+/- Since the proof of op_inv used the previous definition of Group, we need
+to reprove it using the new definition-/
+theorem op_inv [Defs.Group G] (a : G) : μ a (ι a) = 𝕖 := by
+  rw[(id_op (μ a (ι a))).symm, (inv_op (ι a)).symm]
+  rw[op_assoc, (op_assoc (ι a) a (ι a)).symm, inv_op, id_op]
+
+
 /- This proves that the identity is unique. This theorem only requires G to
 be a monoid, so that is all we will assume-/
 theorem identity_uniqueness [Defs.Monoid G] (e2 : G) : (∀ a : G, (μ a e2 = a ∧ μ e2 a = a)) → e2 = 𝕖 := by
