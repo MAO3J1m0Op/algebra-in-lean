@@ -125,108 +125,28 @@ namespace Defs
         rw [ha, inv_id]
         trivial
 
-    def Centralizer [Group G] (S : Set G) : Subgroup G where
-      -- FIXME : all are written with primitive group axioms. If more robust
-      -- ones are provided in ch. 1, we can work to use those instead.
-      carrier := {g | ∀ s ∈ S, μ g s = μ s g}
-      nonempty := by
-        intro s hs
-        rw [id_op, op_id]
-      mul_closure := by
-        intro a b ha hb s hs
-        rw [op_assoc, hb, ←op_assoc, ha, op_assoc] <;> exact hs
-      inv_closure := by
-        -- Nasty, but works
-        intro a ha s hs
-        symm
-        rw [←op_id s, ←op_inv a]
-        repeat rw [←op_assoc]
-        apply congr <;> try rfl
-        rw [op_assoc, op_inv, op_id]
-        nth_rw 1 [←id_op s]
-        rw [←inv_op a]
-        repeat rw [op_assoc]
-        apply congr <;> try rfl
-        apply congr <;> try rfl
-        exact ha s hs
-
-    def conjugate [Group G] (n g : G) : G := μ (μ n g) (ι g)
-
-    def Normalizer [Group G] (S : Set G) : Subgroup G where
-      carrier := {g | ∀ s ∈ S, μ (μ g s) (ι g) = s}
-      nonempty := by
-        intro s hs
-        rw [id_op, inv_id, op_id]
-      mul_closure := by
-        intro a b ha hb s hs
-        rw [inv_anticomm]
-        rw [op_assoc, op_assoc a, ←op_assoc s, ←op_assoc b, ←op_assoc b]
-        rw [hb s hs, ←op_assoc, ha s hs]
-      inv_closure := by
-        intro a ha b hb
-        have inv_inv_eq_self : ∀ g : G, ι (ι g) = g := by
-          intro x
-          have h1 : ∀ g : G, μ (ι (ι g)) (ι g) = 𝕖 := by
-            intro y
-            rw[inv_op]
-          have h2 : ∀ g : G, μ (g) (ι g) = 𝕖 := by
-            intro z
-            rw[op_inv] --ONLY VALID WITH op_inv PROOF
-          have h1_x := h1 x
-          have h2_x := h2 x
-          rw [← h2_x] at h1_x
-          sorry -- FIXME do we have a uniqe inverse theorem?
-        have h3_a := inv_inv_eq_self a
-        rw [h3_a]
-        have h3 : μ (μ a b) (ι a) = b → μ (μ (ι a) b) a = b := by
-          intro ht
-          have hp : μ (μ a b) (ι a) = b → μ (ι a) (μ (μ a b) (ι a)) = μ (ι a) b := by
-            intro hu
-            rw [hu]
-          apply hp at ht
-          rw [op_assoc, ← op_assoc, inv_op, id_op] at ht
-          have hq : μ b (ι a) = μ (ι a) b → μ (μ b (ι a)) a = μ (μ (ι a) b) a := by
-            intro hu
-            rw [hu]
-          apply hq at ht
-          rw [op_assoc, inv_op, op_id] at ht
-          symm
-          exact ht
-        rw [h3]
-        have ha_b := ha b
-        apply ha_b at hb
-        exact hb
-
     variable {G : Type*} [Group G]
 
-    -- We define a subgroup to be _normal_ if the subgroup is closed under
-    -- conjugation with any element of G.
-    -- TODO: include conjugation in the definition?
-    def normal [Group G] (H : Subgroup G) : Prop :=
-      ∀ g h : G, h ∈ H → μ (μ g h) (ι g) = h
-
-    theorem foldml_append [Monoid M] (xs ys : List M)
-        : List.foldl μ 𝕖 (xs ++ ys) = μ (List.foldl μ 𝕖 xs) (List.foldl μ 𝕖 ys) := by
-      sorry
-
     def Generate (S : Set G) : Subgroup G where
-      carrier := {g | ∃ xs : List {s : G // s ∈ S ∨ ι s ∈ S}, List.foldl μ (𝕖 : G) xs = g}
-      nonempty := Exists.intro [] rfl
+      carrier := {g : G | ∀ H : Subgroup G, S ⊆ H → g ∈ H}
+      nonempty := by
+        intro H _
+        exact H.nonempty
       mul_closure := by
-        dsimp at *
-        intro a b ⟨as, has⟩ ⟨bs, hbs⟩
-        use as ++ bs
-        sorry
-      inv_closure :=
-      sorry
+        intro a b ha hb H hH
+        apply H.mul_closure
+        · exact ha H hH
+        · exact hb H hH
+      inv_closure := by
+        intro a ha H hH
+        apply H.inv_closure
+        exact ha H hH
 
-    def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
+    def order (x : G) := Cardinal.mk (Generate {x})
 
-    def Kernel [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) : Subgroup G where
-      carrier := {g | φ g = 𝕖}
-      nonempty := sorry
-      mul_closure := sorry
-      inv_closure := sorry
+    -- TODO: expand on order
+
+    example (H : Subgroup G) : Generate H = H := sorry
 
   end Subgroups
 
