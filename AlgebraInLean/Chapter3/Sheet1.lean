@@ -133,6 +133,7 @@ namespace Defs
         intro H _
         exact H.nonempty
       mul_closure := by
+        dsimp at *
         intro a b ha hb H hH
         apply H.mul_closure
         · exact ha H hH
@@ -142,11 +143,46 @@ namespace Defs
         apply H.inv_closure
         exact ha H hH
 
-    def order (x : G) := Cardinal.mk (Generate {x})
+    -- We define a map φ : G → H to be a homomorphism when for groups (G, ⬝) and (G', ★) it satisfies
+    -- the property that ∀ a, b ∈ G, φ (a ⬝ b) = φ (a) ★ φ (b). Note that a homomorphism preserves
+    -- the group structure of G and G' despite having (potentially) different operations.
+    -- It can readily be checked that a homomorphism is a group action.
+    def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
-    -- TODO: expand on order
+    -- Based on we know about identities and homomorphisms, it makes sense that a homomorphism
+    -- should map the identity of the domain to the identity in the codomain.
+    -- Let's prove it.
+    theorem map_identity [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) : φ (𝕖 : G) = (𝕖 : H) := by
+      have h1 : φ 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
+        rw [h, op_id]
+      have h2 : φ 𝕖 = μ (φ 𝕖) (φ 𝕖) → μ (φ 𝕖) (ι (φ 𝕖)) = μ (μ (φ 𝕖) (φ 𝕖) ) (ι (φ 𝕖)) := by
+        intro he
+        rw [← he]
+      apply h2 at h1
+      rw[op_assoc, op_inv, op_id] at h1
+      symm
+      exact h1
 
-    example (H : Subgroup G) : Generate H = H := sorry
+    -- This naturally leads to the idea of the kernel of a homomorphism. Generally, when a group G
+    -- acts on a set S, the kernel of the action is defined as {g ∈ G | g ⬝ s = s ∀ s ∈ S}.
+    -- For a homomorphism φ : G → H, the kernel of φ (kerφ) is defined by {g ∈ G | φ (g) = 𝕖}.
+    def Kernel [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) : Subgroup G where
+      carrier := {g | φ g = 𝕖}
+      nonempty := by
+        apply map_identity
+        exact h
+      mul_closure := by
+        intro a b ha hb
+        have h1 : a ∈ {g | φ g = 𝕖} → b ∈ {g | φ g = 𝕖} → φ (μ a b) = μ (φ a) (φ b) := by
+          intro hx hy
+          rw [h]
+        rw [ha, hb, op_id] at h1
+        have hf := ha
+        apply h1 at ha
+        apply h1 at hb
+        use hb
+        exact hf
+      inv_closure := sorry
 
   end Subgroups
 
