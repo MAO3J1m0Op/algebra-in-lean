@@ -8,6 +8,17 @@ namespace Defs
     -- TODO: will be imported
     def Homomorphism (φ : G → G') : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
+    -- TODO: import from Chapter 1
+    section FromChapter1
+
+      variable {G : Type*} [Group G]
+
+      theorem op_cancel_left (a u v : G) : μ a u = μ a v → u = v := sorry
+
+      theorem op_cancel_right (a u v : G) : μ a u = μ a v → u = v := sorry
+
+    end FromChapter1
+
     -- TODO: import from Chapter 2
     section FromChapter2
 
@@ -48,18 +59,40 @@ namespace Defs
         use ι x
         rw [←hx, homomorphism_id_inv φ]
 
-    def conjugate (n g : G) : G := μ (μ n g) (ι g)
+    def conjugate (g n : G) : G := μ (μ g n) (ι g)
+
+    @[simp]
+    theorem conjugate_by_id : conjugate (𝕖 : G) = id := by
+      -- EXERCISE
+      unfold conjugate
+      funext g
+      rw [id_op, inv_id, op_id]
+      rfl
+
+    @[simp]
+    theorem conjugate_id (g : G) : conjugate g 𝕖 = 𝕖 := by
+      -- EXERCISE
+      unfold conjugate
+      rw [op_id, op_inv]
+
+    def Conjugate (g : G) (S : Set G) : Set G := conjugate g '' S
+
+    @[simp]
+    theorem Conjugate_op (a b : G) : Conjugate (μ a b) = Conjugate a ∘ Conjugate b := by
+      unfold Conjugate conjugate Set.image
+      funext S
+      simp
+      rw [←inv_anticomm]
 
     -- We define a subgroup to be _normal_ if the subgroup is closed under
     -- conjugation with any element of G.
-    -- TODO: include conjugation in the definition?
     def normal (H : Subgroup G) : Prop :=
-      ∀ g h : G, h ∈ H → μ (μ g h) (ι g) ∈ H
+      ∀ g h : G, h ∈ H → conjugate g h ∈ H
 
     theorem Trivial_normal : normal (Trivial : Subgroup G) := by
       -- EXERCISE
       intro g h hh
-      rw [hh, op_id, op_inv]
+      rw [hh, conjugate_id]
       trivial
 
     theorem Complete_normal : normal (Complete : Subgroup G) := by
@@ -70,54 +103,39 @@ namespace Defs
     theorem Kernel_normal (φ : G → G') (h : Homomorphism φ) : normal (Kernel φ h) := by
       -- EXERCISE
       intro g k hk
-      suffices : φ (μ (μ g k) (ι g)) = 𝕖
+      suffices : φ (conjugate g k) = 𝕖
       · exact this
+      unfold conjugate
       rw [←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ]
 
     def Normalizer (S : Set G) : Subgroup G where
-      carrier := {g | ∀ s ∈ S, μ (μ g s) (ι g) = s}
+      carrier := {g | ∀ s ∈ S, Conjugate g S = S}
+      -- EXERCISES? These are hard...
       nonempty := by
-        intro s hs
-        rw [id_op, inv_id, op_id]
+        intro s _
+        unfold Conjugate
+        rw [conjugate_by_id]
+        simp
       mul_closure := by
         intro a b ha hb s hs
-        rw [inv_anticomm]
-        rw [op_assoc, op_assoc a, ←op_assoc s, ←op_assoc b, ←op_assoc b]
-        rw [hb s hs, ←op_assoc, ha s hs]
+        specialize ha s hs
+        specialize hb s hs
+        rw [Conjugate_op]
+        dsimp
+        rw [hb, ha]
       inv_closure := by
-        intro a ha b hb
-        have inv_inv_eq_self : ∀ g : G, ι (ι g) = g := by
-          intro x
-          have h1 : ∀ g : G, μ (ι (ι g)) (ι g) = 𝕖 := by
-            intro y
-            rw[inv_op]
-          have h2 : ∀ g : G, μ (g) (ι g) = 𝕖 := by
-            intro z
-            rw[op_inv] --ONLY VALID WITH op_inv PROOF
-          have h1_x := h1 x
-          have h2_x := h2 x
-          rw [← h2_x] at h1_x
-          sorry -- FIXME do we have a uniqe inverse theorem?
-        have h3_a := inv_inv_eq_self a
-        rw [h3_a]
-        have h3 : μ (μ a b) (ι a) = b → μ (μ (ι a) b) a = b := by
-          intro ht
-          have hp : μ (μ a b) (ι a) = b → μ (ι a) (μ (μ a b) (ι a)) = μ (ι a) b := by
-            intro hu
-            rw [hu]
-          apply hp at ht
-          rw [op_assoc, ← op_assoc, inv_op, id_op] at ht
-          have hq : μ b (ι a) = μ (ι a) b → μ (μ b (ι a)) a = μ (μ (ι a) b) a := by
-            intro hu
-            rw [hu]
-          apply hq at ht
-          rw [op_assoc, inv_op, op_id] at ht
-          symm
-          exact ht
-        rw [h3]
-        have ha_b := ha b
-        apply ha_b at hb
-        exact hb
+        intro a ha s hs
+        nth_rw 1 [←ha s hs]
+        suffices : Conjugate (ι a) ∘ (Conjugate a) = id
+        · -- Why must implicit arguments be like this
+          rw [←@Function.comp_apply (Set G) (Set G) (Set G) (Conjugate (ι a)) (Conjugate a) S]
+          rw [this]
+          rfl
+        rw [←Conjugate_op, inv_op]
+        unfold Conjugate
+        rw [conjugate_by_id]
+        simp
+        rfl
 
     def Centralizer (S : Set G) : Subgroup G where
       -- FIXME : all are written with primitive group axioms. If more robust
@@ -146,10 +164,15 @@ namespace Defs
 
     def Center : Subgroup G := Centralizer Set.univ
 
-    theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer Set.univ = H := by
+    theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = H := by
       -- EXERCISE
       -- TODO
-      sorry
+      apply Iff.intro
+      · intro hH
+        apply le_antisymm
+        · sorry
+        sorry
+      · sorry
 
     theorem homomorphism_inj_iff_kernel_trivial [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) :
         Function.Injective φ ↔ Kernel φ h = Trivial := by
