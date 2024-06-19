@@ -176,8 +176,7 @@ namespace Defs
           suffices : x = 𝕖
           · exact this
           apply hinj
-          have : φ 𝕖 = 𝕖 := sorry
-          rw [this]
+          rw [homomorphism_id_map_id φ]
           exact hx
         · apply Trivial_smallest
       · intro hk x y hfeq
