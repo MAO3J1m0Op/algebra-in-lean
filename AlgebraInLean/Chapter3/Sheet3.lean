@@ -75,14 +75,14 @@ namespace Defs
       unfold conjugate
       rw [op_id, op_inv]
 
-    def Conjugate (g : G) (S : Set G) : Set G := conjugate g '' S
-
     @[simp]
-    theorem Conjugate_op (a b : G) : Conjugate (μ a b) = Conjugate a ∘ Conjugate b := by
-      unfold Conjugate conjugate Set.image
-      funext S
-      simp
-      rw [←inv_anticomm]
+    theorem conjugate_op (a b : G) : conjugate (μ a b) = conjugate a ∘ conjugate b := by
+      funext s
+      unfold conjugate
+      rw [Function.comp_apply, inv_anticomm]
+      simp only [op_assoc]
+
+    def Conjugate (g : G) (S : Set G) : Set G := conjugate g '' S
 
     -- We define a subgroup to be _normal_ if the subgroup is closed under
     -- conjugation with any element of G.
@@ -120,22 +120,15 @@ namespace Defs
         intro a b ha hb s hs
         specialize ha s hs
         specialize hb s hs
-        rw [Conjugate_op]
-        dsimp
-        rw [hb, ha]
+        unfold Conjugate at *
+        rw [conjugate_op, Set.image_comp, hb, ha]
       inv_closure := by
         intro a ha s hs
         nth_rw 1 [←ha s hs]
-        suffices : Conjugate (ι a) ∘ (Conjugate a) = id
-        · -- Why must implicit arguments be like this
-          rw [←@Function.comp_apply (Set G) (Set G) (Set G) (Conjugate (ι a)) (Conjugate a) S]
-          rw [this]
-          rfl
-        rw [←Conjugate_op, inv_op]
         unfold Conjugate
-        rw [conjugate_by_id]
-        simp
-        rfl
+        funext x
+        dsimp only
+        rw [←Set.image_comp, ←conjugate_op, inv_op, conjugate_by_id, Set.image_id]
 
     def Centralizer (S : Set G) : Subgroup G where
       -- FIXME : all are written with primitive group axioms. If more robust
