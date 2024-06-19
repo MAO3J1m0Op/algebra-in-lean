@@ -3,7 +3,34 @@ import «AlgebraInLean».Chapter3.Sheet1
 namespace Defs
   namespace Subgroups
 
-    instance [Group G] : LE (Subgroup G) := ⟨λ H K ↦ H.carrier ⊆ K.carrier⟩
+    instance [Group G] : PartialOrder (Subgroup G) where
+      le H K := H.carrier ⊆ K.carrier
+      le_refl := by
+        intro H
+        -- If `unfold` does not fully expand the definition as desired, try using
+        -- it as a lemma in `dsimp`.
+        dsimp only [LE.le]
+        trivial
+      le_trans := by
+        -- EXERCISE
+        intro H₁ H₂ H₃ h12 h23 hx h1_x
+        dsimp only [LE.le] at *
+        apply h23
+        apply h12
+        exact h1_x
+      le_antisymm := by
+        intro H K hH hK
+        obtain ⟨H_carrier,_,_,_⟩ := H
+        obtain ⟨K_carrier,_,_,_⟩ := K
+        congr
+        ext x
+        apply Iff.intro
+        · intro hx
+          apply hH
+          exact hx
+        · intro hx
+          apply hK
+          exact hx
 
     theorem Trivial_smallest [Group G] (H : Subgroup G) : Trivial ≤ H := by
       -- EXERCISE
@@ -15,35 +42,6 @@ namespace Defs
       -- EXERCISE
       intro x _
       trivial
-
-    theorem le_refl [Group G] (H : Subgroup G) : H ≤ H := by
-      -- If `unfold` does not fully expand the definition as desired, try using
-      -- it as a lemma in `dsimp`.
-      dsimp only [LE.le]
-      trivial
-
-    theorem le_trans [Group G] (H₁ H₂ H₃ : Subgroup G) : H₁ ≤ H₂ → H₂ ≤ H₃ → H₁ ≤ H₃ := by
-      -- EXERCISE
-      dsimp only [LE.le] at *
-      intro h12 h23
-      intro x h1_x
-      apply h23
-      apply h12
-      exact h1_x
-
-    theorem le_antisymm [Group G] (H K : Subgroup G) : H ≤ K → K ≤ H → H = K := by
-      intro hH hK
-      obtain ⟨H_carrier,_,_,_⟩ := H
-      obtain ⟨K_carrier,_,_,_⟩ := K
-      congr
-      ext x
-      apply Iff.intro
-      · intro hx
-        apply hH
-        exact hx
-      · intro hx
-        apply hK
-        exact hx
 
     def Intersect [Group G] (H K : Subgroup G) : Subgroup G where
       carrier := H ∩ K
