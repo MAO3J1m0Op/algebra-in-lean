@@ -12,5 +12,4 @@ the case.
 
 -/
 
-#eval (add_one ∘ times_two) 3
 
