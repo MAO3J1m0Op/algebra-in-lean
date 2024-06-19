@@ -37,7 +37,8 @@ namespace Morphisms
    end Maps
 
    /- Given a group G and a group H, a homomorphism is a map φ from G to H which
-   "preserves the group structure", i.e., given an element g ∈ G and h ∈ H,
+   "preserves", or "respects" the group structure. I.e., given an element g ∈ G
+   and h ∈ H,
    
    φ(gh) = φ(g)φ(h).
 
@@ -57,11 +58,20 @@ namespace Morphisms
    def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
    Bijective φ)
 
-   /- As expected, you can see how the process of proving isomorphisms in Lean
-   closely parallels pen-and-paper proofs: you split the definition of an
-   isomorphism into its respective parts via a logical conjunction: (1) it is a
-   homomorphism, and (2) it is a bijection, and then prove each part. -/
+   /- TODO: Should we define homs/isos with `def` (like above)  or with type
+   classes (like below?) -/
 
+   class group_hom [Group G] [Group H] (φ : G → H) : Prop :=
+     (hom_mul : ∀ a b, φ (μ a b) = μ (φ a) (φ b))
+
+   class group_iso [Group G] [Group H] (φ : G → H) extends group_hom φ : Prop :=
+     (is_bijective : Bijective φ)
+
+   /- As expected, you can see how the process of proving isomorphisms in Lean
+   might closely parallel pen-and-paper proofs: you split the definition of an
+   isomorphism into its respective parts via a logical conjunction (or type
+   class definition): (1) it is a homomorphism, and (2) it is a bijection, and
+   then prove each part. -/
 
    /- Below are some basic proofs of homomorphisms: that they map inverses to
    inverses, and identities to identities. -/
@@ -81,7 +91,13 @@ namespace Morphisms
    inverse or the identity to an arbitrary element of the group, to exploit the
    "multiplicativity" of homomorphisms. -/
 
-   /- TODO: More exercises wrt surj/inj/bij, more basic exercise about homs? -/
+   /- TODO: More exercises wrt surj/inj/bij
+      More basic exercise about homs? An example is: a homomorphism is injective
+      iff the kernel is trivial. Maybe tie this in with rank-nullity (which
+      may be more familiar to readers from 221). Also emphasize that proving
+      that the kernel is trivial is equivalent to the more standard approach of
+      proving injectivity of a homomorphism, which could lead to more elegant
+      proofs. -/
 
   end Morphisms
 
