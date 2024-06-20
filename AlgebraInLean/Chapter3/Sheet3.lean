@@ -5,44 +5,46 @@ namespace Defs
 
     variable {G G' : Type*} [Group G] [Group G']
 
-    -- TODO: will be imported
+   -- We define a map φ : G → H to be a homomorphism when for groups (G, ⬝) and (G', ★) it satisfies
+    -- the property that ∀ a, b ∈ G, φ (a ⬝ b) = φ (a) ★ φ (b). Note that a homomorphism preserves
+    -- the group structure of G and G' despite having (potentially) different operations.
+    -- It can readily be checked that a homomorphism is a group action.
     def Homomorphism (φ : G → G') : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
-    -- TODO: import from Chapter 1
-    section FromChapter1
+    -- Based on we know about identities and homomorphisms, it makes sense that a homomorphism
+    -- should map the identity of the domain to the identity in the codomain.
+    -- Let's prove it.
+    theorem homomorphism_id_map_id (φ : G → G') (hφ : Homomorphism φ) : φ (𝕖 : G) = (𝕖 : G') := by
+      have h1 : φ 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
+        rw [hφ, op_id]
+      have h2 : φ 𝕖 = μ (φ 𝕖) (φ 𝕖) → μ (φ 𝕖) (ι (φ 𝕖)) = μ (μ (φ 𝕖) (φ 𝕖) ) (ι (φ 𝕖)) := by
+        intro he
+        rw [← he]
+      apply h2 at h1
+      rw[op_assoc, op_inv, op_id] at h1
+      symm
+      exact h1
 
-      variable {G : Type*} [Group G]
+    theorem homomorphism_id_inv (φ : G → G') (hφ : Homomorphism φ) : ∀ a : G, φ (ι a) = ι (φ a) := by
+      sorry
 
-      theorem op_cancel_left (a u v : G) : μ a u = μ a v → u = v := sorry
-
-      theorem op_cancel_right (a u v : G) : μ a u = μ a v → u = v := sorry
-
-    end FromChapter1
-
-    -- TODO: import from Chapter 2
-    section FromChapter2
-
-      variable (φ : G → G') (hφ : Homomorphism φ)
-
-      theorem homomorphism_id_map_id : φ 𝕖 = 𝕖 := sorry
-
-      theorem homomorphism_id_inv : ∀ a : G, φ (ι a) = ι (φ a) := sorry
-
-    end FromChapter2
-
+    -- This naturally leads to the idea of the kernel of a homomorphism. Generally, when a group G
+    -- acts on a set S, the kernel of the action is defined as {g ∈ G | g ⬝ s = s ∀ s ∈ S}.
+    -- For a homomorphism φ : G → H, the kernel of φ (kerφ) is defined by {g ∈ G | φ (g) = 𝕖}.
     def Kernel (φ : G → G') (h : Homomorphism φ) : Subgroup G where
       carrier := {g | φ g = 𝕖}
       -- EXERCISES
       nonempty := by
         suffices : φ 𝕖 = 𝕖
         · exact this
-        exact homomorphism_id_map_id φ
+        exact homomorphism_id_map_id φ h
       mul_closure := by
         intro a b ha hb
         rw [Set.mem_setOf_eq, ←h, ha, hb, id_op]
       inv_closure := by
         intro a ha
         rw [Set.mem_setOf_eq, homomorphism_id_inv φ, ha, inv_id]
+        exact h
 
     def Image [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) : Subgroup H where
       carrier := {x : H | ∃ g, φ g = x}
@@ -50,6 +52,7 @@ namespace Defs
       nonempty := by
         use 𝕖
         rw [homomorphism_id_map_id φ]
+        exact h
       mul_closure := by
         intro a b ⟨x, hx⟩ ⟨y, hy⟩
         use μ x y
@@ -58,6 +61,7 @@ namespace Defs
         intro a ⟨x, hx⟩
         use ι x
         rw [←hx, homomorphism_id_inv φ]
+        exact h
 
     def conjugate (g n : G) : G := μ (μ g n) (ι g)
 
