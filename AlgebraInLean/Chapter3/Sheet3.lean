@@ -110,7 +110,7 @@ namespace Defs
       suffices : φ (conjugate g k) = 𝕖
       · exact this
       unfold conjugate
-      rw [←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ]
+      rw [←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ h]
 
     def Normalizer (S : Set G) : Subgroup G where
       carrier := {g | ∀ s ∈ S, Conjugate g S = S}
@@ -180,7 +180,7 @@ namespace Defs
           suffices : x = 𝕖
           · exact this
           apply hinj
-          rw [homomorphism_id_map_id φ]
+          rw [homomorphism_id_map_id φ h]
           exact hx
         · apply Trivial_smallest
       · intro hk x y hfeq
