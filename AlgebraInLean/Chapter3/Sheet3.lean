@@ -26,7 +26,14 @@ namespace Defs
       exact h1
 
     theorem homomorphism_id_inv (φ : G → G') (hφ : Homomorphism φ) : ∀ a : G, φ (ι a) = ι (φ a) := by
-      sorry
+      intro a
+      have h1 : φ 𝕖 = 𝕖 := by
+        apply homomorphism_id_map_id
+        exact hφ
+      have h2 : φ (μ a (ι a)) = μ (φ a) (φ (ι a)) := by
+        rw [hφ]
+      rw [op_inv, h1] at h2
+      sorry --complete proof with unique inverse theorem
 
     -- This naturally leads to the idea of the kernel of a homomorphism. Generally, when a group G
     -- acts on a set S, the kernel of the action is defined as {g ∈ G | g ⬝ s = s ∀ s ∈ S}.
@@ -93,7 +100,7 @@ namespace Defs
     def normal (H : Subgroup G) : Prop :=
       ∀ g h : G, h ∈ H → conjugate g h ∈ H
 
-    theorem Trivial_normal : normal (Trivial : Subgroup G) := by
+    theorem Minimal_normal : normal (Minimal : Subgroup G) := by
       -- EXERCISE
       intro g h hh
       rw [hh, conjugate_id]
@@ -172,7 +179,7 @@ namespace Defs
       · sorry
 
     theorem homomorphism_inj_iff_kernel_trivial [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) :
-        Function.Injective φ ↔ Kernel φ h = Trivial := by
+        Function.Injective φ ↔ Kernel φ h = Minimal := by
       apply Iff.intro
       · intro hinj
         apply le_antisymm
@@ -184,11 +191,27 @@ namespace Defs
           exact hx
         · apply Trivial_smallest
       · intro hk x y hfeq
-        -- Need some more homomorphism machinery
-        sorry
+        have h1 : φ (μ x (ι y)) = μ (φ x) (φ (ι y)) := by
+          rw [h]
+        have h2 : (φ (ι y)) = ι (φ y):= by
+          apply homomorphism_id_inv
+          exact h
+        rw [hfeq, h2, op_inv] at h1
+        have h3 : μ x (ι y) ∈ Kernel φ h := by
+          trivial
+        rw [hk] at h3
+        have h4 : μ x (ι y) = 𝕖 := by
+          trivial
+        have h5 : μ x (ι y) = 𝕖 → μ (μ x (ι y)) y = μ 𝕖 y := by
+          intro ht
+          rw[ht]
+        apply h5 at h4
+        simp at h4
+        exact h4
+        -- Need some more homomorphism machinery EDIT : solved but messy
 
     theorem homomorphism_surj_iff_image_complete [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) :
-        Function.Surjective φ ↔ Image φ h = Complete := by
+        Function.Surjective φ ↔ Image φ h = Maximal := by
       apply Iff.intro
       · intro hsurj
         apply le_antisymm
