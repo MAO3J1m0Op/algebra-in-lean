@@ -4,10 +4,15 @@ namespace Defs
 
   namespace Subgroups
 
-    -- If G is a group, then a subgroup of G is a subset of G that is itself a
-    -- group under G's group operation. We encode a subgroup as a Lean
-    -- structure, notably not as a type class, as we wish to represent subgroups
-    -- merely as subsets with additional properties.
+    -- If G is a group, then a subgroup H of G is a subset of G that is itself
+    -- a group under G's group operation satisfying three properties.
+    -- 1. The identity in G is the identity in H (H is therefore nonempty)
+    -- 2. ∀ a, b ∈ H then μ a b ∈ H
+    -- 3. ∀ a ∈ H, then ι a ∈ H
+    -- Subgroups are denoted by the less than or equal sign, so we write H ≤ G.
+    -- We encode a subgroup as a Lean structure, notably not as a type class
+    -- to emphasize that subgroups are simply subsets of groups satisfying
+    -- specific properties.
     structure Subgroup (G : Type*) [Group G] where
       -- We represent the subgroup's corresponding set using Mathlib's `Set`
       -- type. Upon viewing the Mathlib documentation for the set (if you are
@@ -33,7 +38,7 @@ namespace Defs
     -- For more information on coercions, consult the link below.
     -- https://lean-lang.org/functional_programming_in_lean/type-classes/coercion.html
 
-    -- More notation! This allows us to use the element-of symbol (∈) for subgroups.
+    -- This notation allows us to use the element-of symbol (∈) for subgroups.
     instance {G : Type*} [Group G] : Membership G (Subgroup G) :=
       ⟨λ g H ↦ g ∈ H.carrier⟩
 
@@ -41,8 +46,8 @@ namespace Defs
     -- group. We do this by implementing our `Group` interface on all `H`. As
     -- you complete the proofs yourself, you will notice that many of the
     -- properties are inherited from the parent group's structure, so the mere
-    -- assertion of closure of H under μ and ι are sufficient to prove that H is
-    -- a group!
+    -- assertion of closure of H under μ and ι are sufficient to prove that H
+    -- is a group!
     instance [Group G] {H : Subgroup G} : Group H where
       -- Our operation now needs to be of type H → H → H instead of G → G → G.
       -- The ⟨ ⟩ notation divides the subgroup elements into its two properties.
@@ -92,9 +97,10 @@ namespace Defs
         ext
         apply inv_op
 
-    -- The largest possible subgroup of G contains every element of G.
-    -- TODO: rename to Maximal
-    def Complete [Group G] : Subgroup G where
+    -- The largest possible subgroup of G contains every element of G. We
+    -- call this subgroup as `Maximal`, and it represents the specific case
+    -- H ≤ G where H = G.
+    def Maximal [Group G] : Subgroup G where
       carrier := Set.univ
 
       -- Try to come up with one-line solutions for each of the below proofs
@@ -108,10 +114,11 @@ namespace Defs
       inv_closure := by
         exact λ a ha ↦ trivial
 
-    -- The smallest possible subgroup of G is called _trivial_ subgroup. What
-    -- would this smallest subgroup be?
-    -- TODO: rename to Minimal
-    def Trivial [Group G] : Subgroup G where
+    -- The smallest possible subgroup of G is called the _trivial_ subgroup.
+    -- What would this smallest subgroup be?
+    -- To avoid confusion with the already defined `trivial` in Lean, we will
+    -- call this `Minimal`.
+    def Minimal [Group G] : Subgroup G where
       -- BELOW ARE SOLUTIONS
       carrier := {𝕖}
       nonempty := by
@@ -125,8 +132,15 @@ namespace Defs
         rw [ha, inv_id]
         trivial
 
+    -- Maybe add subgroup criterion??
+
+    -- The following definition relies on G being a group, so we'll define
+    -- it as such for the subsequent proof.
     variable {G : Type*} [Group G]
 
+    -- Given a group G and a subset of that group, S, the subgroup generated
+    -- by S is the smallest order subgroup H ≤ G such that S ⊆ H. We show that
+    -- such a subset H which contains S is a subgroup in the example below.
     def Generate (S : Set G) : Subgroup G where
       carrier := {g : G | ∀ H : Subgroup G, S ⊆ H → g ∈ H}
       nonempty := by
