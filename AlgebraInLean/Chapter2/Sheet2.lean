@@ -55,13 +55,21 @@ class isCyclic (α : Type u) [Group α] : Prop where
 -- However, we can see that `zpowers` clearly refers to taking multiplicative
 -- integer powers of a group element g, which tracks with our definition above. 
 
+-- We introduce a closely related group; the integers _modulo_ some integer n.
+
+variable (G : ZMod n) (generators : Finset (ZMod n))
+
+-- TODO: do we explain type class instantiation and et cetera?? seems like a
+-- lot for this sheet to take on tbh. though we can totally split things up 
+
 -- ## EXERCISES:
 
 -- TODO: Show that a map φ : n → gⁿ is a homomorphism from ℤ/3ℤ to C₃.
 
 -- TODO: Show that a map φ : n → gⁿ is an isomorphism from ℤ/3ℤ to C₃.
 
--- TODO: Generalise the above: ℤ/nℤ is isomorphic to Cₙ, with the map being the same.
+-- TODO: Generalise the above: ℤ/nℤ is isomorphic to Cₙ, with the map being the
+-- same.
 
 /- ---------- -/
 
