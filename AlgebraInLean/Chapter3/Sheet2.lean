@@ -32,13 +32,13 @@ namespace Defs
           apply hK
           exact hx
 
-    theorem Trivial_smallest [Group G] (H : Subgroup G) : Minimal ≤ H := by
+    theorem Minimal_smallest [Group G] (H : Subgroup G) : Minimal ≤ H := by
       -- EXERCISE
       intro e he
       rw [he]
       exact H.nonempty
 
-    theorem Complete_largest [Group G] (H : Subgroup G) : H ≤ Maximal := by
+    theorem Maximal_largest [Group G] (H : Subgroup G) : H ≤ Maximal := by
       -- EXERCISE
       intro x _
       trivial
