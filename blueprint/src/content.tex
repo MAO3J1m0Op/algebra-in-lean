@@ -5,3 +5,58 @@
 % If you want to split the blueprint content into several files then
 % the current file can be a simple sequence of \input. Otherwise It
 % can start with a \section or \chapter for instance.
+
+\chapter{Basic Definitions}
+
+\begin{definition}[Magma]
+    \label{definition : magma}
+    \lean{Defs.Magma}
+    \leanok 
+    A magma consists of a set $G$ equipped with a single binary operation $\mu$. 
+    No other properties are imposed.
+\end{definition}
+
+\begin{definition}[Semigroup]
+  \label{definition : semigroup}
+  \lean{Defs.Semigroup}
+  \leanok 
+  \uses{definition : magma}
+  A semigroup $G$ is a magma where the operation $\mu$ is associative: 
+  For all $a, b, c \in G$, we have $\mu(a , \mu (b * c)) = \mu(\mu(a, b), c)$
+\end{definition}
+
+\begin{definition}[Monoid]
+  \label{definition : monoid}
+  \lean{Defs.Monoid}
+  \leanok 
+  \uses{definition : semigroup}
+  A monoid $G$ is a semigroup that contains an identity element $e$ that satisfies the condition:
+  for all $a \in G\, , \mu(a, e) = a = \mu(e, a)$.
+\end{definition}
+
+\begin{definition}[Commutative Monoid]
+  \label{definition: commutative monoid}
+  \lean{Defs.CommMonoid}
+  \leanok 
+  \uses{definition : monoid}
+  A commutative monoid $G$ is a monoid where the binary operation $\mu$ is commutative: 
+  for all $a, b \in G\, , \mu (a, b) = \mu(b, a)$
+\end{definition}
+
+\begin{definition}[Group]
+  \label{definition: group}
+  \lean{Defs.Group}
+  \leanok 
+  \uses{definition : monoid}
+  A group $G$ is a monoid along with an inverse map $\iota : G \to G$ such that  
+  for all $a \in G\, , \mu ((\iota~a), a) = e$
+\end{definition}
+
+\begin{definition}[Abelian Group]
+  \label{definition: abelian group}
+  \lean{Defs.AbelianGroup}
+  \leanok 
+  \uses{definition: group}
+  An abelian group $G$ is a group where the binary operation is commutative:
+  for all $a, b \in G\, , \mu (a, b) = \mu(b, a)$
+\end{definition}

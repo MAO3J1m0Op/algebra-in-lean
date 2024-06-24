@@ -1,0 +1,6 @@
+Defs.Magma
+Defs.Semigroup
+Defs.Monoid
+Defs.CommMonoid
+Defs.Group
+Defs.AbelianGroup

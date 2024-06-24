@@ -12,15 +12,31 @@
 
 \documentclass[a4paper]{report}
 
-\usepackage{geometry}
+\usepackage[textwidth=14cm]{geometry}
+\usepackage{xfrac}
+\usepackage{polyglossia}
+\setdefaultlanguage{english}
 
-\usepackage{expl3}
+\usepackage{amsmath,amssymb, bbold}
+\usepackage{enumitem}
+\usepackage{hyperref}
 
-\usepackage{amssymb, amsthm, mathtools}
-\usepackage[unicode,colorlinks=true,linkcolor=blue,urlcolor=magenta, citecolor=blue]{hyperref}
+\usepackage{tikz-cd}
 
+\usepackage{mathtools}
 \usepackage[warnings-off={mathtools-colon,mathtools-overbracket}]{unicode-math}
+\usepackage{fontspec}
+\setmathfont{latinmodern-math.otf}
+\setmathfont[range=\varnothing]{Asana-Math.otf}
+\setmathfont[range=\pitchfork]{Asana-Math.otf}
+\setmathfont[range=\intprod]{Asana-Math.otf}
+\setmathfont[range=\int]{latinmodern-math.otf}
 
+\usepackage[nameinlink, capitalize]{cleveref}
+
+\usepackage{amsthm}
+\usepackage{etexcmds}
+\usepackage{thmtools}
 \input{macros/common}
 \input{macros/print}
 
