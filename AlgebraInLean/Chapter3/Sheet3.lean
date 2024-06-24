@@ -106,7 +106,7 @@ namespace Defs
       rw [hh, conjugate_id]
       trivial
 
-    theorem Complete_normal : normal (Complete : Subgroup G) := by
+    theorem Maximal_normal : normal (Maximal : Subgroup G) := by
       -- EXERCISE
       intro _ _ _
       trivial
