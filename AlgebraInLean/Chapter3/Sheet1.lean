@@ -138,25 +138,6 @@ namespace Defs
     -- it as such for the subsequent proof.
     variable {G : Type*} [Group G]
 
-    -- Given a group G and a subset of that group, S, the subgroup generated
-    -- by S is the smallest order subgroup H ≤ G such that S ⊆ H. We show that
-    -- such a subset H which contains S is a subgroup in the example below.
-    def Generate (S : Set G) : Subgroup G where
-      carrier := {g : G | ∀ H : Subgroup G, S ⊆ H → g ∈ H}
-      nonempty := by
-        intro H _
-        exact H.nonempty
-      mul_closure := by
-        dsimp at *
-        intro a b ha hb H hH
-        apply H.mul_closure
-        · exact ha H hH
-        · exact hb H hH
-      inv_closure := by
-        intro a ha H hH
-        apply H.inv_closure
-        exact ha H hH
-
   end Subgroups
 
 end Defs
