@@ -3,7 +3,9 @@ import «AlgebraInLean».Chapter3.Sheet1
 namespace Defs
   namespace Subgroups
 
-    instance [Group G] : PartialOrder (Subgroup G) where
+    variable {G : Type*} [Group G]
+
+    instance : PartialOrder (Subgroup G) where
       le H K := H.carrier ⊆ K.carrier
       le_refl := by
         intro H
@@ -32,18 +34,18 @@ namespace Defs
           apply hK
           exact hx
 
-    theorem Minimal_smallest [Group G] (H : Subgroup G) : Minimal ≤ H := by
+    theorem Minimal_smallest (H : Subgroup G) : Minimal ≤ H := by
       -- EXERCISE
       intro e he
       rw [he]
       exact H.nonempty
 
-    theorem Maximal_largest [Group G] (H : Subgroup G) : H ≤ Maximal := by
+    theorem Maximal_largest (H : Subgroup G) : H ≤ Maximal := by
       -- EXERCISE
       intro x _
       trivial
 
-    def Intersect [Group G] (H K : Subgroup G) : Subgroup G where
+    def Intersect (H K : Subgroup G) : Subgroup G where
       carrier := H ∩ K
       -- EXERCISES
       nonempty := by
@@ -60,15 +62,15 @@ namespace Defs
         · exact K.inv_closure a ha.right
 
     -- TODO: Other symbols : ∩, ⊓, ∧?
-    instance [Group G] : Inter (Subgroup G) := ⟨Intersect⟩
+    instance : Inter (Subgroup G) := ⟨Intersect⟩
 
-    theorem inter_comm [Group G] (H K : Subgroup G) : H ∩ K = K ∩ H := by
+    theorem inter_comm (H K : Subgroup G) : H ∩ K = K ∩ H := by
       dsimp only [Inter.inter, Intersect]
       suffices : H.carrier ∩ K.carrier = K.carrier ∩ H.carrier
       · congr
       exact Set.inter_comm H.carrier K.carrier
 
-    theorem inter_assoc [Group G] (H₁ H₂ H₃ : Subgroup G) : (H₁ ∩ H₂) ∩ H₃ = H₁ ∩ (H₂ ∩ H₃) := by
+    theorem inter_assoc (H₁ H₂ H₃ : Subgroup G) : (H₁ ∩ H₂) ∩ H₃ = H₁ ∩ (H₂ ∩ H₃) := by
       simp only [Inter.inter, Intersect]
       suffices : (H₁.carrier ∩ H₂.carrier) ∩ H₃.carrier = H₁.carrier ∩ (H₂.carrier ∩ H₃.carrier)
       · congr
