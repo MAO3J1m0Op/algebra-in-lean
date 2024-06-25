@@ -76,13 +76,15 @@ namespace Morphisms
 
   -- φ(gh) = φ(g)φ(h).
 
-  -- An isomorphism has a slightly stricter definition in that φ is required
-  -- to be a bijection. When two groups are isomorphic to each other, they are
-  -- indisguishable from each other by structure alone. There are various
-  -- examples of this correspondence: for example, homomorphisms (and
-  -- therefore isomorphisms) map inverses elements of group G to corresponding
-  -- inverse elements of group H. We will explore this and examples like these
-  -- in the following exercise.
+  -- An isomorphism has a slightly stricter definition in that φ is required to
+  -- be a bijection. When two groups are isomorphic to each other, they are
+  -- indisguishable from each other by structure alone. This is often expressed
+  -- via the phrase "up to isomorphism".
+
+  -- There are various examples of this correspondence: for example,
+  -- homomorphisms (and therefore isomorphisms) map inverses elements of group
+  -- G to corresponding inverse elements of group H. We will explore this and
+  -- examples like these in the following exercise.
 
   -- Morphisms
   def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
@@ -90,16 +92,6 @@ namespace Morphisms
 
   def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
   Bijective φ)
-
-  -- TODO: Should we define homs/isos with `def` (like above)  or with type
-  -- classes (like below?)
-
-  structure group_hom [Group G] [Group H] (φ : G → H) :=
-      (hom_map : G → H)
-      (hom_mul : ∀ a b, φ (μ a b) = μ (φ a) (φ b))
-
-  structure group_iso [Group G] [Group H] (φ : G → H) extends group_hom φ :=
-      (is_bijective : Bijective φ)
 
   -- As expected, you can see how the process of proving isomorphisms in Lean
   -- might closely parallel pen-and-paper proofs: you split the definition of
@@ -125,7 +117,7 @@ namespace Morphisms
           sorry
 
   theorem hom_inv_to_inv {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
-  group_hom φ) (g : G) (𝕖 : G) (𝕖' : H) : φ (ι g) = ι (φ g) := by
+  Homomorphism φ) (g : G) (𝕖 : G) (𝕖' : H) : φ (ι g) = ι (φ g) := by
       have h1 : μ (φ g) (φ (ι g)) = φ (μ g (ι g))
       · sorry
       have h2 : φ (μ g (ι g)) = φ (𝕖)
