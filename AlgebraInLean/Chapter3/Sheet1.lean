@@ -132,7 +132,60 @@ namespace Defs
         rw [ha, inv_id]
         trivial
 
-    -- Maybe add subgroup criterion??
+    -- We have defined a subgroup to be a subset of a group closed under
+    -- operation and three additional properties. However, to show H is a
+    -- subgroup of G it suffices to show two things:
+    -- 1. H == {∅}
+    -- 2. for all x, y ∈ H, μ x (ι y) ∈ H
+    -- That is, a subset H of G is a subgroup IFF the two properties above
+    -- hold, this is known as the Subgroup Criterion.
+    -- Notice that the language nonempty we used to define a subset earlier may
+    -- be slightly misleading. Earlier, we asserted nonempty by claiming the
+    -- identity existed in the subset. However, this criterion truly only
+    -- requires the subset to be nonempty, and we can use the second condition
+    -- to show that the identity must be in the subgroup. The proof is
+    -- outlined below and each thing to show (nonempty, inv_closure,
+    -- mul_closure) follows from the last.
+    def subgroup_criterion [Group G] (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x ∈ S → y ∈ S → (μ x (ι y)) ∈ S) : Subgroup G where
+      carrier := S
+      nonempty := by
+        obtain ⟨s, hs⟩ := he
+        rw [← op_inv s]
+        apply hc <;> exact hs
+      inv_closure := by
+        intro a
+        have hc2 := hc
+        specialize hc2 𝕖 a
+        rw [← id_op (ι a)]
+        apply hc2
+        have h1 : 𝕖 ∈ S := by
+          obtain ⟨s, hs⟩ := he
+          rw [← op_inv s]
+          apply hc <;> exact hs
+        exact h1
+      mul_closure := by
+        intro a b ha hb
+        have hc3 := hc
+        have hc4 := hc
+        specialize hc3 a (ι b)
+        have ht : ι (ι b) = b := sorry -- FIXME use inverse of inverse equals self
+        rw [ht] at hc3
+        have hf : b ∈ S → ι b ∈ S := by
+          intro hb
+          rw [← id_op (ι b)]
+          specialize hc4 𝕖 b
+          apply hc4
+          have h1 : 𝕖 ∈ S := by
+            obtain ⟨s, hs⟩ := he
+            rw [← op_inv s]
+            apply hc <;> exact hs
+          exact h1
+          exact hb
+        apply hf at hb
+        apply hc3 at ha
+        apply ha at hb
+        exact hb
+
 
     -- The following definition relies on G being a group, so we'll define
     -- it as such for the subsequent proof.
