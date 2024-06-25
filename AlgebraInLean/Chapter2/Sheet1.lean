@@ -1,6 +1,6 @@
 import «AlgebraInLean».Basic
 
-namespace Defs  
+namespace Defs
 
 namespace Morphisms
 
@@ -15,7 +15,7 @@ namespace Morphisms
     -- Lean's type system, see
     -- https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html.
 
-    variable {a : Sort u₁} {β : Sort u₂} {γ : Sort u₃}
+    variable {α : Sort u₁} {β : Sort u₂} {γ : Sort u₃}
     -- Type n is syntactic sugar for Sort (n + 1). Sort 0 is the bottom of the
     -- hierarchy; expressed as a Type, it would theoretically be written "Type
     -- -1". Using "Sort" allows for a bit more freedom for the range of types. In
@@ -24,7 +24,19 @@ namespace Morphisms
     -- Surjectivity, injectivity, and bijectivity of maps
     def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
     -- Otherwise known as "one-to-one".
-    
+
+    -- We have already seen many injective functions. One of them is the
+    -- function which takes any group element to its inverse! (This is actually
+    -- bidirectional.)
+
+    example [Group G] : ∀ a b : G, ι a = ι b → a = b:= by
+      intro a b
+      intro hinv
+      have hinj : ∀ (g : G), ι (ι g) = g -- probably shows up in earlier chapter
+      · sorry
+      rw [← hinj a, ← hinj b]
+      rw [hinv]
+
     def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
     -- Otherwise known as "onto".
 
@@ -35,13 +47,16 @@ namespace Morphisms
 
     -- Let's prove a few basic consequences of function composition.
 
-    example (f : X → Y) (g : Y → Z) (h1: Surjective f) (h2 : Surjective g) : Surjective (g ∘ f) := by
+    example (f : X → Y) (g : Y → Z) (h1: Surjective f) (h2 : Surjective g)
+    : Surjective (g ∘ f) := by
        sorry
 
-    example (f : X → Y) (g : Y → Z) (h1: Injective f) (h2 : Injective g) : Injective (g ∘ f) := by
+    example (f : X → Y) (g : Y → Z) (h1: Injective f) (h2 : Injective g)
+    : Injective (g ∘ f) := by
        sorry
 
-    example (f : X → Y) (g : Y → Z) (h1 : Injective (g ∘ f)) (h2 : Injective f) : Injective g := by
+    example (f : X → Y) (g : Y → Z) (h1 : Injective (g ∘ f)) (h2 : Injective f)
+    : Injective g := by
        sorry
 
   end Maps
@@ -49,7 +64,7 @@ namespace Morphisms
   -- Given a group G and a group H, a homomorphism is a map φ from G to H
   -- which "preserves", or "respects" the group structure. I.e., given an
   -- element g ∈ G and h ∈ H,
-  
+
   -- φ(gh) = φ(g)φ(h).
 
   -- An isomorphism has a slightly stricter definition in that φ is required
@@ -89,20 +104,24 @@ namespace Morphisms
   -- TODO: Broken sketches. Probably missing something obvious; there is an
   -- issue with overloading μ for two different groups
   theorem hom_id_to_id {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
-  Homomorphism φ) : φ 𝕖 = 𝕖 := by
+  Homomorphism φ) (𝕖 : G) (𝕖' : H): φ 𝕖 = 𝕖' := by
       have h1 : φ 𝕖 = φ (μ 𝕖 𝕖)
       · sorry
-      have h2 : μ (φ 𝕖) (φ 𝕖)
+      have h2 : μ (φ 𝕖) (φ 𝕖) = μ 𝕖' 𝕖'
       · sorry
+      have h3 : μ 𝕖' 𝕖' = 𝕖'
+      · sorry
+      done
 
   theorem hom_inv_to_inv {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
-  group_hom φ) (g : G) : φ (ι g) = ι (φ g) := by
+  group_hom φ) (g : G) (𝕖 : G) (𝕖' : H) : φ (ι g) = ι (φ g) := by
       have h1 : μ (φ g) (φ (ι g)) = φ (μ g (ι g))
       · sorry
       have h2 : φ (μ g (ι g)) = φ (𝕖)
       · sorry
-      have h3 : φ (𝕖) = 𝕖
+      have h3 : φ (𝕖) = 𝕖'
       · sorry
+      done
 
   -- Tip: Since the only thing we know about a homomorphism φ is that φ (μ a b)
   -- = μ (φ a) (φ b), it is often instructive to start proofs by applying the
