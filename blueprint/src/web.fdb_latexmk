@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1719266825.84107 "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex" "web.pdf" "web" 1719266826.88057 2
-  "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex" 1719265466.4798 834 36657fa6e00da9897c8abda3b124e5cd ""
+["pdflatex"] 1719337569.09507 "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex" "web.pdf" "web" 1719337570.12492 2
+  "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex" 1719337567.60934 994 c61fb4026301cf83269053066aae5c59 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -147,12 +147,13 @@
   "/usr/local/texlive/2024/texmf-var/web2c/xetex/xelatex.fmt" 1717094335 10850172 7a001eb8a22fd8a1e1d1976a20465d9e ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
   "blueprint.sty" 1719243101.11723 33 380e7b64027817bb38aa9902f30ab0d0 ""
-  "content.tex" 1719266824.16325 2046 d6b560dbddd637e3e311b9b7c820c21d ""
+  "chapters/basicDefinitions.tex" 1719337330.29542 1713 6eba76062fb29c6e4e0de702e6d4b4ab ""
+  "content.tex" 1719337128.6632 398 aa4d4c8e11608e8578f91f37437a588a ""
   "macros/common.tex" 1719243101.12138 142 10e8f81f8b8dcf47997f6d1d7aa55e98 ""
   "macros/web.tex" 1719262391.05066 587 e612d5e6e7e6aa489bd0f8f22ce8a34a ""
-  "web.aux" 1719266826.44761 1234 3ef633b39176bf02064c82f85a579afd "pdflatex"
-  "web.out" 1719266826.44804 131 a41df8dcd1b411a6daf7eb4887afeac5 "pdflatex"
-  "web.tex" 1719265466.4798 834 36657fa6e00da9897c8abda3b124e5cd ""
+  "web.aux" 1719337569.70898 1234 3ef633b39176bf02064c82f85a579afd "pdflatex"
+  "web.out" 1719337569.70943 131 a41df8dcd1b411a6daf7eb4887afeac5 "pdflatex"
+  "web.tex" 1719337567.60934 994 c61fb4026301cf83269053066aae5c59 ""
   (generated)
   "web.aux"
   "web.log"

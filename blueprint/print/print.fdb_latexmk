@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1719266832.55695 "print.tex" "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/print/print.pdf" "print" 1719266835.68507 0
-  "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/print/print.aux" 1719266835.22562 2668 b6f3106319d326185971939974131cc3 "pdflatex"
-  "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/print/print.out" 1719266835.22625 131 a41df8dcd1b411a6daf7eb4887afeac5 "pdflatex"
+["pdflatex"] 1719337333.55348 "print.tex" "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/print/print.pdf" "print" 1719337336.69214 0
+  "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/print/print.aux" 1719337336.23224 2668 b6f3106319d326185971939974131cc3 "pdflatex"
+  "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/print/print.out" 1719337336.23286 131 a41df8dcd1b411a6daf7eb4887afeac5 "pdflatex"
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -174,10 +174,11 @@
   "/usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf" 1708706663 41649 5d6ae549fbbcb850a863f69aa41f3d10 ""
   "/usr/local/texlive/2024/texmf-var/web2c/xetex/xelatex.fmt" 1717094335 10850172 7a001eb8a22fd8a1e1d1976a20465d9e ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "content.tex" 1719266824.16325 2046 d6b560dbddd637e3e311b9b7c820c21d ""
+  "chapters/basicDefinitions.tex" 1719337330.29542 1713 6eba76062fb29c6e4e0de702e6d4b4ab ""
+  "content.tex" 1719337128.6632 398 aa4d4c8e11608e8578f91f37437a588a ""
   "macros/common.tex" 1719243101.12138 142 10e8f81f8b8dcf47997f6d1d7aa55e98 ""
   "macros/print.tex" 1719262460.25758 1405 3be38b7da816eeb67de716225b8712ab ""
-  "print.tex" 1719265466.24067 1528 c37c3bb0733a3981e95ace2d785c9a5b ""
+  "print.tex" 1719337236.98986 1561 e7f4626dabc10bd6f2f9e5dc5a383afc ""
   (generated)
   "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/print/print.aux"
   "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/print/print.log"

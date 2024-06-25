@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.5.30)  24 JUN 2024 18:07
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.5.30)  25 JUN 2024 13:46
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -465,8 +465,8 @@ File: pgflibraryarrows.meta.code.tex 2023-01-15 v3.1.10 (3.1.10)
 ))) (./macros/common.tex) (./macros/web.tex
 \c@theorem=\count307
 )
-/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex:19: Undefined control sequence.
-l.19 \home
+/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex:20: Undefined control sequence.
+l.20 \home
           {https://MAO3J1m0Op.github.io/algebra-in-lean}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -475,19 +475,19 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex:19: LaTeX Error: Missing \begin{document}.
+/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex:20: LaTeX Error: Missing \begin{document}.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.19 \home{h
+l.20 \home{h
             ttps://MAO3J1m0Op.github.io/algebra-in-lean}
 You're in trouble here.  Try typing  <return>  to proceed.
 If that doesn't work, type  X <return>  to quit.
 
-/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex:20: Undefined control sequence.
-l.20 \github
+/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex:21: Undefined control sequence.
+l.21 \github
             {https://github.com/MAO3J1m0Op/algebra-in-lean}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -495,8 +495,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex:21: Undefined control sequence.
-l.21 \dochome
+/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/web.tex:22: Undefined control sequence.
+l.22 \dochome
              {https://MAO3J1m0Op.github.io/algebra-in-lean/docs}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -505,7 +505,7 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (79.40001pt too wide) in paragraph at lines 19--22
+Overfull \hbox (79.40001pt too wide) in paragraph at lines 20--23
 []\TU/lmr/m/n/10 https://MAO3J1m0Op.github.io/algebra-in-lean https://github.com/MAO3J1m0Op/algebra-
  []
 
@@ -520,31 +520,31 @@ File: l3backend-xetex.def 2024-02-20 L3 backend support: XeTeX
 No file web.aux.
 \openout1 = `web.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 26.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 28.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 28.
 (/usr/local/texlive/2024/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-Package hyperref Info: Link coloring OFF on input line 26.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 28.
+LaTeX Font Info:    ... okay on input line 28.
+Package hyperref Info: Link coloring OFF on input line 28.
 \@outlinefile=\write4
 \openout4 = `web.out'.
 
@@ -555,35 +555,40 @@ Package hyperref Warning: Rerun to get /PageLabels entry.
 [1
 
 ]
-LaTeX Font Info:    Trying to load font information for U+msa on input line 28.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 30.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 28.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1] (./content.tex
+)
+Overfull \hbox (422.76012pt too wide) in paragraph at lines 30--30
+ [][] 
+ []
+
+[1] (./content.tex (./chapters/basicDefinitions.tex
 Chapter 1.
-./content.tex:13: Undefined control sequence.
-l.13     \lean
-              {Defs.Magma}
+./chapters/basicDefinitions.tex:5: Undefined control sequence.
+l.5     \lean
+             {Defs.Magma}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:14: Undefined control sequence.
-l.14     \leanok
-                
+./chapters/basicDefinitions.tex:6: Undefined control sequence.
+l.6     \leanok
+               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:21: Undefined control sequence.
-l.21   \lean
+./chapters/basicDefinitions.tex:13: Undefined control sequence.
+l.13   \lean
             {Defs.Semigroup}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -591,8 +596,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:22: Undefined control sequence.
-l.22   \leanok
+./chapters/basicDefinitions.tex:14: Undefined control sequence.
+l.14   \leanok
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -600,8 +605,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:23: Undefined control sequence.
-l.23   \uses
+./chapters/basicDefinitions.tex:15: Undefined control sequence.
+l.15   \uses
             {definition : magma}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -609,8 +614,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:30: Undefined control sequence.
-l.30   \lean
+./chapters/basicDefinitions.tex:22: Undefined control sequence.
+l.22   \lean
             {Defs.Monoid}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -618,8 +623,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:31: Undefined control sequence.
-l.31   \leanok
+./chapters/basicDefinitions.tex:23: Undefined control sequence.
+l.23   \leanok
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -627,8 +632,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:32: Undefined control sequence.
-l.32   \uses
+./chapters/basicDefinitions.tex:24: Undefined control sequence.
+l.24   \uses
             {definition : semigroup}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -636,8 +641,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:39: Undefined control sequence.
-l.39   \lean
+./chapters/basicDefinitions.tex:31: Undefined control sequence.
+l.31   \lean
             {Defs.CommMonoid}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -645,8 +650,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:40: Undefined control sequence.
-l.40   \leanok
+./chapters/basicDefinitions.tex:32: Undefined control sequence.
+l.32   \leanok
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -654,8 +659,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:41: Undefined control sequence.
-l.41   \uses
+./chapters/basicDefinitions.tex:33: Undefined control sequence.
+l.33   \uses
             {definition : monoid}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -664,12 +669,12 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (3.43672pt too wide) in paragraph at lines 39--44
+Overfull \hbox (3.43672pt too wide) in paragraph at lines 31--36
 []\TU/lmr/bx/n/10 Definition 1.4 \TU/lmr/m/n/10 (Commutative Monoid)\TU/lmr/bx/n/10 . []\TU/lmr/m/it/10 Defs.CommMonoid definition : monoid
  []
 
-./content.tex:48: Undefined control sequence.
-l.48   \lean
+./chapters/basicDefinitions.tex:40: Undefined control sequence.
+l.40   \lean
             {Defs.Group}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -677,8 +682,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:49: Undefined control sequence.
-l.49   \leanok
+./chapters/basicDefinitions.tex:41: Undefined control sequence.
+l.41   \leanok
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -686,8 +691,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:50: Undefined control sequence.
-l.50   \uses
+./chapters/basicDefinitions.tex:42: Undefined control sequence.
+l.42   \uses
             {definition : monoid}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -696,12 +701,12 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Overfull \hbox (1.66672pt too wide) in paragraph at lines 48--53
+Overfull \hbox (1.66672pt too wide) in paragraph at lines 40--45
 \TU/lmr/m/it/10 monoid along with an inverse map $\OML/cmm/m/it/10 ^^S \OT1/cmr/m/n/10 : \OML/cmm/m/it/10 G \OMS/cmsy/m/n/10 ! \OML/cmm/m/it/10 G$ \TU/lmr/m/it/10 such that for all $\OML/cmm/m/it/10 a \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 G ; ^^V\OT1/cmr/m/n/10 ((\OML/cmm/m/it/10 ^^S a\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 ; a\OT1/cmr/m/n/10 ) =
  []
 
-./content.tex:57: Undefined control sequence.
-l.57   \lean
+./chapters/basicDefinitions.tex:49: Undefined control sequence.
+l.49   \lean
             {Defs.AbelianGroup}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -709,8 +714,8 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:58: Undefined control sequence.
-l.58   \leanok
+./chapters/basicDefinitions.tex:50: Undefined control sequence.
+l.50   \leanok
               
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
@@ -718,16 +723,16 @@ misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-./content.tex:59: Undefined control sequence.
-l.59   \uses
-            {definition: group}
+./chapters/basicDefinitions.tex:51: Undefined control sequence.
+l.51   \uses
+            {definition: group, definition: commutative monoid}
 The control sequence at the end of the top line
 of your error message was never \def'ed. If you have
 misspelled it (e.g., `\hobx'), type `I' and the correct
 spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
-) [1
+)) [1
 
 ] (./web.aux)
  ***********
@@ -748,10 +753,10 @@ Package rerunfilecheck Info: Checksums for `web.out':
 (rerunfilecheck)             After:  A41DF8DCD1B411A6DAF7EB4887AFEAC5;131.
  ) 
 Here is how much of TeX's memory you used:
- 22490 strings out of 474773
- 438438 string characters out of 5757724
- 1923839 words of memory out of 5000000
- 44283 multiletter control sequences out of 15000+600000
+ 22499 strings out of 474773
+ 438710 string characters out of 5757724
+ 1924839 words of memory out of 5000000
+ 44288 multiletter control sequences out of 15000+600000
  564837 words of font info for 71 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  98i,6n,107p,545b,348s stack positions out of 10000i,1000n,20000p,200000b,200000s

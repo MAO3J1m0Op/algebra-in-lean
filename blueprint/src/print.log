@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.5.30)  24 JUN 2024 17:54
+This is XeTeX, Version 3.141592653-2.6-0.999996 (TeX Live 2024) (preloaded format=xelatex 2024.5.30)  25 JUN 2024 13:40
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -602,13 +602,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(1)' created for font
 (fontspec)             - 'small caps'  (m/sc) with NFSS spec.: 
 
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 30.
+(Font)              `operators' in the math version `normal' on input line 31.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 30.
+(Font)                  OT1/cmr/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 31.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 30.
+(Font)              `operators' in the math version `bold' on input line 31.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 30.
+(Font)                  OT1/cmr/bx/n --> TU/latinmodern-math.otf(1)/b/n on input line 31.
 
 Package fontspec Info: latinmodern-math scale = 1.0001.
 
@@ -655,13 +655,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(2)' created for font
 (fontspec)             \fontdimen 21\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `normal' on input line 30.
+(Font)              `symbols' in the math version `normal' on input line 31.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
-(Font)                  OMS/cmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 30.
+(Font)                  OMS/cmsy/m/n --> TU/latinmodern-math.otf(2)/m/n on input line 31.
 LaTeX Font Info:    Encoding `OMS' has changed to `TU' for symbol font
-(Font)              `symbols' in the math version `bold' on input line 30.
+(Font)              `symbols' in the math version `bold' on input line 31.
 LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
-(Font)                  OMS/cmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 30.
+(Font)                  OMS/cmsy/b/n --> TU/latinmodern-math.otf(2)/b/n on input line 31.
 
 Package fontspec Info: latinmodern-math scale = 0.9999.
 
@@ -696,13 +696,13 @@ Package fontspec Info: Font family 'latinmodern-math.otf(3)' created for font
 (fontspec)             =6.0pt\relax \fontdimen 13\font =0pt\relax 
 
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `normal' on input line 30.
+(Font)              `largesymbols' in the math version `normal' on input line 31.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
-(Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 30.
+(Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/m/n on input line 31.
 LaTeX Font Info:    Encoding `OMX' has changed to `TU' for symbol font
-(Font)              `largesymbols' in the math version `bold' on input line 30.
+(Font)              `largesymbols' in the math version `bold' on input line 31.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
-(Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 30.
+(Font)                  OMX/cmex/m/n --> TU/latinmodern-math.otf(3)/b/n on input line 31.
 
 Package fontspec Info: Font family 'Asana-Math.otf(0)' created for font
 (fontspec)             'Asana-Math.otf' with options
@@ -717,24 +717,24 @@ Package fontspec Info: Font family 'Asana-Math.otf(0)' created for font
 
 \sym__um_fam1=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `normal'
-(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/m/n on input line 31.
+(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/m/n on input line 32.
 LaTeX Font Info:    Overwriting symbol font `__um_fam1' in version `bold'
-(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/b/n on input line 31.
+(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/b/n on input line 32.
 \sym__um_fam2=\mathgroup7
 LaTeX Font Info:    Overwriting symbol font `__um_fam2' in version `normal'
-(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/m/n on input line 32.
+(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/m/n on input line 33.
 LaTeX Font Info:    Overwriting symbol font `__um_fam2' in version `bold'
-(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/b/n on input line 32.
+(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/b/n on input line 33.
 \sym__um_fam3=\mathgroup8
 LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `normal'
-(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/m/n on input line 33.
+(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/m/n on input line 34.
 LaTeX Font Info:    Overwriting symbol font `__um_fam3' in version `bold'
-(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/b/n on input line 33.
+(Font)                  TU/Asana-Math.otf(0)/m/n --> TU/Asana-Math.otf(0)/b/n on input line 34.
 \sym__um_fam4=\mathgroup9
 LaTeX Font Info:    Overwriting symbol font `__um_fam4' in version `normal'
-(Font)                  TU/latinmodern-math.otf(1)/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 34.
+(Font)                  TU/latinmodern-math.otf(1)/m/n --> TU/latinmodern-math.otf(1)/m/n on input line 35.
 LaTeX Font Info:    Overwriting symbol font `__um_fam4' in version `bold'
-(Font)                  TU/latinmodern-math.otf(1)/m/n --> TU/latinmodern-math.otf(1)/b/n on input line 34.
+(Font)                  TU/latinmodern-math.otf(1)/m/n --> TU/latinmodern-math.otf(1)/b/n on input line 35.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/cleveref/cleveref.sty
 Package: cleveref 2018/03/27 v0.21.4 Intelligent cross-referencing
 Package cleveref Info: `hyperref' support loaded on input line 2370.
@@ -794,26 +794,26 @@ Package: thm-amsthm 2023/05/04 v0.76
 ) (./print.aux)
 \openout1 = `print.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 46.
-LaTeX Font Info:    ... okay on input line 46.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 47.
+LaTeX Font Info:    ... okay on input line 47.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -849,65 +849,65 @@ LaTeX Font Info:    ... okay on input line 46.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-Package hyperref Info: Link coloring OFF on input line 46.
+Package hyperref Info: Link coloring OFF on input line 47.
 (./print.out) (./print.out)
 \@outlinefile=\write4
 \openout4 = `print.out'.
 
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  TU/latinmodern-math.otf(1)/m/n --> TU/lmr/m/n on input line 46.
+(Font)                  TU/latinmodern-math.otf(1)/m/n --> TU/lmr/m/n on input line 47.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 46.
+(Font)                  OT1/cmr/m/it --> TU/lmr/m/it on input line 47.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/lmr/bx/n on input line 46.
+(Font)                  OT1/cmr/bx/n --> TU/lmr/bx/n on input line 47.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 46.
+(Font)                  OT1/cmss/m/n --> TU/lmss/m/n on input line 47.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/lmss/bx/n on input line 46.
+(Font)                  OT1/cmss/bx/n --> TU/lmss/bx/n on input line 47.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 46.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/m/n on input line 47.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/lmtt/bx/n on input line 46.
-LaTeX Info: Redefining \rmfamily on input line 46.
-LaTeX Info: Redefining \sffamily on input line 46.
-LaTeX Info: Redefining \ttfamily on input line 46.
+(Font)                  OT1/cmtt/m/n --> TU/lmtt/bx/n on input line 47.
+LaTeX Info: Redefining \rmfamily on input line 47.
+LaTeX Info: Redefining \sffamily on input line 47.
+LaTeX Info: Redefining \ttfamily on input line 47.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 12.00128pt on input line 48.
+(Font)              scaled to size 12.00128pt on input line 49.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 8.00085pt on input line 48.
+(Font)              scaled to size 8.00085pt on input line 49.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 6.00064pt on input line 48.
+(Font)              scaled to size 6.00064pt on input line 49.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 11.99872pt on input line 48.
+(Font)              scaled to size 11.99872pt on input line 49.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 7.99915pt on input line 48.
+(Font)              scaled to size 7.99915pt on input line 49.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 5.99936pt on input line 48.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 48.
+(Font)              scaled to size 5.99936pt on input line 49.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 49.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 48.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 49.
  (/usr/local/texlive/2024/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-] (./content.tex
+] (./content.tex (./chapters/basicDefinitions.tex
 Chapter 1.
-Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 11.
+Package hyperref Info: bookmark level for unknown definition defaults to 0 on input line 3.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00107pt on input line 15.
+(Font)              scaled to size 10.00107pt on input line 7.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00075pt on input line 15.
+(Font)              scaled to size 7.00075pt on input line 7.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00053pt on input line 15.
+(Font)              scaled to size 5.00053pt on input line 7.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 15.
+(Font)              scaled to size 9.99893pt on input line 7.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 15.
+(Font)              scaled to size 6.99925pt on input line 7.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 15.
-) [1
+(Font)              scaled to size 4.99947pt on input line 7.
+)) [1
 
 ] (./print.aux)
  ***********
@@ -918,10 +918,10 @@ Package rerunfilecheck Info: File `print.out' has not changed.
 (rerunfilecheck)             Checksum: A41DF8DCD1B411A6DAF7EB4887AFEAC5;131.
  ) 
 Here is how much of TeX's memory you used:
- 32255 strings out of 474773
- 662960 string characters out of 5757724
- 1923839 words of memory out of 5000000
- 53895 multiletter control sequences out of 15000+600000
+ 32270 strings out of 474773
+ 663382 string characters out of 5757724
+ 1925839 words of memory out of 5000000
+ 53906 multiletter control sequences out of 15000+600000
  563993 words of font info for 90 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  98i,6n,114p,666b,2944s stack positions out of 10000i,1000n,20000p,200000b,200000s

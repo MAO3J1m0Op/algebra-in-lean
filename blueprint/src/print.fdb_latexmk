@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1719266058.06414 "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/print.tex" "print.pdf" "print" 1719266061.31394 0
-  "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/print.tex" 1719265466.24067 1528 c37c3bb0733a3981e95ace2d785c9a5b ""
+["pdflatex"] 1719337237.26243 "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/print.tex" "print.pdf" "print" 1719337240.4109 0
+  "/Users/stavanjain/Desktop/Math/lean_stuff/algebra-in-lean/blueprint/src/print.tex" 1719337236.98986 1561 e7f4626dabc10bd6f2f9e5dc5a383afc ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1136768653 1528 f853c4d1b4e0550255e02831fdc8496f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -173,12 +173,13 @@
   "/usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf" 1708706663 41649 5d6ae549fbbcb850a863f69aa41f3d10 ""
   "/usr/local/texlive/2024/texmf-var/web2c/xetex/xelatex.fmt" 1717094335 10850172 7a001eb8a22fd8a1e1d1976a20465d9e ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "content.tex" 1719266057.61318 1501 30c6653eb8bfe55948c73a1bde42ab21 ""
+  "chapters/basicDefinitions.tex" 1719337200.95085 1681 ee057da1fcae443fdaac673544c97a77 ""
+  "content.tex" 1719337128.6632 398 aa4d4c8e11608e8578f91f37437a588a ""
   "macros/common.tex" 1719243101.12138 142 10e8f81f8b8dcf47997f6d1d7aa55e98 ""
   "macros/print.tex" 1719262460.25758 1405 3be38b7da816eeb67de716225b8712ab ""
-  "print.aux" 1719266060.81433 1942 779d2a2ccc9728407943ef9344afa26b "pdflatex"
-  "print.out" 1719266060.81486 131 a41df8dcd1b411a6daf7eb4887afeac5 "pdflatex"
-  "print.tex" 1719265466.24067 1528 c37c3bb0733a3981e95ace2d785c9a5b ""
+  "print.aux" 1719337239.95642 2668 b6f3106319d326185971939974131cc3 "pdflatex"
+  "print.out" 1719337239.95702 131 a41df8dcd1b411a6daf7eb4887afeac5 "pdflatex"
+  "print.tex" 1719337236.98986 1561 e7f4626dabc10bd6f2f9e5dc5a383afc ""
   (generated)
   "print.aux"
   "print.log"
