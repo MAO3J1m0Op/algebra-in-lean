@@ -76,6 +76,18 @@ namespace Defs
       · congr
       exact Set.inter_assoc H₁.carrier H₂.carrier H₃.carrier
 
+    -- Here, we prove that H ∩ K is the "greatest lower bound", or the largest
+    -- subgroup that is smaller than both H and K.
+    theorem le_intersect_self (H K : Subgroup G): H ∩ K ≤ H := by
+      -- EXERCISE
+      intro g hg
+      exact hg.left
+
+    theorem nameTODO (H K I : Subgroup G) : I ≤ H ∧ H ∩ K ≤ I → I = H ∩ K ∨ I = H := by
+      -- EXERCISE
+      intro ⟨h₁, h₂⟩
+      sorry --
+
     -- Given a group G and a subset of that group, S, the subgroup generated
     -- by S is the smallest order subgroup H ≤ G such that S ⊆ H. We show that
     -- such a subset H which contains S is a subgroup in the example below.
