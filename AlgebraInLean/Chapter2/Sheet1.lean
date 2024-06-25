@@ -13,6 +13,9 @@ namespace Morphisms
     -- sets, homomorphisms between algebraic structures, continuous functions
     -- between topological spaces, etc.
 
+    -- But before we dive into morphisms, we present a quick interlude about
+    -- maps!
+
   section Maps
     universe u₁ u₂ u₃
     -- In Lean's type theory, the Calculus of Constructions, there is an
@@ -38,11 +41,19 @@ namespace Morphisms
     -- function which takes any group element to its inverse! (This is actually
     -- bidirectional.)
 
+    -- To do this, we need to prove what might seem like a simple proposition:
+    -- given a group G and an element g in G, the inverse of the inverse of g
+    -- is g itself. In other words, the inverse cancels itself out.
+
+    theorem inv_inv_og [Group G] : ∀ g : G, ι (ι g) = g := by
+      intro hg
+      sorry
+
     example [Group G] : ∀ a b : G, ι a = ι b → a = b:= by
       intro a b
       intro hinv
-      have hinj : ∀ (g : G), ι (ι g) = g -- probably shows up in earlier chapter
-      · sorry
+      have hinj : ∀ (g : G), ι (ι g) = g -- probably shows up in earlier chapter? i included it above as `inv_inv_og` for now
+      · apply inv_inv_og
       rw [← hinj a, ← hinj b]
       rw [hinv]
 
@@ -50,23 +61,33 @@ namespace Morphisms
     -- Otherwise known as "onto".
 
     def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
+    -- Also known as "one-to-one"!
 
     -- It can be instructive to think about bijectivity with regards to function
     -- composition. In Lean, function composition is `∘`. (Type `\circ`.)
 
     -- Let's prove a few basic consequences of function composition.
 
-    example (f : X → Y) (g : Y → Z) (h1: Surjective f) (h2 : Surjective g)
+    -- This is simply restating the definition!
+    example (f : α → β) (h1 : Injective f) (h2 : Surjective f)
+    : (Bijective f) := by
+      sorry
+
+    example (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g)
     : Surjective (g ∘ f) := by
-       sorry
+      sorry
 
-    example (f : X → Y) (g : Y → Z) (h1: Injective f) (h2 : Injective g)
+    example (f : α → β) (g : β → γ) (h1: Injective f) (h2 : Injective g)
     : Injective (g ∘ f) := by
-       sorry
+      sorry
 
-    example (f : X → Y) (g : Y → Z) (h1 : Injective (g ∘ f)) (h2 : Injective f)
+    example (f : α → β) (g : β → γ) (h1 : Injective (g ∘ f)) (h2 : Injective f)
     : Injective g := by
-       sorry
+      sorry
+
+    example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g)
+    : Bijective (g ∘ f) := by
+      sorry
 
   end Maps
 
@@ -125,13 +146,11 @@ namespace Morphisms
       have h3 : φ (𝕖) = 𝕖'
       · sorry
 
-  -- Tip: Since the only thing we know about a homomorphism φ is that φ (μ a b)
-  -- = μ (φ a) (φ b), it is often instructive to start proofs by applying the
-  -- inverse or the identity to an arbitrary element of the group, to exploit
-  -- the "multiplicativity" of homomorphisms.
-
-  -- TODO: Maybe add more basic exercises with homs... unsure of what exactly
-  -- though
+  -- Non-Lean-Specific Tip: Since the only thing we know about a homomorphism φ
+  -- is that φ (μ a b) = μ (φ a) (φ b), it is often instructive to start proofs
+  -- concerning homomorphisms by applying the inverse or the identity to an
+  -- arbitrary element of the group, to exploit the "multiplicativity" of
+  -- homomorphisms.
 
   end Morphisms
 
