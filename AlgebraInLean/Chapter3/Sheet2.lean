@@ -108,5 +108,37 @@ namespace Defs
         apply H.inv_closure
         exact ha H hH
 
+    theorem Generate_empty : Generate ∅ = (Minimal : Subgroup G) := by
+      -- EXERCISE
+      apply le_antisymm
+      · intro g hg
+        unfold Generate at hg
+        dsimp only at hg
+        specialize hg Minimal
+        apply hg
+        apply Set.empty_subset
+      · apply Minimal_smallest
+
+    theorem Generate_self_eq_self (H : Subgroup G) : Generate H = H := by
+      -- EXERCISE
+      apply le_antisymm
+      · intro g hg
+        specialize hg H
+        apply hg
+        rfl
+      · intro g hg
+        intro K hK
+        apply hK
+        exact hg
+
+      theorem Generate_lub (S : Set G) (H : Subgroup G) : S ⊆ H ∧ H ≤ Generate S → H = Generate S := by
+        -- EXERCISE
+        intro ⟨hl, hr⟩
+        apply le_antisymm
+        · exact hr
+        · intro g hg
+          apply hg H
+          exact hl
+
   end Subgroups
 end Defs
