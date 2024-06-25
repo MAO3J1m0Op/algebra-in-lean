@@ -1,5 +1,3 @@
-import «AlgebraInLean».Basic
-import «AlgebraInLean».Chapter2.Sheet1
 import Mathlib.Tactic
 
 namespace Sheet2
@@ -9,11 +7,6 @@ namespace Sheet2
 -- Examples of group homomorphisms & isomorphisms
 -- - Z/nZ is isomorphic to Cₙ
 -- - Any two cyclic groups of the same order are isomorphic
--- - (not sure about how to implement this one) the log function is a
--- homomorphism (in fact an isomorphism) from the multiplicative group of
--- positive reals to the additive group of reals ??? Should we even include
--- this? It's so different from the above two
-
 
 -- Definition of automorphism, (and hence endomorphism?)
 -- Mention familiar examples (not formalized): linear transformations between
