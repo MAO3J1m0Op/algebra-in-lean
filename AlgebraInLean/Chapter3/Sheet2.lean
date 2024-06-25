@@ -119,6 +119,13 @@ namespace Defs
         apply Set.empty_subset
       · apply Minimal_smallest
 
+    theorem Generate_contain_set (S : Set G) : S ⊆ Generate S := by
+      intro x hx
+      unfold Generate
+      intro H hS
+      apply hS
+      exact hx
+
     theorem Generate_self_eq_self (H : Subgroup G) : Generate H = H := by
       -- EXERCISE
       apply le_antisymm
