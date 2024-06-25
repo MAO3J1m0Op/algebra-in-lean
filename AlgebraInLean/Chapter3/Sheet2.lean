@@ -81,6 +81,7 @@ namespace Defs
     -- such a subset H which contains S is a subgroup in the example below.
     def Generate (S : Set G) : Subgroup G where
       carrier := {g : G | ∀ H : Subgroup G, S ⊆ H → g ∈ H}
+      -- EXERCISE
       nonempty := by
         intro H _
         exact H.nonempty
