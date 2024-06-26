@@ -5,7 +5,7 @@ namespace Defs
 
     variable {G G' : Type*} [Group G] [Group G']
 
-   -- We define a map φ : G → H to be a homomorphism when for groups (G, ⬝) and (G', ★) it satisfies
+    -- We define a map φ : G → H to be a homomorphism when for groups (G, ⬝) and (G', ★) it satisfies
     -- the property that ∀ a, b ∈ G, φ (a ⬝ b) = φ (a) ★ φ (b). Note that a homomorphism preserves
     -- the group structure of G and G' despite having (potentially) different operations.
     -- It can readily be checked that a homomorphism is a group action.

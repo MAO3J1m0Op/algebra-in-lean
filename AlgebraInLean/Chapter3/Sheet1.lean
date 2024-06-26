@@ -135,14 +135,14 @@ namespace Defs
     -- We have defined a subgroup to be a subset of a group closed under
     -- operation and three additional properties. However, to show H is a
     -- subgroup of G it suffices to show two things:
-    -- 1. H == {∅}
+    -- 1. H ≠ {∅}
     -- 2. for all x, y ∈ H, μ x (ι y) ∈ H
     -- That is, a subset H of G is a subgroup IFF the two properties above
     -- hold, this is known as the Subgroup Criterion.
     -- Notice that the language nonempty we used to define a subset earlier may
     -- be slightly misleading. Earlier, we asserted nonempty by claiming the
     -- identity existed in the subset. However, this criterion truly only
-    -- requires the subset to be nonempty, and we can use the second condition
+    -- requires the subset to be nonempty-then the second condition can be used
     -- to show that the identity must be in the subgroup. The proof is
     -- outlined below and each thing to show (nonempty, inv_closure,
     -- mul_closure) follows from the last.
@@ -185,6 +185,18 @@ namespace Defs
         apply hc3 at ha
         apply ha at hb
         exact hb
+
+
+    def subgroup_transitivity [Group G] (H : Subgroup G) (K : Subgroup H) : Subgroup G where
+      carrier := K.carrier
+      nonempty := sorry
+      mul_closure := by
+        intro a b h1 h2
+        sorry
+      inv_closure := sorry
+
+
+    --instance [Group G] (H : Subgroup G) (K : Subgroup H) :
 
 
     -- The following definition relies on G being a group, so we'll define
