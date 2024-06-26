@@ -52,9 +52,6 @@ class isCyclic (α : Type u) [Group α] : Prop where
 
 variable (G : ZMod n) (generators : Finset (ZMod n))
 
--- TODO: do we explain type class instantiation and et cetera?? seems like a
--- lot for this sheet to take on tbh. though we can totally split things up 
-
 -- ## EXERCISES:
 
 -- TODO: Show that a map φ : n → gⁿ is a homomorphism from ℤ/3ℤ to C₃.
@@ -73,11 +70,13 @@ variable (G : ZMod n) (generators : Finset (ZMod n))
 -- among many different types of mathematical objects, but in AlgebraInLean it
 -- will always refer to a group endomorphism.
 
--- Definitions: A group endomorphism is a homomorphism from a group G to
--- itself. An automorphism is an endomorphism that is also a bijection.
+-- A group endomorphism is a homomorphism from a group G _to itself_. An
+-- automorphism is an endomorphism that is also a bijection.
 
 -- You can think of it like a permutation from a group to itself, although it
--- is important that this permutation respects the group structure.
+-- is important that this permutation respects the group structure. You will
+-- see more specifically what "respecting the group structure" looks like in
+-- the next chapter.
 
 -- TODO: Do we provide toy examples of automorphisms? Or do we define
 -- conjugation and then go straight into proving that conjugation is an

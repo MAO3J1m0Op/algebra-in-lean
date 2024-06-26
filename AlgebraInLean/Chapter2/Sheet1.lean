@@ -18,6 +18,7 @@ namespace Morphisms
 
   section Maps
     universe u₁ u₂ u₃
+    -- Brace yourself for a type theory interlude!
     -- In Lean's type theory, the Calculus of Constructions, there is an
     -- infinite hierarchy of types that contain one another. Type 0 (or simply
     -- just "Type" is contained in Type 1, Type 1 is contained in Type 2, and
@@ -28,25 +29,29 @@ namespace Morphisms
     -- https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html.
 
     variable {α : Sort u₁} {β : Sort u₂} {γ : Sort u₃}
-    -- Type n is syntactic sugar for Sort (n + 1). Sort 0 is the bottom of the
-    -- hierarchy; expressed as a Type, it would theoretically be written "Type
-    -- -1". Using "Sort" allows for a bit more freedom for the range of types.
-    -- In this case, you are free to think of α, β, and γ as sets.
+    -- You are free to think of α, β, and γ as sets.
 
-    -- Surjectivity, injectivity, and bijectivity of maps
     def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
     -- Otherwise known as "one-to-one".
 
     -- We have already seen many injective functions. One of them is the
-    -- function which takes any group element to its inverse! (This is actually
-    -- bidirectional.)
+    -- function which takes any group element to its inverse! 
 
-    -- To do this, we need to prove what might seem like a simple proposition:
-    -- given a group G and an element g in G, the inverse of the inverse of g
-    -- is g itself. In other words, the inverse cancels itself out.
+    -- To do this, we need to prove an intuitive proposition: given a group G
+    -- and an element g in G, the inverse of the inverse of g is g itself. In
+    -- other words, the inverse cancels itself out.
 
     theorem inv_inv_og [Group G] : ∀ g : G, ι (ι g) = g := by
-      intro hg
+      intro g
+      have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
+      · intro a
+        rw [inv_op a]
+        rw [op_inv a]
+      have hp : ∀ (a : G), μ a (ι a) = 𝕖
+      · intro a
+        rw [op_inv]
+      specialize hq (ι g)
+      -- calc
       sorry
 
     example [Group G] : ∀ a b : G, ι a = ι b → a = b:= by
@@ -63,19 +68,40 @@ namespace Morphisms
     def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
     -- Also known as "one-to-one"!
 
-    -- It can be instructive to think about bijectivity with regards to function
-    -- composition. In Lean, function composition is `∘`. (Type `\circ`.)
+    -- It can be instructive to think about bijectivity with regards to
+    -- function composition. In Lean, function composition is `∘`. (Type
+    -- `\circ`.)
 
     -- Let's prove a few basic consequences of function composition.
 
     -- This is simply restating the definition!
     example (f : α → β) (h1 : Injective f) (h2 : Surjective f)
     : (Bijective f) := by
-      sorry
+      unfold Bijective
+      constructor
+      assumption -- or `exact h1`
+      assumption -- or `exact h2`
 
+    -- This proof is a bit more of a challenge, so there will be additional
+    -- commentary in the solutions.
     example (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g)
     : Surjective (g ∘ f) := by
-      sorry
+      unfold Surjective at * 
+      -- The asterisk represents a 'wildcard', more technically known as a
+      -- Kleene star. `at *` simply means to execute the tactic everywhere
+      -- possible.
+      intro y
+      -- We want to show that `g ∘ f` is surjective, i.e. that for all y in γ,
+      -- there exists an x in α such that `g ∘ f` equals y; since g is
+      -- surjective, we use the `have` tactic to express something we know must
+      -- be true and to use it as a hypothesis
+      have hx : ∃ (x : β), g x = y := h2 y
+      cases' hx with x' hx' 
+      obtain ⟨a, hfa⟩ := h1 x'
+      use a
+      change g (f a) = y -- `change` allows us to zhuzh the goal into something _definitionally equivalent_
+      rw [hfa]
+      exact hx'
 
     example (f : α → β) (g : β → γ) (h1: Injective f) (h2 : Injective g)
     : Injective (g ∘ f) := by
@@ -85,6 +111,7 @@ namespace Morphisms
     : Injective g := by
       sorry
 
+    -- Corollary to above :)
     example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g)
     : Bijective (g ∘ f) := by
       sorry
@@ -99,58 +126,46 @@ namespace Morphisms
 
   -- An isomorphism has a slightly stricter definition in that φ is required to
   -- be a bijection. When two groups are isomorphic to each other, they are
-  -- indisguishable from each other by structure alone. This is often expressed
-  -- via the phrase "up to isomorphism".
-
-  -- There are various examples of this correspondence: for example,
-  -- homomorphisms (and therefore isomorphisms) map inverses elements of group
-  -- G to corresponding inverse elements of group H. We will explore this and
-  -- examples like these in the following exercise.
+  -- indistinguishable from each other by structure alone. This is often
+  -- expressed via the phrase "equal up to isomorphism".
 
   -- Morphisms
   def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
   a) (φ b) = φ (μ a b)
 
+  theorem homomorphism_def [Group G] [Group H] (φ : G → H) : Homomorphism φ ↔ ∀ (a b : G), μ (φ a) (φ b) = φ (μ a b) := by
+    rfl
+
   def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
   Bijective φ)
 
-  -- As expected, you can see how the process of proving isomorphisms in Lean
-  -- might closely parallel pen-and-paper proofs: you split the definition of
-  -- an isomorphism into its respective parts via a logical conjunction (or
-  -- type class definition): (1) it is a homomorphism, and (2) it is a
-  -- bijection, and then prove each part.
+  -- Part of what we mean when we say a homomorphism "respects the group
+  -- structure" is that homomorphisms (and therefore isomorphisms) map inverses
+  -- elements of group G to corresponding inverse elements of group H. We will
+  -- explore this and examples like these in the following exercise.
 
-  -- Below are some basic proofs of homomorphisms: that they map inverses to
-  -- inverses, and identities to identities.
-
-  theorem hom_id_to_id {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
-  Homomorphism φ) (𝕖 : G) (𝕖' : H): φ 𝕖 = 𝕖' :=
-      calc 
-        φ 𝕖 = φ (μ 𝕖 𝕖) := by
-          sorry
-        _ = μ (φ 𝕖) (φ 𝕖) := by 
-          unfold Homomorphism at hp
-          specialize hp 𝕖 𝕖
-          rw [hp]
-        _ = μ 𝕖' 𝕖' := by
-          sorry
-        _ = 𝕖' := by
-          sorry
+  -- Below are some basic proofs of homomorphisms: that they map identities to
+  -- identities, and inverses to inverses.
 
   theorem hom_inv_to_inv {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
-  Homomorphism φ) (g : G) (𝕖 : G) (𝕖' : H) : φ (ι g) = ι (φ g) := by
-      have h1 : μ (φ g) (φ (ι g)) = φ (μ g (ι g))
-      · sorry
-      have h2 : φ (μ g (ι g)) = φ (𝕖)
-      · sorry
-      have h3 : φ (𝕖) = 𝕖'
-      · sorry
+  Homomorphism φ) (g : G) (𝕖 : G) (𝕖' : H) : (∀ g : G), φ (ι g) = ι (φ g) := by
+    have h1 : μ (φ g) (φ (ι g)) = φ (μ g (ι g))
+    · sorry
+    have h2 : φ (μ g (ι g)) = φ (𝕖)
+    · sorry
+    have h3 : φ (𝕖) = 𝕖'
+    · sorry
 
-  -- Non-Lean-Specific Tip: Since the only thing we know about a homomorphism φ
-  -- is that φ (μ a b) = μ (φ a) (φ b), it is often instructive to start proofs
-  -- concerning homomorphisms by applying the inverse or the identity to an
-  -- arbitrary element of the group, to exploit the "multiplicativity" of
-  -- homomorphisms.
+  theorem hom_id_to_id {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
+  Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 :=
+    calc
+      φ 𝕖 = φ (μ a (ι a)) := by rw [op_inv a]
+      _ = μ (φ a) (φ (ι a)) := by
+        rw [homomorphism_def] at hp
+        specialize hp a (ι a)
+        rw [hp]
+      _ = μ (φ a) (ι (φ a)) := by rw [hom_inv_to_inv (ι a)]
+      _ = 𝕖 := by rw [op_inv (φ a)]
 
   end Morphisms
 
