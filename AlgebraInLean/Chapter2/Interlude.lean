@@ -1,7 +1,5 @@
 import «AlgebraInLean».Basic
 
-namespace Defs
-
 -- Let's take a brief break from Algebra and make sure we know where we are at
 -- and where we are going.
 -- We are going to talk formalization of injectivity and surjectivity,
@@ -30,25 +28,32 @@ namespace Interlude
   -- not necessarily problems that involve Algebra, but that will test
   -- all of the tactics you have learned thus far.
 
-  -- ## AS THE PROBLEM SETS DEVELOP, CAN ADD MORE PROBLEMS HERE TO
-  -- ## CHECK PROFICIENCY IN EACH OF THE CRUCIAL ALGEBRA TACTICS
+  -- ## INTERNAL: AS THE PROBLEM SETS DEVELOP, CAN ADD MORE PROBLEMS HERE
+  -- ## TO CHECK PROFICIENCY IN EACH OF THE CRUCIAL ALGEBRA TACTICS
 
-  -- Let's prove a few basic consequences of function composition.
+    -- This is simply restating the definition, so of course it looks a bit different than
+    -- the rest of these problems that follow.
 
-
-    -- This is simply restating the definition!
-    example (f : α → β) (h1 : Injective f) (h2 : Surjective f)
-    : (Bijective f) := by
-      sorry
+    -- A map is bijective ↔ it is both injective and surjective.
+    example {α β : Type} (f : α → β) (h1 : Injective f) (h2 : Surjective f) : Bijective f :=
+      ⟨h1, h2⟩
 
     -- Surjectivity composition
-    example (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g)
-    : Surjective (g ∘ f) := by
-      sorry
+    example {α β γ: Type} (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g) :
+    Surjective (g ∘ f) := by
+      intro z
+      rw[Surjective] at h2
+      specialize h2 z
+      cases' h2 with y hy
+      cases' (h1 y) with x hx
+      use x
+      rw[←hy, ←hx]
+      rfl
+      done
 
     -- Injectivity composition
-    example (f : α → β) (g : β → γ) (h1: Injective f) (h2 : Injective g)
-    : Injective (g ∘ f) := by
+    example (f : α → β) (g : β → γ) (h1: Injective f) (h2 : Injective g) :
+    Injective (g ∘ f) := by
       intros a1 a2 h
       apply h1
       apply h2
@@ -56,13 +61,23 @@ namespace Interlude
       done
 
     -- Working backwards
-    example (f : α → β) (g : β → γ) (h1 : Injective (g ∘ f)) (h2 : Injective f)
-    : Injective g := by
-      sorry
+    -- Tip: A new tactic, `rcases` may be helpful with proving this. Hover over `rcases`
+    -- to see syntax and usage. This particular tactic peforms cases recursively and can
+    -- take in arguments as is usual with `cases` and `cases'`.
+    example (f : X → Y) (g : Y → Z) : Surjective (g ∘ f) → Surjective g := by
+      intros h z
+      rcases h z with ⟨x, rfl⟩
+      use f x
+      rfl
+      done
 
     -- Corrollary: bijectivity composition
-    example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g)
-    : Bijective (g ∘ f) := by
+    example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g) :
+    Bijective (g ∘ f) := by
+      cases' h1 with finv hf
+      cases' h2 with ginv hg
+
+
       sorry
 
 
@@ -70,6 +85,6 @@ namespace Interlude
   -- of those maps `g ∘ f` .
   -- Nice to see all those classic Lean tactics again, right?
   -- Make sure you are fully comfortable with what we've seen above,
-  -- including `intros, apply, exact, done`. See Chapter 0 for a refresher.
-  -- They are basic, but before moving on to the next Chapter, it is necessary
+  -- including `intros, apply, exact, done`. See `Chapter 0` for a refresher.
+  -- They are basic, but before moving on to the next chapter, it is necessary
   -- to be quite familiar with them.
