@@ -1,5 +1,3 @@
-import «AlgebraInLean».Basic
-import «AlgebraInLean».Chapter2.Sheet1
 import Mathlib.Tactic
 
 namespace Sheet2
@@ -53,14 +51,14 @@ class isCyclic (α : Type u) [Group α] : Prop where
 
 -- Don't worry about the term `Subgroup`, this will be defined very soon!
 -- However, we can see that `zpowers` clearly refers to taking multiplicative
--- integer powers of a group element g, which tracks with our definition above. 
+-- integer powers of a group element g, which tracks with our definition above.
 
 -- We introduce a closely related group; the integers _modulo_ some integer n.
 
 variable (G : ZMod n) (generators : Finset (ZMod n))
 
 -- TODO: do we explain type class instantiation and et cetera?? seems like a
--- lot for this sheet to take on tbh. though we can totally split things up 
+-- lot for this sheet to take on tbh. though we can totally split things up
 
 -- ## EXERCISES:
 

@@ -42,22 +42,8 @@ namespace Morphisms
 
     def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
 
-    -- It can be instructive to think about bijectivity with regards to function
-    -- composition. In Lean, function composition is `∘`. (Type `\circ`.)
-
-    -- Let's prove a few basic consequences of function composition.
-
-    example (f : X → Y) (g : Y → Z) (h1: Surjective f) (h2 : Surjective g)
-    : Surjective (g ∘ f) := by
-       sorry
-
-    example (f : X → Y) (g : Y → Z) (h1: Injective f) (h2 : Injective g)
-    : Injective (g ∘ f) := by
-       sorry
-
-    example (f : X → Y) (g : Y → Z) (h1 : Injective (g ∘ f)) (h2 : Injective f)
-    : Injective g := by
-       sorry
+    -- You've seen these definitions before in the `Interlude`. Go back there
+    -- for a refresher on everything that follows from function composition.
 
   end Maps
 
