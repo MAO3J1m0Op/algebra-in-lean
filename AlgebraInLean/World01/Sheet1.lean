@@ -43,6 +43,17 @@ theorem inv_op [Group G] (a : G) : μ (ι a) a = 𝕖 := Group.inv_op a
 
 /- Now, we can start writing proofs with groups-/
 
+/- The simplest proof you can write is exactly one of the group axioms-/
+/- This can be done using exact, but sometimes you have to use a theorem that
+you don't know the name of. Try using the exact? tactic, which will help
+autocomplete the proof. This tactic will be very useful later, when working
+with theorems similar to ones already proven.-/
+theorem op_assoc_exact [Group G] (a b c : G) : μ (μ a b) c = μ a (μ b c) := by
+  -- sorry
+  -- SAMPLE SOLUTION
+  exact op_assoc a b c
+  -- END OF SAMPLE SOLUTION
+
 -- This is a proof that multiplying by the inverse gives the identity
 theorem op_inv [Group G] (a : G) : μ a (ι a) = 𝕖 := by
   rw[(id_op (μ a (ι a))).symm, (inv_op (ι a)).symm]
