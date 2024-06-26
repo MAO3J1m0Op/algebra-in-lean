@@ -133,16 +133,16 @@ namespace Defs
         apply hK
         exact hg
 
-      theorem Generate_lub (S : Set G) (H : Subgroup G) : S ⊆ H ∧ H ≤ Generate S → H = Generate S := by
-        -- EXERCISE
-        intro ⟨hl, hr⟩
-        apply le_antisymm
-        · exact hr
-        · intro g hg
-          apply hg H
-          exact hl
+    theorem Generate_lub (S : Set G) (H : Subgroup G) : S ⊆ H ∧ H ≤ Generate S → H = Generate S := by
+      -- EXERCISE
+      intro ⟨hl, hr⟩
+      apply le_antisymm
+      · exact hr
+      · intro g hg
+        apply hg H
+        exact hl
 
-      def mpow [Monoid M] (x : M) : ℕ → M
+    def mpow [Monoid M] (x : M) : ℕ → M
     | Nat.zero => 𝕖
     | Nat.succ n => μ (mpow x n) x
 
