@@ -1,0 +1,8 @@
+# This file configures the latexmk command you can use to compile
+# the pdf version of the blueprint
+$pdf_mode = 5;
+$aux_dir = "build";
+$out_dir = "build";
+
+set_tex_cmds('-synctex=1');
+@default_files = ('print.tex');
