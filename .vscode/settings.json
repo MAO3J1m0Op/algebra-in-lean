@@ -1,0 +1,21 @@
+{
+    "editor.indentSize": "tabSize",
+    "editor.insertSpaces": true,
+    "editor.rulers": [80],
+    "editor.tabSize": 4,
+    "files.encoding": "utf8",
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+
+    "[lean4]": {
+        "editor.rulers": [100],
+        "editor.tabSize": 2
+    },
+
+    "[git-commit]": {
+        "editor.rulers": [50, 72],
+        "editor.tabSize": 2
+    }
+}
