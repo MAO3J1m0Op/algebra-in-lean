@@ -37,30 +37,47 @@ namespace Morphisms
     -- We have already seen many injective functions. One of them is the
     -- function which takes any group element to its inverse! 
 
-    -- To do this, we need to prove an intuitive proposition: given a group G
-    -- and an element g in G, the inverse of the inverse of g is g itself. In
-    -- other words, the inverse cancels itself out.
+    -- To do this, we need to prove two intuitive propositions: First, a simple
+    -- group identity. Then, a proof that given a group G and an element g in
+    -- G, the inverse of the inverse of g is g itself. In other words, the
+    -- inverse cancels itself out.
 
-    theorem inv_inv_og [Group G] : ∀ g : G, ι (ι g) = g := by
+    theorem mul_left_eq [Group G] (a b c : G) (h : μ a b = μ a c) : b = c
+    :=
+      calc
+        b = μ 𝕖 b := by rw [id_op]
+        _ = μ (μ (ι a) a) b := by rw [← inv_op a]
+        _ = μ (ι a) (μ a b) := by rw [Semigroup.op_assoc]
+        _ = μ (ι a) (μ a c) := by rw [h]
+        _ = μ (μ (ι a) a) c := by rw [Semigroup.op_assoc]
+        _ = μ 𝕖 c := by rw [inv_op a]
+        _ = c := by rw [id_op]
+
+    theorem inv_inv_eq_self [Group G] : ∀ g : G, ι (ι g) = g := by
       intro g
       have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
       · intro a
         rw [inv_op a]
         rw [op_inv a]
-      have hp : ∀ (a : G), μ a (ι a) = 𝕖
-      · intro a
-        rw [op_inv]
       specialize hq (ι g)
-      -- calc
-      sorry
+      rw [inv_op (ι g)] at hq
+      symm at hq
+      rw [← inv_op g] at hq
+      rw [mul_left_eq (ι g) (ι (ι g)) g hq]
 
-    example [Group G] : ∀ a b : G, ι a = ι b → a = b:= by
+    example [Group G] : ∀ a b : G, ι a = ι b → a = b := by
       intro a b
       intro hinv
       have hinj : ∀ (g : G), ι (ι g) = g -- probably shows up in earlier chapter? i included it above as `inv_inv_og` for now
       · apply inv_inv_og
       rw [← hinj a, ← hinj b]
       rw [hinv]
+
+      theorem inv_inj [Group G] (ι : G → G) (x : G) : Injective ι := by
+        unfold Injective
+        have hinv : ι (ι x) = x := by rw [inv_inv_eq_self]
+
+        sorry
 
     def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
     -- Otherwise known as "onto".
@@ -103,19 +120,6 @@ namespace Morphisms
       rw [hfa]
       exact hx'
 
-    example (f : α → β) (g : β → γ) (h1: Injective f) (h2 : Injective g)
-    : Injective (g ∘ f) := by
-      sorry
-
-    example (f : α → β) (g : β → γ) (h1 : Injective (g ∘ f)) (h2 : Injective f)
-    : Injective g := by
-      sorry
-
-    -- Corollary to above :)
-    example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g)
-    : Bijective (g ∘ f) := by
-      sorry
-
   end Maps
 
   -- Given a group G and a group H, a group homomorphism (_group_ usually
@@ -148,13 +152,14 @@ namespace Morphisms
   -- identities, and inverses to inverses.
 
   theorem hom_inv_to_inv {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
-  Homomorphism φ) (g : G) (𝕖 : G) (𝕖' : H) : (∀ g : G), φ (ι g) = ι (φ g) := by
+  Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
     have h1 : μ (φ g) (φ (ι g)) = φ (μ g (ι g))
     · sorry
     have h2 : φ (μ g (ι g)) = φ (𝕖)
     · sorry
-    have h3 : φ (𝕖) = 𝕖'
+    have h3 : φ (𝕖) = 𝕖
     · sorry
+    sorry
 
   theorem hom_id_to_id {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
   Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 :=
@@ -164,7 +169,7 @@ namespace Morphisms
         rw [homomorphism_def] at hp
         specialize hp a (ι a)
         rw [hp]
-      _ = μ (φ a) (ι (φ a)) := by rw [hom_inv_to_inv (ι a)]
+      _ = μ (φ a) (ι (φ a)) := by rw [hom_inv_to_inv φ hp]
       _ = 𝕖 := by rw [op_inv (φ a)]
 
   end Morphisms
