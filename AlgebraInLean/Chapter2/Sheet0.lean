@@ -135,8 +135,8 @@ namespace Interlude
 
   -- You just proved lots about two injective maps `f, g` and the composition
   -- of those maps `g ∘ f` .
-  -- Nice to see all those classic Lean tactics again, right?
+  -- Nice to see all those classic L∃∀N tactics again, right?
   -- Make sure you are fully comfortable with what we've seen above,
-  -- including `intros, apply, exact, done`. See `Chapter 0` for a refresher.
-  -- They are basic, but before moving on to the next chapter, it is necessary
-  -- to be quite familiar with them.
+  -- including `intros, apply, exact, rw, cases, specialize`.
+  -- See `Chapter 0` for a refresher. These are basic, but before moving
+  -- on to the next chapter, it is necessary to be quite familiar with them.
