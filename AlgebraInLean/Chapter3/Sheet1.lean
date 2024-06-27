@@ -186,18 +186,51 @@ namespace Defs
         apply ha at hb
         exact hb
 
-
-    def subgroup_transitivity [Group G] (H : Subgroup G) (K : Subgroup H) : Subgroup G where
-      carrier := K.carrier
-      nonempty := sorry
+    -- An important property of subroups is that for any group G with subgroup
+    -- H, and K a subgroup of H (note this works since H itself is a group)
+    -- then it must be that K is a subgroup of G. That is, transitivity for
+    -- subgroups holds and K ≤ H ≤ G → K ≤ G.
+    def subgroup_trans [Group G] (H : Subgroup G) (K : Subgroup H) : Subgroup G where
+      carrier := {g : G | ∃ h : H, h ∈ K.carrier ∧ g = h}
+      nonempty := by
+        use (𝕖 : H)
+        constructor
+        · exact K.nonempty
+        · rfl
       mul_closure := by
-        intro a b h1 h2
-        sorry
-      inv_closure := sorry
+        intros x y hx hy
+        obtain ⟨hx, hxK, x_eq⟩ := hx
+        obtain ⟨hy, hyK, y_eq⟩ := hy
+        use (μ hx hy : H)
+        constructor
+        · have ht : hx ∈ K.carrier → hy ∈ K.carrier → μ hx hy ∈ K.carrier := by
+            exact K.mul_closure hx hy
+          apply ht at hxK
+          apply hxK at hyK
+          exact hyK
+        · rw [x_eq, y_eq]
+          rfl
+      inv_closure := by
+        intros x hx
+        obtain ⟨hx, hxK, x_eq⟩ := hx
+        use (ι (hx) : H)
+        constructor
+        · have ht : hx ∈ K.carrier → ι hx ∈ K.carrier := by
+            exact K.inv_closure hx
+          apply ht at hxK
+          exact hxK
+        · rw [x_eq]
+          rfl
 
-
-    --instance [Group G] (H : Subgroup G) (K : Subgroup H) :
-
+    -- An extension of this transitivity that may be useful is considering
+    -- three subgroups K, J, L of G. It follows that if K ≤ J and J ≤ L then
+    -- K ≤ L. Try proving this one yourself.
+    theorem sgp_trans [Group G] (J K L : Subgroup G) (kj : K.carrier ⊆ J.carrier) (jl : J.carrier ⊆ L.carrier) : K.carrier ⊆ L.carrier := by
+      --Exercises
+      intros x hx
+      apply jl
+      apply kj
+      exact hx
 
     -- The following definition relies on G being a group, so we'll define
     -- it as such for the subsequent proof.
