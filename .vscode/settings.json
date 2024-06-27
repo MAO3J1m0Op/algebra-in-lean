@@ -15,7 +15,7 @@
     },
 
     "[git-commit]": {
-        "editor.rulers": [72],
+        "editor.rulers": [50, 72],
         "editor.tabSize": 2
     }
 }
