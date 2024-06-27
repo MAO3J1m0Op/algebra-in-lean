@@ -28,9 +28,6 @@ namespace Interlude
   -- not necessarily problems that involve Algebra, but that will test
   -- all of the tactics you have learned thus far.
 
-  -- ## INTERNAL: AS THE PROBLEM SETS DEVELOP, CAN ADD MORE PROBLEMS HERE
-  -- ## TO CHECK PROFICIENCY IN EACH OF THE CRUCIAL ALGEBRA TACTICS
-
     -- This is simply restating the definition, so of course it looks a bit different than
     -- the rest of these problems that follow.
 
@@ -140,3 +137,9 @@ namespace Interlude
   -- including `intros, apply, exact, rw, cases, specialize`.
   -- See `Chapter 0` for a refresher. These are basic, but before moving
   -- on to the next chapter, it is necessary to be quite familiar with them.
+
+
+  -- ## INTERNAL: AS THE PROBLEM SETS DEVELOP, CAN ADD MORE PROBLEMS HERE
+  -- ## TO CHECK PROFICIENCY IN EACH OF THE CRUCIAL ALGEBRA TACTICS
+
+  -- NOW?????
