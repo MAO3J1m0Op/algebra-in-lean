@@ -138,8 +138,22 @@ namespace Interlude
   -- See `Chapter 0` for a refresher. These are basic, but before moving
   -- on to the next chapter, it is necessary to be quite familiar with them.
 
+  -- Another crucial tactic you saw in earlier chapters was `have`. Here is the same theorem
+  -- about surjectivity composition that you proved earlier. However, try using the `have`
+  -- tactic with this one for practice. We've gotten you started below:
+  theorem surjective_comp_have {α β γ : Type} (f : α → β) (g : β → γ) (h1 : Surjective f)
+  (h2 : Surjective g) : Surjective (g ∘ f) := by
+    intro z
+    have h2' := h2 z
+    cases' h2' with y hy
+    have h1' := h1 y
+    cases' h1' with x hx
+    use x
+    have hy' : g y = z := hy
+    have hx' : f x = y := hx
+    rw [←hy', ←hx']
+    rfl
 
-  -- ## INTERNAL: AS THE PROBLEM SETS DEVELOP, CAN ADD MORE PROBLEMS HERE
-  -- ## TO CHECK PROFICIENCY IN EACH OF THE CRUCIAL ALGEBRA TACTICS
-
-  -- NOW?????
+  -- That's all we have for this refresher! Hopefully you have a grasp on our definitions
+  -- of injectivity and surjectivity in Lean because proofs are about to get a bit more
+  -- advanced in this chapter and in later chapters!
