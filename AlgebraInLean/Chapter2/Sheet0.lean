@@ -63,7 +63,7 @@ namespace Interlude
     -- Working backwards
     -- Tip: A new tactic, `rcases` may be helpful with proving this. Hover over `rcases`
     -- to see syntax and usage. This particular tactic peforms cases recursively and can
-    -- take in arguments as is usual with `cases` and `cases'`.
+    -- take in arguments as is the norm with `cases` and `cases'`.
     example (f : X → Y) (g : Y → Z) : Surjective (g ∘ f) → Surjective g := by
       intros h z
       rcases h z with ⟨x, rfl⟩
@@ -72,13 +72,65 @@ namespace Interlude
       done
 
     -- Corrollary: bijectivity composition
+
+    -- Obviously, this one can be made easier based on the previous two proofs we just
+    -- completed. So, let's turn those into theorems in this same namespace that we can
+    -- apply for this particular bijectivitiy example.
+
+    theorem injective_comp {α β γ : Type*} (f : α → β) (g : β → γ) (h1 : Injective f)
+    (h2 : Injective g) : Injective (g ∘ f) := by
+      intros a1 a2 h
+      apply h1
+      apply h2
+      exact h
+      done
+
+    theorem surjective_comp {α β γ : Type} (f : α → β) (g : β → γ) (h1 : Surjective f)
+    (h2 : Surjective g) : Surjective (g ∘ f) := by
+      intro z
+      rw [Surjective] at h2
+      specialize h2 z
+      cases' h2 with y hy
+      cases' h1 y with x hx
+      use x
+      rw [←hy, ←hx]
+      rfl
+      done
+
+    -- You may want to read up more about `Add.intro` that works to split a logical `∧`
+    -- into its two different parts. That will be helpful as you continue.
     example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g) :
     Bijective (g ∘ f) := by
       cases' h1 with finv hf
       cases' h2 with ginv hg
+      rw[Bijective]
+      apply And.intro
+      apply injective_comp
+      · apply finv
+      · apply ginv
+      apply surjective_comp
+      · apply hf
+      · apply hg
+      done
 
 
-      sorry
+    -- In the same spirit, let's turn that bijective composition proof into a theorem,
+    -- but now it is your turn to do that. This may help you further understand how
+    -- L∃∀N categorizes its different types.
+
+    theorem bijective_comp {α β γ : Type} (f : α → β) (g : β → γ) (h1 : Bijective f)
+    (h2 : Bijective g) : Bijective (g ∘ f) := by
+      cases' h1 with finv hf
+      cases' h2 with ginv hg
+      rw[Bijective]
+      apply And.intro
+      apply injective_comp
+      · apply finv
+      · apply ginv
+      apply surjective_comp
+      · apply hf
+      · apply hg
+      done
 
 
   -- You just proved lots about two injective maps `f, g` and the composition
