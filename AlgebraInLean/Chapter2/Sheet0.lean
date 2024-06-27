@@ -157,3 +157,5 @@ namespace Interlude
   -- That's all we have for this refresher! Hopefully you have a grasp on our definitions
   -- of injectivity and surjectivity in Lean because proofs are about to get a bit more
   -- advanced in this chapter and in later chapters!
+
+  -- ## GOOD LUCK!!
