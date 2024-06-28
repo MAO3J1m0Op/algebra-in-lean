@@ -36,7 +36,7 @@ namespace Interlude
       ⟨h1, h2⟩
 
     -- Surjectivity composition
-    example {α β γ: Type} (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g) :
+    example {α β γ : Type} (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g) :
     Surjective (g ∘ f) := by
       intro z
       rw[Surjective] at h2
