@@ -124,21 +124,5 @@ variable (G : ZMod n) (generators : Finset (ZMod n))
 
 /- ---------- -/
 
--- ## Automorphisms
-
--- To define an automorphism, we first take a look at the more general
--- endomorphism. An endomorphism (and morphisms in general) can be defined
--- among many different types of mathematical objects, but in AlgebraInLean it
--- will always refer to a group endomorphism.
-
--- Definitions: A group endomorphism is a homomorphism from a group G to
--- itself. An automorphism is an endomorphism that is also a bijection.
-
--- You can think of it like a permutation from a group to itself, although it
--- is important that this permutation respects the group structure.
-
--- TODO: Do we provide toy examples of automorphisms? Or do we define
--- conjugation and then go straight into proving that conjugation is an
--- automorphism?
 
 end Sheet2
