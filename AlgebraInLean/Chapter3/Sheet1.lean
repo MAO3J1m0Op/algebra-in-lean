@@ -203,34 +203,44 @@ namespace Defs
         obtain ⟨hy, hyK, y_eq⟩ := hy
         use (μ hx hy : H)
         constructor
-        · have ht : hx ∈ K.carrier → hy ∈ K.carrier → μ hx hy ∈ K.carrier := by
-            exact K.mul_closure hx hy
-          apply ht at hxK
-          apply hxK at hyK
-          exact hyK
+        · exact K.mul_closure hx hy hxK hyK
         · rw [x_eq, y_eq]
           rfl
       inv_closure := by
         intros x hx
-        obtain ⟨hx, hxK, x_eq⟩ := hx
+        obtain ⟨hx, hxK, xhx⟩ := hx
         use (ι (hx) : H)
         constructor
-        · have ht : hx ∈ K.carrier → ι hx ∈ K.carrier := by
-            exact K.inv_closure hx
-          apply ht at hxK
-          exact hxK
-        · rw [x_eq]
+        · exact K.inv_closure hx hxK
+        · rw [xhx]
           rfl
 
     -- An extension of this transitivity that may be useful is considering
     -- three subgroups K, J, L of G. It follows that if K ≤ J and J ≤ L then
     -- K ≤ L. Try proving this one yourself.
     theorem sgp_trans [Group G] (J K L : Subgroup G) (kj : K.carrier ⊆ J.carrier) (jl : J.carrier ⊆ L.carrier) : K.carrier ⊆ L.carrier := by
-      --Exercises
+      --EXERCISE
       intros x hx
       apply jl
       apply kj
       exact hx
+
+    -- Subgroups also hold under intersection. That is, given two subroups H
+    -- and K of a group G, H ∩ K is also a subgroup of G. Let's prove it.
+    def subgroup_intersection [Group G] {H K : Set G} (hH : Subgroup G) (hK : Subgroup G) (hHset : H = hH.carrier) (hKset : K = hK.carrier) : Subgroup G where
+      --EXERCISE
+      carrier := H ∩ K
+      nonempty := by
+        simp [hHset, hKset]
+        exact ⟨hH.nonempty, hK.nonempty⟩
+      mul_closure := by
+        intro a b ha hb
+        simp [hHset, hKset] at *
+        exact ⟨hH.mul_closure a b ha.left hb.left, hK.mul_closure a b ha.right hb.right⟩
+      inv_closure := by
+        intros a ha
+        simp [hHset, hKset] at *
+        exact ⟨hH.inv_closure a ha.left, hK.inv_closure a ha.right⟩
 
     -- The following definition relies on G being a group, so we'll define
     -- it as such for the subsequent proof.
