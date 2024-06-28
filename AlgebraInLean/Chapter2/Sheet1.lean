@@ -1,5 +1,7 @@
 import «AlgebraInLean».Basic
 
+-- TODO: Clean up *Maps* section; some of the content overlaps with Sheet 0
+
 namespace Defs
 
 namespace Morphisms
@@ -35,7 +37,7 @@ namespace Morphisms
     -- Otherwise known as "one-to-one".
 
     -- We have already seen many injective functions. One of them is the
-    -- function which takes any group element to its inverse! 
+    -- function which takes any group element to its inverse!
 
     -- To do this, we need to prove two intuitive propositions: First, a simple
     -- group identity. Then, a proof that given a group G and an element g in
@@ -68,16 +70,18 @@ namespace Morphisms
     example [Group G] : ∀ a b : G, ι a = ι b → a = b := by
       intro a b
       intro hinv
-      have hinj : ∀ (g : G), ι (ι g) = g -- probably shows up in earlier chapter? i included it above as `inv_inv_og` for now
-      · apply inv_inv_og
+      have hinj : ∀ (g : G), ι (ι g) = g
+      · apply inv_inv_eq_self
       rw [← hinj a, ← hinj b]
       rw [hinv]
 
-      theorem inv_inj [Group G] (ι : G → G) (x : G) : Injective ι := by
-        unfold Injective
-        have hinv : ι (ι x) = x := by rw [inv_inv_eq_self]
-
-        sorry
+    theorem inv_inj [Group G]: Injective (ι: G → G) := by
+      unfold Injective
+      have hinv : ∀ (x : G), ι (ι x) = x
+      · intro x
+        rw [inv_inv_eq_self x]
+      intro a b hab
+      rw [← hinv a, ← hinv b, hab]
 
     def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
     -- Otherwise known as "onto".
@@ -103,7 +107,7 @@ namespace Morphisms
     -- commentary in the solutions.
     example (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g)
     : Surjective (g ∘ f) := by
-      unfold Surjective at * 
+      unfold Surjective at *
       -- The asterisk represents a 'wildcard', more technically known as a
       -- Kleene star. `at *` simply means to execute the tactic everywhere
       -- possible.
@@ -113,7 +117,7 @@ namespace Morphisms
       -- surjective, we use the `have` tactic to express something we know must
       -- be true and to use it as a hypothesis
       have hx : ∃ (x : β), g x = y := h2 y
-      cases' hx with x' hx' 
+      cases' hx with x' hx'
       obtain ⟨a, hfa⟩ := h1 x'
       use a
       change g (f a) = y -- `change` allows us to zhuzh the goal into something _definitionally equivalent_
@@ -151,26 +155,47 @@ namespace Morphisms
   -- Below are some basic proofs of homomorphisms: that they map identities to
   -- identities, and inverses to inverses.
 
+  theorem hom_id_to_id {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
+  Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
+    have h1 : φ (μ 𝕖 𝕖) = μ (φ 𝕖) (φ 𝕖) := by
+      rw [homomorphism_def] at hp
+      specialize hp 𝕖 𝕖
+      exact hp.symm
+    have h2 : μ (φ 𝕖) 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
+      rw [op_id]
+      nth_rewrite 1 [← op_id 𝕖]
+      exact h1
+    have h3 : 𝕖 = φ 𝕖 := by
+      rw [mul_left_eq (φ 𝕖) 𝕖 (φ 𝕖)]
+      exact h2
+    exact h3.symm
+
+  -- To prove this, we first show that if a * b = 𝕖 and b * a = 𝕖, then b = ι a.
+  theorem two_sided_inv [Group G] (a b : G) (h1 : μ a b = 𝕖) (h2 : μ b a = 𝕖) : b = ι a := by
+    have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
+    · intro g
+      rw [inv_op g]
+      rw [op_inv g]
+    specialize hq a
+    have hp : μ a b = μ a (ι a)
+    · rw [h1, op_inv]
+    rw [mul_left_eq a b (ι a) hp]
+
   theorem hom_inv_to_inv {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
   Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
-    have h1 : μ (φ g) (φ (ι g)) = φ (μ g (ι g))
-    · sorry
-    have h2 : φ (μ g (ι g)) = φ (𝕖)
-    · sorry
-    have h3 : φ (𝕖) = 𝕖
-    · sorry
-    sorry
-
-  theorem hom_id_to_id {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
-  Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 :=
+    have h1 : μ (φ (ι g)) (φ g) = φ (μ (ι g) g)
+    · rw [homomorphism_def] at hp
+      rw [hp (ι g) g]
+    have h2 : φ (μ (ι g) g) = φ 𝕖
+    · rw [inv_op]
+    rw [h2] at h1
+    rw [hom_id_to_id φ hp g] at h1
+    rw [two_sided_inv (φ (ι g)) (φ g) h1]
+    rw [inv_inv_eq_self]
     calc
-      φ 𝕖 = φ (μ a (ι a)) := by rw [op_inv a]
-      _ = μ (φ a) (φ (ι a)) := by
-        rw [homomorphism_def] at hp
-        specialize hp a (ι a)
-        rw [hp]
-      _ = μ (φ a) (ι (φ a)) := by rw [hom_inv_to_inv φ hp]
-      _ = 𝕖 := by rw [op_inv (φ a)]
+      μ (φ g) (φ (ι g)) = φ (μ g (ι g)) := by rw [hp g (ι g)]
+      _ = φ 𝕖 := by rw [op_inv]
+      _ = 𝕖 := by rw [hom_id_to_id φ hp g]
 
   end Morphisms
 
