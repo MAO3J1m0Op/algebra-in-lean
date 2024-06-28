@@ -4,6 +4,8 @@ namespace Sheet2
 
 -- ## Things we want to include in this Sheet2
 
+-- - _Modular arithmetic interlude!_
+
 -- Examples of group homomorphisms & isomorphisms
 -- - Z/nZ is isomorphic to Cₙ
 -- - Any two cyclic groups of the same order are isomorphic
