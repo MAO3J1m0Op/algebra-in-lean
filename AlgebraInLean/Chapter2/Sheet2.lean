@@ -7,6 +7,7 @@ namespace Sheet2
 -- Examples of group homomorphisms & isomorphisms
 -- - Z/nZ is isomorphic to Cₙ
 -- - Any two cyclic groups of the same order are isomorphic
+-- - 
 
 -- Definition of automorphism, (and hence endomorphism?)
 -- Mention familiar examples (not formalized): linear transformations between
@@ -27,7 +28,7 @@ namespace Sheet2
 -- homomorphism from the group GL_n(ℝ) to (ℝ, *).
 
 -- Below, we provide other examples of homomorphisms and isomorphisms with
--- groups that you have already seen before in Chapter 1.
+-- concrete examples of groups that you have already seen before in Chapter 1.
 
 -- We formally introduce the notion of a cyclic group. You have seen this in
 -- the previous chapter, just through a different lens; C₃ is the cyclic group
@@ -56,10 +57,16 @@ variable (G : ZMod n) (generators : Finset (ZMod n))
 
 -- TODO: Show that a map φ : n → gⁿ is a homomorphism from ℤ/3ℤ to C₃.
 
+-- theorem mod3_hom_to_cyclic3 [Group G] (Z3 : ZMod n) (g : G) (φ : G → Z3) : Homomorphism φ := by
+
 -- TODO: Show that a map φ : n → gⁿ is an isomorphism from ℤ/3ℤ to C₃.
+
+-- theorem mod3_iso_to_cyclic3 [Group G] (Z3 : ZMod n) (g : G) (φ : G → Z3) : Isomorphism φ := by
 
 -- TODO: Generalise the above: ℤ/nℤ is isomorphic to Cₙ, with the map being the
 -- same.
+
+-- theorem modn_iso_to_cyclicn [Group G] (Z3 : ZMod n) (g : G) (φ : G → Z3) : Isomorphism φ := by
 
 /- ---------- -/
 
@@ -73,10 +80,12 @@ variable (G : ZMod n) (generators : Finset (ZMod n))
 -- A group endomorphism is a homomorphism from a group G _to itself_. An
 -- automorphism is an endomorphism that is also a bijection.
 
+-- def Endomorphism 
+
 -- You can think of it like a permutation from a group to itself, although it
--- is important that this permutation respects the group structure. You will
+-- is important that this permutation respects the group structure.
 -- see more specifically what "respecting the group structure" looks like in
--- the next chapter.
+-- the next chapter (keep an eye out for orders!).
 
 -- TODO: Do we provide toy examples of automorphisms? Or do we define
 -- conjugation and then go straight into proving that conjugation is an

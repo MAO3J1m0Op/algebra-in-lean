@@ -132,10 +132,15 @@ namespace Morphisms
 
   -- φ(gh) = φ(g)φ(h).
 
+  -- In other words, you can combine g and h in G, and then apply φ, or apply φ
+  -- to g and h each, before combining them in H. We omit the symbol for the
+  -- operator for the sake of simplicity.
+
   -- An isomorphism has a slightly stricter definition in that φ is required to
   -- be a bijection. When two groups are isomorphic to each other, they are
   -- indistinguishable from each other by structure alone. This is often
-  -- expressed via the phrase "equal up to isomorphism".
+  -- expressed via the phrase "equal up to isomorphism". We'll talk more about
+  -- isomorphisms in the next sheet!
 
   -- Morphisms
   def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
@@ -171,7 +176,7 @@ namespace Morphisms
     exact h3.symm
 
   -- To prove this, we first show that if a * b = 𝕖 and b * a = 𝕖, then b = ι a.
-  theorem two_sided_inv [Group G] (a b : G) (h1 : μ a b = 𝕖) (h2 : μ b a = 𝕖) : b = ι a := by
+  theorem two_sided_inv [Group G] (a b : G) (h1 : μ a b = 𝕖): b = ι a := by
     have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
     · intro g
       rw [inv_op g]
