@@ -20,12 +20,6 @@ to slight discrepancies in syntax.
 
 PLANNING
 
-Sheet 1
-rfl
-rw
-done
-sorry
-
 Sheet 2
 intro
 exact
@@ -33,27 +27,6 @@ apply
 trivial
 exfalso (not in natural num)
 nth_rewrite
-
-Sheet 3
-cases and induction
-have
-mention assumption?
-mention specialize?
-left and right
-
-Sheet 4
-constructor (not in natural num)
-talk about formatting (\·)
-
-Sheet 5
-use
-simp
-symm
-wrap up
-
-Sheet 6
-list of tactics for the user to keep updating
-
 -/
 
 /-Implication World Level 1-/
@@ -231,4 +204,17 @@ example : (True → False) → P := by
   exfalso
   apply h1
   trivial
+  done
+
+/-Section 1 Sheet 5-/
+
+example : (P ↔ Q) → (Q ↔ P) := by
+  intro h
+  rw[h]
+  done
+
+example : (P ↔ Q) → (Q ↔ R) → (P ↔ R) := by
+  intro h1 h2
+  rw[h2] at h1
+  exact h1
   done
