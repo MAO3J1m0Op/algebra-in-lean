@@ -1,4 +1,4 @@
-import «AlgebraInLean».Chapter3.Sheet1
+import «AlgebraInLean».Chapter3.«Sheet1+CHALLENGE»
 import Mathlib.Data.Nat.Nth
 
 namespace Defs
@@ -143,16 +143,162 @@ namespace Defs
         apply hg H
         exact hl
 
-  def HasFinOrder (x : G) (n : ℕ) : Prop := 0 < n ∧ mpow x n = 𝕖 ∧ ∀ m < n, 0 < m → mpow x m ≠ 𝕖
+    def Pows (x : G) : Subgroup G where
+      carrier := {g : G | ∃ a, gpow x a = g}
+      nonempty := by
+        use 0
+        rw [gpow_zero]
+      mul_closure := by
+        intro g₁ g₂ ⟨a, ha⟩ ⟨b, hb⟩
+        use a + b
+        rw [←ha, ←hb, gpow_add]
+      inv_closure := by
+        intro g ⟨a, ha⟩
+        use -a
+        have : ∀ i : G, μ i g = 𝕖 → i = ι g := sorry -- inverse unique
+        apply this
+        rw [←ha, gpow_neg, inv_op]
 
-    def HasInfinOrder (x : G) : Prop := ∀ n > 0, mpow x n ≠ 𝕖
+    theorem Pows_contain_self (x : G) : x ∈ Pows x := by
+      use 1
+      exact gpow_one x
 
-    noncomputable def finOrder (x : G) := Nat.nth (λ n ↦ mpow x n = 𝕖) 0
+    noncomputable def Pows_equiv_fin_order (x : G) (h : 0 < order x) : Pows x ≃ Fin (order x) := by
+      let φf : Pows x → Fin (order x) := λ ⟨g, hg⟩ ↦ by
+        unfold Pows at hg
+        dsimp at hg
+        set v := Int.toNat (hg.choose % ↑(order x)) with hv
+        have hv : v < order x
+        · rw [hv, Int.toNat_lt]
+          · apply Int.emod_lt_of_pos hg.choose
+            rw [Int.ofNat_pos]
+            exact h
+          · apply Int.emod_nonneg
+            rw [Int.natCast_ne_zero_iff_pos]
+            exact h
+        exact ⟨v, hv⟩
+      let φb : Fin (order x) → Pows x := λ ⟨n, hn⟩ ↦ by
+        set v := gpow x n
+        have hv : v ∈ Pows x := by use n
+        exact ⟨v, hv⟩
+      apply Equiv.mk φf φb
+      · intro ⟨g, hg⟩
+        dsimp [φb, φf]
+        congr
+        rw [Int.toNat_of_nonneg]
+        · rw [gpow_mod_order]
+          exact hg.choose_spec
+        · apply Int.emod_nonneg
+          rw [Int.natCast_ne_zero_iff_pos]
+          exact h
+      · intro ⟨g, hg⟩
+        dsimp [φb, φf]
+        congr
+        sorry
+        -- rw [Int.toNat_of_nonneg]
+        -- · rw [gpow_mod_order]
+        --   exact hg.choose_spec
+        -- · apply Int.emod_nonneg
+        --   rw [Int.natCast_ne_zero_iff_pos]
+        --   exact h
+      done
 
-    -- theorem InfinOrder_eq_FinOrder_zero (x : G) : HasInfinOrder x ↔ HasFinOrder x 0 := by
-    --   apply Iff.intro
-    --   · intro h
-    --     sorry
+    theorem fin_order_of_Pows_equiv (x : G) (n : ℕ) (e : Pows x ≃ Fin n) : n = order x := by
+      -- by_cases ho : order x ≠ 0
+      -- · have ho : 0 < order x := Nat.zero_lt_of_ne_zero ho
+      --   have e' := Pows_equiv_fin_order x ho
+      --   have : Fin n ≃ Fin (order x) := (e.symm).trans e'
+      --   rw [←Fin.equiv_iff_eq]
+      --   use this
+      -- · rw [ne_eq, Decidable.not_not] at ho
+      --   rw [ho]
+
+      -- by_cases hn : n = 0
+      -- · have := e ⟨𝕖, (Pows x).nonempty⟩
+      --   rw [hn] at this
+      --   obtain ⟨_, h⟩ := this
+      --   contradiction
+      -- ·
+      -- have hf' : ∀ g, e.invFun (f' g) = gpow x (f' g) := by
+      --   intro g
+      --   dsimp [f']
+      --   apply @Exists.choose_spec  (∃ k : Fin n, e.invFun k = gpow x k)
+      have f : Fin n ≃ Pows x := by
+        set toFun : Fin n → Pows x := λ k ↦ ⟨gpow x k, gpow_closure x (Pows_contain_self x)⟩
+        have invProp : ∀ g : Pows x, ∃ k : Fin n, e.invFun k = gpow x k
+        · intro g
+          sorry
+        have invFn : Pows x → Fin n := λ g ↦ Exists.choose (invProp g)
+        have hInvFn : ∀ g : Pows x, e.invFun (invFn g) = gpow x (invFn g)
+        · intro g
+          sorry -- This is terrible
+          -- apply Exists.choose_spec (invProp g)
+        -- apply Equiv.mk toFun (Exists.choose invProp)
+        sorry
+      sorry
+
+
+      --     -- Exists.choose
+      --     -- let prop := λ k ↦ (h : k < n) → e.invFun ⟨k, h⟩ = gpow x k
+      --     -- have this : ∃ k : ℕ, prop k := sorry
+      --     -- have _ := Classical.decPred
+      --     -- ⟨@Nat.find prop (Classical.decPred prop) this, Nat.find_spec this⟩
+      --   left_inv := by
+      --     intro k
+      --     have x := (invProp (toFun k)).choose_spec
+      --     simp at x
+
+
+      --     apply Exists.choose_spec
+
+      -- }
+
+
+      -- have ⟨k, hk⟩ : ∃ k : Fin n, mpow x k = 𝕖 := by
+      --   sorry
+      -- have ⟨k', ⟨hks, hk'⟩⟩ : ∃ k' : Fin n, k' ≠ k ∧ mpow x k' = 𝕖 := by
+      --   sorry
+
+
+      -- have h₁ : n ≤ order x := by
+
+      --   have : ∃ n₀ : ℕ, mpow x n₀ = 𝕖 := by
+      --     sorry
+      --   have : ∃ n₁ : ℕ, mpow x n₁ = 𝕖 := by
+      --     sorry
+      -- have h₂ : order x ∣ n := by
+      --   rw [←order_divides_iff_mpow_id]
+
+
+    theorem Pows_order (x : G) : Nat.card (Pows x) = order x := by
+      by_cases h : order x ≠ 0
+      · apply Nat.card_eq_of_equiv_fin
+        apply Pows_equiv_fin_order
+        exact Nat.zero_lt_of_ne_zero h
+      · rw [ne_eq, Decidable.not_not] at h
+        rw [h]
+        apply Set.Infinite.card_eq_zero
+        unfold Set.Infinite
+        by_contra!
+        cases this with | @intro n map =>
+        have : Fin n ≃ {g // gpow x n = g} := {
+          toFun := sorry
+          invFun := sorry
+          left_inv := sorry
+          right_inv := sorry
+        }
+
+        have inj := map.left_inv
+        -- unfold Function.LeftInverse at inj
+        -- have : (Fin n).card < (Fin (n + 1)).card := sorry
+        -- sorry
+        -- have h := Finset.exists_ne_map_eq_of_card_lt_of_maps_to (sorry) (sorry)
+        -- have img : ∀ a, map ⟨gpow x a, by use a⟩ < n
+        -- · intro a
+        --   exact (map ⟨gpow x a, Exists.intro a (Eq.refl (gpow x a))⟩).isLt
+        -- specialize img n
+        sorry
+      done
 
     def Klein4 := Bool × Bool
 
@@ -228,44 +374,96 @@ namespace Defs
         exact h a
         -- END OF SAMPLE SOLUTION
 
+    theorem Pows_eq_Generate_singleton (x : G) : Pows x = Generate {x} := by
+      apply le_antisymm
+      · intro g hg
+        intro H hH
+        rw [Set.singleton_subset_iff] at hH
+        obtain ⟨a, ha⟩ := hg
+        rw [←ha]
+        apply gpow_closure
+        exact hH
+      · intro g hg
+        dsimp [Pows]
+        dsimp [Generate] at hg
+        have : {x} ⊆ (Pows x).carrier
+        · rw [Set.singleton_subset_iff]
+          apply Pows_contain_self
+        specialize hg (Pows x) this
+        obtain ⟨n, hn⟩ := hg
+        use n
+
     def Homomorphism [Group G] [Group G'] (φ : G → G') : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
     def Isomorphic [Group G] [Group G'] (φ : G → G') : Prop := Function.Bijective φ ∧ Homomorphism φ
 
+    def orderCyclicMap (x : G) (n : Cn (order x)) : Generate {x} := by
+      apply Subtype.mk (mpow x n.val)
+      unfold Generate
+      intro H hH
+      set n := n.val
+      induction n with
+      | zero => exact H.nonempty
+      | succ n ih =>
+        rw [mpow_succ_right]
+        apply H.mul_closure
+        · exact ih
+        · rw [←Set.singleton_subset_iff]
+          exact hH
+      done
+
+    theorem cyclic_mpow (n : ℕ) (hn : n > 1) [NeZero n] : ∀ x : Cn n, ∃ a : ℕ, x = mpow ⟨1, by linarith⟩ a := by
+      intro ⟨x, hx⟩
+      use x
+      induction x with
+      | zero => rfl
+      | succ x ih =>
+        rw [mpow_succ_right]
+        rw [←ih]
+        · congr
+          rw [Nat.mod_eq_of_lt hx]
+        · linarith
+
+    theorem generate_singleton_mpow (x : G) : ∀ a < order x, mpow x a ∈ Generate {x} := by
+      intro a
+      induction a with
+      | zero =>
+        intro _
+        rw [mpow_zero]
+        exact (Generate {x}).nonempty
+      | succ n ih =>
+        intro _
+        specialize ih (by linarith)
+        rw [mpow_succ_right]
+        apply (Generate {x}).mul_closure
+        · exact ih
+        · apply Generate_contain_set
+          trivial
+
+    theorem generate_singleton_mpow' (x : G) : ∀ g ∈ Generate {x}, ∃ a, mpow x a = g := by
+      intro g hg
+      sorry
+
+    def cyclicOrderMap (x : G) (x : Generate {x}) : Cn (order x) := by
+      apply Fin.mk (sorry)
+      sorry
+
     theorem Generate_singleton_cyclic (x : G) [NeZero (order x)] : ∃ φ : (Cn (order x)) → Generate {x}, Isomorphic φ := by
-      use λ cn ↦ intro (mpow x cn.val) (by
-        unfold Generate
-        intro H hH
-        set n := cn.val
-        induction n with
-        | zero => exact H.nonempty
-        | succ n ih =>
-          rw [mpow_succ]
-          apply H.mul_closure
-          · exact ih
-          · rw [←Set.singleton_subset_iff]
-            exact hH
-        done
-      )
+      use orderCyclicMap x
       apply And.intro
       · apply And.intro
         · intro a b h
-          dsimp only at h
+          cases a with | mk a ha =>
+          cases b with | mk b hb =>
+          congr
+          simp only [orderCyclicMap, Subtype.mk.injEq] at h
+          exact mpow_inj_of_lt_order x a b ha hb h
+        · unfold Function.Surjective
+          intro fx
+          cases fx with | mk fx hfx =>
           sorry
-
-    theorem order_elem_eq_cylic (x : G) : order x = Nat.card (Generate {x}) := by
-      by_cases h : Finite (Generate {x})
-      · have h : Nat.card (Generate {x}) ≠ 0
-        · rw [Nat.card_ne_zero]
-          apply And.intro
-          · use 𝕖
-            exact (Generate {x}).nonempty
-          · exact h
-        sorry -- Need more cyclic machinery
-
-
-
-    -- TODO: discussion of order and cyclic groups
+      · sorry
+      done
 
   end Subgroups
 end Defs
