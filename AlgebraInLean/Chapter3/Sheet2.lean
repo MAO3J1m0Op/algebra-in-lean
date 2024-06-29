@@ -281,23 +281,20 @@ namespace Defs
         unfold Set.Infinite
         by_contra!
         cases this with | @intro n map =>
-        have : Fin n ≃ {g // gpow x n = g} := {
-          toFun := sorry
-          invFun := sorry
-          left_inv := sorry
-          right_inv := sorry
-        }
-
-        have inj := map.left_inv
-        -- unfold Function.LeftInverse at inj
-        -- have : (Fin n).card < (Fin (n + 1)).card := sorry
-        -- sorry
-        -- have h := Finset.exists_ne_map_eq_of_card_lt_of_maps_to (sorry) (sorry)
-        -- have img : ∀ a, map ⟨gpow x a, by use a⟩ < n
-        -- · intro a
-        --   exact (map ⟨gpow x a, Exists.intro a (Eq.refl (gpow x a))⟩).isLt
-        -- specialize img n
-        sorry
+        have : ∃ i : Fin n, map.symm i = gpow x n
+        · have this := map.symm.surjective
+          specialize this ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
+          obtain ⟨a, ha⟩ := this
+          use a
+          rw [ha]
+        obtain ⟨i, hi⟩ := this
+        have : ∃ m : Fin n, gpow x m = gpow x n
+        · have this := map.surjective
+          dsimp [Function.Surjective] at this
+          -- specialize this ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
+          -- obtain ⟨a, ha⟩ := this
+          rw [←hi]
+          sorry
       done
 
     def Klein4 := Bool × Bool
