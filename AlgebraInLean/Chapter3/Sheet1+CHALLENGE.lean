@@ -245,7 +245,7 @@ namespace Defs
       | negSucc n =>
         sorry
 
-    theorem mpow_inj_iff_order_zero : order x = 0 ↔ (gpow x m = gpow x n → m = n) := by
+    theorem gpow_inj_iff_order_zero : order x = 0 ↔ (gpow x m = gpow x n → m = n) := by
       sorry
 
     theorem mod_order_eq_of_gpow_eq : gpow x m = gpow x n → m % (order x) = n % (order x) := by
