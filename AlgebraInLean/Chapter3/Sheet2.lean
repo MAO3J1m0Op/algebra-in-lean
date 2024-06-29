@@ -291,10 +291,17 @@ namespace Defs
         have : ∃ m : Fin n, gpow x m = gpow x n
         · have this := map.surjective
           dsimp [Function.Surjective] at this
-          -- specialize this ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
-          -- obtain ⟨a, ha⟩ := this
           rw [←hi]
-          sorry
+          have this' : ∀ g : Pows x, ∃ m : Fin n, gpow x m = g
+          · intro g
+            have this := (test x n map).surjective
+            unfold Function.Surjective at this
+            obtain ⟨a, ha⟩ := this g
+            use a
+            simp [gpowMap] at ha
+            rw [←Subtype.val_inj] at ha
+            exact ha
+          exact this' ↑(map.symm i)
         obtain ⟨m, hm⟩ := this
         have : ↑m ≠ n
         · have ⟨m, hm⟩ := m
