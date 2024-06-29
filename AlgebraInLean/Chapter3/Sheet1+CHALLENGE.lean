@@ -210,6 +210,24 @@ namespace Defs
     lemma gpow_mul (m n : ℤ) : gpow x (m * n) = gpow (gpow x m) n := by
       sorry
 
+    theorem gpow_closure {H : Subgroup G} : x ∈ H → gpow x n ∈ H := by
+      intro h
+      induction n using Int.induction_on with
+      | hz => exact H.nonempty
+      | hp n ih =>
+        rw [gpow_succ]
+        apply H.mul_closure
+        · exact ih
+        · exact h
+      | hn n ih =>
+        rw [←gpow_pred, gpow_neg]
+        apply H.mul_closure
+        · rw [←gpow_neg]
+          exact ih
+        · apply H.inv_closure
+          exact h
+      done
+
     end Gpow
 
     section GroupOrder
