@@ -295,6 +295,13 @@ namespace Defs
           -- obtain ⟨a, ha⟩ := this
           rw [←hi]
           sorry
+        obtain ⟨m, hm⟩ := this
+        have : ↑m ≠ n
+        · have ⟨m, hm⟩ := m
+          exact Nat.ne_of_lt hm
+        absurd this
+        rw [←Int.ofNat_inj]
+        apply (gpow_inj_iff_order_zero x).mp h hm
       done
 
     def Klein4 := Bool × Bool
