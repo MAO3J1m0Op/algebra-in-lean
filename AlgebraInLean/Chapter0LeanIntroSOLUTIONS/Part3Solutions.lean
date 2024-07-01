@@ -1,21 +1,75 @@
 /-
-This is a solutions doc.
+This is a solutions sheet.
 -/
 
 import Mathlib.Tactic
 
-/-Sheet 3
-cases
-have
-left and right-/
+/-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics
+course OR to the Natural Number Game. If you would like to learn more about Lean,
+Buzzard's course goes more in depth in relation to numerous undergraduate math topics.
+When exercises are from either of these sources, they will be clearly marked so as
+to give credit.-/
 
-/-EDIT THIS: Credit for exercises goes to Kevin Buzzard and his Formalizing Mathematics course.
-If you would like to do some more practice and learn more about Lean, his course is
-a great place to start!
+/-In the Natural Number Game, you used the tactics:
 
-OR Exercises are from Natural Number Game.-/
+left
+right
 
-/-Inequality World Level 7-/
+Let's do a couple warm up exercises from Formalizing Mathematics using these.
+Note that the ∨ symbol means "or," just as it did in NNG.-/
+
+variable (P Q R S T : Prop)
+
+/-FM Section 1 Sheet 6-/
+example : P → P ∨ Q := by
+  intro h
+  left
+  exact h
+  done
+
+/-FM Section 1 Sheet 6-/
+example : Q → P ∨ Q := by
+  intro h
+  right
+  exact h
+  done
+
+/-Also in the Natural Number Game, you learned a tactic called cases. However,
+the functionality and syntax you learned is actually closer to the tactic cases'
+(called cases prime), which is a more specific functionality of the broader tactic.
+Let's now go over how to use the cases tactic.
+
+First, let's look at an example:-/
+
+/-FM Section 1 Sheet 4-/
+example : P ∧ Q → P := by
+  intro h1
+  cases h1 with
+  | intro left right =>
+    exact left
+  done
+
+/-Note that the structure of the tactic looks a bit different. A shortcut to
+getting this structure automatically generated rather than having to type it all
+out is to type "cases h1 (or whatever you want to do cases on) with" and wait for
+a yellow lightbulb to appear at the left side of the line. Click on the lightbulb,
+then select "Generate an explicit pattern match." The structure will then appear.
+You will need to indent the next lines as appropriate.
+
+See if you can fill in the blank structure below:-/
+
+/-FM Section 1 Sheet 4-/
+example : P ∧ Q → Q := by
+  intro h1
+  cases h1 with
+  | intro left right =>
+    exact right
+  done
+
+/-Complete the exercises below. Notes that the structure generated for cases
+is not always the same.-/
+
+/-NNG Inequality World Level 7-/
 example (x y : Nat) (h1 : x = 37 ∨ y = 42) : y = 42 ∨ x = 37 := by
   cases h1 with
   | inl h =>
@@ -26,24 +80,7 @@ example (x y : Nat) (h1 : x = 37 ∨ y = 42) : y = 42 ∨ x = 37 := by
     exact h
   done
 
-variable (P Q R S T : Prop)
-
-/-Section 1 Sheet 4-/
-
-example : P ∧ Q → P := by
-  intro h1
-  cases h1 with
-  | intro left right =>
-    exact left
-  done
-
-example : P ∧ Q → Q := by
-  intro h1
-  cases h1 with
-  | intro left right =>
-    exact right
-  done
-
+/-FM Section 1 Sheet 4-/
 example : (P → Q → R) → P ∧ Q → R := by
   intro h1 h2
   cases h2 with
@@ -53,20 +90,7 @@ example : (P → Q → R) → P ∧ Q → R := by
     exact right
   done
 
-/-Section 1 Sheet 6-/
-
-example : P → P ∨ Q := by
-  intro h
-  left
-  exact h
-  done
-
-example : Q → P ∨ Q := by
-  intro h
-  right
-  exact h
-  done
-
+/-FM Section 1 Sheet 6-/
 example : P ∨ Q → (P → R) → (Q → R) → R := by
   intro h1 h2 h3
   cases h1 with
@@ -78,7 +102,7 @@ example : P ∨ Q → (P → R) → (Q → R) → R := by
     exact h
   done
 
--- symmetry of `or`
+/-FM Section 1 Sheet 6-/
 example : P ∨ Q → Q ∨ P := by
   intro h1
   cases h1 with
@@ -90,6 +114,7 @@ example : P ∨ Q → Q ∨ P := by
     exact h
   done
 
+/-FM Section 1 Sheet 6-/
   example : (P → R) → (Q → S) → P ∨ Q → R ∨ S := by
   intro h1 h2 h3
   cases h3 with
@@ -103,6 +128,7 @@ example : P ∨ Q → Q ∨ P := by
     exact h4
   done
 
+/-FM Section 1 Sheet 6-/
 example : (P → Q) → P ∨ R → Q ∨ R := by
   intro h1 h2
   cases h2 with
@@ -115,7 +141,4 @@ example : (P → Q) → P ∨ R → Q ∨ R := by
     exact h3
   done
 
-/-
-Still need exercises for
-have
--/
+/-On to the next part!-/
