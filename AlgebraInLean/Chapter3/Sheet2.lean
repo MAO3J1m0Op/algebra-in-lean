@@ -23,8 +23,8 @@ namespace Defs
         exact h1_x
       le_antisymm := by
         intro H K hH hK
-        obtain ⟨H_carrier,_,_,_⟩ := H
-        obtain ⟨K_carrier,_,_,_⟩ := K
+        cases H
+        cases K
         congr
         ext x
         apply Iff.intro
