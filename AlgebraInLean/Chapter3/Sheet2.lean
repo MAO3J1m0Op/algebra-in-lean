@@ -232,6 +232,7 @@ namespace Defs
     def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpowMap x k
 
     theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0)
+      -- EXERCISE
       : Function.Bijective (gpowMap x) := by
       apply And.intro
       · intro a b heq
@@ -248,6 +249,7 @@ namespace Defs
 
     theorem finPowMap_order_bijective (x : G) (h : order x ≠ 0)
       : Function.Bijective (finPowMap x (order x)) := by
+      -- EXERCISE
       apply And.intro
       · intro ⟨a, ha⟩ ⟨b, hb⟩ heq
         congr
@@ -284,12 +286,14 @@ namespace Defs
 
     theorem Pows_card_eq_order (x : G) : Nat.card (Pows x) = order x := by
       by_cases h : order x ≠ 0
-      · apply Nat.card_eq_of_equiv_fin
+      · -- EXERCISE
+        apply Nat.card_eq_of_equiv_fin
         apply Equiv.symm
         apply Equiv.ofBijective (finPowMap x (order x))
         apply finPowMap_order_bijective x
         exact h
-      · rw [ne_eq, Decidable.not_not] at h
+      · -- EXERCISE
+        rw [ne_eq, Decidable.not_not] at h
         rw [h]
         apply Set.Infinite.card_eq_zero
         have e : ℤ ≃ Pows x
@@ -299,6 +303,8 @@ namespace Defs
         rw [←Set.infinite_coe_iff, ←Equiv.infinite_iff e]
         exact Int.infinite
       done
+
+    -- FIXME: REPLACE ALL Cn CODE WITH AN IMPORT FROM CHAPTER 1
 
     def Cn (n : ℕ): Type := Fin n
     /- Fin n already has an add function that automatically takes mod n. This is
