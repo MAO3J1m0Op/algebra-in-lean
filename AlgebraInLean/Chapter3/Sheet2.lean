@@ -163,51 +163,25 @@ namespace Defs
       use 1
       exact gpow_one x
 
-    noncomputable def Pows_equiv_fin_order (x : G) (h : 0 < order x) : Pows x ≃ Fin (order x) := by
-      let φf : Pows x → Fin (order x) := λ ⟨g, hg⟩ ↦ by
-        unfold Pows at hg
-        dsimp at hg
-        set v := Int.toNat (hg.choose % ↑(order x)) with hv
-        have hv : v < order x
-        · rw [hv, Int.toNat_lt]
-          · apply Int.emod_lt_of_pos hg.choose
-            rw [Int.ofNat_pos]
-            exact h
-          · apply Int.emod_nonneg
-            rw [Int.natCast_ne_zero_iff_pos]
-            exact h
-        exact ⟨v, hv⟩
-      let φb : Fin (order x) → Pows x := λ ⟨n, hn⟩ ↦ by
-        set v := gpow x n
-        have hv : v ∈ Pows x := by use n
-        exact ⟨v, hv⟩
-      apply Equiv.mk φf φb
-      · intro ⟨g, hg⟩
-        dsimp [φb, φf]
-        congr
-        rw [Int.toNat_of_nonneg]
-        · rw [gpow_mod_order]
-          exact hg.choose_spec
-        · apply Int.emod_nonneg
-          rw [Int.natCast_ne_zero_iff_pos]
-          exact h
-      · intro ⟨g, hg⟩
-        dsimp [φb, φf]
-        congr
-        sorry
-        -- rw [Int.toNat_of_nonneg]
-        -- · rw [gpow_mod_order]
-        --   exact hg.choose_spec
-        -- · apply Int.emod_nonneg
-        --   rw [Int.natCast_ne_zero_iff_pos]
-        --   exact h
-      done
-
     def gpowMap (x : G) (n : ℤ) : Pows x := ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
 
     def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpowMap x k
 
-    theorem finPowMapOrderBijective (x : G) (h : order x ≠ 0) : Function.Bijective (finPowMap x (order x)) := by
+    theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0) : Function.Bijective (gpowMap x) := by
+      apply And.intro
+      · intro a b heq
+        apply gpow_inj_of_order_zero x
+        · exact h
+        · dsimp [finPowMap, gpowMap] at heq
+          rw [Subtype.ext_iff] at heq
+          exact heq
+      · intro ⟨g, hg⟩
+        obtain ⟨a, ha⟩ := hg
+        use a
+        unfold gpowMap
+        congr
+
+    theorem finPowMap_order_bijective (x : G) (h : order x ≠ 0) : Function.Bijective (finPowMap x (order x)) := by
       apply And.intro
       · intro ⟨a, ha⟩ ⟨b, hb⟩ heq
         congr
@@ -242,121 +216,22 @@ namespace Defs
           rw [Int.ofNat_ne_zero]
           exact h
 
-    lemma yummy_lemma (x : G) (h : order x ≠ 0) (e : Pows x ≃ Fin n) : n = order x := by
-      have : Nat.card (Pows x) = n := Nat.card_eq_of_equiv_fin e
-      rw [←this]
-      apply Nat.card_eq_of_equiv_fin
-      apply Equiv.symm
-      apply Equiv.ofBijective (finPowMap x (order x))
-      · exact finPowMapOrderBijective x h
-      -- have : ∀ a b : Fin n, ∀ α : Type*, (α ≃ Fin a) → (α ≃ Fin b) → a = b := by
-      -- apply?
-
-      -- by_cases ho : order x ≠ 0
-      -- · have ho : 0 < order x := Nat.zero_lt_of_ne_zero ho
-      --   have e' := Pows_equiv_fin_order x ho
-      --   have : Fin n ≃ Fin (order x) := (e.symm).trans e'
-      --   rw [←Fin.equiv_iff_eq]
-      --   use this
-      -- · rw [ne_eq, Decidable.not_not] at ho
-      --   rw [ho]
-
-      -- by_cases hn : n = 0
-      -- · have := e ⟨𝕖, (Pows x).nonempty⟩
-      --   rw [hn] at this
-      --   obtain ⟨_, h⟩ := this
-      --   contradiction
-      -- ·
-      -- have hf' : ∀ g, e.invFun (f' g) = gpow x (f' g) := by
-      --   intro g
-      --   dsimp [f']
-      --   apply @Exists.choose_spec  (∃ k : Fin n, e.invFun k = gpow x k)
-      -- have f : Fin n ≃ Pows x := by
-      --   set toFun : Fin n → Pows x := λ k ↦ ⟨gpow x k, gpow_closure x (Pows_contain_self x)⟩
-      --   have invProp : ∀ g : Pows x, ∃ k : Fin n, e.invFun k = gpow x k
-      --   · intro g
-      --     sorry
-      --   have invFn : Pows x → Fin n := λ g ↦ Exists.choose (invProp g)
-      --   have hInvFn : ∀ g : Pows x, e.invFun (invFn g) = gpow x (invFn g)
-      --   · intro g
-      --     sorry -- This is terrible
-      --     -- apply Exists.choose_spec (invProp g)
-      --   -- apply Equiv.mk toFun (Exists.choose invProp)
-      --   sorry
-      -- sorry
-
-
-      --     -- Exists.choose
-      --     -- let prop := λ k ↦ (h : k < n) → e.invFun ⟨k, h⟩ = gpow x k
-      --     -- have this : ∃ k : ℕ, prop k := sorry
-      --     -- have _ := Classical.decPred
-      --     -- ⟨@Nat.find prop (Classical.decPred prop) this, Nat.find_spec this⟩
-      --   left_inv := by
-      --     intro k
-      --     have x := (invProp (toFun k)).choose_spec
-      --     simp at x
-
-
-      --     apply Exists.choose_spec
-
-      -- }
-
-
-      -- have ⟨k, hk⟩ : ∃ k : Fin n, mpow x k = 𝕖 := by
-      --   sorry
-      -- have ⟨k', ⟨hks, hk'⟩⟩ : ∃ k' : Fin n, k' ≠ k ∧ mpow x k' = 𝕖 := by
-      --   sorry
-
-
-      -- have h₁ : n ≤ order x := by
-
-      --   have : ∃ n₀ : ℕ, mpow x n₀ = 𝕖 := by
-      --     sorry
-      --   have : ∃ n₁ : ℕ, mpow x n₁ = 𝕖 := by
-      --     sorry
-      -- have h₂ : order x ∣ n := by
-      --   rw [←order_divides_iff_mpow_id]
-
-
     theorem Pows_order (x : G) : Nat.card (Pows x) = order x := by
       by_cases h : order x ≠ 0
       · apply Nat.card_eq_of_equiv_fin
-        apply Pows_equiv_fin_order
-        exact Nat.zero_lt_of_ne_zero h
+        apply Equiv.symm
+        apply Equiv.ofBijective (finPowMap x (order x))
+        apply finPowMap_order_bijective x
+        exact h
       · rw [ne_eq, Decidable.not_not] at h
         rw [h]
         apply Set.Infinite.card_eq_zero
-        unfold Set.Infinite
-        by_contra!
-        cases this with | @intro n map =>
-        have : ∃ i : Fin n, map.symm i = gpow x n
-        · have this := map.symm.surjective
-          specialize this ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
-          obtain ⟨a, ha⟩ := this
-          use a
-          rw [ha]
-        obtain ⟨i, hi⟩ := this
-        have : ∃ m : Fin n, gpow x m = gpow x n
-        · have this := map.surjective
-          dsimp [Function.Surjective] at this
-          rw [←hi]
-          have this' : ∀ g : Pows x, ∃ m : Fin n, gpow x m = g
-          · intro g
-            have this := (test x n map).surjective
-            unfold Function.Surjective at this
-            obtain ⟨a, ha⟩ := this g
-            use a
-            simp [gpowMap] at ha
-            rw [←Subtype.val_inj] at ha
-            exact ha
-          exact this' ↑(map.symm i)
-        obtain ⟨m, hm⟩ := this
-        have : ↑m ≠ n
-        · have ⟨m, hm⟩ := m
-          exact Nat.ne_of_lt hm
-        absurd this
-        rw [←Int.ofNat_inj]
-        apply (gpow_inj_iff_order_zero x).mp h hm
+        have e : ℤ ≃ Pows x
+        · apply Equiv.ofBijective (gpowMap x)
+          apply gpowMap_bijective_of_order_zero x
+          exact h
+        rw [←Set.infinite_coe_iff, ←Equiv.infinite_iff e]
+        exact Int.infinite
       done
 
     def Klein4 := Bool × Bool
