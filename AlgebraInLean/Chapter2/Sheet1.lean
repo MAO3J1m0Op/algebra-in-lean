@@ -55,6 +55,16 @@ namespace Morphisms
         _ = μ 𝕖 c := by rw [inv_op a]
         _ = c := by rw [id_op]
 
+    -- `calc`, like `have`, is an example of what is called "forward thinking"
+    -- in Lean. Usually with tactic-style proofs, we are trying to go
+    -- backwards, transforming our goal to one of our assumed hypotheses. With
+    -- forward thinking, we are trying to transform our assumptions into the
+    -- goal.
+
+    -- `calc` might be more familiar than you think, since it closely reflects
+    -- some pen-and-paper proofs via a chain of equalities and algebraic
+    -- manipulations. Hover over `calc` to see the syntax.
+
     theorem inv_inv_eq_self [Group G] : ∀ g : G, ι (ι g) = g := by
       intro g
       have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
@@ -197,11 +207,12 @@ namespace Morphisms
     rw [hom_id_to_id φ hp g] at h1
     rw [two_sided_inv (φ (ι g)) (φ g) h1]
     rw [inv_inv_eq_self]
-    calc
-      μ (φ g) (φ (ι g)) = φ (μ g (ι g)) := by rw [hp g (ι g)]
-      _ = φ 𝕖 := by rw [op_inv]
-      _ = 𝕖 := by rw [hom_id_to_id φ hp g]
 
   end Morphisms
 
 end Defs
+
+-- You have two options on where to go next. If you're familiar with basic
+-- modular arithmetic (including gcds, lcms, and the Euclidean algorithm), you
+-- can go straight to Sheet2. If you would like a refresher, or simply to see
+-- how these concepts are implemented in Lean, feel free to go to the sheet named `ModularArithmetic.lean`.
