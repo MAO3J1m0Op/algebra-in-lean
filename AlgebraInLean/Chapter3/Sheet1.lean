@@ -132,6 +132,15 @@ namespace Defs
         rw [ha, inv_id]
         trivial
 
+    -- This theorem here is an _extensionality_ theorem, which enables us to use the `ext` tactic on
+    -- equality of subgroups.
+    @[ext]
+    theorem ext [Group G] (H K : Subgroup G) (h : H.carrier = K.carrier) : H = K := by
+      cases H
+      cases K
+      congr
+      done
+
     -- Maybe add subgroup criterion??
 
     -- The following definition relies on G being a group, so we'll define
