@@ -300,35 +300,6 @@ namespace Defs
         exact Int.infinite
       done
 
-    def Klein4 := Bool × Bool
-
-    instance : AbelianGroup Klein4 where
-      op := λ ⟨a₁, a₂⟩ ⟨b₁, b₂⟩ ↦ (xor a₁ b₁, xor a₂ b₂)
-      op_assoc := by
-        intro ⟨a₁, a₂⟩ ⟨b₁, b₂⟩ ⟨c₁, c₂⟩
-        dsimp only [μ, Magma.op]
-        congr 1 <;> apply Bool.xor_assoc
-      id := (false, false)
-      op_id := by
-        intro ⟨a₁, a₂⟩
-        dsimp only [μ, Magma.op]
-        congr 1 <;> apply Bool.xor_false
-      id_op := by
-        intro ⟨a₁, a₂⟩
-        dsimp only [μ, Magma.op]
-        congr 1 <;> apply Bool.false_xor
-      inv := id
-      inv_op := by
-        intro ⟨a₁, a₂⟩
-        dsimp only [μ, Magma.op, id]
-        congr 1 <;> apply Bool.xor_self
-      op_comm := by
-        intro ⟨a₁, a₂⟩ ⟨b₁, b₂⟩
-        dsimp only [μ, Magma.op]
-        congr 1 <;> apply Bool.xor_comm
-
-    def ft : Klein4 := (false, true)
-
     def Cn (n : ℕ): Type := Fin n
     /- Fin n already has an add function that automatically takes mod n. This is
     equivalent to a rotation of more than 360° being converted to a rotation of
