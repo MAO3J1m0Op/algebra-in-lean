@@ -2,6 +2,8 @@
 
 -- ### GCD and LCM
 
+namespace Nat
+
 #check Nat.gcd
 -- The command `#print` is useful to see what is going on beneath the hood
 #print Nat.gcd
@@ -17,12 +19,19 @@
 
 -- Similarly, we define the _least common multiple_. It is a function which takes in two natural numbers and outputs the minimal natural number that is divisible by both inputs. The lcm of any number and 9 is 0, since 0 divided by any number is 0.
 
-#check Nat.lcm
-#print Nat.lcm
+#check lcm
+#print lcm
 
 #eval lcm 1 2
 #eval lcm 100 45
 #eval lcm 73 0
+
+variable (n : Nat)
+
+#check (gcd_zero_right n : gcd n 0 = n)
+#check (gcd_zero_left n : gcd 0 n = n)
+#check (lcm_zero_right n : lcm n 0 = 0)
+#check (lcm_zero_left n : lcm 0 n = 0)
 
 -- Note that the definition for lcm uses the gcd.
 
@@ -33,9 +42,8 @@
 -- The "naive" way to do it is through _prime factorization_; break up each of
 -- the numbers into their constituent, atomic parts, and then find the largest
 -- part they have in common. But this brute-force algorithm scales very poorly
--- for large numbers. If you find an efficient way to do this, you will also be
--- compromising some of the most important crytography schemes to ever be
--- realized, for example RSA cryptography.
+-- for large numbers, a performance bottleneck that cryptographic schemes like
+-- RSA depend on.
 
 -- Thankfully, there is a quicker way to find the gcd (and therefore lcm) via
 -- the Euclidean Algorithm.
@@ -66,10 +74,30 @@
 
 #eval Nat.mod 4 5
 
-def congr_mod (m : ℕ) (a b : ℤ) : Prop := (↑m : ℤ) ∣ (a - b)
+def congr_mod (m : Nat) (a b : Int) : Prop := (↑m : Int) ∣ (a - b)
 notation:50  a " ≡ " b "(mod " m ")" => congr_mod m a b
 
 #check 5 ≡ 2 (mod 2) -- false; 5 (mod 2) = 1 and 2 (mod 2) = 0
 #check 9 ≡ 27 (mod 3) -- true; 9 (mod 6) = 3 and 27 (mod 6) = 3
 
+-- Here are some identities regarding mod:
+
+#eval Nat.mod 4 5
+
+-- Sample solution; not exercise
+example (a b m : Nat) : (a + b).mod m = ((a.mod m) + (b.mod m)).mod m := by
+  sorry
+
+-- Exercise
+example (a b m : Nat) : (a * b).mod m = ((a.mod m) * (b.mod m)).mod m := by
+  sorry
+
+-- Perhaps you would expect a + b (mod m) to equal (a mod m) + (b mod m).
+-- Similarly, a * b (mod m) does not simply equal (a mod m) * (b mod m). Why do
+-- we need the extra (mod m) at the end? We leave this as a (hopefully)
+-- thought-provoking exercise to the reader.
+
+-- ### The Euclidean Algorithm
+
+-- As mentioned before, the Euclidean Algorithm offers a quicker way (than the brute-force method) for finding the gcd, relying on a recursive definition of a gcd function.
 
