@@ -7,7 +7,7 @@ namespace Defs
     variable {G : Type*} [Group G]
 
     instance : PartialOrder (Subgroup G) where
-      le H K := H.carrier ⊆ K.carrier
+      le H K := (H : Set G) ⊆ K
       le_refl := by
         intro H
         -- If `unfold` does not fully expand the definition as desired, try using
@@ -54,28 +54,28 @@ namespace Defs
       mul_closure := by
         intro a b ha hb
         apply And.intro
-        · exact H.mul_closure a b ha.left hb.left
-        · exact K.mul_closure a b ha.right hb.right
+        · exact H.mul_closure ha.left hb.left
+        · exact K.mul_closure ha.right hb.right
       inv_closure := by
         intro a ha
         apply And.intro
-        · exact H.inv_closure a ha.left
-        · exact K.inv_closure a ha.right
+        · exact H.inv_closure ha.left
+        · exact K.inv_closure  ha.right
 
     -- TODO: Other symbols : ∩, ⊓, ∧?
     instance : Inter (Subgroup G) := ⟨Intersect⟩
 
     theorem inter_comm (H K : Subgroup G) : H ∩ K = K ∩ H := by
       dsimp only [Inter.inter, Intersect]
-      suffices : H.carrier ∩ K.carrier = K.carrier ∩ H.carrier
+      suffices : (H : Set G) ∩ K = K ∩ H
       · congr
-      exact Set.inter_comm H.carrier K.carrier
+      exact Set.inter_comm (H : Set G) K
 
     theorem inter_assoc (H₁ H₂ H₃ : Subgroup G) : (H₁ ∩ H₂) ∩ H₃ = H₁ ∩ (H₂ ∩ H₃) := by
       simp only [Inter.inter, Intersect]
-      suffices : (H₁.carrier ∩ H₂.carrier) ∩ H₃.carrier = H₁.carrier ∩ (H₂.carrier ∩ H₃.carrier)
+      suffices : ((H₁ : Set G) ∩ H₂) ∩ H₃ = H₁ ∩ (H₂ ∩ H₃)
       · congr
-      exact Set.inter_assoc H₁.carrier H₂.carrier H₃.carrier
+      exact Set.inter_assoc (H₁ : Set G) H₂ H₃
 
     -- Here, we prove that H ∩ K is the "greatest lower bound", or the largest
     -- subgroup that is smaller than both H and K.
