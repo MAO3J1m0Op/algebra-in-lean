@@ -26,8 +26,8 @@ namespace Defs
       nonempty : 𝕖 ∈ carrier
       -- The below propositions assert that the subgroup is closed under the
       -- group operation μ and the inverse function ι.
-      mul_closure : ∀ a b, a ∈ carrier → b ∈ carrier → μ a b ∈ carrier
-      inv_closure : ∀ a : G, a ∈ carrier → ι a ∈ carrier
+      mul_closure : a ∈ carrier → b ∈ carrier → μ a b ∈ carrier
+      inv_closure : a ∈ carrier → ι a ∈ carrier
 
     -- This instance coerces `Subgroup G` to `Set G`.
     instance [Group G] : Coe (Subgroup G) (Set G) := ⟨λ H ↦ H.carrier⟩
@@ -54,7 +54,8 @@ namespace Defs
       op := λ ⟨a, ha⟩ ⟨b, hb⟩ ↦ by
         have μ_closed : μ a b ∈ H
         -- SOLUTION
-        · exact H.mul_closure a b ha hb
+        · exact H.mul_closure ha hb
+
 
         -- Create an element of H from G, again using ⟨ ⟩ notation.
         exact ⟨μ a b, μ_closed⟩
@@ -88,7 +89,7 @@ namespace Defs
 
         have ι_closed : ι a ∈ H
         -- SOLUTION
-        · exact H.inv_closure a ha
+        · exact H.inv_closure ha
 
         exact ⟨ι a, ι_closed⟩
 
@@ -109,10 +110,10 @@ namespace Defs
         exact trivial
 
       mul_closure := by
-        exact λ a b ha hb ↦ trivial
+        exact λ _ _ ↦ trivial
 
       inv_closure := by
-        exact λ a ha ↦ trivial
+        exact λ _ ↦ trivial
 
     -- The smallest possible subgroup of G is called the _trivial_ subgroup.
     -- What would this smallest subgroup be?
