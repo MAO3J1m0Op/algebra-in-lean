@@ -56,10 +56,6 @@ namespace Sheet3
     -- because of the existence of the endomorphism mapping some arbitrary vector
     -- v ↦ 0, and the identity mapping v ↦ v.
 
-    -- ## EXAMPLES HERE??
-
-
-
   end Endomorphisms
 
   section Automorphisms
@@ -73,6 +69,44 @@ namespace Sheet3
     -- is important that this permutation respects the group structure.
     -- see more specifically what "respecting the group structure" looks like in
     -- the next chapter (keep an eye out for orders!).
+
+    -- ## EXAMPLES HERE ?
+
+    -- As an exercise, let's prove that a specific function mapping within the
+    -- group of integers under addition is a group automorphism.
+
+    -- Spefically, fix G = ⟨ℤ, +⟩, and φ : G → G, x ↦ -x
+    -- (the function fx = -x).
+
+    -- Note that in order to prove this, we do not necessarily need to "prove" that
+    -- our φ is an endomorphism. We are already defining it as the map φ : G → G
+    -- (a group onto itself), so it suffices to prove that φ is a homomorphism.
+    -- That may be useful going forward with this proof.
+
+    -- A brief definition of our φ:
+    def φ (x : ℤ) : ℤ := -x
+    -- φ : G → G, x ↦ -x
+
+    -- Show that f is a group automorphism
+    theorem f_group_automorphism : ∀ x y : ℤ, φ (x + y) = φ x + φ y ∧ Bijective φ := by
+      intros x y
+      apply And.intro
+      -- Prove homomorphism
+      unfold φ
+      rw[neg_add]
+      -- Prove Bijectivity
+      rw[Bijective]
+      apply And.intro
+        -- Injectivity
+      · intros x y h
+        unfold φ at h
+        exact neg_inj.mp h
+        -- Surjectivity
+      · intro z
+        use -z
+        unfold φ
+        rw[neg_neg]
+      done
 
   end Automorphisms
 
