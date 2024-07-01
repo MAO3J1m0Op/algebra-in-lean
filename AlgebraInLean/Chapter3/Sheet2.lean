@@ -134,7 +134,8 @@ namespace Defs
         apply hK
         exact hg
 
-    theorem Generate_lub (S : Set G) (H : Subgroup G) : S ⊆ H ∧ H ≤ Generate S → H = Generate S := by
+    theorem Generate_lub (S : Set G) (H : Subgroup G)
+      : S ⊆ H ∧ H ≤ Generate S → H = Generate S := by
       -- EXERCISE
       intro ⟨hl, hr⟩
       apply le_antisymm
@@ -163,11 +164,13 @@ namespace Defs
       use 1
       exact gpow_one x
 
-    def gpowMap (x : G) (n : ℤ) : Pows x := ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
+    def gpowMap (x : G) (n : ℤ) : Pows x :=
+      ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
 
     def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpowMap x k
 
-    theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0) : Function.Bijective (gpowMap x) := by
+    theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0)
+      : Function.Bijective (gpowMap x) := by
       apply And.intro
       · intro a b heq
         apply gpow_inj_of_order_zero x
@@ -181,7 +184,8 @@ namespace Defs
         unfold gpowMap
         congr
 
-    theorem finPowMap_order_bijective (x : G) (h : order x ≠ 0) : Function.Bijective (finPowMap x (order x)) := by
+    theorem finPowMap_order_bijective (x : G) (h : order x ≠ 0)
+      : Function.Bijective (finPowMap x (order x)) := by
       apply And.intro
       · intro ⟨a, ha⟩ ⟨b, hb⟩ heq
         congr
@@ -327,9 +331,11 @@ namespace Defs
         obtain ⟨n, hn⟩ := hg
         use n
 
-    def Homomorphism [Group G] [Group G'] (φ : G → G') : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
+    def Homomorphism [Group G] [Group G'] (φ : G → G') : Prop :=
+      ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
-    def Isomorphic [Group G] [Group G'] (φ : G → G') : Prop := Function.Bijective φ ∧ Homomorphism φ
+    def Isomorphic [Group G] [Group G'] (φ : G → G') : Prop :=
+      Function.Bijective φ ∧ Homomorphism φ
 
     def orderCyclicMap (x : G) (n : Cn (order x)) : Generate {x} := by
       apply Subtype.mk (mpow x n.val)
@@ -346,7 +352,8 @@ namespace Defs
           exact hH
       done
 
-    theorem cyclic_mpow (n : ℕ) (hn : n > 1) [NeZero n] : ∀ x : Cn n, ∃ a : ℕ, x = mpow ⟨1, by linarith⟩ a := by
+    theorem cyclic_mpow (n : ℕ) (hn : n > 1) [NeZero n]
+      : ∀ (x : Cn n), ∃ (a : ℕ), x = mpow ⟨1, by linarith⟩ a := by
       intro ⟨x, hx⟩
       use x
       induction x with
@@ -382,7 +389,8 @@ namespace Defs
       apply Fin.mk (sorry)
       sorry
 
-    theorem Generate_singleton_cyclic (x : G) [NeZero (order x)] : ∃ φ : (Cn (order x)) → Generate {x}, Isomorphic φ := by
+    theorem Generate_singleton_cyclic (x : G) [NeZero (order x)]
+      : ∃ (φ : (Cn (order x)) → Generate {x}), Isomorphic φ := by
       use orderCyclicMap x
       apply And.intro
       · apply And.intro
