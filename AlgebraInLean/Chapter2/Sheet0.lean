@@ -60,7 +60,7 @@ namespace Interlude
     -- Working backwards
     -- Tip: A new tactic, `rcases` may be helpful with proving this. Hover over `rcases`
     -- to see syntax and usage. This particular tactic peforms cases recursively and can
-    -- take in arguments as is the norm with `cases` and `cases'`.
+    -- take in arguments as is the norm with `cases`.
     example (f : X → Y) (g : Y → Z) : Surjective (g ∘ f) → Surjective g := by
       intros h z
       rcases h z with ⟨x, rfl⟩
