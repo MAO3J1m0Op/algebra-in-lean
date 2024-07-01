@@ -15,10 +15,10 @@ noncomputable def Sn_inv_val : (Sn n) → (Fin n → Fin n) := fun f => (inverse
 theorem Sn_inv_def (f : Sn n) : Sn_inv_val f = (inverse f.val f.property).choose := rfl
 
 theorem inverse_prop (f : Sn n) : Function.LeftInverse (Sn_inv_val f) f.val ∧ Function.RightInverse (Sn_inv_val f) f.val := by
-  rw[Sn_inv_def]
+  rw [Sn_inv_def]
   exact (inverse f.val f.property).choose_spec
 
-noncomputable def Sn_inv : (Sn n) → (Sn n) := fun f => {val := Sn_inv_val f, property := by have h:= inverse_prop f; rw[Function.bijective_iff_has_inverse]; use f.val; exact And.comm.mp h}
+noncomputable def Sn_inv : (Sn n) → (Sn n) := fun f => {val := Sn_inv_val f, property := by have h:= inverse_prop f; rw [Function.bijective_iff_has_inverse]; use f.val; exact And.comm.mp h}
 
 @[ext]
 theorem Sn.ext {n : ℕ} {f g : Sn n} : f.val = g.val → f = g := by
@@ -53,12 +53,12 @@ noncomputable instance (n : ℕ) : Defs.Group (Sn n) where
     have h : ∀ a : Sn n, (Sn_op) (Sn_inv a) a = Sn_id
     intro a
     have h2 :  (Sn_op (Sn_inv a) a).val = Sn_id.val
-    rw[op_def n]
+    rw [op_def n]
     simp
     have h_inverse_prop := inverse_prop a
     obtain ⟨hl, _⟩ := h_inverse_prop
     exact Function.RightInverse.id hl
     ext
-    rw[h2]
+    rw [h2]
     exact fun a => h a
     done
