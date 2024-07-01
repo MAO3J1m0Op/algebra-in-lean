@@ -1,5 +1,5 @@
 /-
-This is a solutions doc.
+This is a solutions sheet.
 -/
 
 import Mathlib.Tactic
@@ -9,22 +9,23 @@ use
 simp
 symm
 induction
+mention have (used in NNG)
 mention assumption
 mention specialize
 wrap up-/
 
-/-EDIT THIS: Credit for exercises goes to Kevin Buzzard and his Formalizing Mathematics course.
-If you would like to do some more practice and learn more about Lean, his course is
-a great place to start!
+/-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics
+course OR to the Natural Number Game. If you would like to learn more about Lean,
+Buzzard's course goes more in depth in relation to numerous undergraduate math topics.
+When exercises are from either of these sources, they will be clearly marked so as
+to give credit.-/
 
-OR Exercises are from Natural Number Game.-/
-
-/-Inequality World Level 1-/
+/-NNG Inequality World Level 1-/
 example (x : Nat) : x ≤ x := by
   simp
   done
 
-/-Inequality World Level 2-/
+/-NNG Inequality World Level 2-/
 example (x : Nat) : 0 ≤ x := by
   simp
   done
@@ -75,7 +76,7 @@ example (x y z : Nat) (h1 : x = y * z) (h2 : z = 4) : y * 4 = x := by
   exact h1
   done
 
-/-Advanced Addition World Level 4-/
+/-NNG Advanced Addition World Level 4-/
 example (x y : Nat) : x + y = x → y = 0 := by
   induction x with
   | zero =>
@@ -88,7 +89,7 @@ example (x y : Nat) : x + y = x → y = 0 := by
     exact h2
   done
 
-/-Advanced Addition World Level 5-/
+/-NNG Advanced Addition World Level 5-/
 example (a b : Nat) : a + b = 0 → a = 0 := by
   induction a with
   | zero =>

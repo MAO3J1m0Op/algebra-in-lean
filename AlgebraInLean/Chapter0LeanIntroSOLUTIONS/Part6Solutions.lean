@@ -48,7 +48,6 @@ nth_rewrite
 
 Sheet 3
 cases
-have
 left and right
 
 Sheet 4
@@ -60,18 +59,8 @@ use
 simp
 symm
 induction
+mention have (used in NNG)
 mention assumption
 mention specialize
 wrap up
 -/
-
-
-/-Levels from Natural Number Game-/
-
-/-Inequality World Level 4-/
-example (x y z : Nat) (h1 : x ≤ y) (h2 : y ≤ z) : x ≤ z := by
-  induction x with
-  | zero =>
-    simp
-  | succ n ih =>
-    sorry

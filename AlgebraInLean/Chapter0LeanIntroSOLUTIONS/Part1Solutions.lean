@@ -1,5 +1,5 @@
 /-
-This is a solutions doc.
+This is a solutions sheet.
 -/
 
 import Mathlib.Tactic
