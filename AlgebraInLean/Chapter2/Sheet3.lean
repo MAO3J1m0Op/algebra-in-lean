@@ -1,5 +1,5 @@
 -- import «AlgebraInLean».Chapter2.Sheet1
-import «AlgebraInLean».Basic
+import «AlgebraInLean».Basic  -- ## [FIX ME] - IMPORT ISSUES?
 import Mathlib.Tactic
 
 namespace Defs
@@ -49,7 +49,16 @@ namespace Sheet3
     def Endomorphism [Group G] (φ : G → G) : Prop := Homomorphism φ
     -- A fairly simple definition, but important as we move on.
 
+    -- Aside from group endomorphisms, a common example of an endomorphism is
+    -- in linear algebra when considering some vector space V.
+    -- f: V → V is an endomorphism on a vector space V, and we define _End(V)_
+    -- to be the set of all endomorphisms of V, which we know to be nonempty
+    -- because of the existence of the endomorphism mapping some arbitrary vector
+    -- v ↦ 0, and the identity mapping v ↦ v.
+
     -- ## EXAMPLES HERE??
+
+
 
   end Endomorphisms
 
