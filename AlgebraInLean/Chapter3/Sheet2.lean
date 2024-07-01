@@ -203,7 +203,55 @@ namespace Defs
         --   exact h
       done
 
-    theorem fin_order_of_Pows_equiv (x : G) (n : ℕ) (e : Pows x ≃ Fin n) : n = order x := by
+    def gpowMap (x : G) (n : ℤ) : Pows x := ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
+
+    def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpowMap x k
+
+    theorem finPowMapOrderBijective (x : G) (h : order x ≠ 0) : Function.Bijective (finPowMap x (order x)) := by
+      apply And.intro
+      · intro ⟨a, ha⟩ ⟨b, hb⟩ heq
+        congr
+        apply mpow_inj_of_lt_order x
+        · exact ha
+        · exact hb
+        · repeat rw [←gpow_ofNat]
+          dsimp [finPowMap, gpowMap] at heq
+          rw [Subtype.ext_iff] at heq
+          exact heq
+      · intro ⟨g, hg⟩
+        obtain ⟨a, ha⟩ := hg
+        set k := (a % order x).toNat with kdef
+        have hk : k < order x
+        · rw [kdef]
+          rw [Int.toNat_lt]
+          · apply Int.emod_lt_of_pos
+            apply Ne.lt_of_le
+            · symm
+              rw [Int.ofNat_ne_zero]
+              exact h
+            · exact Int.ofNat_zero_le (order x)
+          · apply Int.emod_nonneg
+            rw [Int.ofNat_ne_zero]
+            exact h
+        use Fin.mk k hk
+        dsimp [finPowMap, gpowMap]
+        congr
+        rw [kdef, Int.toNat_of_nonneg, ←ha]
+        · exact gpow_mod_order x a
+        · apply Int.emod_nonneg
+          rw [Int.ofNat_ne_zero]
+          exact h
+
+    lemma yummy_lemma (x : G) (h : order x ≠ 0) (e : Pows x ≃ Fin n) : n = order x := by
+      have : Nat.card (Pows x) = n := Nat.card_eq_of_equiv_fin e
+      rw [←this]
+      apply Nat.card_eq_of_equiv_fin
+      apply Equiv.symm
+      apply Equiv.ofBijective (finPowMap x (order x))
+      · exact finPowMapOrderBijective x h
+      -- have : ∀ a b : Fin n, ∀ α : Type*, (α ≃ Fin a) → (α ≃ Fin b) → a = b := by
+      -- apply?
+
       -- by_cases ho : order x ≠ 0
       -- · have ho : 0 < order x := Nat.zero_lt_of_ne_zero ho
       --   have e' := Pows_equiv_fin_order x ho
@@ -223,19 +271,19 @@ namespace Defs
       --   intro g
       --   dsimp [f']
       --   apply @Exists.choose_spec  (∃ k : Fin n, e.invFun k = gpow x k)
-      have f : Fin n ≃ Pows x := by
-        set toFun : Fin n → Pows x := λ k ↦ ⟨gpow x k, gpow_closure x (Pows_contain_self x)⟩
-        have invProp : ∀ g : Pows x, ∃ k : Fin n, e.invFun k = gpow x k
-        · intro g
-          sorry
-        have invFn : Pows x → Fin n := λ g ↦ Exists.choose (invProp g)
-        have hInvFn : ∀ g : Pows x, e.invFun (invFn g) = gpow x (invFn g)
-        · intro g
-          sorry -- This is terrible
-          -- apply Exists.choose_spec (invProp g)
-        -- apply Equiv.mk toFun (Exists.choose invProp)
-        sorry
-      sorry
+      -- have f : Fin n ≃ Pows x := by
+      --   set toFun : Fin n → Pows x := λ k ↦ ⟨gpow x k, gpow_closure x (Pows_contain_self x)⟩
+      --   have invProp : ∀ g : Pows x, ∃ k : Fin n, e.invFun k = gpow x k
+      --   · intro g
+      --     sorry
+      --   have invFn : Pows x → Fin n := λ g ↦ Exists.choose (invProp g)
+      --   have hInvFn : ∀ g : Pows x, e.invFun (invFn g) = gpow x (invFn g)
+      --   · intro g
+      --     sorry -- This is terrible
+      --     -- apply Exists.choose_spec (invProp g)
+      --   -- apply Equiv.mk toFun (Exists.choose invProp)
+      --   sorry
+      -- sorry
 
 
       --     -- Exists.choose
