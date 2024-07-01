@@ -242,8 +242,10 @@ namespace Defs
         simp [hHset, hKset] at *
         exact ⟨hH.inv_closure a ha.left, hK.inv_closure a ha.right⟩
 
-    -- The following definition relies on G being a group, so we'll define
-    -- it as such for the subsequent proof.
+    -- So far we have explicitly defined a group G in each definition and
+    -- theorem for clarity, but we could simply define G as a group for any
+    -- subsequent theorems and definitions. From here on out, any instance of G
+    -- will be assumed to be a group.
     variable {G : Type*} [Group G]
 
     -- Given a group G and a subset of that group, S, the subgroup generated
