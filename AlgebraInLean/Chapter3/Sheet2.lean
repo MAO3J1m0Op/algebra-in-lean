@@ -134,7 +134,7 @@ namespace Defs
         apply hK
         exact hg
 
-    theorem Generate_lub (S : Set G) (H : Subgroup G)
+    theorem Generate_smallest_closure (S : Set G) (H : Subgroup G)
       : S ⊆ H ∧ H ≤ Generate S → H = Generate S := by
       -- EXERCISE
       intro ⟨hl, hr⟩
@@ -164,10 +164,26 @@ namespace Defs
       use 1
       exact gpow_one x
 
-    def gpowMap (x : G) (n : ℤ) : Pows x :=
-      ⟨gpow x n, by apply gpow_closure; exact Pows_contain_self x⟩
+    theorem Pows_eq_Generate_singleton (x : G) : Pows x = Generate {x} := by
+      apply le_antisymm
+      · intro g hg
+        intro H hH
+        rw [Set.singleton_subset_iff] at hH
+        obtain ⟨a, ha⟩ := hg
+        rw [←ha]
+        apply gpow_closure
+        exact hH
+      · intro g hg
+        dsimp [Pows]
+        dsimp [Generate] at hg
+        have : {x} ⊆ (Pows x).carrier
+        · rw [Set.singleton_subset_iff]
+          apply Pows_contain_self
+        specialize hg (Pows x) this
+        obtain ⟨n, hn⟩ := hg
+        use n
 
-    def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpowMap x k
+    def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpow x k
 
     theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0)
       : Function.Bijective (gpowMap x) := by
@@ -311,25 +327,6 @@ namespace Defs
         exact fun a => neg_add_self a
         exact h a
         -- END OF SAMPLE SOLUTION
-
-    theorem Pows_eq_Generate_singleton (x : G) : Pows x = Generate {x} := by
-      apply le_antisymm
-      · intro g hg
-        intro H hH
-        rw [Set.singleton_subset_iff] at hH
-        obtain ⟨a, ha⟩ := hg
-        rw [←ha]
-        apply gpow_closure
-        exact hH
-      · intro g hg
-        dsimp [Pows]
-        dsimp [Generate] at hg
-        have : {x} ⊆ (Pows x).carrier
-        · rw [Set.singleton_subset_iff]
-          apply Pows_contain_self
-        specialize hg (Pows x) this
-        obtain ⟨n, hn⟩ := hg
-        use n
 
     def Homomorphism [Group G] [Group G'] (φ : G → G') : Prop :=
       ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
