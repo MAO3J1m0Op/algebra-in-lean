@@ -92,7 +92,7 @@ namespace Defs
 
     -- The largest possible subgroup of G contains every element of G. We call this subgroup as
     -- `Maximal`, and it represents the specific case H ≤ G where H = G.
-    def Maximal [Group G] : Subgroup G where
+    def Maximal (G : Type*) [Group G] : Subgroup G where
       carrier := Set.univ
 
       -- Try to come up with one-line solutions for each of the below proofs
@@ -109,7 +109,7 @@ namespace Defs
     -- The smallest possible subgroup of G is called the _trivial_ subgroup. What would this
     -- smallest subgroup be? To avoid confusion with the already defined `trivial` in Lean, we will
     -- call this `Minimal`.
-    def Minimal [Group G] : Subgroup G where
+    def Minimal (G : Type*) [Group G] : Subgroup G where
       -- BELOW ARE SOLUTIONS
       carrier := {𝕖}
       nonempty := by
