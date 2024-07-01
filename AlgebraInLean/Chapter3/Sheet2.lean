@@ -49,13 +49,13 @@ namespace Defs
           apply hK
           exact hx
 
-    theorem Minimal_smallest (H : Subgroup G) : Minimal ≤ H := by
+    theorem Minimal_smallest (H : Subgroup G) : Minimal G ≤ H := by
       -- EXERCISE
       intro e he
       rw [he]
       exact H.nonempty
 
-    theorem Maximal_largest (H : Subgroup G) : H ≤ Maximal := by
+    theorem Maximal_largest (H : Subgroup G) : H ≤ Maximal G := by
       -- EXERCISE
       intro x _
       trivial
@@ -82,7 +82,7 @@ namespace Defs
     -- important as we move into our discussion of generators and cyclic subgroups.
     theorem subgroup_eq_Maximal_of_card_eq_G (H : Subgroup G) [Fintype G] [Fintype H]
       (h : Fintype.card G = Fintype.card H)
-      : H = Maximal := by
+      : H = Maximal G := by
       apply ext
       dsimp [Maximal]
       rw [←set_fintype_card_eq_univ_iff]
@@ -137,13 +137,13 @@ namespace Defs
         apply H.inv_closure
         exact ha H hH
 
-    theorem Generate_empty : Generate ∅ = (Minimal : Subgroup G) := by
+    theorem Generate_empty : Generate ∅ = Minimal G := by
       -- EXERCISE
       apply le_antisymm
       · intro g hg
         unfold Generate at hg
         dsimp only at hg
-        specialize hg Minimal
+        specialize hg (Minimal G)
         apply hg
         apply Set.empty_subset
       · apply Minimal_smallest
