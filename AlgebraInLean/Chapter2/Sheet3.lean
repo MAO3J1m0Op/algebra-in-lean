@@ -87,8 +87,8 @@ namespace Sheet3
     def φ (x : ℤ) : ℤ := -x
     -- φ : G → G, x ↦ -x
 
-    -- Show that f is a group automorphism
-    theorem f_group_automorphism : ∀ x y : ℤ, φ (x + y) = φ x + φ y ∧ Bijective φ := by
+    -- Show that φ is a group automorphism
+    theorem φ_group_automorphism : ∀ x y : ℤ, φ (x + y) = φ x + φ y ∧ Bijective φ := by
       intros x y
       apply And.intro
       -- Prove homomorphism
@@ -107,6 +107,8 @@ namespace Sheet3
         unfold φ
         rw[neg_neg]
       done
+
+
 
   end Automorphisms
 
