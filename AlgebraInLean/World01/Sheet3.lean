@@ -8,8 +8,8 @@ identity and inverses are unique. This can be proven-/
 /- Since the proof of op_inv used the previous definition of Group, we need
 to reprove it using the new definition-/
 theorem op_inv [Defs.Group G] (a : G) : μ a (ι a) = 𝕖 := by
-  rw[(id_op (μ a (ι a))).symm, (inv_op (ι a)).symm]
-  rw[op_assoc, (op_assoc (ι a) a (ι a)).symm, inv_op, id_op]
+  rw [(id_op (μ a (ι a))).symm, (inv_op (ι a)).symm]
+  rw [op_assoc, (op_assoc (ι a) a (ι a)).symm, inv_op, id_op]
 
 
 /- This proves that the identity is unique. This theorem only requires G to
@@ -19,8 +19,8 @@ theorem identity_uniqueness [Defs.Monoid G] (e2 : G) : (∀ a : G, (μ a e2 = a 
   -- SAMPLE SOLUTION
   intro ha
   specialize ha 𝕖
-  cases' ha with ha1 ha2
-  rw[id_op] at ha1
+  obtain ⟨ha1, ha2⟩ := ha
+  rw [id_op] at ha1
   exact ha1
   -- END OF SAMPLE SOLUTION
 
@@ -29,9 +29,9 @@ theorem inverse_uniqueness [Defs.Group G] (a i : G) : (μ a i = 𝕖 ∧ μ i a 
   -- sorry
   -- SAMPLE SOLUTION
   intro ha
-  cases' ha with ha1 ha2
-  rw[(op_id (ι a)).symm]
-  rw[ha1.symm]
-  rw[(op_assoc (ι a) a i).symm]
-  rw[inv_op, id_op]
+  obtain ⟨ha1, _⟩ := ha
+  rw [(op_id (ι a)).symm]
+  rw [ha1.symm]
+  rw [(op_assoc (ι a) a i).symm]
+  rw [inv_op, id_op]
   -- END OF SAMPLE SOLUTION
