@@ -192,21 +192,23 @@ instance (n : ℕ) (hpos : NeZero n) : Defs.Group (Dn n) where
     have h : ∀ a : Dn n, (Dn_op n) a (false, 0) = a
     intro a
     have htf := Bool.eq_false_or_eq_true a.1
-    cases' htf with ht hf
-    rw[h_op_t ht]
-    have hf2 : (false, 0).1 = false := rfl
-    rw[h_ref_f hf2]
-    simp
-    have hzero : a.2.sub 0 = a.2 := sub_zero a.2
-    rw[hzero, ht.symm]
-    rfl
-    rw[h_op_f hf]
-    have hf2 : (false, 0).1 = false := rfl
-    rw[h_no_ref_f hf2]
-    simp
-    have hzero : a.2.add 0 = a.2 := add_zero a.2
-    rw[hzero, hf.symm]
-    rfl
+    cases htf with
+    | inl ht =>
+      rw[h_op_t ht]
+      have hf2 : (false, 0).1 = false := rfl
+      rw[h_ref_f hf2]
+      simp
+      have hzero : a.2.sub 0 = a.2 := sub_zero a.2
+      rw[hzero, ht.symm]
+      rfl
+    | inr hf =>
+      rw[h_op_f hf]
+      have hf2 : (false, 0).1 = false := rfl
+      rw[h_no_ref_f hf2]
+      simp
+      have hzero : a.2.add 0 = a.2 := add_zero a.2
+      rw[hzero, hf.symm]
+      rfl
     exact fun a => h a
 
   id_op := by
@@ -215,19 +217,21 @@ instance (n : ℕ) (hpos : NeZero n) : Defs.Group (Dn n) where
     have hf : (false, 0).1 = false := rfl
     rw[h_op_f hf]
     have htf := Bool.eq_false_or_eq_true a.1
-    cases' htf with ht hf
-    rw[h_no_ref_t ht]
-    simp
-    have hzero1 : Fin.add 0 a.2 = 0 + a.2 := rfl
-    have hzero2 : 0 + a.2 = a.2 := zero_add a.2
-    rw[hzero1, hzero2, ht.symm]
-    rfl
-    rw[h_no_ref_f hf]
-    simp
-    have hzero1 : Fin.add 0 a.2 = 0 + a.2 := rfl
-    have hzero2 : 0 + a.2 = a.2 := zero_add a.2
-    rw[hzero1, hzero2, hf.symm]
-    rfl
+    cases htf with
+    | inl ht =>
+      rw[h_no_ref_t ht]
+      simp
+      have hzero1 : Fin.add 0 a.2 = 0 + a.2 := rfl
+      have hzero2 : 0 + a.2 = a.2 := zero_add a.2
+      rw[hzero1, hzero2, ht.symm]
+      rfl
+    | inr hf =>
+      rw[h_no_ref_f hf]
+      simp
+      have hzero1 : Fin.add 0 a.2 = 0 + a.2 := rfl
+      have hzero2 : 0 + a.2 = a.2 := zero_add a.2
+      rw[hzero1, hzero2, hf.symm]
+      rfl
     exact fun a => h a
 
   inv := Dn_inv n
@@ -236,20 +240,22 @@ instance (n : ℕ) (hpos : NeZero n) : Defs.Group (Dn n) where
     have h : ∀ a : Dn n, (Dn_op n) (Dn_inv n a) a = (false, 0)
     intro a
     have htf := Bool.eq_false_or_eq_true a.1
-    cases' htf with ht hf
-    rw[h_inv_t ht]
-    have ht2 : (true, a.2).1 = true := rfl
-    rw[h_op_t ht2, h_ref_t ht]
-    simp
-    have hinv1 : a.2.sub a.2 = a.2 - a.2 := rfl
-    have hinv2 : a.2 - a.2 = 0 := sub_eq_zero_of_eq rfl
-    rw[hinv1, hinv2]
-    rw[h_inv_f hf]
-    have hf2 : (false, -a.2).1 = false := rfl
-    rw[h_op_f hf2, h_no_ref_f hf]
-    simp
-    have hinv1 : (-a.2).add a.2 = (-a.2) + a.2 := rfl
-    have hinv2 : (-a.2) + a.2 = 0
-    exact neg_add_self a.2
-    rw[hinv1, hinv2]
+    cases htf with
+    | inl ht =>
+      rw[h_inv_t ht]
+      have ht2 : (true, a.2).1 = true := rfl
+      rw[h_op_t ht2, h_ref_t ht]
+      simp
+      have hinv1 : a.2.sub a.2 = a.2 - a.2 := rfl
+      have hinv2 : a.2 - a.2 = 0 := sub_eq_zero_of_eq rfl
+      rw[hinv1, hinv2]
+    | inr hf =>
+      rw[h_inv_f hf]
+      have hf2 : (false, -a.2).1 = false := rfl
+      rw[h_op_f hf2, h_no_ref_f hf]
+      simp
+      have hinv1 : (-a.2).add a.2 = (-a.2) + a.2 := rfl
+      have hinv2 : (-a.2) + a.2 = 0
+      exact neg_add_self a.2
+      rw[hinv1, hinv2]
     exact fun a => h a

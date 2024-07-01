@@ -19,7 +19,7 @@ theorem identity_uniqueness [Defs.Monoid G] (e2 : G) : (∀ a : G, (μ a e2 = a 
   -- SAMPLE SOLUTION
   intro ha
   specialize ha 𝕖
-  cases' ha with ha1 ha2
+  obtain ⟨ha1,ha2⟩:=ha
   rw[id_op] at ha1
   exact ha1
   -- END OF SAMPLE SOLUTION
@@ -29,7 +29,7 @@ theorem inverse_uniqueness [Defs.Group G] (a i : G) : (μ a i = 𝕖 ∧ μ i a 
   -- sorry
   -- SAMPLE SOLUTION
   intro ha
-  cases' ha with ha1 ha2
+  obtain ⟨ha1,_⟩:=ha
   rw[(op_id (ι a)).symm]
   rw[ha1.symm]
   rw[(op_assoc (ι a) a i).symm]
