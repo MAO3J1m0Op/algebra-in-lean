@@ -78,6 +78,9 @@ namespace Defs
         · exact H.inv_closure a ha.left
         · exact K.inv_closure a ha.right
 
+    -- This allows us to use the H ∩ K notation.
+    instance : Inter (Subgroup G) := ⟨Intersect⟩
+
     -- If G is a finite group, and H is a subgroup of G with |H| = |G|, then H = G. This will become
     -- important as we move into our discussion of generators and cyclic subgroups.
     theorem subgroup_eq_Maximal_of_card_eq_G (H : Subgroup G) [Fintype G] [Fintype H]
@@ -88,9 +91,6 @@ namespace Defs
       rw [←set_fintype_card_eq_univ_iff]
       exact Eq.symm h
       done
-
-    -- This allows us to use the H ∩ K notation.
-    instance : Inter (Subgroup G) := ⟨Intersect⟩
 
     -- The exercises below make use of the `congr` tactic. Learn more about the tactic by hovering
     -- over its definition in the example below.
