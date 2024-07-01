@@ -381,31 +381,5 @@ namespace Defs
         · apply Generate_contain_set
           trivial
 
-    theorem generate_singleton_mpow' (x : G) : ∀ g ∈ Generate {x}, ∃ a, mpow x a = g := by
-      intro g hg
-      sorry
-
-    def cyclicOrderMap (x : G) (x : Generate {x}) : Cn (order x) := by
-      apply Fin.mk (sorry)
-      sorry
-
-    theorem Generate_singleton_cyclic (x : G) [NeZero (order x)]
-      : ∃ (φ : (Cn (order x)) → Generate {x}), Isomorphic φ := by
-      use orderCyclicMap x
-      apply And.intro
-      · apply And.intro
-        · intro a b h
-          cases a with | mk a ha =>
-          cases b with | mk b hb =>
-          congr
-          simp only [orderCyclicMap, Subtype.mk.injEq] at h
-          exact mpow_inj_of_lt_order x a b ha hb h
-        · unfold Function.Surjective
-          intro fx
-          cases fx with | mk fx hfx =>
-          sorry
-      · sorry
-      done
-
   end Subgroups
 end Defs
