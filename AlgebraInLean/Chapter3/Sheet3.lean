@@ -73,27 +73,33 @@ namespace Defs
     def conjugate (g n : G) : G := μ (μ g n) (ι g)
 
     @[simp]
+    theorem conjugate_def {g n : G}: conjugate g n = μ (μ g n) (ι g) := by rfl
+
+    @[simp]
     theorem conjugate_by_id : conjugate (𝕖 : G) = id := by
       -- EXERCISE
-      unfold conjugate
       funext g
+      rw [conjugate_def]
       rw [id_op, inv_id, op_id]
       rfl
 
     @[simp]
     theorem conjugate_id (g : G) : conjugate g 𝕖 = 𝕖 := by
       -- EXERCISE
-      unfold conjugate
+      rw [conjugate_def]
       rw [op_id, op_inv]
 
     @[simp]
     theorem conjugate_op (a b : G) : conjugate (μ a b) = conjugate a ∘ conjugate b := by
       funext s
-      unfold conjugate
+      rw [conjugate_def]
       rw [Function.comp_apply, inv_anticomm]
       simp only [op_assoc]
 
     def Conjugate (g : G) (S : Set G) : Set G := conjugate g '' S
+
+    @[simp]
+    theorem Conjugate_def {g : G} {S : Set G} : Conjugate g S = conjugate g '' S := by rfl
 
     -- We define a subgroup to be _normal_ if the subgroup is closed under
     -- conjugation with any element of G.
@@ -116,7 +122,7 @@ namespace Defs
       intro g k hk
       suffices : φ (conjugate g k) = 𝕖
       · exact this
-      unfold conjugate
+      rw [conjugate_def]
       rw [←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ h]
 
     def Normalizer (S : Set G) : Subgroup G where
@@ -124,21 +130,20 @@ namespace Defs
       -- EXERCISES? These are hard...
       nonempty := by
         intro s _
-        unfold Conjugate
-        rw [conjugate_by_id]
+        rw [Conjugate_def, conjugate_by_id]
         simp
       mul_closure := by
         intro a b ha hb s hs
         specialize ha s hs
         specialize hb s hs
-        unfold Conjugate at *
+        rw [Conjugate_def] at *
         rw [conjugate_op, Set.image_comp, hb, ha]
       inv_closure := by
         intro a ha s hs
         nth_rw 1 [←ha s hs]
-        unfold Conjugate
+        rw [Conjugate_def]
         funext x
-        dsimp only
+        rw [Conjugate_def]
         rw [←Set.image_comp, ←conjugate_op, inv_op, conjugate_by_id, Set.image_id]
 
     def Centralizer (S : Set G) : Subgroup G where
@@ -177,6 +182,37 @@ namespace Defs
         · sorry
         sorry
       · sorry
+
+
+    theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
+      intro g hg s hs
+      ext x
+      constructor
+      · intro h
+        rw [Conjugate_def] at h
+        obtain ⟨y , h₁, h₂⟩ :=  h
+        rw [← h₂]
+        rw [conjugate_def]
+        apply Subgroup.mul_closure
+        · apply Subgroup.mul_closure
+          · exact hg
+          · exact h₁
+        · apply Subgroup.inv_closure
+          exact hg
+      · intro h
+        rw [Conjugate_def]
+        use μ (μ (ι g) (x)) g
+        constructor
+        · apply Subgroup.mul_closure
+          apply Subgroup.mul_closure
+          apply Subgroup.inv_closure
+          exact hg
+          exact h
+          exact hg
+        · simp only [conjugate_def, op_assoc, op_inv, op_id]
+          rw [← op_assoc]
+          simp only [op_inv, id_op]
+      done
 
     theorem homomorphism_inj_iff_kernel_trivial [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) :
         Function.Injective φ ↔ Kernel φ h = Minimal := by
