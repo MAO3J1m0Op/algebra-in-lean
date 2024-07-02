@@ -66,7 +66,7 @@ example : P ∧ Q → Q := by
     exact right
   done
 
-/-Complete the exercises below. Notes that the structure generated for cases
+/-Complete the exercises below. Note that the structure generated for cases
 is not always the same.-/
 
 /-NNG Inequality World Level 7-/

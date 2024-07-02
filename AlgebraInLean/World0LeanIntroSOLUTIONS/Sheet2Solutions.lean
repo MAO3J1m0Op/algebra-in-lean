@@ -18,7 +18,7 @@ way these tactics work in the Natural Number Game may be slightly different than
 the way that they are actually used in Lean. These differences mostly boil down
 to slight discrepancies in syntax.
 
-Let's start with a few tactics that you're already familiar with from the NNG:
+Let's start with a few tactics that you are already familiar with from the NNG:
 
 exact
 apply
@@ -262,4 +262,8 @@ example (x y : Nat) : x + y = y → x = 0 := by
   exact h1
   done
 
-/-On to the next part!-/
+/-Note that tactics exact and apply both have variants, exact? and apply?, which
+both go into mathlib's theorems/lemmas to search for something applicable to the
+proof. exact? and apply? do not always work, as there are not always helpful lemmas.
+
+On to the next part!-/
