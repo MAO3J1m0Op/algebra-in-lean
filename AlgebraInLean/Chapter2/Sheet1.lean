@@ -93,6 +93,9 @@ namespace Morphisms
       intro a b hab
       rw [← hinv a, ← hinv b, hab]
 
+    -- `unfold` does what it sounds like: unfolding a symbol to its
+    -- underlying definition.
+
     def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
     -- Otherwise known as "onto".
 
@@ -215,4 +218,5 @@ end Defs
 -- You have two options on where to go next. If you're familiar with basic
 -- modular arithmetic (including gcds, lcms, and the Euclidean algorithm), you
 -- can go straight to Sheet2. If you would like a refresher, or simply to see
--- how these concepts are implemented in Lean, feel free to go to the sheet named `ModularArithmetic.lean`.
+-- how these concepts are implemented in Lean, feel free to go to the sheet
+-- named `ModularArithmetic.lean`.

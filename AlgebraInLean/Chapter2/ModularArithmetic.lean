@@ -82,15 +82,9 @@ notation:50  a " ≡ " b "(mod " m ")" => congr_mod m a b
 
 -- Here are some identities regarding mod:
 
-#eval Nat.mod 4 5
+#check (∀ a b m : Nat, (a + b).mod m = ((a.mod m) + (b.mod m)).mod m)
 
--- Sample solution; not exercise
-example (a b m : Nat) : (a + b).mod m = ((a.mod m) + (b.mod m)).mod m := by
-  sorry
-
--- Exercise
-example (a b m : Nat) : (a * b).mod m = ((a.mod m) * (b.mod m)).mod m := by
-  sorry
+#check (∀ a b m : Nat, (a * b).mod m = ((a.mod m) * (b.mod m)).mod m)
 
 -- Perhaps you would expect a + b (mod m) to equal (a mod m) + (b mod m).
 -- Similarly, a * b (mod m) does not simply equal (a mod m) * (b mod m). Why do
@@ -99,5 +93,15 @@ example (a b m : Nat) : (a * b).mod m = ((a.mod m) * (b.mod m)).mod m := by
 
 -- ### The Euclidean Algorithm
 
--- As mentioned before, the Euclidean Algorithm offers a quicker way (than the brute-force method) for finding the gcd, relying on a recursive definition of a gcd function.
+-- As mentioned before, the Euclidean Algorithm offers a quicker way (than the
+-- brute-force method) for finding the gcd, relying on a recursive definition
+-- of the gcd function.
 
+-- Simply, gcd(a, b) equals gcd(b, a mod b). The termination step (or in more
+-- computer science-y terms, the "base case") of the Euclidean algorithm is
+-- gcd(n, 0) = 0, or when b = 0.
+
+def gcd' (a b : Nat) : Nat :=
+  match b with
+    | 0 => a
+    | n + 1 => gcd (n + 1) (a % (n + 1))
