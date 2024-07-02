@@ -9,7 +9,7 @@ namespace Defs
     -- the property that ∀ a, b ∈ G, φ (a ⬝ b) = φ (a) ★ φ (b). Note that a homomorphism preserves
     -- the group structure of G and G' despite having (potentially) different operations.
     -- It can readily be checked that a homomorphism is a group action.
-    def Homomorphism (φ : G → G') : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
+    -- def Homomorphism (φ : G → G') : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
     -- Based on we know about identities and homomorphisms, it makes sense that a homomorphism
     -- should map the identity of the domain to the identity in the codomain.
@@ -93,13 +93,13 @@ namespace Defs
     def normal (H : Subgroup G) : Prop :=
       ∀ g h : G, h ∈ H → conjugate g h ∈ H
 
-    theorem Trivial_normal : normal (Trivial : Subgroup G) := by
+    theorem Minimal_normal : normal (Minimal G) := by
       -- EXERCISE
       intro g h hh
       rw [hh, conjugate_id]
       trivial
 
-    theorem Complete_normal : normal (Complete : Subgroup G) := by
+    theorem Maximal_normal : normal (Maximal G) := by
       -- EXERCISE
       intro _ _ _
       trivial
@@ -172,7 +172,7 @@ namespace Defs
       · sorry
 
     theorem homomorphism_inj_iff_kernel_trivial [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) :
-        Function.Injective φ ↔ Kernel φ h = Trivial := by
+        Function.Injective φ ↔ Kernel φ h = Minimal G := by
       apply Iff.intro
       · intro hinj
         apply le_antisymm
@@ -182,17 +182,33 @@ namespace Defs
           apply hinj
           rw [homomorphism_id_map_id φ h]
           exact hx
-        · apply Trivial_smallest
+        · apply Minimal_smallest
       · intro hk x y hfeq
-        -- Need some more homomorphism machinery
-        sorry
+        have h1 : φ (μ x (ι y)) = μ (φ x) (φ (ι y)) := by
+          rw [h]
+        have h2 : (φ (ι y)) = ι (φ y):= by
+          apply homomorphism_id_inv
+          exact h
+        rw [hfeq, h2, op_inv] at h1
+        have h3 : μ x (ι y) ∈ Kernel φ h := by
+          trivial
+        rw [hk] at h3
+        have h4 : μ x (ι y) = 𝕖 := by
+          trivial
+        have h5 : μ x (ι y) = 𝕖 → μ (μ x (ι y)) y = μ 𝕖 y := by
+          intro ht
+          rw[ht]
+        apply h5 at h4
+        simp at h4
+        exact h4
+        -- Need some more homomorphism machinery EDIT : solved but messy
 
     theorem homomorphism_surj_iff_image_complete [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) :
-        Function.Surjective φ ↔ Image φ h = Complete := by
+        Function.Surjective φ ↔ Image φ h = Maximal H := by
       apply Iff.intro
       · intro hsurj
         apply le_antisymm
-        · apply Complete_largest
+        · apply Maximal_largest
         · intro x _
           exact hsurj x
       · intro hcomp
