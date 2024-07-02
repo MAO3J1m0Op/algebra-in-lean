@@ -1,0 +1,185 @@
+\section{The Power Function}
+
+Let $M$ be a monoid and $G$ be a group.
+
+\begin{definition}
+    \label{definition : mpow}
+    \lean{Defs.Subgroups.mpow}
+    \leanok
+    \uses{definition : monoid}
+    For $x \in M$, the \textit{$n$th power} of $x$ (where $n \in \mathbb{N}$) is defined as the left-multiplication of $x$ with the identity of $M$ $n$ times. It is defined inductively below
+
+    \begin{equation*}
+        x^n := \begin{cases}
+            e, & n = 0 \\
+            \mu(x^{n-1}, x), & n > 0
+        \end{cases}
+    \end{equation*}
+\end{definition}
+
+For the following theorems, let $x \in G$, and let $m,n \in \mathbb{N}$.
+
+\begin{theorem}
+    \label{theorem : mpow_zero}
+    \lean{Defs.Subgroups.mpow_zero}
+    \leanok
+    \uses{definition : mpow}
+    $x^0 = e$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : mpow_succ_right}
+    \lean{Defs.Subgroups.mpow_succ_right}
+    \leanok
+    \uses{definition : mpow}
+    $x^{n+1} = \mu(x^n,x)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : mpow_one}
+    \lean{Defs.Subgroups.mpow_one}
+    \leanok
+    \uses{theorem : mpow_zero}
+    $x^1 = x$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : mpow_two}
+    \lean{Defs.Subgroups.mpow_two}
+    \leanok
+    \uses{theorem : mpow_one}
+    $x^2 = \mu(x,x)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : mpow_succ_left}
+    \lean{Defs.Subgroups.mpow_succ_left}
+    \leanok
+    \uses{theorem : mpow_zero, theorem : mpow_one, theorem : mpow_succ_right}
+    $x^{n+1} = \mu(x,x^n)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : mpow_add}
+    \lean{Defs.Subgroups.mpow_add}
+    \leanok
+    \uses{theorem : mpow_one, theorem : mpow_zero, theorem : mpow_succ_right}
+    $x^{m+n} = \mu(x^m,x^n)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : mpow_mul}
+    \lean{Defs.Subgroups.mpow_mul}
+    \leanok
+    \uses{theorem : mpow_add}
+    $x^{mn} = (x^m)^n$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : mpow_id}
+    \lean{Defs.Subgroups.mpow_id}
+    \leanok
+    \uses{theorem : mpow_zero, theorem : mpow_succ_right}
+    If $e$ is the identity of $M$, then $e^n = e$.
+\end{theorem}
+
+\begin{definition}
+    \label{definition : gpow}
+    \lean{Defs.Subgroups.gpow}
+    \leanok
+    \uses{definition : mpow, definition : group}
+    For a group $G$ and $x \in G$, we extend the domain of the power function to include all of $\mathbb{Z}$ such that if $n < 0$, then $x^n$ is equal to $\iota(x^{-n})$. It is defined inductively below:
+
+    \begin{equation*}
+        x^n := \begin{cases}
+            e, & n = 0 \\
+            \mu(x^{n-1}, x), & n > 0 \\
+            \iota(\mu(x^{n+1}, x)), & n < 0
+        \end{cases}
+    \end{equation*}
+\end{definition}
+
+For the following theorems, let $x \in G$.
+
+\begin{theorem}
+    \label{theorem : gpow_zero}
+    \lean{Defs.Subgroups.gpow_zero}
+    \leanok
+    \uses{definition : gpow}
+    $x^0 = e$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_one}
+    \lean{Defs.Subgroups.gpow_one}
+    \leanok
+    \uses{definition : gpow, theorem : mpow_one}
+    $x^1 = x$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_two}
+    \lean{Defs.Subgroups.gpow_two}
+    \leanok
+    \uses{definition : gpow, theorem : mpow_two}
+    $x^2 = \mu(x,x)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_neg_one}
+    \lean{Defs.Subgroups.gpow_neg_one}
+    \leanok
+    \uses{definition : gpow, theorem : mpow_one}
+    $x^{-1} = \iota(x)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_neg}
+    \lean{Defs.Subgroups.gpow_neg}
+    \uses{definition : gpow}
+    For any $n \in \mathbb{Z}$, $x^{-n} = \iota(x^n)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_succ}
+    \lean{Defs.Subgroups.gpow_succ}
+    \uses{definition : gpow}
+    For any $n \in \mathbb{Z}$, $x^{n+1} = \mu(x^n, x)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_pred}
+    \lean{Defs.Subgroups.gpow_pred}
+    \uses{definition : gpow}
+    For any $n \in \mathbb{Z}$, $x^{n-1} = \mu(x^n, \iota(x))$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_add}
+    \lean{Defs.Subgroups.gpow_add}
+    \uses{definition : gpow}
+    For any $m,n \in \mathbb{Z}$, $x^{m+n} = \mu(x^m, x^n)$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_sub}
+    \lean{Defs.Subgroups.gpow_add}
+    \leanok
+    \uses{theorem : gpow_add, theorem : gpow_neg}
+    For any $m,n \in \mathbb{Z}$, $x^{m-n} = \mu(x^m, \iota(x^n))$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_mul}
+    \lean{Defs.Subgroups.gpow_mul}
+    \uses{definition : gpow}
+    For any $m,n \in \mathbb{Z}$, $x^{mn} = (x^m)^n$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : gpow_closure}
+    \lean{Defs.Subgroups.gpow_closure}
+    \leanok
+    \uses{theorem : gpow_succ, theorem : gpow_pred, theorem : gpow_neg}
+    Let $H$ be a subgroup of $G$. Then if $x \in H$, $x^n \in H$ for any $n \in \mathbb{Z}$.
+\end{theorem}
