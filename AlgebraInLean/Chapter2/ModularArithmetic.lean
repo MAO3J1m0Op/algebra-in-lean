@@ -74,6 +74,11 @@ variable (n : Nat)
 
 #eval Nat.mod 4 5
 
+-- Like in computer science, `%` represents the mod operation.
+#eval 4 % 5
+
+-- `↑` coerces the `(m : Nat)` into an `Int`, which is what we need to look at
+-- divisibility
 def congr_mod (m : Nat) (a b : Int) : Prop := (↑m : Int) ∣ (a - b)
 notation:50  a " ≡ " b "(mod " m ")" => congr_mod m a b
 
@@ -101,6 +106,7 @@ notation:50  a " ≡ " b "(mod " m ")" => congr_mod m a b
 -- computer science-y terms, the "base case") of the Euclidean algorithm is
 -- gcd(n, 0) = 0, or when b = 0.
 
+-- Here's our homemade version of the gcd function.
 def gcd' (a b : Nat) : Nat :=
   match b with
     | 0 => a

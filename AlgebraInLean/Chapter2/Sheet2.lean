@@ -1,21 +1,10 @@
+import AlgebraInLean.Basic
+import AlgebraInLean.Chapter2.Sheet1
 import Mathlib.Tactic
 
 namespace Sheet2
 
--- Examples of group homomorphisms & isomorphisms
--- - Z/nZ is isomorphic to Cₙ
--- - Any two cyclic groups of the same order are isomorphic
-
--- Definition of automorphism, (and hence endomorphism?)
--- Mention familiar examples (not formalized): linear transformations between
--- vector spaces, functions (like graphs you see in high school math),
--- permutations
-
--- Conjugation is an automorphism
--- Which segues us very nicely into the next sheet, which probably will be
--- about automorphism groups
-
-/- ---------- -/
+namespace Defs
 
 -- ## Homomorphisms and Isomorphisms
 
@@ -39,46 +28,43 @@ namespace Sheet2
 -- an element g can be written <g>. You'll learn more about generators in
 -- Chapter 2.
 
--- We'll use the definition of Cn that you've seen in Chapter 1. Hopefully,
+-- We'll use the definition of Cₙ that you've seen in Chapter 1. Hopefully,
 -- you've already proved that it is a group, so we're good to go.
 
 def Cn (n : ℕ): Type := Fin n
 def fCn (n : ℕ) : (Cn n) → (Cn n) → (Cn n) := Fin.add
+def inv_fCn (n : ℕ) : (Fin n) → (Fin n) := fun x => -x
 
 -- We introduce a closely related group; the integers _modulo_ some natural
--- number n. We write this as ℤ/nℤ, for reasons that will become apparent when
--- you eventually come across "quotient groups". We pronounce ℤ/nℤ as "Z mod n
--- Z".
+-- number n. The definition is virtually identical. We write this as ℤ/nℤ, for
+-- reasons that will become apparent when you eventually come across _quotient
+-- groups_. We pronounce ℤ/nℤ as "Z mod n Z".
 
-variable (G : ZMod n) (generators : Finset (ZMod n))
+def ZModnZ (n : ℕ) : Type := Fin n
+def fZModnZ (n : ℕ) : (ZModnZ n) → (ZModnZ n) → (ZModnZ n) := Fin.add
+def inv_ZModnZ (n : ℕ) : (Fin n) → (Fin n) := fun x => -x
 
-#check (ZMod 4 : Type)
-#print ZMod
+-- The similarity between Cₙ and ℤ/nℤ might lead one to ask: are they
+-- isomorphic? In order to answer that excellent question, let's prove a more
+-- lenient result and work our way up to isomorphism:
 
-def ZModnZ (n : ℕ) : Type := ZMod n
-
--- def x : (ZModnZ 3) := 2
-
-#print ZModnZ
-
--- ## EXERCISES:
+-- TODO: Consider scrapping everything here and look at more abstract examples of isomorphism. Why? Maybe a better idea to introduce ℤ/nℤ when quotient groups are introduced... also, formally considering isomorphisms between groups requires considering orders or elements. :(
 
 -- TODO: Show that a map φ : n → gⁿ is a homomorphism from ℤ/3ℤ to C₃.
 
--- theorem mod3_hom_to_cyclic3 [Group G] (Z3 : ZMod n) (g : G) (φ : G → Z3) : Homomorphism φ := by
+theorem mod3_hom_to_cyclic3 (C3 : Defs.Group (Cn 3)) (Z3 : Defs.Group (ZModnZ 3)) (g : G) (φ : C3 → Z3) : Homomorphism φ := by
+  sorry
 
 -- TODO: Show that a map φ : n → gⁿ is an isomorphism from ℤ/3ℤ to C₃.
 
--- theorem mod3_iso_to_cyclic3 [Group G] (Z3 : ZMod n) (g : G) (φ : G → Z3) : Isomorphism φ := by
+theorem mod3_iso_to_cyclic3 (C3 : Defs.Group (Cn 3)) (Z3 : Defs.Group (ZModnZ 3)) (g : G) (φ : C3 → Z3) : Isomorphism φ := by
+  sorry
 
 -- TODO: Generalise the above: ℤ/nℤ is isomorphic to Cₙ, with the map being the
 -- same.
 
--- theorem modn_iso_to_cyclicn [Group G] (Z3 : ZMod n) (g : G) (φ : G → Z3) : Isomorphism φ := by
+theorem modn_iso_to_cyclicn (Cn : Defs.Group (Cn n)) (Zn : Defs.Group (ZModnZ n)) (g : G) (φ : Cn → Zn) : Isomorphism φ := by
+  sorry
 
 /- ... -/
 
--- ## Automorphisms
-
-
-end Sheet2

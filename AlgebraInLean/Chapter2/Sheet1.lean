@@ -1,4 +1,5 @@
-import «AlgebraInLean».Basic
+import AlgebraInLean.Basic
+import Mathlib.Tactic
 
 -- TODO: Clean up *Maps* section; some of the content overlaps with Sheet 0
 
@@ -94,7 +95,9 @@ namespace Morphisms
       rw [← hinv a, ← hinv b, hab]
 
     -- `unfold` does what it sounds like: unfolding a symbol to its
-    -- underlying definition.
+    -- underlying definition. It isn't best practice; it's usually better to
+    -- write a definition to use `rw` with. However, for a one-off use-case,
+    -- `unfold` suffices.
 
     def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
     -- Otherwise known as "onto".
@@ -188,7 +191,7 @@ namespace Morphisms
       exact h2
     exact h3.symm
 
-  -- To prove this, we first show that if a * b = 𝕖 and b * a = 𝕖, then b = ι a.
+  -- To prove this, we first show that if a * b = 𝕖, then b = ι a.
   theorem two_sided_inv [Group G] (a b : G) (h1 : μ a b = 𝕖): b = ι a := by
     have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
     · intro g
@@ -198,6 +201,10 @@ namespace Morphisms
     have hp : μ a b = μ a (ι a)
     · rw [h1, op_inv]
     rw [mul_left_eq a b (ι a) hp]
+
+  -- Note that the double-sided inverse of a group element is also the
+  -- element's unique inverse. Why? (Hint: Remember the inverse map is
+  -- injective, as we proved earlier in the sheet.)
 
   theorem hom_inv_to_inv {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
   Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
