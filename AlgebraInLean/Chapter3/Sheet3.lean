@@ -5,6 +5,9 @@ namespace Defs
 
     variable {G G' : Type*} [Group G] [Group G']
 
+    -- This makes replaces instances of H.carrier with ↑H in the infoview
+    attribute [coe] Subgroup.carrier
+
    -- We define a map φ : G → H to be a homomorphism when for groups (G, ⬝) and (G', ★) it satisfies
     -- the property that ∀ a, b ∈ G, φ (a ⬝ b) = φ (a) ★ φ (b). Note that a homomorphism preserves
     -- the group structure of G and G' despite having (potentially) different operations.
@@ -171,6 +174,10 @@ namespace Defs
         apply congr <;> try rfl
         exact ha s hs
 
+    -- TODO: figure out how to make this an iff rather than a one way implication
+    theorem Centralizer_def {S : Set G} (h : a ∈ Centralizer S) :
+    ∀ s ∈ S, μ a s = μ s a := h
+
     def Center : Subgroup G := Centralizer Set.univ
 
     theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = H := by
@@ -213,6 +220,20 @@ namespace Defs
           rw [← op_assoc]
           simp only [op_inv, id_op]
       done
+
+
+
+    -- Subgroup H is abelian
+    def isAbelian (H : Subgroup G) : Prop := ∀ (x y : G), x ∈ H → y ∈ H → μ x y = μ y x
+
+    --Show that H ≤ C_G (H) if and only if H is abelian
+    theorem abelian_iff_subgroup_centralizer_self (H : Subgroup G) : H ≤ Centralizer H ↔ isAbelian H := by
+    constructor
+    · intro h x y hx hy
+      specialize h hx
+      exact Centralizer_def h y hy
+    · intro h x hx s hs
+      exact h x s hx hs
 
     theorem homomorphism_inj_iff_kernel_trivial [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) :
         Function.Injective φ ↔ Kernel φ h = Minimal := by
