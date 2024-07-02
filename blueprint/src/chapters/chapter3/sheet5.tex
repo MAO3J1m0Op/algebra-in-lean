@@ -1,0 +1,110 @@
+\section{Subgroups and Homomorphisms}
+
+\begin{definition}
+    \label{definition : Kernel}
+    \lean{Defs.Subgroups.Kernel}
+    \leanok
+    \uses{definition : Subgroup}
+    Let $\phi : G \rightarrow G'$ be a group homomorphism. The \textit{kernel} of $\phi$, denoted $\text{ker}(\phi)$, is defined as
+
+    $$\left\{ x \in G \middle| \phi(x) = e \right\}.$$
+
+    This definition implicitly encodes that the kernel of a group homomorphism is a subgroup of $G$.
+\end{definition}
+
+\begin{definition}
+    \label{definition : Image}
+    \lean{Defs.Subgroups.Image}
+    \leanok
+    \uses{definition : Subgroup}
+    Let $\phi : G \rightarrow G'$ be a group homomorphism. The \textit{kernel} of $\phi$, denoted $\text{img}(\phi)$, is defined as
+
+    $$\left\{ y \in G' \middle| \exists\,x,\;\phi(x) = y \right\}.$$
+
+    This definition implicitly encodes that the image of a group homomorphism is a subgroup of $G'$.
+\end{definition}
+
+\begin{definition}
+    \label{definition : normal}
+    \lean{Defs.Subgroups.normal}
+    \leanok
+    \uses{definition : Subgroup}
+    A subgroup $H$ of a group $G$ is \textit{normal} if a subgroup is closed under conjugation of any element in $G$. In other terms, for any $g \in G$ and $h \in H$, $ghg^{-1} \in H$.
+\end{definition}
+
+\begin{theorem}
+    \label{theorem : Minimal_normal}
+    \lean{Defs.Subgroups.Minimal_normal}
+    \leanok
+    \uses{definition : Subgroup, defintion : Minimal}
+    The minimal subgroup of $G$ is a normal subgroup of $G$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : Maximal_normal}
+    \lean{Defs.Subgroups.Maximal_normal}
+    \leanok
+    \uses{definition : Subgroup, defintion : Maximal}
+    The maximal subgroup of $G$ is a normal subgroup of $G$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : Kernel_normal}
+    \lean{Defs.Subgroups.Kernel_normal}
+    \leanok
+    \uses{definition : Subgroup, defintion : Kernel}
+    If $\phi$ is a group homomorphism with domain $G$, then $ker(\phi)$ is a normal subgroup of $G$.
+\end{theorem}
+
+\begin{definition}
+    \label{definition : Normalizer}
+    \lean{Defs.Subgroups.Normalizer}
+    \leanok
+    \uses{definition : Subgroup}
+    Let $G$ be a group and $S \subset G$. The \textit{normalizer} in $G$ of $S$, denoted $N_G(S)$, is defined as
+
+    $$N_G(S) := \left\{ x \in G \middle| gSg^{-1} = S \right\}.$$
+
+    Implicit in this definition is that the normalizer is a subgroup of $G$.
+\end{definition}
+
+\begin{definition}
+    \label{definition : Centralizer}
+    \lean{Defs.Subgroups.Centralizer}
+    \leanok
+    \uses{definition : Subgroup}
+    Let $G$ be a group and $S \subset G$. The \textit{centralizer} in $G$ of $S$, denoted $C_G(S)$, is defined as
+
+    $$C_G(S) := \left\{ x \in G \middle| gs sg\;\forall\;s \in S\right\}.$$
+
+    Implicit in this definition is that the normalizer is a subgroup of $G$.
+\end{definition}
+
+\begin{definition}
+    \label{definition : Center}
+    \lean{Defs.Subgroups.Center}
+    \leanok
+    \uses{definition : Centralizer}
+    The \textit{center} of $G$, denoted $Z(G)$, is the set of all elements that commute with every element of $G$, or $C_G(G)$.
+\end{definition}
+
+\begin{theorem}
+    \label{theorem : normal_Normalizer}
+    \lean{Defs.Subgroups.normal_Normalizer}
+    \uses{definition : normal, definition : Normalizer}
+    A subgroup $H$ of $G$ is normal if and only if $N_G(H) = G$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : homomorphism_inj_iff_kernel_trivial}
+    \lean{Defs.Subgroups.homomorphism_inj_iff_kernel_trivial}
+    \uses{definition : Kernel, theorem : Minimal_smallest}
+    If $\phi : G \rightarrow G'$ is a group homomorphism, then it is injective if and only if $\text{ker}(\phi)$ is trivial, meaning $\text{ker}(\phi) = \{e\}$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : homomorphism_surj_iff_image_complete}
+    \lean{Defs.Subgroups.homomorphism_surj_iff_image_complete}
+    \uses{definition : Image, theorem : Maximal_largest}
+    If $\phi : G \rightarrow G'$ is a group homomorphism, then it is surjective if and only if $\text{img}(\phi) = G$.
+\end{theorem}
