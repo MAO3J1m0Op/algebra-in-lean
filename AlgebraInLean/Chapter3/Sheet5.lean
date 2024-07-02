@@ -186,7 +186,7 @@ namespace Defs
 
     -- This may sound trivial, but try proving a subgroup H is normal if and only if its normalizer
     -- is the full subgroup H.
-    theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = H := by
+    theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = Maximal G := by
       -- EXERCISE
       -- TODO
       apply Iff.intro
