@@ -101,13 +101,13 @@ namespace Interlude
       cases' h1 with finv hf
       cases' h2 with ginv hg
       rw[Bijective]
-      apply And.intro
-      apply injective_comp
-      · apply finv
-      · apply ginv
-      apply surjective_comp
-      · apply hf
-      · apply hg
+      constructor
+      · apply injective_comp
+        · apply finv
+        · apply ginv
+      · apply surjective_comp
+        · apply hf
+        · apply hg
       done
 
 
@@ -120,13 +120,13 @@ namespace Interlude
       cases' h1 with finv hf
       cases' h2 with ginv hg
       rw[Bijective]
-      apply And.intro
-      apply injective_comp
-      · apply finv
-      · apply ginv
-      apply surjective_comp
-      · apply hf
-      · apply hg
+      constructor
+      · apply injective_comp
+        · apply finv
+        · apply ginv
+      · apply surjective_comp
+        · apply hf
+        · apply hg
       done
 
 

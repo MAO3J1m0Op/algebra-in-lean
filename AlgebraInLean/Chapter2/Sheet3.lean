@@ -1,5 +1,6 @@
 -- import «AlgebraInLean».Chapter2.Sheet1
-import «AlgebraInLean».Basic  -- ## [FIX ME] - IMPORT ISSUES?
+-- ## [FIX ME] - IMPORT ISSUES?
+import «AlgebraInLean».Basic
 import Mathlib.Tactic
 
 namespace Defs
@@ -9,7 +10,7 @@ namespace Morphisms
 namespace Sheet3
 
 -- ## NEED TO BE REMOVED LATER, NEED TO RESOLVE IMPORT ISSUE
--- See comment at top of sheet, Line 1.
+-- See comment at top of sheet, Lines 1-2.
 
 -- Injectivity, Surjectivity, Bijectivity
   def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
@@ -25,7 +26,7 @@ namespace Sheet3
   def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
   Bijective φ)
 
--- ## Automorphisms, etc.
+-- ## Endomorphisms and Automorphisms
 
   section Endomorphisms
     -- In Sheet 1 of this chapter, you were introduced to homomorphisms
@@ -64,13 +65,11 @@ namespace Sheet3
     -- bijectivity in the first place.
 
     def Automorphism [Group G] (φ : G → G) : Prop := Endomorphism φ ∧ Bijective φ
-
     -- You can think of it like a permutation from a group to itself, although it
     -- is important that this permutation respects the group structure.
     -- see more specifically what "respecting the group structure" looks like in
     -- the next chapter (keep an eye out for orders!).
 
-    -- ## EXAMPLES HERE ?
 
     -- As an exercise, let's prove that a specific function mapping within the
     -- group of integers under addition is a group automorphism.
@@ -88,27 +87,67 @@ namespace Sheet3
     -- φ : G → G, x ↦ -x
 
     -- Show that φ is a group automorphism
-    theorem φ_group_automorphism : ∀ x y : ℤ, φ (x + y) = φ x + φ y ∧ Bijective φ := by
+    theorem φ_automorphism : ∀ x y : ℤ, φ (x + y) = φ x + φ y ∧ Bijective φ := by
       intros x y
-      apply And.intro
+      constructor
       -- Prove homomorphism
-      unfold φ
-      rw[neg_add]
+      · unfold φ
+        rw[neg_add]
       -- Prove Bijectivity
-      rw[Bijective]
-      apply And.intro
+      · rw[Bijective]
+        constructor
         -- Injectivity
-      · intros x y h
-        unfold φ at h
-        exact neg_inj.mp h
+        · intros x y h
+          unfold φ at h
+          exact neg_inj.mp h
         -- Surjectivity
-      · intro z
-        use -z
-        unfold φ
-        rw[neg_neg]
+        · intro z
+          use -z
+          unfold φ
+          rw[neg_neg]
       done
 
 
+    -- Now that you have done a basic proof with automorphisms, we will move on to
+    -- one that is slightly more complex (which also introduces a new concept).
+    -- _conjugation_ is defined to be the specific relation between two elements of
+    -- some group where a,b ∈ G are _conjugates_ if there is also some g ∈ G such that
+    -- b = gag⁻¹
+
+    -- Specifically, in the case of the general linear group of invertible matrices,
+    -- _GL(n)_, this conjugacy relation is called matrix similarity, which may be
+    -- more familiar. (Recall that two matrices A,B are similar iff there is also some
+    -- matrix D such that B = DAD⁻¹).
+
+    -- We claim that conjugation is an automorphism under an arbitrary group and
+    -- group operation, meaning:
+    -- ψ : G → G, x ↦ gxg⁻¹ is a group automorphism. Let's prove this!
+
+    -- As with before, a brief definition of our ψ:
+    def ψ [Group G] (g x : G) : G := μ (μ g x) (ι g)
+    -- This definition, because it is under an arbitraty group action, has to conform
+    -- with the definitions that we previously defined for groups. Don't worry too much
+    -- if you don't understand the specific syntax here, but just know that μ is an
+    -- arbitrary group operation, and (ι g) is g⁻¹.
+
+    theorem ψ_automorphism [Group G] (g : G) : ∀ x y : G, ψ g (μ x y) = μ (ψ g x) (ψ g y)
+    ∧ Bijective (ψ g) := by
+      intros x y
+      constructor
+      -- Prove homomorphism
+      · unfold ψ
+        simp only [op_assoc]
+        rw[← op_assoc (ι g), inv_op, id_op]
+      -- Prove bijectivity
+      · rw[Bijective]
+        constructor
+        -- Injectivity
+        · intros x y h
+          unfold ψ at h
+          sorry
+        -- Surjectivity
+        · sorry
+      done
 
   end Automorphisms
 
