@@ -132,11 +132,117 @@ namespace Defs
       congr
       done
 
-    -- Maybe add subgroup criterion??
+    -- We have defined a subgroup to be a subset of a group closed under
+    -- operation and three additional properties. However, to show H is a
+    -- subgroup of G it suffices to show two things:
 
-    -- The following definition relies on G being a group, so we'll define it as such for the
-    -- subsequent proof.
-    variable {G : Type*} [Group G]
+    -- 1. H ≠ {∅}
+    -- 2. for all x, y ∈ H, μ x (ι y) ∈ H
+
+    -- That is, a subset H of G is a subgroup IFF the two properties above
+    -- hold, this is known as the Subgroup Criterion.
+    -- Notice that the language nonempty we used to define a subset earlier may
+    -- be slightly misleading. Earlier, we asserted nonempty by claiming the
+    -- identity existed in the subset. However, this criterion truly only
+    -- requires the subset to be nonempty-then the second condition can be used
+    -- to show that the identity must be in the subgroup. The proof is
+    -- outlined below and each thing to show (nonempty, inv_closure,
+    -- mul_closure) follows from the last.
+    def subgroup_criterion [Group G] (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x ∈ S → y ∈ S → (μ x (ι y)) ∈ S) : Subgroup G where
+      carrier := S
+      nonempty := by
+        obtain ⟨s, hs⟩ := he
+        rw [← op_inv s]
+        apply hc <;> exact hs
+      inv_closure := by
+        intro a
+        have hc2 := hc
+        specialize hc2 𝕖 a
+        rw [← id_op (ι a)]
+        apply hc2
+        have h1 : 𝕖 ∈ S := by
+          obtain ⟨s, hs⟩ := he
+          rw [← op_inv s]
+          apply hc <;> exact hs
+        exact h1
+      mul_closure := by
+        intro a b ha hb
+        have hc3 := hc
+        have hc4 := hc
+        specialize hc3 a (ι b)
+        have ht : ι (ι b) = b := sorry -- FIXME use inverse of inverse equals self
+        rw [ht] at hc3
+        have hf : b ∈ S → ι b ∈ S := by
+          intro hb
+          rw [← id_op (ι b)]
+          specialize hc4 𝕖 b
+          apply hc4
+          have h1 : 𝕖 ∈ S := by
+            obtain ⟨s, hs⟩ := he
+            rw [← op_inv s]
+            apply hc <;> exact hs
+          exact h1
+          exact hb
+        apply hf at hb
+        apply hc3 at ha
+        apply ha at hb
+        exact hb
+
+    -- An important property of subroups is that for any group G with subgroup
+    -- H, and K a subgroup of H (note this works since H itself is a group)
+    -- then it must be that K is a subgroup of G. That is, transitivity for
+    -- subgroups holds and K ≤ H ≤ G → K ≤ G.
+    def subgroup_trans [Group G] (H : Subgroup G) (K : Subgroup H) : Subgroup G where
+      carrier := {g : G | ∃ h : H, h ∈ K.carrier ∧ g = h}
+      nonempty := by
+        use (𝕖 : H)
+        constructor
+        · exact K.nonempty
+        · rfl
+      mul_closure := by
+        intros x y hx hy
+        obtain ⟨hx, hxK, x_eq⟩ := hx
+        obtain ⟨hy, hyK, y_eq⟩ := hy
+        use (μ hx hy : H)
+        constructor
+        · exact K.mul_closure hx hy hxK hyK
+        · rw [x_eq, y_eq]
+          rfl
+      inv_closure := by
+        intros x hx
+        obtain ⟨hx, hxK, xhx⟩ := hx
+        use (ι (hx) : H)
+        constructor
+        · exact K.inv_closure hx hxK
+        · rw [xhx]
+          rfl
+
+    -- An extension of this transitivity that may be useful is considering
+    -- three subgroups K, J, L of G. It follows that if K ≤ J and J ≤ L then
+    -- K ≤ L. Try proving this one yourself.
+    theorem sgp_trans [Group G] (J K L : Subgroup G) (kj : K.carrier ⊆ J.carrier) (jl : J.carrier ⊆ L.carrier) : K.carrier ⊆ L.carrier := by
+      --EXERCISE
+      intros x hx
+      apply jl
+      apply kj
+      exact hx
+
+    -- Subgroups also hold under intersection. That is, given two subroups H
+    -- and K of a group G, H ∩ K is also a subgroup of G. Let's prove it.
+    def subgroup_intersection [Group G] {H K : Set G} (hH : Subgroup G) (hK : Subgroup G) (hHset : H = hH.carrier) (hKset : K = hK.carrier) : Subgroup G where
+      --EXERCISE
+      carrier := H ∩ K
+      nonempty := by
+        simp [hHset, hKset]
+        exact ⟨hH.nonempty, hK.nonempty⟩
+      mul_closure := by
+        intro a b ha hb
+        simp [hHset, hKset] at *
+        exact ⟨hH.mul_closure a b ha.left hb.left, hK.mul_closure a b ha.right hb.right⟩
+      inv_closure := by
+        intros a ha
+        simp [hHset, hKset] at *
+        exact ⟨hH.inv_closure a ha.left, hK.inv_closure a ha.right⟩
 
   end Subgroups
 

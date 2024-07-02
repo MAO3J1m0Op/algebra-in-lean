@@ -20,7 +20,7 @@ namespace Defs
     -- The definition of partial order is encoded in Lean using Mathlib's `PartialOrder` type class.
     -- Here, we demonstrate that inclusion (or H ⊆ K for H and K being subgroups of G), creates a
     -- partial order over our type of subgroups.
-    instance : PartialOrder (Subgroup G) where
+    instance [Group G] : PartialOrder (Subgroup G) where
       le H K := H.carrier ⊆ K.carrier
       le_refl := by
         intro H
@@ -48,20 +48,20 @@ namespace Defs
           apply hK
           exact hx
 
-    theorem Minimal_smallest (H : Subgroup G) : Minimal G ≤ H := by
+    theorem Minimal_smallest [Group G] (H : Subgroup G) : Minimal G ≤ H := by
       -- EXERCISE
       intro e he
       rw [he]
       exact H.nonempty
 
-    theorem Maximal_largest (H : Subgroup G) : H ≤ Maximal G := by
+    theorem Maximal_largest [Group G] (H : Subgroup G) : H ≤ Maximal G := by
       -- EXERCISE
       intro x _
       trivial
 
     -- The intersection of two subgroups is itself a subgroup. Prove this by completing the
     -- definition below.
-    def Intersect (H K : Subgroup G) : Subgroup G where
+    def Intersect [Group G] (H K : Subgroup G) : Subgroup G where
       carrier := H ∩ K
       -- EXERCISES
       nonempty := by
