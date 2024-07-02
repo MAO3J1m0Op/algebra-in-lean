@@ -234,8 +234,12 @@ namespace Defs
         exact h4
         -- Need some more homomorphism machinery EDIT : solved but messy
 
-    theorem homomorphism_surj_iff_image_complete [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) :
+    -- In order for a homomorphism φ : G → G' to be surjective, it must be that each element in G'
+    -- is mapped to by an element from G. That is, each element in G' is mapped to, so it must be
+    -- that the image is complete. Try proving both directions of the IFF proof here.
+    theorem homomorphism_surj_iff_image_complete  (φ : G → G') (h : Homomorphism φ) :
         Function.Surjective φ ↔ Image φ h = Maximal H := by
+      -- EXERCISE
       apply Iff.intro
       · intro hsurj
         apply le_antisymm
