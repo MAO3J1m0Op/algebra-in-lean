@@ -72,7 +72,7 @@ namespace Interlude
 
     -- Obviously, this one can be made easier based on the previous two proofs we just
     -- completed. So, let's turn those into theorems in this same namespace that we can
-    -- apply for this particular bijectivitiy example.
+    -- `apply` them for this next bijectivitiy example.
 
     theorem injective_comp {α β γ : Type*} (f : α → β) (g : β → γ) (h1 : Injective f)
     (h2 : Injective g) : Injective (g ∘ f) := by

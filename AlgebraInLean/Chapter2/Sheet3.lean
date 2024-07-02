@@ -130,6 +130,32 @@ namespace Sheet3
     -- if you don't understand the specific syntax here, but just know that μ is an
     -- arbitrary group operation, and (ι g) is g⁻¹.
 
+    -- Tip: You will want to approach this proof similarly to how you proved that the
+    -- inversion function for integers under addition was a group automorphism.
+    -- Split the proof up into its different components (i.e., proving the homorphism
+    -- property and then the bijectivity property separately).
+
+    -- The following helper lemmas may be helpful to you when proving the bijectivity
+    -- property of the conjugation automorphism.
+    -- ## START HELPERS
+    lemma left_cancel [Group G] (x y g : G) (h : μ g x = μ g y) : x = y := by
+      have h1 : μ g x = μ g y → μ (ι g) (μ g x) = μ (ι g) (μ g y) := by
+        intro h
+        rw [h]
+      apply h1 at h
+      rw [← op_assoc, inv_op, ← op_assoc, inv_op, id_op, id_op] at h
+      exact h
+
+    lemma right_cancel [Group G] (x y g : G) (h : μ x g = μ y g) : x = y := by
+      have h1 : μ x g = μ y g → μ (μ x g) (ι g) = μ (μ y g) (ι g) := by
+        intro h
+        rw [h]
+      apply h1 at h
+      rw [op_assoc, op_inv, op_assoc, op_inv, op_id, op_id] at h
+      exact h
+    -- ## END HELPERS
+
+    -- Show that ψ is a group automorphism
     theorem ψ_automorphism [Group G] (g : G) : ∀ x y : G, ψ g (μ x y) = μ (ψ g x) (ψ g y)
     ∧ Bijective (ψ g) := by
       intros x y
@@ -144,6 +170,7 @@ namespace Sheet3
         -- Injectivity
         · intros x y h
           unfold ψ at h
+
           sorry
         -- Surjectivity
         · sorry
