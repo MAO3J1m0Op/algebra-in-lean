@@ -1,0 +1,20 @@
+\section{Uniqueness Theorems}
+\usepackage{amsmath, amssymb}
+
+\begin{theorem}[Identity Uniqueness]
+    \label{theorem : identity_uniqueness}
+    \lean{Defs.identity_uniqueness}
+    \leanok
+    \uses{definition : monoid}
+    A semigroup $G$ is a magma where the operation $\mu$ is associative:
+    For all $a, b, c \in G$, we have $\mu(a , \mu (b , c)) = \mu(\mu(a, b), c)$
+  \end{theorem}
+
+\begin{theorem}[Inverse Uniqueness]
+    \label{theorem : inverse_uniqueness}
+    \lean{Defs.inverse_uniqueness}
+    \leanok
+    \uses{definition : group}
+    A semigroup $G$ is a magma where the operation $\mu$ is associative:
+    For all $a, b, c \in G$, we have $\mu(a , \mu (b , c)) = \mu(\mu(a, b), c)$
+  \end{theorem}
