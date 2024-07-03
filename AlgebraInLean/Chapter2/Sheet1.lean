@@ -206,7 +206,7 @@ namespace Morphisms
   -- inverse. Why? (Hint: Remember the inverse map is injective, as we proved
   -- earlier in the sheet.)
 
-  theorem hom_inv_to_inv {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
+  theorem hom_inv_to_inv [Group G] [Group H] (φ : G → H) (hp :
   Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
     have h1 : μ (φ (ι g)) (φ g) = φ (μ (ι g) g)
     · rw [homomorphism_def] at hp

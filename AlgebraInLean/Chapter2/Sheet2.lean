@@ -6,11 +6,13 @@ namespace Sheet2
 
 namespace Defs
 
--- ## Homomorphisms and Isomorphisms
+-- ## Isomorphisms
 
--- In Mathlib, isomorphisms come with additional structure; they are not simply defined as bijective homomorphisms.
+-- In Mathlib, isomorphisms come with additional structure; they are not simply
+-- defined as bijective homomorphisms.
 
--- They are defined as a structure, bundled up with some useful (and some essential) fields: 
+-- They are defined as a structure, bundled up with some useful (and some
+-- essential) fields: 
 -- - to_fun (a map from a group G → group H)
 -- - inv_fun (a map from group H → group G)
 -- - left_inv & right_inv (both inverses exist and they are unique)
@@ -30,7 +32,7 @@ namespace Defs
 
 -- Example, not exercise
 example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
-  let hom : ℤ ≃ ℤ := by
+  let hom_map : ℤ ≃ ℤ := by
   { constructor
     have ha : Function.LeftInverse φ φ
     · intro x
@@ -43,7 +45,7 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
   }
   constructor
   intro x y
-  have hc : hom.toFun = φ := by rfl
+  have hc : hom_map.toFun = φ := by rfl
   rw [hc]
   simp [h1]
 
@@ -56,7 +58,7 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
 
 -- Exercise
 example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
-  let hom : ℤ ≃ ℤ := by
+  let hom_map : ℤ ≃ ℤ := by
   { constructor
     have ha : Function.LeftInverse φ φ
     · intro x
@@ -69,7 +71,7 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
   }
   constructor
   intro x y
-  have hc : hom.toFun = φ := by rfl
+  have hc : hom_map.toFun = φ := by rfl
   rw [hc]
   simp [h1]
   linarith
@@ -81,7 +83,7 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
 -- the function that takes an integer x to 2x.
 
 example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
-  let hom : _ ≃ _ := by
+  let hom_map : _ ≃ _ := by
   { constructor
     have ha : Function.LeftInverse φ φ
     · sorry
@@ -92,35 +94,8 @@ example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
   }
   sorry
 
--- Let's prove that for every isomorphism φ which maps from a group G to
--- another group G', that there exists another isomorphism φ' which maps from
--- G' to G.
-
-def iso_symm (φ : G → G') (hi : Isomorphism φ) : (φ' : G' → G) := by
-  sorry
-
--- Let's prove that any group G is isomorphic to itself.
-
-def iso_refl (φ : G → G') (hi : Isomorphism φ) : (φ' : G' → G) := by
-  sorry
-
--- Let's prove that if a group G is isomorphic to group H, and group H is isomorphic to a group I, then the group G must be isomorphic to group I.
-
-def iso_trans (φ : G → G') (hi : Isomorphism φ) : (φ' : G' → G) := by
-  sorry
-
--- We have just proved that group isomorphisms form an equivalence relation
--- over all groups in general!
-
--- We have seen equivalence relations before: equality is an equivalence
--- relation. Formally, they are defined as a binary relation `∼` (often
--- pronounced "sim" and written `\sim`) over a set S such that:
-
--- - Reflexive; ∀ a ∈ S, a ∼ a
--- - Symmetric; ∀ a, b ∈ S, a ∼ b → b ∼ a
--- - Transitive; ∀ a, b, c ∈ S, a ∼ b and b ∼ c → a ∼ c
-
--- Group isomorphisms from a group to itself might seem uninteresting at first;
--- the more simple example being the identity mapping, which we showed was an
--- isomorphism at the beginning of this sheet. However, there are interesting
--- examples of nontrivial group-to-itself isomorphisms, which you will focus on next chapter.
+-- Group isomorphisms from a group to itself (like the first example we looked
+-- at) might seem uninteresting at first. Any group will have at least one
+-- isomorphism associated with it: the identity map. Boring. However, there are
+-- much more interesting examples of nontrivial group-to-itself isomorphisms,
+-- which you will focus on next chapter.
