@@ -176,7 +176,7 @@ namespace Morphisms
   -- Below are some basic proofs of homomorphisms: that they map identities to
   -- identities, and inverses to inverses.
 
-  theorem hom_id_to_id {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
+  theorem hom_id_to_id [Group G] [Group H] (φ : G → H) (hp :
   Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
     have h1 : φ (μ 𝕖 𝕖) = μ (φ 𝕖) (φ 𝕖) := by
       rw [homomorphism_def] at hp
@@ -202,9 +202,9 @@ namespace Morphisms
     · rw [h1, op_inv]
     rw [mul_left_eq a b (ι a) hp]
 
-  -- Note that the double-sided inverse of a group element is also the
-  -- element's unique inverse. Why? (Hint: Remember the inverse map is
-  -- injective, as we proved earlier in the sheet.)
+  -- Note that the inverse of a group element is also the element's unique
+  -- inverse. Why? (Hint: Remember the inverse map is injective, as we proved
+  -- earlier in the sheet.)
 
   theorem hom_inv_to_inv {G H : Type*} [Group G] [Group H] (φ : G → H) (hp :
   Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
