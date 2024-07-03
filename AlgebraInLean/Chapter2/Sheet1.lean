@@ -136,7 +136,8 @@ namespace Morphisms
       cases' hx with x' hx'
       obtain ⟨a, hfa⟩ := h1 x'
       use a
-      change g (f a) = y -- `change` allows us to zhuzh the goal into something _definitionally equivalent_
+      change g (f a) = y -- `change` allows us to zhuzh the goal into
+                         -- something _definitionally equivalent_
       rw [hfa]
       exact hx'
 
@@ -162,8 +163,8 @@ namespace Morphisms
   def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
   a) (φ b) = φ (μ a b)
 
-  theorem homomorphism_def [Group G] [Group H] (φ : G → H) : Homomorphism φ ↔ ∀ (a b : G), μ (φ a) (φ b) = φ (μ a b) := by
-    rfl
+  theorem homomorphism_def [Group G] [Group H] (φ : G → H) : Homomorphism φ ↔ ∀
+  (a b : G), μ (φ a) (φ b) = φ (μ a b) := by rfl
 
   def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
   Bijective φ)
