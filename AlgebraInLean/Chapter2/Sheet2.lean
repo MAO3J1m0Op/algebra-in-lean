@@ -35,6 +35,8 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
   let hom_map : ℤ ≃ ℤ := by
   { constructor
     have ha : Function.LeftInverse φ φ
+    -- Function.LeftInverse g f means that g is a left inverse to f. Ditto for
+    -- RightInverse, aside from the obvious difference.
     · intro x
       simp [h1]
     exact ha
