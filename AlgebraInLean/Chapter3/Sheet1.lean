@@ -23,8 +23,8 @@ namespace Defs
       nonempty : 𝕖 ∈ carrier
       -- The below propositions assert that the subgroup is closed under the group operation μ and
       -- the inverse function ι.
-      mul_closure : ∀ a b, a ∈ carrier → b ∈ carrier → μ a b ∈ carrier
-      inv_closure : ∀ a : G, a ∈ carrier → ι a ∈ carrier
+      mul_closure : a ∈ carrier → b ∈ carrier → μ a b ∈ carrier
+      inv_closure : a ∈ carrier → ι a ∈ carrier
 
     -- This instance coerces `Subgroup G` to `Set G`.
     instance [Group G] : Coe (Subgroup G) (Set G) := ⟨λ H ↦ H.carrier⟩
@@ -39,6 +39,9 @@ namespace Defs
     instance {G : Type*} [Group G] : Membership G (Subgroup G) :=
       ⟨λ g H ↦ g ∈ H.carrier⟩
 
+    -- This replaces instances of `H.carrier` with `↑H` in the infoview
+    attribute [coe] Subgroup.carrier
+
     -- The instances above allow us to assert that `H : Subgroup G` is itself a group. We do this by
     -- implementing our `Group` interface on all `H`. As you complete the proofs yourself, you will
     -- notice that many of the properties are inherited from the parent group's structure, so the
@@ -49,7 +52,7 @@ namespace Defs
       op := λ ⟨a, ha⟩ ⟨b, hb⟩ ↦ by
         have μ_closed : μ a b ∈ H
         -- SOLUTION
-        · exact H.mul_closure a b ha hb
+        · exact H.mul_closure ha hb
 
         -- Create an element of H from G, again using ⟨ ⟩ notation.
         exact ⟨μ a b, μ_closed⟩
@@ -81,7 +84,7 @@ namespace Defs
 
         have ι_closed : ι a ∈ H
         -- SOLUTION
-        · exact H.inv_closure a ha
+        · exact H.inv_closure ha
 
         exact ⟨ι a, ι_closed⟩
 
@@ -101,10 +104,10 @@ namespace Defs
         exact trivial
 
       mul_closure := by
-        exact λ a b ha hb ↦ trivial
+        exact λ _ _ ↦ trivial
 
       inv_closure := by
-        exact λ a ha ↦ trivial
+        exact λ _ ↦ trivial
 
     -- The smallest possible subgroup of G is called the _trivial_ subgroup. What would this
     -- smallest subgroup be? To avoid confusion with the already defined `trivial` in Lean, we will
@@ -205,7 +208,7 @@ namespace Defs
         obtain ⟨hy, hyK, y_eq⟩ := hy
         use (μ hx hy : H)
         constructor
-        · exact K.mul_closure hx hy hxK hyK
+        · exact K.mul_closure hxK hyK
         · rw [x_eq, y_eq]
           rfl
       inv_closure := by
@@ -213,7 +216,7 @@ namespace Defs
         obtain ⟨hx, hxK, xhx⟩ := hx
         use (ι (hx) : H)
         constructor
-        · exact K.inv_closure hx hxK
+        · exact K.inv_closure hxK
         · rw [xhx]
           rfl
 
@@ -238,11 +241,11 @@ namespace Defs
       mul_closure := by
         intro a b ha hb
         simp [hHset, hKset] at *
-        exact ⟨hH.mul_closure a b ha.left hb.left, hK.mul_closure a b ha.right hb.right⟩
+        exact ⟨hH.mul_closure ha.left hb.left, hK.mul_closure ha.right hb.right⟩
       inv_closure := by
         intros a ha
         simp [hHset, hKset] at *
-        exact ⟨hH.inv_closure a ha.left, hK.inv_closure a ha.right⟩
+        exact ⟨hH.inv_closure ha.left, hK.inv_closure ha.right⟩
 
   end Subgroups
 

@@ -21,7 +21,7 @@ namespace Defs
     -- Here, we demonstrate that inclusion (or H ⊆ K for H and K being subgroups of G), creates a
     -- partial order over our type of subgroups.
     instance [Group G] : PartialOrder (Subgroup G) where
-      le H K := H.carrier ⊆ K.carrier
+      le H K := (H : Set G) ⊆ K
       le_refl := by
         intro H
         -- If `unfold` does not fully expand the definition as desired, try using
@@ -61,7 +61,7 @@ namespace Defs
 
     -- The intersection of two subgroups is itself a subgroup. Prove this by completing the
     -- definition below.
-    def Intersect [Group G] (H K : Subgroup G) : Subgroup G where
+    def Intersect (H K : Subgroup G) : Subgroup G where
       carrier := H ∩ K
       -- EXERCISES
       nonempty := by
@@ -69,13 +69,13 @@ namespace Defs
       mul_closure := by
         intro a b ha hb
         apply And.intro
-        · exact H.mul_closure a b ha.left hb.left
-        · exact K.mul_closure a b ha.right hb.right
+        · exact H.mul_closure ha.left hb.left
+        · exact K.mul_closure ha.right hb.right
       inv_closure := by
         intro a ha
         apply And.intro
-        · exact H.inv_closure a ha.left
-        · exact K.inv_closure a ha.right
+        · exact H.inv_closure ha.left
+        · exact K.inv_closure ha.right
 
     -- This allows us to use the H ∩ K notation.
     instance : Inter (Subgroup G) := ⟨Intersect⟩

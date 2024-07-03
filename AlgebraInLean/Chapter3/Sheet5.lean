@@ -52,8 +52,8 @@ namespace Defs
     -- The image of a homomorphism φ is a subgroup of G' (not G as the kernel was) that contains all
     -- elements which φ maps to. That is, all elements g' ∈ G' such that there is some element g ∈ G
     -- where φ : g → g'.
-    def Image (φ : G → G') (h : Homomorphism φ) : Subgroup G' where
-      carrier := {x : G' | ∃ g, φ g = x}
+    def Image [Group G] [Group H] (φ : G → H) (h : Homomorphism φ) : Subgroup H where
+      carrier := {x : H | ∃ g, φ g = x}
       -- EXERCISES
       nonempty := by
         use 𝕖
@@ -73,37 +73,39 @@ namespace Defs
     -- Note that g and n are in group g so the conjugate also exists in G.
     def conjugate (g n : G) : G := μ (μ g n) (ι g)
 
-    -- Let's give simp access to some simple theorems.
-    -- Firstly, conjugating an element g by 𝕖 gives g back. Can you see why this works?
+    @[simp]
+    theorem conjugate_def {g n : G}: conjugate g n = μ (μ g n) (ι g) := by rfl
+
     @[simp]
     theorem conjugate_by_id : conjugate (𝕖 : G) = id := by
       -- EXERCISE
-      unfold conjugate
       funext g
-      rw [id_op, inv_id, op_id]
+      rw [conjugate_def, id_op, inv_id, op_id]
       rfl
 
     -- Secondly, conjugating 𝕖 by any element yields the identity. This uses the op_inv property.
     @[simp]
     theorem conjugate_id (g : G) : conjugate g 𝕖 = 𝕖 := by
       -- EXERCISE
-      unfold conjugate
-      rw [op_id, op_inv]
+      rw [conjugate_def, op_id, op_inv]
 
     -- Thirdly, the conjugate of a · b is just conjugate of a composed with conjugate of b.
     -- Can you figure out how g · (a · b) · g⁻¹ = (g · a · g⁻¹) · (g · b · g⁻¹)?
     @[simp]
     theorem conjugate_op (a b : G) : conjugate (μ a b) = conjugate a ∘ conjugate b := by
       funext s
-      unfold conjugate
-      rw [Function.comp_apply, inv_anticomm]
+      rw [conjugate_def, Function.comp_apply, inv_anticomm]
       simp only [op_assoc]
+      sorry
 
     -- We'll use capital `Conjugate` to define conjugating a set by an element g. This notation is
     -- equivalent to the set {g · s · g⁻¹ | s ∈ S}, that is {conjugate s | s ∈ S}.
     def Conjugate (g : G) (S : Set G) : Set G := conjugate g '' S
 
-    -- We define a subgroup to be `normal` if the subgroup is closed under
+    @[simp]
+    theorem Conjugate_def {g : G} {S : Set G} : Conjugate g S = conjugate g '' S := by rfl
+
+    -- We define a subgroup to be _normal_ if the subgroup is closed under
     -- conjugation with any element of G.
     def normal (H : Subgroup G) : Prop :=
       ∀ g h : G, h ∈ H → conjugate g h ∈ H
@@ -126,8 +128,7 @@ namespace Defs
       intro g k hk
       suffices : φ (conjugate g k) = 𝕖
       · exact this
-      unfold conjugate
-      rw [←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ h]
+      rw [conjugate_def, ←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ h]
 
     -- The normalizer of a set S (of a group G) is the set of all elements in G that when conjugated
     -- with S return S. The normalizer will never be empty since 𝕖 conjugates in such a way. Now
@@ -137,24 +138,22 @@ namespace Defs
       -- EXERCISES? These are hard...
       nonempty := by
         intro s _
-        unfold Conjugate
-        rw [conjugate_by_id]
+        rw [Conjugate_def, conjugate_by_id]
         simp
       mul_closure := by
         intro a b ha hb s hs
         specialize ha s hs
         specialize hb s hs
-        unfold Conjugate at *
+        rw [Conjugate_def] at *
         rw [conjugate_op, Set.image_comp, hb, ha]
       inv_closure := by
         intro a ha s hs
         nth_rw 1 [←ha s hs]
-        unfold Conjugate
+        rw [Conjugate_def]
         funext x
-        dsimp only
-        rw [←Set.image_comp, ←conjugate_op, inv_op, conjugate_by_id, Set.image_id]
+        rw [Conjugate_def, ←Set.image_comp, ←conjugate_op, inv_op, conjugate_by_id, Set.image_id]
 
-    -- The centralizer of a set S (of a group G) is the set of all elements in G that commute with\
+    -- The centralizer of a set S (of a group G) is the set of all elements in G that commute with
     -- all elements of S. The centralizer will never be empty since 𝕖 commutes in such a way. Now
     -- show that this subset of G is a subgroup of G. What would happen if G is abelian?
     def Centralizer (S : Set G) : Subgroup G where
@@ -162,7 +161,7 @@ namespace Defs
       -- ones are provided in ch. 1, we can work to use those instead.
       carrier := {g | ∀ s ∈ S, μ g s = μ s g}
       nonempty := by
-        intro s hs
+        intro s _
         rw [id_op, op_id]
       mul_closure := by
         intro a b ha hb s hs
@@ -182,11 +181,13 @@ namespace Defs
         apply congr <;> try rfl
         exact ha s hs
 
+    -- TODO: figure out how to make this an iff rather than a one way implication
+    theorem Centralizer_def {S : Set G} (h : a ∈ Centralizer S) :
+      ∀ s ∈ S, μ a s = μ s a := h
+
     def Center : Subgroup G := Centralizer Set.univ
 
-    -- This may sound trivial, but try proving a subgroup H is normal if and only if its normalizer
-    -- is the full subgroup H.
-    theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = Maximal G := by
+    theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = H := by
       -- EXERCISE
       -- TODO
       apply Iff.intro
@@ -252,6 +253,48 @@ namespace Defs
         · exact this
         rw [hcomp]
         trivial
+
+    theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
+      intro g hg s _
+      ext x
+      constructor
+      · intro h
+        rw [Conjugate_def] at h
+        obtain ⟨y , h₁, h₂⟩ :=  h
+        rw [← h₂]
+        rw [conjugate_def]
+        apply Subgroup.mul_closure
+        · apply Subgroup.mul_closure
+          · exact hg
+          · exact h₁
+        · apply Subgroup.inv_closure
+          exact hg
+      · intro h
+        rw [Conjugate_def]
+        use μ (μ (ι g) (x)) g
+        constructor
+        · apply Subgroup.mul_closure
+          apply Subgroup.mul_closure
+          apply Subgroup.inv_closure
+          exact hg
+          exact h
+          exact hg
+        · simp only [conjugate_def, op_assoc, op_inv, op_id]
+          rw [← op_assoc]
+          simp only [op_inv, id_op]
+      done
+
+    -- Subgroup H is abelian
+    def isAbelian (H : Subgroup G) : Prop := ∀ (x y : G), x ∈ H → y ∈ H → μ x y = μ y x
+
+    --Show that H ≤ C_G (H) if and only if H is abelian
+    theorem abelian_iff_subgroup_centralizer_self (H : Subgroup G) : H ≤ Centralizer H ↔ isAbelian H := by
+    constructor
+    · intro h x y hx hy
+      specialize h hx
+      exact Centralizer_def h y hy
+    · intro h x hx s hs
+      exact h x s hx hs
 
   end Subgroups
 end Defs
