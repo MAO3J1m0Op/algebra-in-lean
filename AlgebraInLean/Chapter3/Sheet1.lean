@@ -132,23 +132,19 @@ namespace Defs
       congr
       done
 
-    -- We have defined a subgroup to be a subset of a group closed under
-    -- operation and three additional properties. However, to show H is a
-    -- subgroup of G it suffices to show two things:
-
+    -- We have defined a subgroup to be a subset of a group closed underoperation and three
+    -- additional properties. However, to show H is a subgroup of G it suffices to show two things:
     -- 1. H ≠ {∅}
     -- 2. for all x, y ∈ H, μ x (ι y) ∈ H
-
-    -- That is, a subset H of G is a subgroup IFF the two properties above
-    -- hold, this is known as the Subgroup Criterion.
-    -- Notice that the language nonempty we used to define a subset earlier may
-    -- be slightly misleading. Earlier, we asserted nonempty by claiming the
-    -- identity existed in the subset. However, this criterion truly only
-    -- requires the subset to be nonempty-then the second condition can be used
-    -- to show that the identity must be in the subgroup. The proof is
-    -- outlined below and each thing to show (nonempty, inv_closure,
-    -- mul_closure) follows from the last.
-    def subgroup_criterion [Group G] (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x ∈ S → y ∈ S → (μ x (ι y)) ∈ S) : Subgroup G where
+    -- That is, a subset H of G is a subgroup IFF the two properties above hold, this is known as
+    -- the `Subgroup Criterion`.
+    -- Notice that the language nonempty we used to define a subgroup earlier may be slightly
+    -- misleading. Earlier, we asserted nonempty by claiming the identity existed in the subset.
+    -- However, this criterion truly only requires the subset to be nonempty-then the second
+    -- condition can be used to show that the identity must be in the subgroup. The proof is
+    -- outlined below and each thing to show (nonempty, inv_closure, mul_closure)
+    -- follows from the last.
+    def Subgroup_Criterion [Group G] (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x ∈ S → y ∈ S → (μ x (ι y)) ∈ S) : Subgroup G where
       carrier := S
       nonempty := by
         obtain ⟨s, hs⟩ := he
@@ -188,10 +184,9 @@ namespace Defs
         apply ha at hb
         exact hb
 
-    -- An important property of subroups is that for any group G with subgroup
-    -- H, and K a subgroup of H (note this works since H itself is a group)
-    -- then it must be that K is a subgroup of G. That is, transitivity for
-    -- subgroups holds and K ≤ H ≤ G → K ≤ G.
+    -- An important property of subroups is that for any group G with subgroup H, and K a subgroup
+    -- of H (note this works since H itself is a group) then it must be that K is a subgroup of G.
+    -- That is, transitivity for subgroups holds and K ≤ H ≤ G → K ≤ G.
     def subgroup_trans [Group G] (H : Subgroup G) (K : Subgroup H) : Subgroup G where
       carrier := {g : G | ∃ h : H, h ∈ K.carrier ∧ g = h}
       nonempty := by
@@ -217,9 +212,8 @@ namespace Defs
         · rw [xhx]
           rfl
 
-    -- An extension of this transitivity that may be useful is considering
-    -- three subgroups K, J, L of G. It follows that if K ≤ J and J ≤ L then
-    -- K ≤ L. Try proving this one yourself.
+    -- An extension of this transitivity that may be useful is considering three subgroups K, J, L
+    -- of G. It follows that if K ≤ J and J ≤ L then K ≤ L. Try proving this one yourself.
     theorem sgp_trans [Group G] (J K L : Subgroup G) (kj : K.carrier ⊆ J.carrier) (jl : J.carrier ⊆ L.carrier) : K.carrier ⊆ L.carrier := by
       --EXERCISE
       intros x hx
@@ -227,11 +221,11 @@ namespace Defs
       apply kj
       exact hx
 
-    -- Subgroups also hold under intersection. That is, given two subroups H
-    -- and K of a group G, H ∩ K is also a subgroup of G. Let's prove it.
+    -- Subgroups also hold under intersection. That is, given two subgroups H and K of a group G,
+    -- H ∩ K is also a subgroup of G. Let's prove it.
     def subgroup_intersection [Group G] {H K : Set G} (hH : Subgroup G) (hK : Subgroup G) (hHset : H = hH.carrier) (hKset : K = hK.carrier) : Subgroup G where
-      --EXERCISE
       carrier := H ∩ K
+      --EXERCISE
       nonempty := by
         simp [hHset, hKset]
         exact ⟨hH.nonempty, hK.nonempty⟩
