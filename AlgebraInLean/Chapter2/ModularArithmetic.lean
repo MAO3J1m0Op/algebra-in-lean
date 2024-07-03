@@ -107,7 +107,7 @@ notation:50  a " ≡ " b "(mod " m ")" => congr_mod m a b
 
 -- Simply, gcd(a, b) equals gcd(b, a mod b). The termination step (or in more
 -- computer science-y terms, the "base case") of the Euclidean algorithm is
--- gcd(n, 0) = 0, or when b = 0.
+-- gcd(n, 0) = 0; in other words, when b = 0.
 
 -- Here's our homemade version of the gcd function.
 def gcd' (a b : Nat) : Nat :=
