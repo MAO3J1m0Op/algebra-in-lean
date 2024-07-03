@@ -130,6 +130,14 @@ namespace Sheet3
     -- if you don't understand the specific syntax here, but just know that μ is an
     -- arbitrary group operation, and (ι g) is g⁻¹.
 
+    -- THIS PROOF WILL BE TOUGH, especially when it comes to the syntax of our arbitrary
+    -- group operation definitions! As a reminder, `μ g x` means g*x, where * is the implicit
+    -- group operation. `μ (y) (μ g x)` means y*(g*x). The associativity is important here as
+    -- Lean will automatically associate group elements that directly follow the `μ` operator.
+    -- However, using theorems from the group definitions sheet, you can rearrange this
+    -- associativity (since that is a key part of a group definition anwyays)!
+    -- You may want to revisit Chapter 1 for those theorems.
+
     -- Tip: You will want to approach this proof similarly to how you proved that the
     -- inversion function for integers under addition was a group automorphism.
     -- Split the proof up into its different components (i.e., proving the homorphism
@@ -170,18 +178,29 @@ namespace Sheet3
         -- Injectivity
         · intros x y h
           unfold ψ at h
-
-          sorry
+          have h1 : μ (μ g x) (ι g) = μ (μ g y) (ι g) → μ g x = μ g y := by
+            intro h
+            apply right_cancel at h
+            exact h
+          apply h1 at h
+          apply left_cancel at h
+          exact h
         -- Surjectivity
-        · sorry
+        · intro z
+          use μ (ι g) (μ z g)
+          unfold ψ
+          simp only [op_assoc]
+          rw [← op_assoc g, op_inv, id_op, op_id]
       done
+
+    -- That proof was tough! But, it was a great exercise for you to prove in the most
+    -- arbitrary sense, since such a proof will be useful later when learning about
+    -- group actions and automorphism groups (meaning this sheet will likely be
+    -- referenced in later chapters as one to come back to)!
 
   end Automorphisms
 
--- ## OLD ↓ ↓
-
--- TODO: Do we provide toy examples of automorphisms? Or do we define
--- conjugation and then go straight into proving that conjugation is an
--- automorphism?
+-- That's all we have for morphisms. Feel free to move on to Chapter 3: Subgroups!
+-- ## HAVE FUN!
 
 end Sheet3
