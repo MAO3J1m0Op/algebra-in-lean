@@ -67,6 +67,14 @@ variable (n : Nat)
 -- integer `b`, plus a positive remainder `r` with `r` strictly less than `b`.
 -- (What would happen if `r` were equal to or greater than `b`?)
 
+-- When we talk about some integer `n` modulo `q`, we are simply disregarding
+-- the first term in the sum, `bq`, and only considering the remainder `r`.
+
+-- A common real-world example is the analog clock. The clock runs modulo 12;
+-- once we get to the 12th hour, we "roll over" and start at 1 again. Thus, 13
+-- modulo 12 is 1. Another way to look at it is that 13 divided by 12 is 1 with
+-- remainder 1.
+
 -- Another useful and small piece of notation is the vertical bar `∣`, not to
 -- be confused with the "pipe" operator `|` on your keyboard. You can write it
 -- as `\mid`.
@@ -109,7 +117,7 @@ notation:50  a " ≡ " b "(mod " m ")" => congr_mod m a b
 -- computer science-y terms, the "base case") of the Euclidean algorithm is
 -- gcd(n, 0) = 0; in other words, when b = 0.
 
--- Here's our homemade version of the gcd function.
+-- Here's our homemade, and of course, recursive version of the gcd function.
 def gcd' (a b : Nat) : Nat :=
   match b with
     | 0 => a
