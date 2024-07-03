@@ -1,0 +1,25 @@
+\section{More Definitions}
+\usepackage{amsmath, amssymb}
+
+\begin{definition}[Magma]
+    \label{definition : Magma}
+    \lean{Defs.Magma}
+    \leanok
+    A magma is a set G with an operation $\mu$
+\end{definition}
+
+\begin{definition}[Semigroup]
+    \label{definition : Semigroup}
+    \lean{Defs.Semigroup}
+    \leanok
+    \uses{definition : Magma}
+    A semigroup is a Magma with the associative property: $\forall a, b, c \in G, \mu(\mu(a, b), c) = \mu(a, \mu(b, c))$
+\end{definition}
+
+\begin{definition}[Monoid]
+    \label{definition : Monoid}
+    \lean{Defs.Monoid}
+    \leanok
+    \uses{definition : Semigroup}
+    A monoid is a semigroup with an identity $\mathbb{e}$ where $\forall a \in G, \mu (a, \mathbb{e}) = \mu(\mathbb{e}, a) = a$
+\end{definition}

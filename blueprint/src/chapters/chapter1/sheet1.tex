@@ -1,8 +1,23 @@
 \section{Defining the Group}
+\usepackage{amsmath, amssymb}
 
-\begin{definition}
+\begin{definition}[Group]
     \label{definition : Group}
     \lean{Defs.Group}
     \leanok
-    A group is a group.
+    \uses{definition : Monoid}
+    A group is a set $G$ with the following properties:
+    \begin{itemize}
+        \item It must have a binary operation $\mu$.
+        \item This operation must be associative, so $\forall a, b, c \in G, \mu(\mu(a, b), c) = \mu(a, \mu(b, c))$
+        \item $G$ must contain an identity $\mathbb{e}$ where $\forall a \in G, \mu (a, \mathbb{e}) = \mu(\mathbb{e}, a) = a$
+        \item There must also be an inverse function $\iota$, where $\forall a \in G, \mu(\iota(a), a) = \mathbb{e}$
 \end{definition}
+
+\begin{theorem}
+    \label{theorem : inv_op}
+    \lean{Defs.Sheet1.op_inv}
+    \leanok
+    \uses{definition : Group}
+    Applying the operation to an element and it's inverse returns the identity: $\forall a \in G, \mu(a, \iota(a)) = \mathbb{e}$
+\end{theorem}
