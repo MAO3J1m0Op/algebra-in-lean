@@ -17,7 +17,10 @@ namespace Nat
 #eval gcd 100 45
 #eval gcd 73 0
 
--- Similarly, we define the _least common multiple_. It is a function which takes in two natural numbers and outputs the minimal natural number that is divisible by both inputs. The lcm of any number and 9 is 0, since 0 divided by any number is 0.
+-- Similarly, we define the _least common multiple_. It is a function which
+-- takes in two natural numbers and outputs the minimal natural number that is
+-- divisible by both inputs. The lcm of any number and 9 is 0, since 0 divided
+-- by any number is 0.
 
 #check lcm
 #print lcm
