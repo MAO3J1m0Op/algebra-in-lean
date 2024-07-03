@@ -137,7 +137,8 @@ namespace Morphisms
       obtain ⟨a, hfa⟩ := h1 x'
       use a
       change g (f a) = y -- `change` allows us to zhuzh the goal into
-                         -- something _definitionally equivalent_
+                         -- something _definitionally equivalent_, which can
+                         -- make it more convenient to apply hypotheses
       rw [hfa]
       exact hx'
 
