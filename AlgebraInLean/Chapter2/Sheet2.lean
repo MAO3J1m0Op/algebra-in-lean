@@ -15,7 +15,7 @@ namespace Defs
 -- essential) fields: 
 -- - to_fun (a map from a group G → group H)
 -- - inv_fun (a map from group H → group G)
--- - left_inv & right_inv (both inverses exist and they are unique)
+-- - left_inv & right_inv (both inverses exist, thus a unique inverse exists)
 -- - map_mul' (a proof of homomorphism/preservation of operation)
 
 -- So to prove an isomorphism, we have to provide proofs for each of these
@@ -98,4 +98,5 @@ example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
 -- at) might seem uninteresting at first. Any group will have at least one
 -- isomorphism associated with it: the identity map. Boring. However, there are
 -- much more interesting examples of nontrivial group-to-itself isomorphisms,
--- which you will focus on next chapter.
+-- which you will focus on next chapter; we'll also be pivoting back to our
+-- implementation of morphisms.
