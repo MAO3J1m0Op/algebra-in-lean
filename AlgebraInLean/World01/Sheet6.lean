@@ -311,7 +311,7 @@ smallest non-abelian group. -/
 instance : Defs.Group (Dn 3) := instGroupDnOfNeZeroNat 3 NeZero.succ
 
 /- Now, try to find a counterexample and show that D3 cannot be abelian-/
-example : ¬(∀ a b : (Dn 3), μ a b = μ b a) := by
+theorem D3_nonabelian : ¬(∀ a b : (Dn 3), μ a b = μ b a) := by
   -- sorry
   -- SAMPLE SOLUTION
   intro h

@@ -12,7 +12,7 @@
     \lean{Defs.Semigroup}
     \leanok
     \uses{definition : Magma}
-    A semigroup is a Magma with the associative property: $\forall a, b, c \in G, \mu(\mu(a, b), c) = \mu(a, \mu(b, c))$
+    A semigroup is a magma with the associative property: $\forall a, b, c \in G, \mu(\mu(a, b), c) = \mu(a, \mu(b, c))$
 \end{definition}
 
 \begin{definition}[Monoid]
@@ -21,4 +21,20 @@
     \leanok
     \uses{definition : Semigroup}
     A monoid is a semigroup with an identity $\mathbb{e}$ where $\forall a \in G, \mu (a, \mathbb{e}) = \mu(\mathbb{e}, a) = a$
+\end{definition}
+
+\begin{definition}[Commutative Monoid]
+    \label{definition : CommMonoid}
+    \lean{Defs.CommMonoid}
+    \leanok
+    \uses{definition : Monoid}
+    A commutative monoid is a monoid with the commutative property: $\forall a, b \in G, \mu(a, b) = \mu(b, a)$
+\end{definition}
+
+\begin{definition}[Abelian Group]
+    \label{definition : AbelianGroup}
+    \lean{Defs.AbelianGroup}
+    \leanok
+    \uses{definition : Group, definition : CommMonoid}
+    An abelian group is a group with the commutative property: $\forall a, b \in G, \mu(a, b) = \mu(b, a)$
 \end{definition}

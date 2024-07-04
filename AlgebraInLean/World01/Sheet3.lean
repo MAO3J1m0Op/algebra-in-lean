@@ -35,3 +35,15 @@ theorem inverse_uniqueness [Defs.Group G] (a i : G) : (μ a i = 𝕖 ∧ μ i a 
   rw [(op_assoc (ι a) a i).symm]
   rw [inv_op, id_op]
   -- END OF SAMPLE SOLUTION
+
+/- Now that we have the uniqueness theorems, we can prove some more interesting
+theorems about the identity and inverses-/
+theorem shoes_and_socks [Defs.Group G] (a b : G) : ι (μ a b) = μ (ι b) (ι a) := by
+  -- sorry
+  -- SAMPLE SOLUTION
+  symm
+  apply inverse_uniqueness
+  constructor
+  rw[op_assoc, (op_assoc b (ι b) (ι a)).symm, op_inv, id_op, op_inv]
+  rw[op_assoc, (op_assoc (ι a) a b).symm, inv_op, id_op, inv_op]
+  -- END OF SAMPLE SOLUTION
