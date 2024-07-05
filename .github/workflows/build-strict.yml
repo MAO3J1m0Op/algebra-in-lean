@@ -8,6 +8,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  exercises:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build exercises
+        run: python3 ./scripts/mk_exercises.py
+
+      - name: check for changes
+        run: |
+          git add -- Exercises
+          git diff --cached --quiet -- Exercises
+
   lake-build:
     runs-on: ubuntu-latest
     steps:
@@ -31,12 +42,6 @@ jobs:
 
       - name: confirm all modules are included
         run: lake exe mk_all --check
-
-      - name: confirm exercises are up-to-date
-        run: |
-          python3 ./scripts/mk_exercises.py
-          git add -- Exercises
-          git diff --cached --quiet -- Exercises
 
       - name: get cache
         run: lake exe cache get
