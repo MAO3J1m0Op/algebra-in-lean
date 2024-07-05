@@ -8,11 +8,14 @@ import Mathlib.Tactic
 course OR to the Natural Number Game. If you would like to learn more about Lean,
 Buzzard's course goes more in depth in relation to numerous undergraduate math topics.
 When exercises are from either of these sources, they will be clearly marked so as
-to give credit.-/
+to give credit.
+
+Formalising Mathematics can be found here:
+<https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>-/
 
 /-
 Many basic tactics in Lean are best introduced through logic exercises.
-You already know rfl and rw from the Natural Number Game (NNG), and you are also
+You already know "rfl" and "rw" from the Natural Number Game (NNG), and you are also
 already familiar with a few other basic tactics. However, keep in mind that the
 way these tactics work in the Natural Number Game may be slightly different than
 the way that they are actually used in Lean. These differences mostly boil down
@@ -25,8 +28,8 @@ apply
 intro
 
 To continue getting used to reading Lean and working with the Lean Infoview,
-let's do a few levels from the NNG. Don't forget that you can also use rw and rfl!
-Delete the sorrys and fill in the proofs.
+let's do a few levels from the NNG. Don't forget that you can also use "rw" and "rfl"!
+Delete the "sorry"s and fill in the proofs.
 -/
 
 /-NNG Implication World Level 1-/
@@ -37,8 +40,8 @@ example (x y z : Nat) (h1 : x + y = 37) (h2 : 3 * x + z = 42) : x + y = 37 := by
 /-NNG Implication World Level 2-/
 /-hint: zero_add still works outside of the NNG-/
 example (y x : Nat) (h1 : 0 + x = 0 + y + 2) : x = y + 2 := by
-  rw[zero_add] at h1
-  rw[zero_add] at h1
+  rw [zero_add] at h1
+  rw [zero_add] at h1
   exact h1
   done
 
@@ -161,19 +164,19 @@ symbol in Lean, just hover over it for a few seconds. rw can be applied to ↔ h
 /-FM Section 1 Sheet 5-/
 example : (P ↔ Q) → (Q ↔ P) := by
   intro h
-  rw[h]
+  rw [h]
   done
 
 /-FM Section 1 Sheet 5-/
 example : (P ↔ Q) → (Q ↔ R) → (P ↔ R) := by
   intro h1 h2
-  rw[h2] at h1
+  rw [h2] at h1
   exact h1
   done
 
 /-Lean also has booleans True and False.
 
-If the goal is "True", it can be solved with the tactic trivial.
+If the goal is "True", it can be solved with the tactic "trivial".
 
 For example:-/
 
@@ -182,7 +185,7 @@ example : True := by
   trivial
   done
 
-/-Let's do some exercises, adding trivial to our list of tactics.-/
+/-Let's do some exercises, adding "trivial" to our list of tactics.-/
 
 /-FM Section 1 Sheet 2-/
 example : True → True := by
@@ -222,7 +225,7 @@ example : P → (P → False) → False := by
   exact h1
   done
 
-/-The tactic exfalso changes any goal after the ⊢ symbol to "False."
+/-The tactic "exfalso" changes any goal after the ⊢ symbol to "False."
 
 For example:-/
 
@@ -251,8 +254,8 @@ example : (True → False) → P := by
   trivial
   done
 
-/-To wrap up this part, note that the more advanced form of the rw tactic is
-nth_rewrite. This example from the NNG shows it in use:-/
+/-To wrap up this part, note that the more advanced form of the "rw" tactic is
+"nth_rewrite". This example from the NNG shows it in use:-/
 
 /-NNG Advanced Addition World Level 3-/
 example (x y : Nat) : x + y = y → x = 0 := by
@@ -262,8 +265,8 @@ example (x y : Nat) : x + y = y → x = 0 := by
   exact h1
   done
 
-/-Note that tactics exact and apply both have variants, exact? and apply?, which
+/-Note that tactics "exact" and "apply" both have variants, "exact?" and "apply?", which
 both go into mathlib's theorems/lemmas to search for something applicable to the
-proof. exact? and apply? do not always work, as there are not always helpful lemmas.
+proof. "exact?" and "apply?" do not always work, as there are not always helpful lemmas.
 
 On to the next part!-/

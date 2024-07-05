@@ -8,10 +8,13 @@ import Mathlib.Tactic
 course OR to the Natural Number Game. If you would like to learn more about Lean,
 Buzzard's course goes more in depth in relation to numerous undergraduate math topics.
 When exercises are from either of these sources, they will be clearly marked so as
-to give credit.-/
+to give credit.
 
-/-The tactic constructor should be completely new to you. It is very useful for
-deconstructing goals that use "and" (∧). It is similar to the cases tactic in the
+Formalising Mathematics can be found here:
+<https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>-/
+
+/-The tactic "constructor" should be completely new to you. It is very useful for
+deconstructing goals that use "and" (∧). It is similar to the "cases" tactic in the
 way that it breaks up one goal into multiple goals to be completed, but it is
 used on the goal rather than on a hypothesis.
 
@@ -27,9 +30,9 @@ example : P → Q → P ∧ Q := by
   · exact h2
   done
 
-/-Note that constructor breaks the goal of P ∧ Q into two goals, ⊢ P and then ⊢ Q.
+/-Note that "constructor" breaks the goal of P ∧ Q into two goals, ⊢ P and then ⊢ Q.
 
-With the constructor tactic comes the need to talk about some helpful formatting
+With the "constructor" tactic comes the need to talk about some helpful formatting
 in Lean. The · that you see above is used to indicate steps to solve separate goals.
 ⊢ P is one goal, so a new dot is added. exact h1 then solves that goal.
 ⊢ Q is the next goal, so another dot is added. exact h2 then solves that goal.
@@ -43,12 +46,12 @@ For example:-/
 example : (P ↔ Q) ↔ (Q ↔ P) := by
   constructor
   · intro h1
-    rw[h1]
+    rw [h1]
   · intro h2
-    rw[h2]
+    rw [h2]
   done
 
-/-Note that in the above example, constructor is used to break up an if and only if
+/-Note that in the above example, "constructor" is used to break up an if and only if
 statement.
 
 See if you can complete the following exercises. The last few are a bit tricky!

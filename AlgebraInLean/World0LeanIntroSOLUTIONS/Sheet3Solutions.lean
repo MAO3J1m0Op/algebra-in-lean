@@ -8,7 +8,10 @@ import Mathlib.Tactic
 course OR to the Natural Number Game. If you would like to learn more about Lean,
 Buzzard's course goes more in depth in relation to numerous undergraduate math topics.
 When exercises are from either of these sources, they will be clearly marked so as
-to give credit.-/
+to give credit.
+
+Formalising Mathematics can be found here:
+<https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>-/
 
 /-In the Natural Number Game, you used the tactics:
 
@@ -34,10 +37,10 @@ example : Q → P ∨ Q := by
   exact h
   done
 
-/-Also in the Natural Number Game, you learned a tactic called cases. However,
+/-Also in the Natural Number Game, you learned a tactic called "cases". However,
 the functionality and syntax you learned is actually closer to the tactic cases'
 (called cases prime), which is a more specific functionality of the broader tactic.
-Let's now go over how to use the cases tactic.
+Let's now go over how to use the "cases" tactic.
 
 First, let's look at an example:-/
 
@@ -51,7 +54,7 @@ example : P ∧ Q → P := by
 
 /-Note that the structure of the tactic looks a bit different. A shortcut to
 getting this structure automatically generated rather than having to type it all
-out is to type "cases h1 (or whatever you want to do cases on) with" and wait for
+out is to type "cases h1 (or the hypothesis you want to do cases on) with" and wait for
 a yellow lightbulb to appear at the left side of the line. Click on the lightbulb,
 then select "Generate an explicit pattern match." The structure will then appear.
 You will need to indent the next lines as appropriate.
