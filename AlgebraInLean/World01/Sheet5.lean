@@ -1,5 +1,6 @@
 import AlgebraInLean.World01.Sheet4
-open Defs
+
+namespace AlgebraInLean
 
 /- To represent Cn, the group of rotational symmetries of an n-gon, we will
 have a function mapping any natural number n to the set of all n rotational
@@ -15,7 +16,7 @@ def fCn (n : ℕ) : (Cn n) → (Cn n) → (Cn n) := Fin.add
 def fCn_inv (n : ℕ): (Fin n) → (Fin n) := fun x => -x
 
 
-instance (n : ℕ) (hpos : NeZero n): Defs.Group (Cn n) where
+instance (n : ℕ) (hpos : NeZero n): Group (Cn n) where
   op := fCn n
 
   op_assoc := by

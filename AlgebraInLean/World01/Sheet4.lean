@@ -1,12 +1,13 @@
 import AlgebraInLean.World01.Sheet3
-open Defs
+
+namespace AlgebraInLean
 
 /- Now that we know how to define a group, and some basic properties of groups,
 we can find important examples of groups-/
 
 /- The group you are likely most familiar with is the integers, with addition
 as the group operation.-/
-instance : Defs.Group ℤ where
+instance : Group ℤ where
   op := fun x y => x + y
 
   op_assoc := by -- Mathlib already has a proof that the addition is associative, try to use that
@@ -108,7 +109,7 @@ def fC3inv : C3 → C3
 /- Now, we can prove that C3 is a group.
 The cases tactic is very useful here, along with the all_goals tactic, which allows
 you to solve multiple goals at the same time-/
-instance : Defs.Group C3 where
+instance : Group C3 where
   op := fC3
 
   op_assoc := by

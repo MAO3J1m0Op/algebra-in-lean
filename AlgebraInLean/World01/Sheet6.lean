@@ -1,5 +1,6 @@
 import AlgebraInLean.World01.Sheet5
-open Defs
+
+namespace AlgebraInLean
 
 /- The next example of a group we will go over is the dihedral group, Dn. Similarly to
 the cyclic group, Dn is a group of the symmetries of a regular n-gon. However, in
@@ -94,7 +95,7 @@ theorem h_ref_f {x y : Dn n}: y.1 = false → (f_ref n x y= {1 := true, 2 := Fin
   exact if_neg h2
 
 /- Finally, we can claim that Dn is a group-/
-instance (n : ℕ) (hpos : NeZero n) : Defs.Group (Dn n) where
+instance (n : ℕ) (hpos : NeZero n) : Group (Dn n) where
   op := Dn_op n
 
   /- The proof that the group operation is associative requires splitting the
@@ -308,7 +309,7 @@ instance (n : ℕ) (hpos : NeZero n) : Defs.Group (Dn n) where
 smallest non-abelian group. -/
 
 /- First, we have to claim that D3 is a group. This is simple, since we just proved it-/
-instance : Defs.Group (Dn 3) := instGroupDnOfNeZeroNat 3 NeZero.succ
+instance : Group (Dn 3) := instGroupDnOfNeZeroNat 3 NeZero.succ
 
 /- Now, try to find a counterexample and show that D3 cannot be abelian-/
 theorem D3_nonabelian : ¬(∀ a b : (Dn 3), μ a b = μ b a) := by
