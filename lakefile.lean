@@ -4,7 +4,11 @@ open Lake DSL
 def leanVersion : String := s!"v{Lean.versionString}"
 
 package «algebra-in-lean» where
-  -- add package configuration options here
+  leanOptions :=
+    #[ ⟨`pp.unicode.fun, true⟩
+     , ⟨`autoImplicit, false⟩
+     , ⟨`relaxedAutoImplicit, false⟩
+     ]
 
 require mathlib from git
   "https://github.com/leanprover-community/mathlib4" @ leanVersion
