@@ -32,6 +32,11 @@ jobs:
       - name: confirm all modules are included
         run: lake exe mk_all --check
 
+      - name: confirm exercises are up-to-date
+        run: |
+          ./scripts/mk_exercises.py
+          git diff --quiet -- Exercises
+
       - name: get cache
         run: lake exe cache get
 
