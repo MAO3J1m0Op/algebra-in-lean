@@ -16,6 +16,9 @@ jobs:
       - name: checkout the branch
         uses: actions/checkout@v4
 
+      - name: clean exercises
+        run: rm -rf ./Exercises
+
       - name: build exercises
         run: python3 ./scripts/mk_exercises.py
 
