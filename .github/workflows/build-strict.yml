@@ -8,9 +8,14 @@ on:
   workflow_dispatch:
 
 jobs:
+
   exercises:
     runs-on: ubuntu-latest
     steps:
+
+      - name: checkout the branch
+        uses: actions/checkout@v4
+
       - name: build exercises
         run: python3 ./scripts/mk_exercises.py
 
