@@ -1,1 +1,21 @@
 \section{Some Examples of Groups}
+
+\begin{definition}[Integers]
+    \label{definition : Int}
+    \lean{Int}
+    \leanok
+    \uses{definition : Group}
+    $(\mathbb{Z}, +)$, the integers with addition, is a group. $0$ is the identity,
+    and the inverse of x is -x.
+\end{definition}
+
+\begin{definition}[$C_3$]
+    \label{definition : C3}
+    \lean{Defs.C3}
+    \leanok
+    \uses{definition : Group}
+    $C_3$ is the group of rotational symmetries of an equilateral triangle under
+    composition. This is treated as an inductive type with three elements. The
+    identity is a $ 0 ^{\circ} $ rotation, and the inverse of an  $x ^{\circ} $
+    rotation is a $360 - x ^{\circ} $ rotation.
+\end{definition}

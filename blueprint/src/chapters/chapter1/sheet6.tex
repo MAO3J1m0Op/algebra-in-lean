@@ -1,0 +1,24 @@
+\section{$D_n$ as a group}
+
+\begin{definition}[$D_n$]
+    \label{definition : Dn}
+    \lean{Defs.Dn}
+    \leanok
+    \uses{definition : Group}
+    $D_n$ is the dihedral group of order $2n$. This is the group of all
+    symmetries of a regular n-gon. This includes n rotations and n reflections.
+    It is represented by a pair of a boolean and an element of Fin n. The
+    boolean represents whether the element is a rotation or not, and the element
+    of Fin n represents how much the first vertex is rotated. The identity is a
+    $0 ^{\circ}$ rotation, the inverse of an $x ^{\circ}$ rotation is a $360 - x
+    ^{\circ}$ rotation, and any reflection is its own inverse.
+\end{definition}
+
+\begin{theorem}[$D_3$ is nonabelian]
+    \label{theorem : D3_nonabelian}
+    \lean{Defs.D3_nonabelian}
+    \leanok
+    \uses{definition  : Dn}
+    $D_3$ is the first example we've seen of a nonabelian group:
+    $\neg (\forall a, b \in D_3, \mu(a, b) = \mu(b, a))$
+\end{theorem}
