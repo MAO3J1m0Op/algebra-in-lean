@@ -1,1 +1,1 @@
-import «AlgebraInLean».Basic
+import AlgebraInLean.Basic
