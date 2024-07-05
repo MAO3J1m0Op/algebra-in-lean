@@ -34,8 +34,9 @@ jobs:
 
       - name: confirm exercises are up-to-date
         run: |
-          ./scripts/mk_exercises.py
-          git diff --quiet -- Exercises
+          python3 ./scripts/mk_exercises.py
+          git add -- Exercises
+          git diff --cached --quiet -- Exercises
 
       - name: get cache
         run: lake exe cache get
