@@ -11,7 +11,6 @@ namespace Defs
   class Semigroup (G : Type*) extends Magma G where
     protected op_assoc : ∀ (a b c : G), μ (μ a b) c = μ a (μ b c)
 
-  @[simp]
   theorem op_assoc [Semigroup G] (a b c : G) : μ (μ a b) c = μ a (μ b c) := Semigroup.op_assoc a b c
 
   class Monoid (G : Type*) extends Semigroup G where
@@ -30,7 +29,6 @@ namespace Defs
   class CommMonoid (G : Type*) extends Monoid G where
     protected op_comm : ∀ (a b : G), μ a b = μ b a
 
-  @[simp]
   theorem op_comm [CommMonoid G] (a b : G) : μ a b = μ b a := CommMonoid.op_comm a b
 
   class Group (G : Type*) extends Monoid G where
