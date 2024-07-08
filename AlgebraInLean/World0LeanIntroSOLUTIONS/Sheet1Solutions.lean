@@ -36,31 +36,31 @@ arithmetic.
 
 To get you used to reading Lean, let us begin with a very basic exercise from the Natural Number
 Game.
---/
+-/
 
-example (x q : Nat): 37 * x + q = 37 * x + q := by
+example (x q : Nat) : 37 * x + q = 37 * x + q := by
   rfl
 
 /-
 The above example is the very first level of the Natural Number Game. In the Natural Number Game,
 you typed a tactic into a text box, and the active goals updated. Here, it is a little different.
 
-Putting your cursor after the word "by," you should see the Tactic State appear in your Lean
+Putting your cursor after the `by`, you should see the Tactic State appear in your Lean
 Infoview window to the right of your screen. There, you will see what you saw in the Natural Number
-Game as "Objects" and "Active Goals". What you see after the "⊢" is your Active Goal, and it will
+Game as "Objects" and "Active Goals". What you see after the `⊢` is your active goal, and it will
 update as you write tactics.
 
 We complete exercises just as we did in the Natural Number Game. This example can be completed by
-rfl, just as it was in the Natural Number Game. Putting your cursor to the right of rfl, you will
-see in the Lean Infoview that the Tactic State has updated to read "No goals." This is what we want
-to see with all of our exercises by the time we're done going through this problem set!
+`rfl`, just as it was in the Natural Number Game. Putting your cursor to the right of `rfl`, you
+will see in the Lean Infoview that the Tactic State has updated to read "No goals." This is what we
+want to see with all of our exercises by the time we're done going through this problem set!
 
 Let's see another example from the Natural Number Game, but this time, you try completing it
-yourself! The tactic "sorry" is used as a placeholder in Lean. Deleting it will show the objects and
-goals. After you write a new tactic, go to a new line. The tactic "done" is used to indicate that
+yourself! The tactic `sorry` is used as a placeholder in Lean. Deleting it will show the objects and
+goals. After you write a new tactic, go to a new line. The tactic `done` is used to indicate that
 the exercise or theorem is complete.
 
-This example can be done entirely using the rw tactic and theorems that you used in the Natural
+This example can be done entirely using the `rw` tactic and theorems that you used in the Natural
 Number Game.
 -/
 

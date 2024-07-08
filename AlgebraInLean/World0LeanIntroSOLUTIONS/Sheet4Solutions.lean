@@ -4,23 +4,27 @@ This is a solutions sheet.
 
 import Mathlib.Tactic
 
-/-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics course OR to the
+/-
+Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics course OR to the
 Natural Number Game. If you would like to learn more about Lean, Buzzard's course goes more in depth
 in relation to numerous undergraduate math topics. When exercises are from either of these sources,
 they will be clearly marked so as to give credit.
 
 Formalising Mathematics can be found here:
-<https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>-/
+<https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>
+-/
 
-/-The tactic "constructor" should be completely new to you. It is very useful for deconstructing
-goals that use "and" (∧). It is similar to the "cases" tactic in the way that it breaks up one goal
-into multiple goals to be completed, but it is used on the goal rather than on a hypothesis.
+/-
+The tactic `constructor` should be completely new to you. It is very useful for deconstructing
+goals that use `∧` ("and"). It is similar to the `cases` tactic in the way that it breaks up one
+goal into multiple goals to be completed, but it is used on the goal rather than on a hypothesis.
 
-Let's take a look at the example below:-/
+Let's take a look at the example below:
+-/
 
 variable (P Q R S T : Prop)
 
-/-FM Section 1 Sheet 4-/
+/- FM Section 1 Sheet 4 -/
 example : P → Q → P ∧ Q := by
   intro h1 h2
   constructor
@@ -28,18 +32,22 @@ example : P → Q → P ∧ Q := by
   · exact h2
   done
 
-/-Note that "constructor" breaks the goal of P ∧ Q into two goals, ⊢ P and then ⊢ Q.
+/-
+Note that `constructor` breaks up the goal `⊢ P ∧ Q` into `⊢ P` and `⊢ Q`.
 
-With the "constructor" tactic comes the need to talk about some helpful formatting in Lean. The ·
+With the `constructor` tactic comes the need to talk about some helpful formatting in Lean. The `·`
 that you see above is used to indicate steps to solve separate goals.
-⊢ P is one goal, so a new dot is added. exact h1 then solves that goal.
-⊢ Q is the next goal, so another dot is added. exact h2 then solves that goal.
-In the case where more than one tactic is requred to resolve the goal, lines following the line with
-the new · are indented to indicate that they are associated with a certain goal.
 
-For example:-/
+- `⊢ P` is one goal, so a `·` is added. `exact h1` solves this first goal.
+- `⊢ Q` is the next goal, so another `·` is added. `exact h2` solves this second goal.
 
-/-FM Section 1 Sheet 5-/
+In the case where more than one tactic is requred to solve the goal, lines following the line with
+the new `·` are indented to indicate that they are associated with this specific goal.
+
+For example:
+-/
+
+/- FM Section 1 Sheet 5 -/
 example : (P ↔ Q) ↔ (Q ↔ P) := by
   constructor
   · intro h1
@@ -48,12 +56,14 @@ example : (P ↔ Q) ↔ (Q ↔ P) := by
     rw [h2]
   done
 
-/-Note that in the above example, "constructor" is used to break up an if and only if statement.
+/-
+Note that in the above example, `constructor` is used to break up an if and only if statement.
 
 See if you can complete the following exercises. The last few are a bit tricky! Don't forget all of
-the tactics you've learned so far, and try to use our newly learned formatting.-/
+the tactics you've learned so far, and try to use our newly learned formatting.
+-/
 
-/-FM Section 1 Sheet 4-/
+/- FM Section 1 Sheet 4 -/
 example : P ∧ Q → Q ∧ P := by
   intro h1
   cases h1 with
@@ -63,7 +73,7 @@ example : P ∧ Q → Q ∧ P := by
     · exact left
   done
 
-/-FM Section 1 Sheet 4-/
+/- FM Section 1 Sheet 4 -/
 example : P → P ∧ True := by
   intro h1
   constructor
@@ -71,7 +81,7 @@ example : P → P ∧ True := by
   · trivial
   done
 
-/-FM Section 1 Sheet 4-/
+/- FM Section 1 Sheet 4 -/
 example : False → P ∧ False := by
   intro h1
   constructor
@@ -80,7 +90,7 @@ example : False → P ∧ False := by
   · exact h1
   done
 
-/-FM Section 1 Sheet 4-/
+/- FM Section 1 Sheet 4 -/
 example : P ∧ Q → Q ∧ R → P ∧ R := by
   intro h1 h2
   cases h1 with
@@ -92,7 +102,7 @@ example : P ∧ Q → Q ∧ R → P ∧ R := by
       · exact right2
   done
 
-/-FM Section 1 Sheet 4-/
+/- FM Section 1 Sheet 4 -/
 example : (P ∧ Q → R) → P → Q → R := by
   intro h1 h2 h3
   apply h1
@@ -101,7 +111,7 @@ example : (P ∧ Q → R) → P → Q → R := by
   · exact h3
   done
 
-/-FM Section 1 Sheet 5-/
+/- FM Section 1 Sheet 5 -/
 example : P ∧ Q ↔ Q ∧ P := by
   constructor
   · intro h1
@@ -118,7 +128,7 @@ example : P ∧ Q ↔ Q ∧ P := by
       · exact left
   done
 
-/-FM Section 1 Sheet 6-/
+/- FM Section 1 Sheet 6 -/
 example : (P ∨ Q) ∨ R ↔ P ∨ Q ∨ R := by
   constructor
   · intro h1
@@ -153,7 +163,7 @@ example : (P ∨ Q) ∨ R ↔ P ∨ Q ∨ R := by
         exact h7
   done
 
-/-FM Section 1 Sheet 6-/
+/- FM Section 1 Sheet 6 -/
 example : (P ↔ R) → (Q ↔ S) → (P ∨ Q ↔ R ∨ S) := by
   intro h1 h2
   constructor
@@ -195,4 +205,4 @@ example : (P ↔ R) → (Q ↔ S) → (P ∨ Q ↔ R ∨ S) := by
           exact h4
   done
 
-/-On to the next part!-/
+/- On to the next part! -/
