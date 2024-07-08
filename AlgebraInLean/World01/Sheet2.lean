@@ -51,3 +51,11 @@ theorem inv_op [Group G] (a : G) : μ (ι a) a = 𝕖 := Group.inv_op a
 class AbelianGroup (G : Type*) extends Group G, CommMonoid G
 
 /- These are the definitions that will be used moving forwards-/
+
+/- Try to prove a theorem using the new definitions-/
+theorem left_cancel [Group G] (a b c : G) : μ a b = μ a c → b = c := by
+  -- sorry
+  -- SAMPLE SOLUTION
+  intro h
+  rw[←(id_op b), ←(id_op c), ←(inv_op a), op_assoc, op_assoc, h]
+  -- END OF SAMPLE SOLUTION

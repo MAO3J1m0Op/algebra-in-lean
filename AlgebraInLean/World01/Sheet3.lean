@@ -48,3 +48,13 @@ theorem shoes_and_socks [Group G] (a b : G) : ι (μ a b) = μ (ι b) (ι a) := 
   rw[op_assoc, (op_assoc b (ι b) (ι a)).symm, op_inv, id_op, op_inv]
   rw[op_assoc, (op_assoc (ι a) a b).symm, inv_op, id_op, inv_op]
   -- END OF SAMPLE SOLUTION
+
+theorem inv_inv [Group G] (a : G) : ι (ι a) = a := by
+  --sorry
+  -- SAMPLE SOLUTION
+  symm
+  apply inverse_uniqueness
+  constructor
+  exact inv_op a
+  exact op_inv a
+  -- END OF SAMPLE SOLUTION
