@@ -43,10 +43,11 @@
     \lean{Defs.Subgroups.Subgroup_Criterion}
     \leanok
     \uses{definition : Subgroup}
-    Let $G$ be a group. A \textit{subset} $H$ of $G$ is a \textit {subgroup} \iff
+    Let $G$ be a group. A \textit{subset} $H$ of $G$ is a \textit {subgroup} $\iff$
     \begin{enumerate}
-        \item $H \neq \{\}$
-        \item \all x, y \in H, $\mu x (\io y) \in H$
+        \item $H \neq \emptyset$
+        \item $\forall x, y \in H, \mu x ( \iota y) \in H$
+    \end{enumerate}
 \end{proposition}
 
 \begin{definition}
@@ -54,15 +55,15 @@
     \lean{Defs.Subgroups.subgroup_trans}
     \leanok
     \uses{definition : Subgroup}
-    Let $G$, $H$, and $K$ be groups such that $K \le H$ and $H \le G$. Then $K \le G$.
-\end{theorem}
+    Let $G$, $H$, and $K$ be groups such that $K \leq H$ and $H \leq G$. Then $K \leq G$.
+\end{definition}
 
 \begin{theorem}
     \label{theorem : sgp_trans}
     \lean{Defs.Subgroups.sgp_trans}
     \leanok
     \uses{definition : Subgroup}
-    Let $G$ be a group. For $J$, $K$, $L \le G$ then if $J \le K$ and $K \le L$ then $J \le L$.
+    Let $G$ be a group. For $J$, $K$, $L \leq G$ then if $J \leq K$ and $K \leq L$ then $J \leq L$.
 \end{theorem}
 
 \begin{definition}
