@@ -9,7 +9,7 @@ namespace Defs
   # Morphisms
 
   Morphisms are structure-preserving maps between objects in a category.
-  In category theory, morphisms are arrows that connect objects and adhere
+  In category theory, morphisms are arrows between objects and adhere
   to certain composition and identity rules.
 
   Examples of morphisms you may have seen before are functions between
@@ -23,14 +23,15 @@ namespace Defs
 
   namespace Interlude
 
+    /-- For all a, b, c ∈ G, ab = ac → b = c-/
     theorem mul_left_eq [Group G] (a b c : G) (h : μ a b = μ a c) : b = c
     :=
       calc
         b = μ 𝕖 b := by rw [id_op]
         _ = μ (μ (ι a) a) b := by rw [← inv_op a]
-        _ = μ (ι a) (μ a b) := by rw [Semigroup.op_assoc]
+        _ = μ (ι a) (μ a b) := by rw [op_assoc]
         _ = μ (ι a) (μ a c) := by rw [h]
-        _ = μ (μ (ι a) a) c := by rw [Semigroup.op_assoc]
+        _ = μ (μ (ι a) a) c := by rw [op_assoc]
         _ = μ 𝕖 c := by rw [inv_op a]
         _ = c := by rw [id_op]
 
@@ -48,6 +49,7 @@ namespace Defs
 
     -/
 
+    /- For all g ∈ G, (g⁻¹)⁻¹ = g -/
     theorem inv_inv_eq_self [Group G] : ∀ g : G, ι (ι g) = g := by
       intro g
       have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
@@ -60,6 +62,7 @@ namespace Defs
       rw [← inv_op g] at hq
       rw [mul_left_eq (ι g) (ι (ι g)) g hq]
 
+    /- For all a, b ∈ G, a⁻¹ = b⁻¹ → a = b -/
     example [Group G] : ∀ a b : G, ι a = ι b → a = b := by
       intro a b
       intro hinv
@@ -68,6 +71,7 @@ namespace Defs
       rw [← hinj a, ← hinj b]
       rw [hinv]
 
+    /-- The inverse function is injective-/
     theorem inv_inj [Group G]: Injective (ι: G → G) := by
       unfold Injective
       have hinv : ∀ (x : G), ι (ι x) = x
@@ -88,33 +92,32 @@ namespace Defs
 
     -/
 
+    -- An injective and surjective function is bijective
     example (f : α → β) (h1 : Injective f) (h2 : Surjective f)
     : (Bijective f) := by
-      unfold Bijective
+      rw [Bijective]
       constructor
-      assumption -- or `exact h1`
-      assumption -- or `exact h2`
+      · assumption -- or `exact h1`
+      · assumption -- or `exact h2`
 
-    /- This proof is a bit more of a challenge, so there will be additional
-    commentary in the solutions -/
+    -- This proof is a bit more involved, so there will be additional commentary in the solutions
+
+    -- The composition of surjective functions is surjective
     example (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g)
     : Surjective (g ∘ f) := by
-      unfold Surjective at *
-      /- The asterisk represents a 'wildcard', more technically known as a
-      Kleene star. `at *` simply means to execute the tactic everywhere
-      possible. -/
+      rw [Surjective] at *
+      /- The asterisk represents a 'wildcard', more technically known as a Kleene star. `at *`
+      simply means to execute the tactic everywhere possible. -/
       intro y
-      /- We want to show that `g ∘ f` is surjective, i.e. that for all y in γ,
-      there exists an x in α such that `g ∘ f` equals y; since g is
-      surjective, we use the `have` tactic to express something we know must
-      be true and to use it as a hypothesis -/
+      /- We want to show that `g ∘ f` is surjective, i.e. that for all y in γ, there exists an x in α
+      such that `g ∘ f` equals y; since g is surjective, we use the `have` tactic to express
+      something we know must be true and to use it as a hypothesis. -/
       have hx : ∃ (x : β), g x = y := h2 y
       obtain ⟨x, hx⟩ := hx
       obtain ⟨a, hfa⟩ := h1 x
       use a
       change g (f a) = y
-      /- `change` allows us to zhuzh the goal into
-      something _definitionally equivalent_, which can
+      /- `change` allows us to zhuzh the goal into something _definitionally equivalent_, which can
       make it more convenient to apply hypotheses -/
       rw [hfa]
       exact hx
@@ -123,20 +126,19 @@ namespace Defs
 
     ## GROUP MORPHISMS
 
-    Given a group G and a group H, a group homomorphism (_group_ usually
-    omitted) is a map φ from G to H which "preserves", or "respects" the group
-    structure. I.e., given an element g ∈ G and h ∈ H,
+    Given a group G and a group H, a group homomorphism (_group_ usually omitted) is a map φ from G
+    to H which "preserves", or "respects" the group structure. That is, given an element g ∈ G and h
+    ∈ H,
 
     φ(gh) = φ(g)φ(h).
 
-    In other words, you can combine g and h in G, and then apply φ, or apply φ
-    to g and h each, before combining them in H. We omit the symbol for the
-    operator for the sake of simplicity.
+    In other words, you can combine g and h in G, and then apply φ, or apply φ to g and h each,
+    before combining them in H. We omit the symbol for the group operator for the sake of
+    simplicity.
 
-    An isomorphism has a slightly stricter definition in that φ is required to
-    be a bijection. When two groups are isomorphic to each other, they are
-    indistinguishable from each other by structure alone. This is often
-    expressed via the phrase "equal up to isomorphism". We'll talk more about
+    An isomorphism has a slightly stricter definition in that φ is required to be a bijection. When
+    two groups are isomorphic to each other, they are indistinguishable from each other by structure
+    alone. This is often expressed via the phrase "equal up to isomorphism". We'll talk more about
     isomorphisms in the next sheet!
 
     -/
@@ -176,6 +178,8 @@ namespace Defs
       exact h3.symm
 
   --To prove this, we first show that if a * b = 𝕖, then b = ι a.
+
+  /-- For all a, b ∈ G, ab = 1 → b = a⁻¹ -/
   theorem two_sided_inv [Group G] (a b : G) (h1 : μ a b = 𝕖): b = ι a := by
     have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
     · intro g
@@ -193,6 +197,8 @@ namespace Defs
   earlier in the sheet.)
 
   -/
+
+  /-- Suppose φ : G → H is a homomorphism. If g ∈ G, then φ(g⁻¹) = φ(g)⁻¹ -/
   theorem hom_inv_to_inv [Group G] [Group H] (φ : G → H) (hp :
   Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
     have h1 : μ (φ (ι g)) (φ g) = φ (μ (ι g) g)

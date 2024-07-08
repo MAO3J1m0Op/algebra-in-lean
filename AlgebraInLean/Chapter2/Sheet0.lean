@@ -1,12 +1,10 @@
 import Mathlib.Tactic
 /-
 
-Let's take a brief break from Algebra and make sure we know where we are at
-and where we are going.
-We are going to talk formalization of injectivity and surjectivity,
-and everything that follows from those.
+Let's take a brief break from Algebra to orient ourselves.
+We are going to explore injectivity and surjectivity of functions.
 
-Beginning with some basic definitions as a reminder (meaning you have likely
+Let's start with some basic definitions (you have likely
 seen some of these already!)
 
 -/
@@ -17,25 +15,22 @@ namespace Interlude
 
     /-
 
-    Brace yourself for a type theory interlude!
-    In Lean's type theory, the Calculus of Constructions, there is an
-    infinite hierarchy of types that contain one another. Type 0 (or simply
-    just "Type" is contained in Type 1, Type 1 is contained in Type 2, and
-    so on. A type can never contain itself; if that were to happen, we would
-    run into a logical paradox! We classify types using what are called
-    "universes"; in other words, a universe is a family of types. For more
-    information on Lean's type system, see
+    Brace yourself for a type theory interlude! In Lean's type theory, the Calculus of
+    Constructions, there is an infinite hierarchy of types that contain one another. Type 0 (or
+    simply just "Type" is contained in Type 1, Type 1 is contained in Type 2, and so on. A type can
+    never contain itself; if that were to happen, we would run into a logical paradox! We classify
+    types using what are called "universes"; in other words, a universe is a family of types. For
+    more information on Lean's type system, see
     https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html.
 
     You are free to think of α, β, and γ as sets.
 
-    We have already seen many injective functions. One of them is the
-    function which takes any group element to its inverse!
+    We have already seen many injective functions. One of them is the function which takes any group
+    element to its inverse!
 
-    To do this, we need to prove two intuitive propositions: First, a simple
-    group identity. Then, a proof that given a group G and an element g in
-    G, the inverse of the inverse of g is g itself. In other words, the
-    inverse cancels itself out.
+    To prove that the inverse function is injective, we need to prove two intuitive propositions.
+    The first is a simple group identity. The second is a proof that given a group G and an element
+    g in G, the inverse of the inverse of g is g itself (i.e. (g⁻¹)⁻¹ = g).
 
     -/
 
@@ -48,13 +43,12 @@ namespace Interlude
     -- Otherwise known as "onto".
 
     def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
-    -- Of course as follows, a map is bijective
-    -- it is both injective and surjective.
+    -- A map is bijective if it is both injective and surjective.
 
     /-
 
-    Now let's take a look at some basic problems about bijective maps that will test
-    all of the tactics you have learned thus far.
+    Now let's take a look at some basic problems about bijective maps that will test all of the
+    tactics you have learned thus far.
 
     -/
 
@@ -66,13 +60,13 @@ namespace Interlude
     example {α β γ : Type} (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g) :
     Surjective (g ∘ f) := by
       intro z
-      rw[Surjective] at h2
+      rw [Surjective] at h2
       specialize h2 z
       obtain ⟨y , hy⟩ := h2
       specialize h1 y
       obtain ⟨x, hx⟩ := h1
       use x
-      rw[← hy, ← hx]
+      rw [← hy, ← hx]
       rfl
       done
 
@@ -131,7 +125,7 @@ namespace Interlude
     /-
 
     You may want to read up more about `Add.intro` that works to split a logical `∧`
-    into its two different parts. That will be helpful as you continue.
+    into its two different parts. Alternatively, you could use the tactic `constructor`.
 
     -/
     example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g) :
@@ -170,20 +164,17 @@ namespace Interlude
         · apply hg
       done
 
-
   /-
 
-  You just proved lots about two injective maps `f, g` and the composition
-  of those maps `g ∘ f` .
-  Nice to see all those classic L∃∀N tactics again, right?
-  Make sure you are fully comfortable with what we've seen above,
-  including `intros, apply, exact, rw, cases, specialize`.
-  See `Chapter 0` for a refresher. These are basic, but before moving
-  on to the next chapter, it is necessary to be quite familiar with them.
+  You just proved lots about two injective maps `f, g` and the composition of those maps `g ∘ f`.
+  Nice to see all those classic L∃∀N tactics again, right? Make sure you are fully comfortable with
+  the tactics `intros, apply, exact, rw, cases, specialize`. See `Chapter 0` for a refresher. These
+  are basic, but before moving on to the next chapter, it is necessary to be quite familiar with
+  them.
 
-  Another crucial tactic you saw in earlier chapters was `have`. Here is the same theorem
-  about surjectivity composition that you proved earlier. However, try using the `have`
-  tactic with this one for practice. We've gotten you started below:
+  Another crucial tactic you saw in earlier chapters was `have`. Here is the same theorem about
+  surjectivity composition that you proved earlier. However, try using the `have` tactic with this
+  one for practice. We've gotten you started below:
 
   -/
   theorem surjective_comp_have {α β γ : Type} (f : α → β) (g : β → γ) (h1 : Surjective f)
