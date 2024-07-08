@@ -43,10 +43,10 @@
     \lean{Defs.Subgroups.Subgroup_Criterion}
     \leanok
     \uses{definition : Subgroup}
-    Let $G$ be a group. A \textit{subset} $H$ of $G$ is a \textit {subgroup} $\iff$
+    Let $G$ be a group. A \textit{subset} $H$ of $G$ is a \textit {subgroup} if and only if
     \begin{enumerate}
         \item $H \neq \emptyset$
-        \item $\forall x, y \in H, \mu x ( \iota y) \in H$
+        \item For any $x, y \in H$, $\mu(x, \iota (y))) \in H$
     \end{enumerate}
 \end{proposition}
 
@@ -63,7 +63,7 @@
     \lean{Defs.Subgroups.sgp_trans}
     \leanok
     \uses{definition : Subgroup}
-    Let $G$ be a group. For $J$, $K$, $L \leq G$ then if $J \leq K$ and $K \leq L$ then $J \leq L$.
+    Let $G$ be a group. For $J$, $K$, $L \leq G$, if $J \leq K$ and $K \leq L$ then $J \leq L$.
 \end{theorem}
 
 \begin{definition}
