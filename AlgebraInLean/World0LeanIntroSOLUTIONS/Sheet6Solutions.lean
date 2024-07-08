@@ -4,10 +4,11 @@ This is a solutions sheet.
 
 /- Tactics!
 
-Below is a list of tactics mentioned in World 0. Feel free to use this list for
-reference to write notes, or keep updating it with tactics mentioned in future worlds.
+Below is a list of tactics mentioned in World 0. Feel free to use this list for reference to write
+notes, or keep updating it with tactics mentioned in future worlds.
 
-This cheatsheet from Formalising Mathematics might also be helpful: <https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/Part_C/cheatsheet.html>
+This cheatsheet from Formalising Mathematics might also be helpful:
+<https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/Part_C/cheatsheet.html>
 
 rfl
 rw

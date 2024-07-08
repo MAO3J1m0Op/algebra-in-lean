@@ -4,11 +4,10 @@ This is a solutions sheet.
 
 import Mathlib.Tactic
 
-/-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics
-course OR to the Natural Number Game. If you would like to learn more about Lean,
-Buzzard's course goes more in depth in relation to numerous undergraduate math topics.
-When exercises are from either of these sources, they will be clearly marked so as
-to give credit.
+/-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics course OR to the
+Natural Number Game. If you would like to learn more about Lean, Buzzard's course goes more in depth
+in relation to numerous undergraduate math topics. When exercises are from either of these sources,
+they will be clearly marked so as to give credit.
 
 Formalising Mathematics can be found here:
 <https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>-/
@@ -18,8 +17,8 @@ Formalising Mathematics can be found here:
 left
 right
 
-Let's do a couple warm up exercises from Formalizing Mathematics using these.
-Note that the ∨ symbol means "or," just as it did in NNG.-/
+Let's do a couple warm up exercises from Formalizing Mathematics using these. Note that the ∨ symbol
+means "or," just as it did in NNG.-/
 
 variable (P Q R S T : Prop)
 
@@ -37,10 +36,9 @@ example : Q → P ∨ Q := by
   exact h
   done
 
-/-Also in the Natural Number Game, you learned a tactic called "cases". However,
-the functionality and syntax you learned is actually closer to the tactic cases'
-(called cases prime), which is a more specific functionality of the broader tactic.
-Let's now go over how to use the "cases" tactic.
+/-Also in the Natural Number Game, you learned a tactic called "cases". However, the functionality
+and syntax you learned is actually closer to the tactic cases' (called cases prime), which is a more
+specific functionality of the broader tactic. Let's now go over how to use the "cases" tactic.
 
 First, let's look at an example:-/
 
@@ -52,11 +50,10 @@ example : P ∧ Q → P := by
     exact left
   done
 
-/-Note that the structure of the tactic looks a bit different. A shortcut to
-getting this structure automatically generated rather than having to type it all
-out is to just type “cases h1” (or "cases h1 with") and then perform the code 
-action “Generate an explicit pattern match” when available (in VSCode, this shows
-up as a yellow lightbulb to the left).
+/-Note that the structure of the tactic looks a bit different. A shortcut to getting this structure
+automatically generated rather than having to type it all out is to just type “cases h1” (or "cases
+h1 with") and then perform the code action “Generate an explicit pattern match” when available (in
+VSCode, this shows up as a yellow lightbulb to the left).
 
 See if you can fill in the blank structure below:-/
 
@@ -68,8 +65,8 @@ example : P ∧ Q → Q := by
     exact right
   done
 
-/-Complete the exercises below. Note that the structure generated for cases
-is not always the same.-/
+/-Complete the exercises below. Note that the structure generated for cases is not always the
+same.-/
 
 /-NNG Inequality World Level 7-/
 example (x y : Nat) (h1 : x = 37 ∨ y = 42) : y = 42 ∨ x = 37 := by

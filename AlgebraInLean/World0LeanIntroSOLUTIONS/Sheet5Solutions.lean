@@ -4,31 +4,24 @@ This is a solutions sheet.
 
 import Mathlib.Tactic
 
-/-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics
-course OR to the Natural Number Game. If you would like to learn more about Lean,
-Buzzard's course goes more in depth in relation to numerous undergraduate math topics.
-When exercises are from either of these sources, they will be clearly marked so as
-to give credit.
+/-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics course OR to the
+Natural Number Game. If you would like to learn more about Lean, Buzzard's course goes more in depth
+in relation to numerous undergraduate math topics. When exercises are from either of these sources,
+they will be clearly marked so as to give credit.
 
 Formalising Mathematics can be found here:
 <https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>-/
 
-/-Let's wrap up our intro to Lean with some more straightforward tactics.
-We will quickly go over:
+/-Let's wrap up our intro to Lean with some more straightforward tactics. We will quickly go over:
 
-simp
-use
-symm
-induction
-have
+simp use symm induction have
 
 You have should have seen all of these previously in the Natural Number Game.
 
-Let's begin with "simp". "Simp" uses lemmas already in mathlib as well as existing
-hypotheses to simplify the goal. "Simp" has a wide range of uses, so if you are curious
-about uses beyond the very simple examples shown below, looking up the documentation
-is recommended. For example, just as "exact" and "apply" have "exact?" and "apply?",
-"simp" has variation "simp?".
+Let's begin with "simp". "Simp" uses lemmas already in mathlib as well as existing hypotheses to
+simplify the goal. "Simp" has a wide range of uses, so if you are curious about uses beyond the very
+simple examples shown below, looking up the documentation is recommended. For example, just as
+"exact" and "apply" have "exact?" and "apply?", "simp" has variation "simp?".
 
 Let's look at a couple examples:-/
 
@@ -57,9 +50,8 @@ example (x y : Nat) (h1 : x = 13) (h2 : y = 2) : x + y = 15 := by
   simp [h1, h2]
   done
 
-/-Moving on to the "use" tactic. A quick shortcut that indicates whether this tactic
-will be handy is if "∃" appears. "Use" will replace that variable with whatever you
-have input.
+/-Moving on to the "use" tactic. A quick shortcut that indicates whether this tactic will be handy
+is if "∃" appears. "Use" will replace that variable with whatever you have input.
 
 For example:-/
 
@@ -84,8 +76,8 @@ example : ∃ x z : ℤ, x * z = y := by
   simp
   done
 
-/-The "symm" tactic is used to change a goal such as a ∼ b to b ∼ a. It works
-only when the relation is symmetric or has previously been proven to be symmetric.
+/-The "symm" tactic is used to change a goal such as a ∼ b to b ∼ a. It works only when the relation
+is symmetric or has previously been proven to be symmetric.
 
 For example:-/
 
@@ -102,10 +94,10 @@ example (x y z : Nat) (h1 : x = y * z) (h2 : z = 4) : y * 4 = x := by
   exact h1
   done
 
-/-The "induction" tactic is similar to the "cases" tactic in that it uses a specific
-structure, and VSCode can automatically generate the structure once you type something
-like "induction x" (or "induction x with"). Note that this is different from how you 
-used induction in the Natural Number Game, just as the cases tactic is different.
+/-The "induction" tactic is similar to the "cases" tactic in that it uses a specific structure, and
+VSCode can automatically generate the structure once you type something like "induction x" (or
+"induction x with"). Note that this is different from how you used induction in the Natural Number
+Game, just as the cases tactic is different.
 
 Try out these exercises using induction:-/
 
@@ -134,8 +126,8 @@ example (a b : Nat) : a + b = 0 → a = 0 := by
     simp [ih] at h2
     done
 
-/-The "have" tactic should also be familiar to you. With the "have" tactic, the user
-can add a new hypothesis to the list of existing hypotheses after proving it is true.
+/-The "have" tactic should also be familiar to you. With the "have" tactic, the user can add a new
+hypothesis to the list of existing hypotheses after proving it is true.
 
 For example:-/
 
@@ -155,16 +147,13 @@ example (a b c : Nat) (h1 : a = 32) (h2 : b = 4) (h3 : a + (b + c) = 60): 36 + c
 
 /-Note that there could be many solutions to any given exercise.
 
-Tactics like "assumption" and "specialize" are also helpful for dealing with multiple
-hypotheses.
+Tactics like "assumption" and "specialize" are also helpful for dealing with multiple hypotheses.
 
-You now know enough tactics to progress beyond these simpler exercises to applying
-what you know about Lean to abstract algebra. In future worlds, we go beyond only
-working with the natural numbers or simple Prop variables to creating Groups as
-defined in abstract algebra, so keep an eye out for the way these are made, as Types
-are an important concept when working with Lean.
+You now know enough tactics to progress beyond these simpler exercises to applying what you know
+about Lean to abstract algebra. In future worlds, we go beyond only working with the natural numbers
+or simple Prop variables to creating Groups as defined in abstract algebra, so keep an eye out for
+the way these are made, as Types are an important concept when working with Lean.
 
-The final sheet in World 0 is a list of tactics mentioned so far and is for your
-use as you see fit.
+The final sheet in World 0 is a list of tactics mentioned so far and is for your use as you see fit.
 
 On to the next world!-/
