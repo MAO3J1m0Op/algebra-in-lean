@@ -35,3 +35,12 @@
   The inverse of the inverse of an element is that element:
   $\forall a \in G, \iota(\iota(a)) = a$
 \end{theorem}
+
+\begin{theorem}[Right Cancellation]
+  \label{definition : right_cancel}
+  \lean{AlgebraInLean.right_cancel}
+  \leanok
+  \uses{definition : Group}
+  You can cancel out the right side of an equation:
+  $\forall a, b, c \in G, \mu(b, a) = \mu(c, a) \Rightarrow b = c$
+\end{theorem}
