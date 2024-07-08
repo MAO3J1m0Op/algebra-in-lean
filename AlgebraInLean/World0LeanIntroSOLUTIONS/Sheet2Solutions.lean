@@ -22,9 +22,15 @@ the way that they are actually used in Lean. These differences mostly boil down
 to slight discrepancies in syntax.
 
 Mathlib is the library of theorems that have already been formalized in Lean.
-Theorems in mathlib are named and can be used in other proofs. An overview of the 
+Theorems in mathlib are named and can be used in other proofs. An overview of the
 topics currently in mathlib can be found here: <https://leanprover-community.github.io/mathlib-overview.html>
+Note that "#check" tells the type. For propositions, this will tell you the
+definition of a proposition in mathlib. For example:
+-/
 
+#check zero_add
+
+/-
 Let's start with a few tactics that you are already familiar with from the NNG:
 
 exact
@@ -179,7 +185,7 @@ example : (P ↔ Q) → (Q ↔ R) → (P ↔ R) := by
   exact h1
   done
 
-/-Note that many of the exercises above could be solved in one line, using the 
+/-Note that many of the exercises above could be solved in one line, using the
 tactic "tauto," just as some levels in NNG could be solved by "tauto."-/
 
 /-Lean also has booleans True and False.
