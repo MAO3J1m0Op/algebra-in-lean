@@ -1,5 +1,6 @@
 import Mathlib.Tactic
 /-
+
 Let's take a brief break from Algebra and make sure we know where we are at
 and where we are going.
 We are going to talk formalization of injectivity and surjectivity,
@@ -7,6 +8,7 @@ and everything that follows from those.
 
 Beginning with some basic definitions as a reminder (meaning you have likely
 seen some of these already!)
+
 -/
 
 namespace Defs
@@ -14,6 +16,7 @@ namespace Defs
 namespace Interlude
 
     /-
+
     Brace yourself for a type theory interlude!
     In Lean's type theory, the Calculus of Constructions, there is an
     infinite hierarchy of types that contain one another. Type 0 (or simply
@@ -33,6 +36,7 @@ namespace Interlude
     group identity. Then, a proof that given a group G and an element g in
     G, the inverse of the inverse of g is g itself. In other words, the
     inverse cancels itself out.
+
     -/
 
     /- Surjectivity, injectivity, and bijectivity of maps -/
@@ -48,8 +52,10 @@ namespace Interlude
     -- it is both injective and surjective.
 
     /-
+
     Now let's take a look at some basic problems about bijective maps that will test
     all of the tactics you have learned thus far.
+
     -/
 
     /-- A map is bijective if and only if it is injective and surjective. -/

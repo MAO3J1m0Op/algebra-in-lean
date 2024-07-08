@@ -4,17 +4,22 @@ import Mathlib.Tactic
 
 namespace Defs
 
-    -- # Morphisms
-    -- Morphisms are structure-preserving maps between objects in a category.
-    -- In category theory, morphisms are arrows that connect objects and adhere
-    -- to certain composition and identity rules.
+  /-
 
-    -- Examples of morphisms you may have seen before are functions between
-    -- sets, homomorphisms between algebraic structures, continuous functions
-    -- between topological spaces, etc.
+  # Morphisms
 
-    -- But before we dive into morphisms, we prove a few useful theorems about
-    -- group elements.
+  Morphisms are structure-preserving maps between objects in a category.
+  In category theory, morphisms are arrows that connect objects and adhere
+  to certain composition and identity rules.
+
+  Examples of morphisms you may have seen before are functions between
+  sets, homomorphisms between algebraic structures, continuous functions
+  between topological spaces, etc.
+
+  But before we dive into morphisms, we prove a few useful theorems about
+  group elements.
+
+  -/
 
   namespace Interlude
 
@@ -29,15 +34,19 @@ namespace Defs
         _ = μ 𝕖 c := by rw [inv_op a]
         _ = c := by rw [id_op]
 
-    -- `calc`, like `have`, is an example of what is called "forward thinking"
-    -- in Lean. Usually with tactic-style proofs, we are trying to go
-    -- backwards, transforming our goal to one of our assumed hypotheses. With
-    -- forward thinking, we are trying to transform our assumptions into the
-    -- goal.
+    /-
 
-    -- `calc` might be more familiar than you think, since it closely reflects
-    -- some pen-and-paper proofs via a chain of equalities and algebraic
-    -- manipulations. Hover over `calc` to see the syntax.
+    `calc`, like `have`, is an example of what is called "forward reasoning"
+    in Lean. Usually with tactic-style proofs, we are trying to go
+    backwards, transforming our goal to one of our assumed hypotheses. With
+    forward reasoning, we are trying to transform our assumptions into the
+    goal.
+
+    `calc` might be more familiar than you think, since it closely reflects
+    some pen-and-paper proofs via a chain of equalities and algebraic
+    manipulations. Hover over `calc` to see the syntax.
+
+    -/
 
     theorem inv_inv_eq_self [Group G] : ∀ g : G, ι (ι g) = g := by
       intro g
@@ -67,14 +76,17 @@ namespace Defs
       intro a b hab
       rw [← hinv a, ← hinv b, hab]
 
-    -- `unfold` does what it sounds like: unfolding a symbol to its
-    -- underlying definition. It isn't best practice; it's usually better to
-    -- write a definition to use `rw` with. However, for a one-off use-case,
-    -- `unfold` suffices.
+    /-
 
+    `unfold` does what it sounds like: unfolding a symbol to its
+    underlying definition. It isn't best practice; it's usually better to
+    write a definition to use `rw` with. However, for a one-off use-case,
+    `unfold` suffices.
 
-    -- You saw the following examples in Sheet 0, but in a much different way.
-    -- It may be useful to review different approaches for the following proofs:
+    You saw the following examples in Sheet 0, but in a much different way.
+    It may be useful to review different approaches for the following proofs:
+
+    -/
 
     example (f : α → β) (h1 : Injective f) (h2 : Surjective f)
     : (Bijective f) := by
@@ -83,82 +95,87 @@ namespace Defs
       assumption -- or `exact h1`
       assumption -- or `exact h2`
 
-    -- This proof is a bit more of a challenge, so there will be additional
-    -- commentary in the solutions.
+    /- This proof is a bit more of a challenge, so there will be additional
+    commentary in the solutions -/
     example (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g)
     : Surjective (g ∘ f) := by
       unfold Surjective at *
-      -- The asterisk represents a 'wildcard', more technically known as a
-      -- Kleene star. `at *` simply means to execute the tactic everywhere
-      -- possible.
+      /- The asterisk represents a 'wildcard', more technically known as a
+      Kleene star. `at *` simply means to execute the tactic everywhere
+      possible. -/
       intro y
-      -- We want to show that `g ∘ f` is surjective, i.e. that for all y in γ,
-      -- there exists an x in α such that `g ∘ f` equals y; since g is
-      -- surjective, we use the `have` tactic to express something we know must
-      -- be true and to use it as a hypothesis
+      /- We want to show that `g ∘ f` is surjective, i.e. that for all y in γ,
+      there exists an x in α such that `g ∘ f` equals y; since g is
+      surjective, we use the `have` tactic to express something we know must
+      be true and to use it as a hypothesis -/
       have hx : ∃ (x : β), g x = y := h2 y
-      cases' hx with x' hx'
-      obtain ⟨a, hfa⟩ := h1 x'
+      obtain ⟨x, hx⟩ := hx
+      obtain ⟨a, hfa⟩ := h1 x
       use a
-      change g (f a) = y -- `change` allows us to zhuzh the goal into
-                         -- something _definitionally equivalent_, which can
-                         -- make it more convenient to apply hypotheses
+      change g (f a) = y
+      /- `change` allows us to zhuzh the goal into
+      something _definitionally equivalent_, which can
+      make it more convenient to apply hypotheses -/
       rw [hfa]
-      exact hx'
+      exact hx
 
+    /-
 
-  -- ## GROUP MORPHISMS
+    ## GROUP MORPHISMS
 
-  -- Given a group G and a group H, a group homomorphism (_group_ usually
-  -- omitted) is a map φ from G to H which "preserves", or "respects" the group
-  -- structure. I.e., given an element g ∈ G and h ∈ H,
+    Given a group G and a group H, a group homomorphism (_group_ usually
+    omitted) is a map φ from G to H which "preserves", or "respects" the group
+    structure. I.e., given an element g ∈ G and h ∈ H,
 
-  -- φ(gh) = φ(g)φ(h).
+    φ(gh) = φ(g)φ(h).
 
-  -- In other words, you can combine g and h in G, and then apply φ, or apply φ
-  -- to g and h each, before combining them in H. We omit the symbol for the
-  -- operator for the sake of simplicity.
+    In other words, you can combine g and h in G, and then apply φ, or apply φ
+    to g and h each, before combining them in H. We omit the symbol for the
+    operator for the sake of simplicity.
 
-  -- An isomorphism has a slightly stricter definition in that φ is required to
-  -- be a bijection. When two groups are isomorphic to each other, they are
-  -- indistinguishable from each other by structure alone. This is often
-  -- expressed via the phrase "equal up to isomorphism". We'll talk more about
-  -- isomorphisms in the next sheet!
+    An isomorphism has a slightly stricter definition in that φ is required to
+    be a bijection. When two groups are isomorphic to each other, they are
+    indistinguishable from each other by structure alone. This is often
+    expressed via the phrase "equal up to isomorphism". We'll talk more about
+    isomorphisms in the next sheet!
 
-  -- Morphisms
-  def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
-  a) (φ b) = φ (μ a b)
+    -/
+    def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
+    a) (φ b) = φ (μ a b)
 
-  theorem homomorphism_def [Group G] [Group H] (φ : G → H) : Homomorphism φ ↔ ∀
-  (a b : G), μ (φ a) (φ b) = φ (μ a b) := by rfl
+    theorem homomorphism_def [Group G] [Group H] (φ : G → H) : Homomorphism φ ↔ ∀
+    (a b : G), μ (φ a) (φ b) = φ (μ a b) := by rfl
 
-  def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
-  Bijective φ)
+    def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
+    Bijective φ)
 
-  -- Part of what we mean when we say a homomorphism "respects the group
-  -- structure" is that homomorphisms (and therefore isomorphisms) map inverses
-  -- elements of group G to corresponding inverse elements of group H. We will
-  -- explore this and examples like these in the following exercise.
+    /-
 
-  -- Below are some basic proofs of homomorphisms: that they map identities to
-  -- identities, and inverses to inverses.
+    Part of what we mean when we say a homomorphism "respects the group
+    structure" is that homomorphisms (and therefore isomorphisms) map inverses
+    elements of group G to corresponding inverse elements of group H. We will
+    explore this and examples like these in the following exercise.
 
-  theorem hom_id_to_id [Group G] [Group H] (φ : G → H) (hp :
-  Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
-    have h1 : φ (μ 𝕖 𝕖) = μ (φ 𝕖) (φ 𝕖) := by
-      rw [homomorphism_def] at hp
-      specialize hp 𝕖 𝕖
-      exact hp.symm
-    have h2 : μ (φ 𝕖) 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
-      rw [op_id]
-      nth_rewrite 1 [← op_id 𝕖]
-      exact h1
-    have h3 : 𝕖 = φ 𝕖 := by
-      rw [mul_left_eq (φ 𝕖) 𝕖 (φ 𝕖)]
-      exact h2
-    exact h3.symm
+    Below are some basic proofs of homomorphisms: that they map identities to
+    identities, and inverses to inverses.
 
-  -- To prove this, we first show that if a * b = 𝕖, then b = ι a.
+    -/
+    theorem hom_id_to_id [Group G] [Group H] (φ : G → H) (hp :
+    Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
+      have h1 : φ (μ 𝕖 𝕖) = μ (φ 𝕖) (φ 𝕖) := by
+        rw [homomorphism_def] at hp
+        specialize hp 𝕖 𝕖
+        exact hp.symm
+      have h2 : μ (φ 𝕖) 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
+        rw [op_id]
+        nth_rewrite 1 [← op_id 𝕖]
+        exact h1
+      have h3 : 𝕖 = φ 𝕖 := by
+        rw [mul_left_eq (φ 𝕖) 𝕖 (φ 𝕖)]
+        exact h2
+      exact h3.symm
+
+  --To prove this, we first show that if a * b = 𝕖, then b = ι a.
   theorem two_sided_inv [Group G] (a b : G) (h1 : μ a b = 𝕖): b = ι a := by
     have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
     · intro g
@@ -169,10 +186,13 @@ namespace Defs
     · rw [h1, op_inv]
     rw [mul_left_eq a b (ι a) hp]
 
-  -- Note that the inverse of a group element is also the element's unique
-  -- inverse. Why? (Hint: Remember the inverse map is injective, as we proved
-  -- earlier in the sheet.)
+  /-
 
+  Note that the inverse of a group element is also the element's unique
+  inverse. Why? (Hint: Remember the inverse map is injective, as we proved
+  earlier in the sheet.)
+
+  -/
   theorem hom_inv_to_inv [Group G] [Group H] (φ : G → H) (hp :
   Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
     have h1 : μ (φ (ι g)) (φ g) = φ (μ (ι g) g)
@@ -190,8 +210,12 @@ end Interlude
 
 end Defs
 
--- You have two options on where to go next. If you're familiar with basic
--- modular arithmetic (including gcds, lcms, and the Euclidean algorithm), you
--- can go straight to Sheet2. If you would like a refresher, or simply to see
--- how these concepts are implemented in Lean, feel free to go to the sheet
--- named `ModularArithmetic.lean`.
+/-
+
+You have two options on where to go next. If you're familiar with basic
+modular arithmetic (including gcds, lcms, and the Euclidean algorithm), you
+can go straight to Sheet2. If you would like a refresher, or simply to see
+how these concepts are implemented in Lean, feel free to go to the sheet
+named `ModularArithmetic.lean`.
+
+-/
