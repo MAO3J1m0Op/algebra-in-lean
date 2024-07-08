@@ -2,7 +2,7 @@
 
 \begin{theorem}[Identity Uniqueness]
     \label{theorem : identity_uniqueness}
-    \lean{Defs.identity_uniqueness}
+    \lean{AlgebraInLean.identity_uniqueness}
     \leanok
     \uses{definition : Monoid}
     In a monoid, the identity element is unique:
@@ -11,7 +11,7 @@
 
 \begin{theorem}[Inverse Uniqueness]
     \label{theorem : inverse_uniqueness}
-    \lean{Defs.inverse_uniqueness}
+    \lean{AlgebraInLean.inverse_uniqueness}
     \leanok
     \uses{definition : Group}
     In a group, each element has a unique inverse:
@@ -20,9 +20,18 @@
 
 \begin{theorem}[Shoes and Socks Theorem]
   \label{theorem : shoes_and_socks}
-  \lean{Defs.shoes_and_socks}
+  \lean{AlgebraInLean.shoes_and_socks}
   \leanok
-  \uses{definition : Group, theorem : inverse_uniqueness, theorem : op_inv}
+  \uses{theorem : inverse_uniqueness, theorem : op_inv}
   The inverse of a product is the product of the inverses in reverse order:
   $\forall a, b \in G, \iota(\mu(a, b)) = \mu(\iota(b), \iota(a))$
+\end{theorem}
+
+\begin{theorem}[Inverse of the Inverse]
+  \label{theorem : inv_inv}
+  \lean{AlgebraInLean.inv_inv}
+  \leanok
+  \uses{theorem : inverse_uniqueness, theorem : op_inv}
+  The inverse of the inverse of an element is that element:
+  $\forall a \in G, \iota(\iota(a)) = a
 \end{theorem}
