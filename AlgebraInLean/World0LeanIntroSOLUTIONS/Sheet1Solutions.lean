@@ -41,7 +41,7 @@ To get you used to reading Lean, let us begin with a very basic exercise from
 the Natural Number Game.
 --/
 
-example : 37 * x + q = 37 * x + q := by
+example (x q : Nat): 37 * x + q = 37 * x + q := by
   rfl
 
 /-
