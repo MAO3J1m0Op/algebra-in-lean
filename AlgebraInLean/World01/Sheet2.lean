@@ -1,5 +1,6 @@
 import AlgebraInLean.World01.Sheet1
-namespace Sheet2
+
+namespace AlgebraInLean
 
 /- Groups aren't the only important structures in algebra. By adding or
 subtracting certain properties from our definition, we create structures with

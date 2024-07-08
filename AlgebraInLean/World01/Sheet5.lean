@@ -1,5 +1,6 @@
 import AlgebraInLean.World01.Sheet4
-open Defs
+
+namespace AlgebraInLean
 
 /- To represent Cn, the group of rotational symmetries of an n-gon, we will
 use a type already in mathlib called Fin. Fin n is just the type of all natural
@@ -8,7 +9,7 @@ and a proof that that number is less than n. -/
 
 /- The value n will represent a rotation of (n / 360) degrees. -/
 
-instance (n : ℕ) (hpos : NeZero n): Defs.Group (Fin n) where
+instance (n : ℕ) (hpos : NeZero n): Group (Fin n) where
   /- Fin.add adds two elements in Fin n and then takes the result mod n. Since n is
   equivalent to a 360 degree rotation, this means that if you get a rotation over
   360 degrees, it gets changed to a rotation under 360 degrees. -/

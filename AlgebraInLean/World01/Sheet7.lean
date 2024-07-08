@@ -1,5 +1,6 @@
 import AlgebraInLean.World01.Sheet6
-open Defs
+
+namespace AlgebraInLean
 
 /- The last group we will cover in this section is the symmetric group. This is
 defined by the different ways of permuting n elements. The group operation is
@@ -58,7 +59,7 @@ theorem Sn.ext {n : ℕ} {f g : Sn n} : f.val = g.val → f = g := by
 /- We define the identity as the identity function.-/
 def Sn_id : Sn n := {val := id, property := Function.bijective_id}
 
-noncomputable instance (n : ℕ) : Defs.Group (Sn n) where
+noncomputable instance (n : ℕ) : Group (Sn n) where
   op := Sn_op
 
   op_assoc := by
