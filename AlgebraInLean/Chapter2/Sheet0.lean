@@ -8,8 +8,29 @@ import «AlgebraInLean».Basic
 -- Beginning with some basic definitions as a reminder (meaning you have likely
 -- seen some of these already!)
 
+namespace Defs
+
 namespace Interlude
-  section bijectivity
+
+    -- Brace yourself for a type theory interlude!
+    -- In Lean's type theory, the Calculus of Constructions, there is an
+    -- infinite hierarchy of types that contain one another. Type 0 (or simply
+    -- just "Type" is contained in Type 1, Type 1 is contained in Type 2, and
+    -- so on. A type can never contain itself; if that were to happen, we would
+    -- run into a logical paradox! We classify types using what are called
+    -- "universes"; in other words, a universe is a family of types. For more
+    -- information on Lean's type system, see
+    -- https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html.
+
+    -- You are free to think of α, β, and γ as sets.
+
+    -- We have already seen many injective functions. One of them is the
+    -- function which takes any group element to its inverse!
+
+    -- To do this, we need to prove two intuitive propositions: First, a simple
+    -- group identity. Then, a proof that given a group G and an element g in
+    -- G, the inverse of the inverse of g is g itself. In other words, the
+    -- inverse cancels itself out.
 
   -- Surjectivity, injectivity, and bijectivity of maps
     def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
@@ -21,8 +42,6 @@ namespace Interlude
     def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
     -- Of course as follows, a map is bijective
     -- it is both injective and surjective.
-
-  end bijectivity
 
   -- Now let's take a look at some basic problems involving this bijectivity,
   -- not necessarily problems that involve Algebra, but that will test

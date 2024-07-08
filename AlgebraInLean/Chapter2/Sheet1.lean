@@ -1,11 +1,8 @@
+import «AlgebraInLean».Chapter2.Sheet0
 import AlgebraInLean.Basic
 import Mathlib.Tactic
 
--- TODO: Clean up *Maps* section; some of the content overlaps with Sheet 0
-
 namespace Defs
-
-namespace Morphisms
 
     -- # Morphisms
     -- Morphisms are structure-preserving maps between objects in a category.
@@ -16,34 +13,10 @@ namespace Morphisms
     -- sets, homomorphisms between algebraic structures, continuous functions
     -- between topological spaces, etc.
 
-    -- But before we dive into morphisms, we present a quick interlude about
-    -- maps!
+    -- But before we dive into morphisms, we prove a few useful theorems about
+    -- group elements.
 
-  section Maps
-    universe u₁ u₂ u₃
-    -- Brace yourself for a type theory interlude!
-    -- In Lean's type theory, the Calculus of Constructions, there is an
-    -- infinite hierarchy of types that contain one another. Type 0 (or simply
-    -- just "Type" is contained in Type 1, Type 1 is contained in Type 2, and
-    -- so on. A type can never contain itself; if that were to happen, we would
-    -- run into a logical paradox! We classify types using what are called
-    -- "universes"; in other words, a universe is a family of types. For more
-    -- information on Lean's type system, see
-    -- https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html.
-
-    variable {α : Sort u₁} {β : Sort u₂} {γ : Sort u₃}
-    -- You are free to think of α, β, and γ as sets.
-
-    def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
-    -- Otherwise known as "one-to-one".
-
-    -- We have already seen many injective functions. One of them is the
-    -- function which takes any group element to its inverse!
-
-    -- To do this, we need to prove two intuitive propositions: First, a simple
-    -- group identity. Then, a proof that given a group G and an element g in
-    -- G, the inverse of the inverse of g is g itself. In other words, the
-    -- inverse cancels itself out.
+  namespace Interlude
 
     theorem mul_left_eq [Group G] (a b c : G) (h : μ a b = μ a c) : b = c
     :=
@@ -99,19 +72,10 @@ namespace Morphisms
     -- write a definition to use `rw` with. However, for a one-off use-case,
     -- `unfold` suffices.
 
-    def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
-    -- Otherwise known as "onto".
 
-    def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
-    -- Also known as "one-to-one"!
+    -- You saw the following examples in Sheet 0, but in a much different way.
+    -- It may be useful to review different approaches for the following proofs:
 
-    -- It can be instructive to think about bijectivity with regards to
-    -- function composition. In Lean, function composition is `∘`. (Type
-    -- `\circ`.)
-
-    -- Let's prove a few basic consequences of function composition.
-
-    -- This is simply restating the definition!
     example (f : α → β) (h1 : Injective f) (h2 : Surjective f)
     : (Bijective f) := by
       unfold Bijective
@@ -141,26 +105,9 @@ namespace Morphisms
                          -- make it more convenient to apply hypotheses
       rw [hfa]
       exact hx'
-    -- It can be instructive to think about bijectivity with regards to function
-    -- composition. In Lean, function composition is `∘`. (Type `\circ`.)
 
-    -- Let's prove a few basic consequences of function composition.
 
-    example (f : X → Y) (g : Y → Z) (h1: Surjective f) (h2 : Surjective g)
-    : Surjective (g ∘ f) := by
-       sorry
-
-    example (f : X → Y) (g : Y → Z) (h1: Injective f) (h2 : Injective g)
-    : Injective (g ∘ f) := by
-       sorry
-
-    example (f : X → Y) (g : Y → Z) (h1 : Injective (g ∘ f)) (h2 : Injective f)
-    : Injective g := by
-       sorry
-    -- You've seen these definitions before in the `Interlude`. Go back there
-    -- for a refresher on everything that follows from function composition.
-
-  end Maps
+  -- ## GROUP MORPHISMS
 
   -- Given a group G and a group H, a group homomorphism (_group_ usually
   -- omitted) is a map φ from G to H which "preserves", or "respects" the group
@@ -238,7 +185,8 @@ namespace Morphisms
     rw [two_sided_inv (φ (ι g)) (φ g) h1]
     rw [inv_inv_eq_self]
 
-  end Morphisms
+
+end Interlude
 
 end Defs
 

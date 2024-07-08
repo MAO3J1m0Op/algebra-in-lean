@@ -1,8 +1,6 @@
-import AlgebraInLean.Basic
+import «AlgebraInLean».Basic  -- ## FIX ME: IMPORT ISSUE (SHEET 3 TOO)
 import AlgebraInLean.Chapter2.Sheet1
 import Mathlib.Tactic
-
-namespace Sheet2
 
 namespace Defs
 
@@ -95,9 +93,6 @@ example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
     sorry
   }
   sorry
--- Don't worry about the term `Subgroup`, this will be defined very soon!
--- However, we can see that `zpowers` clearly refers to taking multiplicative
--- integer powers of a group element g, which tracks with our definition above.
 
 -- Group isomorphisms from a group to itself (like the first example we looked
 -- at) might seem uninteresting at first. Any group will have at least one
@@ -105,24 +100,3 @@ example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
 -- much more interesting examples of nontrivial group-to-itself isomorphisms,
 -- which you will focus on next chapter; we'll also be pivoting back to our
 -- implementation of morphisms.
-
--- We introduce a closely related group; the integers _modulo_ some integer n.
-
-variable (G : ZMod n) (generators : Finset (ZMod n))
-
--- TODO: do we explain type class instantiation and et cetera?? seems like a
--- lot for this sheet to take on tbh. though we can totally split things up
-
--- ## EXERCISES:
-
--- TODO: Show that a map φ : n → gⁿ is a homomorphism from ℤ/3ℤ to C₃.
-
--- TODO: Show that a map φ : n → gⁿ is an isomorphism from ℤ/3ℤ to C₃.
-
--- TODO: Generalise the above: ℤ/nℤ is isomorphic to Cₙ, with the map being the
--- same.
-
-/- ---------- -/
-
-
-end Sheet2
