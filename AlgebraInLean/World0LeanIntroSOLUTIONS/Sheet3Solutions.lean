@@ -54,10 +54,9 @@ example : P ∧ Q → P := by
 
 /-Note that the structure of the tactic looks a bit different. A shortcut to
 getting this structure automatically generated rather than having to type it all
-out is to type "cases h1 (or the hypothesis you want to do cases on) with" and wait for
-a yellow lightbulb to appear at the left side of the line. Click on the lightbulb,
-then select "Generate an explicit pattern match." The structure will then appear.
-You will need to indent the next lines as appropriate.
+out is to just type “cases h1” (or "cases h1 with") and then perform the code 
+action “Generate an explicit pattern match” when available (in VSCode, this shows
+up as a yellow lightbulb to the left).
 
 See if you can fill in the blank structure below:-/
 

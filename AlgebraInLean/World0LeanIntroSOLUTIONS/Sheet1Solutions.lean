@@ -29,7 +29,9 @@ Full documentation can be found here: <https://leanprover-community.github.io/ma
 
 Before we dive into abstract algebra in World 1, we will begin with the basics
 of Lean in World 0. If you are already familiar with using Lean, feel free to
-skip World 0 and dive straight into World 1.
+skip World 0 and dive straight into World 1. Additionally, if on any sheet you
+feel comfortable with a tactic, feel free to skip exercises and move on to learning
+the next one, as some exercises can be repetitive.
 
 As you saw in the Natural Number Game, in Lean, theorems are proven using the help
 of tactics. World 0 will familiarize you with a few basic tactics through some

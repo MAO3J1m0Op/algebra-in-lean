@@ -21,6 +21,10 @@ way these tactics work in the Natural Number Game may be slightly different than
 the way that they are actually used in Lean. These differences mostly boil down
 to slight discrepancies in syntax.
 
+Mathlib is the library of theorems that have already been formalized in Lean.
+Theorems in mathlib are named and can be used in other proofs. An overview of the 
+topics currently in mathlib can be found here: <https://leanprover-community.github.io/mathlib-overview.html>
+
 Let's start with a few tactics that you are already familiar with from the NNG:
 
 exact
@@ -38,7 +42,8 @@ example (x y z : Nat) (h1 : x + y = 37) (h2 : 3 * x + z = 42) : x + y = 37 := by
   done
 
 /-NNG Implication World Level 2-/
-/-hint: zero_add still works outside of the NNG-/
+/-hint: zero_add still works outside of the NNG, as it is a theorem
+proven in mathlib.-/
 example (y x : Nat) (h1 : 0 + x = 0 + y + 2) : x = y + 2 := by
   rw [zero_add] at h1
   rw [zero_add] at h1
@@ -173,6 +178,9 @@ example : (P ↔ Q) → (Q ↔ R) → (P ↔ R) := by
   rw [h2] at h1
   exact h1
   done
+
+/-Note that many of the exercises above could be solved in one line, using the 
+tactic "tauto," just as some levels in NNG could be solved by "tauto."-/
 
 /-Lean also has booleans True and False.
 

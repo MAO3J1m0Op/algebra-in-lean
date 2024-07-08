@@ -27,7 +27,8 @@ You have should have seen all of these previously in the Natural Number Game.
 Let's begin with "simp". "Simp" uses lemmas already in mathlib as well as existing
 hypotheses to simplify the goal. "Simp" has a wide range of uses, so if you are curious
 about uses beyond the very simple examples shown below, looking up the documentation
-is recommened.
+is recommended. For example, just as "exact" and "apply" have "exact?" and "apply?",
+"simp" has variation "simp?".
 
 Let's look at a couple examples:-/
 
@@ -103,8 +104,8 @@ example (x y z : Nat) (h1 : x = y * z) (h2 : z = 4) : y * 4 = x := by
 
 /-The "induction" tactic is similar to the "cases" tactic in that it uses a specific
 structure, and VSCode can automatically generate the structure once you type something
-like "induction x with." Note that this is different from how you used induction
-in the Natural Number Game, just as the cases tactic is different.
+like "induction x" (or "induction x with"). Note that this is different from how you 
+used induction in the Natural Number Game, just as the cases tactic is different.
 
 Try out these exercises using induction:-/
 
