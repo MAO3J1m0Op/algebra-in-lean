@@ -16,7 +16,7 @@ REGEX = re.compile(
 
         .*?                                 # contained text to delete
         /- \s*                              # open comment
-        exercse \s+ end                     # end keyword
+        exercise \s+ end                    # end keyword
         \s* -/                              # close comment
     """,
     re.IGNORECASE | re.DOTALL | re.VERBOSE,
