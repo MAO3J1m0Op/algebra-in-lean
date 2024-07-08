@@ -2,59 +2,40 @@ import AlgebraInLean.World01.Sheet4
 open Defs
 
 /- To represent Cn, the group of rotational symmetries of an n-gon, we will
-have a function mapping any natural number n to the set of all n rotational
-symmetries of an n-gon. Fin n is just the type of all natural numbers less than n-/
-def Cn (n : ℕ): Type := Fin n
+use a type already in mathlib called Fin. Fin n is just the type of all natural
+numbers less than n. Elements are represented as a pair of a natural number,
+and a proof that that number is less than n. -/
 
-/- Fin n already has an add function that automatically takes mod n. This is
-equivalent to a rotation of more than 360° being converted to a rotation of
-less than 360°-/
-def fCn (n : ℕ) : (Cn n) → (Cn n) → (Cn n) := Fin.add
+/- The value n will represent a rotation of (n / 360) degrees. -/
 
-/- Again we define the inverse function before proving that Cn is a group-/
-def fCn_inv (n : ℕ): (Fin n) → (Fin n) := fun x => -x
+instance (n : ℕ) (hpos : NeZero n): Defs.Group (Fin n) where
+  /- Fin.add adds two elements in Fin n and then takes the result mod n. Since n is
+  equivalent to a 360 degree rotation, this means that if you get a rotation over
+  360 degrees, it gets changed to a rotation under 360 degrees. -/
+  op := Fin.add
 
-
-instance (n : ℕ) (hpos : NeZero n): Defs.Group (Cn n) where
-  op := fCn n
-
+  /- Fin already has all of these proven, you just need to figue out what they are called.-/
   op_assoc := by
-    intro a b c
-    have h : ∀ (a b c : Fin n), a + b + c = a + (b + c)
-    exact fun a b c => add_assoc a b c
-    exact h a b c
-    done
+    exact add_assoc
 
-  /- Elements in Fin n, which is how we are representing Cn, are defined as a
-  natural number x, along with a proof that x < n. Fin n also has many of
-  the properties we need to show already proven. -/
-  id := {val := 0, isLt := Fin.size_pos'}
+  id := 0
 
-  /- Try to prove the other group axioms. If you are struggling, similar proofs
-  to the proof for op_assoc can work for the other axioms.-/
   op_id := by
     -- sorry
     -- SAMPLE SOLUTION
-    intro a
-    exact Fin.add_zero a
+    exact add_zero
     -- END OF SAMPLE SOLUTION
 
   id_op := by
     -- sorry
     -- SAMPLE SOLUTION
-    intro a
-    have h : ∀ (a : Fin n), 0 + a = a
-    exact fun a => Fin.zero_add a
-    exact h a
+    exact zero_add
     -- END OF SAMPLE SOLUTION
 
-  inv := fCn_inv n
+  inv := fun n => -n
 
   inv_op := by
     -- sorry
     -- SAMPLE SOLUTION
-    intro a
-    have h : ∀ (a : Fin n), -a + a = 0
-    exact fun a => neg_add_self a
-    exact h a
+    exact neg_add_self
     -- END OF SAMPLE SOLUTION
