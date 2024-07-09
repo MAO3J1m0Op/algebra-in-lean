@@ -190,7 +190,7 @@ def Centralizer (S : Set G) : Subgroup G where
     exact ha s hs
 
 -- TODO: figure out how to make this an iff rather than a one way implication
-theorem Centralizer_def {S : Set G} (h : a ∈ Centralizer S) :
+theorem Centralizer_def {S : Set G} {a : G} (h : a ∈ Centralizer S) :
   ∀ s ∈ S, μ a s = μ s a := h
 
 def Center : Subgroup G := Centralizer Set.univ
@@ -243,6 +243,7 @@ theorem homomorphism_inj_iff_kernel_trivial (φ : G → G') (h : Homomorphism φ
     apply h5 at h4
     simp at h4
     exact h4
+    -- @william11339 needs to fix
     -- Need some more homomorphism machinery EDIT : solved but messy
 
 -- In order for a homomorphism φ : G → G' to be surjective, it must be that each element in G'

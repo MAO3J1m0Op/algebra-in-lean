@@ -26,7 +26,7 @@ section MonoidOrder
 --
 -- * `Decidable` type class (Init.Prelude)
 -- * `Classical` namespace
-noncomputable def order [Monoid M] (x : M) : ℕ := by
+noncomputable def order {M : Type*} [Monoid M] (x : M) : ℕ := by
   classical exact if h : ∃ (n : ℕ), n ≠ 0 ∧ mpow x n = 𝕖 then Nat.find h else 0
 
 variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
@@ -136,7 +136,7 @@ variable {G : Type*} [Group G] (x : G)
 theorem gpow_order : gpow x (order x) = 𝕖 := by
   rw [gpow_ofNat, mpow_order]
 
-theorem gpow_order_zero (h₀ : order x = 0): gpow x n = 𝕖 → n = 0 := by
+theorem gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n = 0 := by
   intro h
   cases n with
   | ofNat n =>
@@ -151,7 +151,7 @@ theorem gpow_order_zero (h₀ : order x = 0): gpow x n = 𝕖 → n = 0 := by
     linarith
     exact h₀
 
-theorem gpow_mod_order (n : ℤ): gpow x (n % order x) = gpow x n := by
+theorem gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
   -- EXERCISE (**)
   cases n with
   | ofNat n =>
@@ -160,7 +160,7 @@ theorem gpow_mod_order (n : ℤ): gpow x (n % order x) = gpow x n := by
   | negSucc n =>
     sorry
 
-theorem gpow_inj_of_order_zero (h : order x = 0) (heq : gpow x m = gpow x n) : m = n := by
+theorem gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = gpow x n) : m = n := by
   induction n using Int.induction_on generalizing m with
   | hz =>
     apply gpow_order_zero x h
@@ -174,7 +174,8 @@ theorem gpow_inj_of_order_zero (h : order x = 0) (heq : gpow x m = gpow x n) : m
 --   : order x = 0 := by
 --   sorry
 
-theorem mod_order_eq_of_gpow_eq : gpow x m = gpow x n → m % (order x) = n % (order x) := by
+theorem mod_order_eq_of_gpow_eq {m n : ℤ}
+  : gpow x m = gpow x n → m % (order x) = n % (order x) := by
   sorry
 
 end GroupOrder

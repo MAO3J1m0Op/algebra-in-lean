@@ -23,21 +23,22 @@ structure Subgroup (G : Type*) [Group G] where
   nonempty : 𝕖 ∈ carrier
   -- The below propositions assert that the subgroup is closed under the group operation μ and
   -- the inverse function ι.
-  mul_closure : a ∈ carrier → b ∈ carrier → μ a b ∈ carrier
-  inv_closure : a ∈ carrier → ι a ∈ carrier
+  mul_closure : ∀ {a b : G}, a ∈ carrier → b ∈ carrier → μ a b ∈ carrier
+  inv_closure : ∀ {a : G}, a ∈ carrier → ι a ∈ carrier
+
+variable {G : Type*} [Group G]
 
 -- This instance coerces `Subgroup G` to `Set G`.
-instance [Group G] : Coe (Subgroup G) (Set G) := ⟨λ H ↦ H.carrier⟩
+instance : Coe (Subgroup G) (Set G) := ⟨λ H ↦ H.carrier⟩
 -- This instance permits the use of `H : Subgroup G`. An element `a : H`, will have two
 -- properties: `a.val`, which is of type `G`, and `a.property`, which is the hypothesis that
 -- `a.val ∈ H`.
-instance {G : Type u} [Group G] : CoeSort (Subgroup G) (Type u) := ⟨λ H ↦ H.carrier⟩
+instance : CoeSort (Subgroup G) (Type _) := ⟨λ H ↦ H.carrier⟩
 -- For more information on coercions, consult the link below.
 -- https://lean-lang.org/functional_programming_in_lean/type-classes/coercion.html
 
 -- This notation allows us to use the element-of symbol (∈) for subgroups.
-instance {G : Type*} [Group G] : Membership G (Subgroup G) :=
-  ⟨λ g H ↦ g ∈ H.carrier⟩
+instance : Membership G (Subgroup G) := ⟨λ g H ↦ g ∈ H.carrier⟩
 
 -- This replaces instances of `H.carrier` with `↑H` in the infoview
 attribute [coe] Subgroup.carrier
@@ -46,7 +47,7 @@ attribute [coe] Subgroup.carrier
 -- implementing our `Group` interface on all `H`. As you complete the proofs yourself, you will
 -- notice that many of the properties are inherited from the parent group's structure, so the
 -- mere assertion of closure of H under μ and ι are sufficient to prove that H is a group!
-instance [Group G] {H : Subgroup G} : Group H where
+instance {H : Subgroup G} : Group H where
   -- Our operation now needs to be of type H → H → H instead of G → G → G. The ⟨ ⟩ notation
   -- divides the subgroup elements into its two properties.
   op := λ ⟨a, ha⟩ ⟨b, hb⟩ ↦ by
@@ -129,7 +130,7 @@ def Minimal (G : Type*) [Group G] : Subgroup G where
 -- This theorem here is an _extensionality_ theorem, which enables us to use the `ext` tactic on
 -- equality of subgroups.
 @[ext]
-theorem ext [Group G] (H K : Subgroup G) (h : H.carrier = K.carrier) : H = K := by
+theorem ext (H K : Subgroup G) (h : H.carrier = K.carrier) : H = K := by
   cases H
   cases K
   congr
@@ -147,7 +148,7 @@ theorem ext [Group G] (H K : Subgroup G) (h : H.carrier = K.carrier) : H = K := 
 -- condition can be used to show that the identity must be in the subgroup. The proof is
 -- outlined below and each thing to show (nonempty, inv_closure, mul_closure)
 -- follows from the last.
-def Subgroup_Criterion [Group G] (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x ∈ S → y ∈ S → (μ x (ι y)) ∈ S) : Subgroup G where
+def Subgroup_Criterion (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x ∈ S → y ∈ S → (μ x (ι y)) ∈ S) : Subgroup G where
   carrier := S
   nonempty := by
     obtain ⟨s, hs⟩ := he
@@ -190,7 +191,7 @@ def Subgroup_Criterion [Group G] (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀
 -- An important property of subroups is that for any group G with subgroup H, and K a subgroup
 -- of H (note this works since H itself is a group) then it must be that K is a subgroup of G.
 -- That is, transitivity for subgroups holds and K ≤ H ≤ G → K ≤ G.
-def subgroup_trans [Group G] (H : Subgroup G) (K : Subgroup H) : Subgroup G where
+def subgroup_trans (H : Subgroup G) (K : Subgroup H) : Subgroup G where
   carrier := {g : G | ∃ h : H, h ∈ K.carrier ∧ g = h}
   nonempty := by
     use (𝕖 : H)

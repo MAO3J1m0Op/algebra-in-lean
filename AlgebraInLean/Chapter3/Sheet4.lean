@@ -93,7 +93,7 @@ theorem subgroup_eq_Maximal_of_card_eq_G (H : Subgroup G) [Fintype G] [Fintype H
 
 -- The exercises below make use of the `congr` tactic. Learn more about the tactic by hovering
 -- over its definition in the example below.
-example : ∀ f : α → β, x = y → f x = f y := by
+example {α β : Type*} {x y : α} : ∀ f : α → β, x = y → f x = f y := by
   intro f heq
   congr
 
@@ -278,7 +278,7 @@ theorem finPowMap_order_bijective (x : G) (h : order x ≠ 0)
     dsimp [finPowMap, gpowMap]
     congr
     rw [kdef, Int.toNat_of_nonneg, ←ha]
-    · exact gpow_mod_order x a
+    · exact gpow_mod_order x
     · apply Int.emod_nonneg
       rw [Int.ofNat_ne_zero]
       exact h
@@ -350,10 +350,10 @@ instance {n : ℕ} [hpos : NeZero n]: Defs.Group (Cn n) where
     exact h a
     -- END OF SAMPLE SOLUTION
 
-def Homomorphism [Group G] [Group G'] (φ : G → G') : Prop :=
+def Homomorphism {G G' : Type*} [Group G] [Group G'] (φ : G → G') : Prop :=
   ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
-def Isomorphic [Group G] [Group G'] (φ : G → G') : Prop :=
+def Isomorphic {G G' : Type*} [Group G] [Group G'] (φ : G → G') : Prop :=
   Function.Bijective φ ∧ Homomorphism φ
 
 -- TODO: Create isomorphism between Cn and Pows n

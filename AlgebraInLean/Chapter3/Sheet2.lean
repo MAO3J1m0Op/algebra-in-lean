@@ -164,7 +164,7 @@ lemma gpow_mul (m n : ℤ) : gpow x (m * n) = gpow (gpow x m) n := by
   sorry
 
 -- The first thing we will prove about `gpow` is that subgroups are closed under the function.
-theorem gpow_closure {H : Subgroup G} : x ∈ H → gpow x n ∈ H := by
+theorem gpow_closure {H : Subgroup G} {n : ℤ} : x ∈ H → gpow x n ∈ H := by
   -- EXERCISE (*)
   intro h
   induction n using Int.induction_on with
