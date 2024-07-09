@@ -245,8 +245,7 @@ theorem homomorphism_inj_iff_kernel_trivial (φ : G → G') (h : Homomorphism φ
   · intro hinj
     apply le_antisymm
     · intro x hx
-      suffices : x = 𝕖
-      · exact this
+      change x = 𝕖
       apply hinj
       rw [homomorphism_id_map_id φ h]
       exact hx
@@ -275,7 +274,7 @@ In order for a homomorphism φ : G → G' to be surjective, it must be that each
 mapped to by an element from G. That is, each element in G' is mapped to, so it must be that the
 image is complete. Try proving both directions of the IFF proof here.
 -/
-theorem homomorphism_surj_iff_image_complete  (φ : G → G') (h : Homomorphism φ) :
+theorem homomorphism_surj_iff_image_complete (φ : G → G') (h : Homomorphism φ) :
     Function.Surjective φ ↔ Image φ h = Maximal G' := by
   -- EXERCISE
   apply Iff.intro
@@ -311,10 +310,10 @@ theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
     use μ (μ (ι g) (x)) g
     constructor
     · apply Subgroup.mul_closure
-      apply Subgroup.mul_closure
-      apply Subgroup.inv_closure
-      exact hg
-      exact h
+      · apply Subgroup.mul_closure
+        · apply Subgroup.inv_closure
+          exact hg
+        exact h
       exact hg
     · simp only [conjugate_def, op_assoc, op_inv, op_id]
       rw [← op_assoc]
