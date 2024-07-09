@@ -4,6 +4,9 @@ This is a solutions sheet.
 
 import Mathlib.Tactic
 
+set_option linter.unusedVariables false
+/-this allows us to define variables that go on to be unused in an exercise-/
+
 /-
 Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics course OR to the
 Natural Number Game. If you would like to learn more about Lean, Buzzard's course goes more in depth
@@ -75,7 +78,8 @@ are from Kevin Buzzard's Formalizing Mathematics.
 -/
 
 variable (P Q R S T : Prop)
-/- Note that the variables we are working with here are of the type Prop. -/
+/- This variable declaration indicates that for the rest of the file, references to P, Q, R, S
+and T will all be references to arbitrary values of type Prop. -/
 
 /- FM Section 1 Sheet 1 -/
 example : P → P := by
@@ -84,6 +88,8 @@ example : P → P := by
   done
 
 /- FM Section 1 Sheet 1 -/
+/-Note going forward that the function arrow → is right-associative, so
+P → Q → P is the same thing as P → (Q → P).-/
 example : P → Q → P := by
   intro h1
   intro h2
@@ -297,8 +303,10 @@ example (x y : Nat) : x + y = y → x = 0 := by
 
 /-
 Note that tactics `exact` and `apply` both have variants, `exact?` and `apply?`, which both go into
-Mathlib's theorems/lemmas to search for something applicable to the proof. `exact?` and `apply?` do
-not always work, as there are not always helpful lemmas.
+Mathlib's theorems/lemmas to search for something applicable to the proof. `exact?` looks for
+theorems that close the goal, while `apply?` looks for theorems that can be used with the tactic
+`apply` to the goal. `exact?` and `apply?` do not always work, as there are not always helpful
+lemmas.
 
 On to the next part!
 -/

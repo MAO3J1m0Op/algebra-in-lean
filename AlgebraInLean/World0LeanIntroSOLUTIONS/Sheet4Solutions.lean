@@ -5,19 +5,10 @@ This is a solutions sheet.
 import Mathlib.Tactic
 
 /-
-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics course OR to the
-Natural Number Game. If you would like to learn more about Lean, Buzzard's course goes more in depth
-in relation to numerous undergraduate math topics. When exercises are from either of these sources,
-they will be clearly marked so as to give credit.
-
-Formalising Mathematics can be found here:
-<https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>
--/
-
-/-
 The tactic `constructor` should be completely new to you. It is very useful for deconstructing
 goals that use `∧` ("and"). It is similar to the `cases` tactic in the way that it breaks up one
 goal into multiple goals to be completed, but it is used on the goal rather than on a hypothesis.
+`constructor` is also helpful for some other structures like ↔ or ∃.
 
 Let's take a look at the example below:
 -/

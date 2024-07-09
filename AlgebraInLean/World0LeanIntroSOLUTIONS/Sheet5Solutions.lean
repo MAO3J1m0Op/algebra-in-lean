@@ -5,16 +5,6 @@ This is a solutions sheet.
 import Mathlib.Tactic
 
 /-
-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics course OR to the
-Natural Number Game. If you would like to learn more about Lean, Buzzard's course goes more in depth
-in relation to numerous undergraduate math topics. When exercises are from either of these sources,
-they will be clearly marked so as to give credit.
-
-Formalising Mathematics can be found here:
-<https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>
--/
-
-/-
 Let's wrap up our intro to Lean with some more straightforward tactics. We will quickly go over:
 
 - simp
@@ -60,7 +50,7 @@ example (x y : Nat) (h1 : x = 13) (h2 : y = 2) : x + y = 15 := by
 
 /-
 Moving on to the `use` tactic. A quick shortcut that indicates whether this tactic will be handy is
-if `∃` appears. `use x` will have you prove that `x` satisfies the condition in the `∃`.
+if `∃ x` appears. `use x` will have you prove that `x` satisfies the condition in the `∃`.
 
 For example:
 -/
@@ -142,7 +132,10 @@ example (a b : Nat) : a + b = 0 → a = 0 := by
 
 /-
 The `have` tactic should also be familiar to you. With the `have` tactic, the user can add a new
-hypothesis to the list of existing hypotheses after proving it is true.
+hypothesis to the list of existing hypotheses after proving it is true. Keep in mind that `have` is
+a useful tactic when applying "forwards logic," which is probably what you picture when writing
+natural language proofs on paper. However, Lean proofs more often employ "backwards logic," where
+the goal is edited to match a hypothesis. Both approaches work in proofs here.
 
 For example:
 -/
@@ -168,8 +161,8 @@ Tactics like `assumption` and `specialize` are also helpful for dealing with mul
 
 You now know enough tactics to progress beyond these simpler exercises to applying what you know
 about Lean to abstract algebra. In future worlds, we go beyond only working with the natural numbers
-or simple Prop variables to creating Groups as defined in abstract algebra, so keep an eye out for
-the way these are made, as Types are an important concept when working with Lean.
+or simple Prop variables to creating algebraic structures such as groups. This means that the types
+you will be working with will become more intricate and complex.
 
 The final sheet in World 0 is a list of tactics mentioned so far and is for your use as you see fit.
 
