@@ -175,8 +175,11 @@ requires the subset to be nonempty-then the second condition can be used to show
 must be in the subgroup. The proof is outlined below and each thing to show (`nonempty`,
 `inv_closure`, `mul_closure`) follows from the last.
 -/
-def Subgroup_Criterion (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x ∈ S → y ∈ S → (μ x (ι y)) ∈ S) : Subgroup G where
+def Subgroup_Criterion (S : Set G) (he : ∃ (s : G), s ∈ S)
+(hc : ∀ (x y : G), x ∈ S → y ∈ S → (μ x (ι y)) ∈ S)
+: Subgroup G where
   carrier := S
+  -- EXERCISE
   has_id := by
     obtain ⟨s, hs⟩ := he
     rw [← op_inv s]

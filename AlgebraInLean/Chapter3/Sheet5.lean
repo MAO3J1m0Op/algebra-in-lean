@@ -241,7 +241,7 @@ theorem homomorphism_inj_iff_kernel_trivial (φ : G → G') (h : Homomorphism φ
       exact hx
     · apply Minimal_smallest
   · intro hk x y hfeq
-    have h1 : φ (μ x (ι y)) = μ (φ x) (φ (ι y)) := by
+    have h1 : φ (μ x (ι y)) = μ (φ x) (φ (ι y)) := by --redo all using right and left cancel
       rw [h]
     have h2 : (φ (ι y)) = ι (φ y):= by
       apply homomorphism_id_inv
@@ -256,10 +256,8 @@ theorem homomorphism_inj_iff_kernel_trivial (φ : G → G') (h : Homomorphism φ
       intro ht
       rw[ht]
     apply h5 at h4
-    simp at h4
+    rw [id_op, op_assoc, inv_op, op_id] at h4
     exact h4
-    -- @william11339 needs to fix
-    -- Need some more homomorphism machinery EDIT : solved but messy
 
 /-
 In order for a homomorphism φ : G → G' to be surjective, it must be that each element in G' is
