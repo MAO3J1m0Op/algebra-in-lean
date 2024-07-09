@@ -1,8 +1,10 @@
 \section{Generators and the Cyclic Group}
 
 \begin{theorem}
-    \label{theorem : PartialOrder (Subgroup G)}
-    % TODO : name partial order so it can be included in the blueprint
+    \label{theorem : subgroupOrder}
+    \lean{Defs.Subgroup.subgroupOrder}
+    \leanok
+    \uses{definition : Subgroup}
     Inclusion ($\subset$) forms a partial order over the set of all subgroups of $G$.
 \end{theorem}
 
@@ -10,6 +12,7 @@
     \label{theorem : Minimal_smallest}
     \lean{Defs.Subgroups.Minimal_smallest}
     \leanok
+    \uses{definition : Subgroup_Minimal, theorem : subgroupOrder}
     Every subgroup $H$ has order greater than or equal to the minimal subgroup.
 \end{theorem}
 
@@ -17,6 +20,7 @@
     \label{theorem : Maximal_largest}
     \lean{Defs.Subgroups.Maximal_largest}
     \leanok
+    \uses{definition : Subgroup_Maximal, theorem : subgroupOrder}
     Every subgroup $H$ has order less than or equal to the maximal subgroup.
 \end{theorem}
 
@@ -24,24 +28,30 @@
     \label{definition : Intersect}
     \lean{Defs.Subgroups.Intersect}
     \leanok
+    \uses{definition : Subgroup}
     The intersection of subgroups is itself a subgroup.
 \end{theorem}
 
 \begin{theorem}
     \label{definition : subgroup_eq_Maximal_of_card_eq_G}
     \lean{Defs.Subgroups.subgroup_eq_Maximal_of_card_eq_G}
+    \uses{theorem : subgroupOrder, }
     If $G$ is a finite group, and $H$ is a subgroup of $G$ with $|H| = |G|$, then $H = G$.
 \end{theorem}
 
 \begin{theorem}
     \label{theorem : inter_comm}
     \lean{Defs.Subgroups.inter_comm}
+    \leanok
+    \uses{definition : Intersect}
     The intersection of subgroups is commutative, that is $H \cap K = K \cap H$ for subgroups $H$ and $K$.
 \end{theorem}
 
 \begin{theorem}
     \label{theorem : le_intersect_self}
     \lean{Defs.Subgroups.le_intersect_self}
+    \leanok
+    \uses{definition : Intersect, theorem : subgroupOrder}
     For subgroups $H$ and $K$ of group $G$, $H \cap K \subset H$.
 \end{theorem}
 

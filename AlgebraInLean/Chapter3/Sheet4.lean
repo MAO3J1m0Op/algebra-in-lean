@@ -20,7 +20,7 @@ namespace Defs
     -- The definition of partial order is encoded in Lean using Mathlib's `PartialOrder` type class.
     -- Here, we demonstrate that inclusion (or H ⊆ K for H and K being subgroups of G), creates a
     -- partial order over our type of subgroups.
-    instance [Group G] : PartialOrder (Subgroup G) where
+    instance subgroupOrder [Group G]  : PartialOrder (Subgroup G) where
       le H K := (H : Set G) ⊆ K
       le_refl := by
         intro H
