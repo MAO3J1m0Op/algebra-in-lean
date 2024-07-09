@@ -4,10 +4,10 @@ import AlgebraInLean.Chapter00.Sheet03
 import AlgebraInLean.Chapter00.Sheet04
 import AlgebraInLean.Chapter00.Sheet05
 import AlgebraInLean.Chapter00.Sheet06
-import AlgebraInLean.World01.Sheet1
-import AlgebraInLean.World01.Sheet2
-import AlgebraInLean.World01.Sheet3
-import AlgebraInLean.World01.Sheet4
-import AlgebraInLean.World01.Sheet5
-import AlgebraInLean.World01.Sheet6
-import AlgebraInLean.World01.Sheet7
+import AlgebraInLean.Chapter01.Sheet01
+import AlgebraInLean.Chapter01.Sheet02
+import AlgebraInLean.Chapter01.Sheet03
+import AlgebraInLean.Chapter01.Sheet04
+import AlgebraInLean.Chapter01.Sheet05
+import AlgebraInLean.Chapter01.Sheet06
+import AlgebraInLean.Chapter01.Sheet07
