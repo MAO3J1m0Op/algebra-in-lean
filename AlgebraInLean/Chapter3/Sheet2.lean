@@ -182,7 +182,7 @@ theorem gpow_closure {H : Subgroup G} {n : ℤ} : x ∈ H → gpow x n ∈ H := 
   -- EXERCISE (*)
   intro h
   induction n using Int.induction_on with
-  | hz => exact H.nonempty
+  | hz => exact H.has_id
   | hp n ih =>
     rw [gpow_succ]
     apply H.mul_closure

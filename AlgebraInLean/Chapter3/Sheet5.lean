@@ -45,7 +45,7 @@ homomorphism is a subgroup of G.
 def Kernel (φ : G → G') (h : Homomorphism φ) : Subgroup G where
   carrier := {g | φ g = 𝕖}
   -- EXERCISES
-  nonempty := by
+  has_id := by
     suffices : φ 𝕖 = 𝕖
     · exact this
     exact homomorphism_id_map_id φ h
@@ -67,7 +67,7 @@ Try proving that the image of a homomorphism is a subgroup of G'.
 def Image (φ : G → G') (h : Homomorphism φ) : Subgroup G' where
   carrier := {x : G' | ∃ g, φ g = x}
   -- EXERCISES
-  nonempty := by
+  has_id := by
     use 𝕖
     rw [homomorphism_id_map_id φ]
     exact h
@@ -166,7 +166,7 @@ subset of G is a subgroup of G.
 def Normalizer (S : Set G) : Subgroup G where
   carrier := {g | ∀ s ∈ S, Conjugate g S = S}
   -- EXERCISES? These are hard...
-  nonempty := by
+  has_id := by
     intro s _
     rw [Conjugate_def, conjugate_by_id]
     simp
@@ -192,7 +192,7 @@ def Centralizer (S : Set G) : Subgroup G where
   -- FIXME : all are written with primitive group axioms. If more robust
   -- ones are provided in ch. 1, we can work to use those instead.
   carrier := {g | ∀ s ∈ S, μ g s = μ s g}
-  nonempty := by
+  has_id := by
     intro s _
     rw [id_op, op_id]
   mul_closure := by

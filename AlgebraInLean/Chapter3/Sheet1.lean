@@ -25,10 +25,10 @@ structure Subgroup (G : Type*) [Group G] where
   -/
   carrier : Set G
   /--
-  This proposition asserts that the group is nonempty, namely that the subgroup contains the
-  identity of G.
+  This proposition asserts that the subgroup contains the identity of G. This also asserts that the
+  subgroup is nonempty.
   -/
-  nonempty : 𝕖 ∈ carrier
+  has_id : 𝕖 ∈ carrier
   /--
   The below propositions assert that the subgroup is closed under the group operation μ and the
   inverse function ι.
@@ -82,7 +82,7 @@ instance {H : Subgroup G} : Group H where
     apply op_assoc
 
   -- Make sure to provide both an element `e : G` and a proof that `e ∈ H`.
-  id := ⟨𝕖, H.nonempty⟩
+  id := ⟨𝕖, H.has_id⟩
 
   /-
   Recall that the next two fields are proofs. If you ever forget the type signature of a
@@ -122,7 +122,7 @@ def Maximal (G : Type*) [Group G] : Subgroup G where
 
   -- Try to come up with one-line solutions for each of the below proofs
   --PROOFS BELOW ARE SOLUTIONS
-  nonempty := by
+  has_id := by
     exact trivial
 
   mul_closure := by
@@ -139,7 +139,7 @@ call this `Minimal`.
 def Minimal (G : Type*) [Group G] : Subgroup G where
   -- BELOW ARE SOLUTIONS
   carrier := {𝕖}
-  nonempty := by
+  has_id := by
     trivial
   mul_closure := by
     intro a b ha hb
@@ -177,7 +177,7 @@ must be in the subgroup. The proof is outlined below and each thing to show (`no
 -/
 def Subgroup_Criterion (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x ∈ S → y ∈ S → (μ x (ι y)) ∈ S) : Subgroup G where
   carrier := S
-  nonempty := by
+  has_id := by
     obtain ⟨s, hs⟩ := he
     rw [← op_inv s]
     apply hc <;> exact hs
