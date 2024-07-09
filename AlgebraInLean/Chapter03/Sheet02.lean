@@ -1,4 +1,4 @@
-import AlgebraInLean.Chapter3.Sheet1
+import AlgebraInLean.Chapter03.Sheet01
 
 namespace Defs
 namespace Subgroups
