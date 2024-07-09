@@ -12,13 +12,13 @@ operation satisfying three properties.
 2. ∀ a, b ∈ H then μ a b ∈ H
 3. ∀ a ∈ H, then ι a ∈ H
 
-Subgroups are denoted by the less than or equal sign, so we write H ≤ G. We encode a subgroup as a
-Lean structure, notably not as a type class to emphasize that subgroups are simply subsets of groups
-satisfying specific properties.
+To denote a subgroup on paper, we write that H ≤ G (we will explore why this notation is used in
+Sheet 4). We encode a subgroup as a Lean `structure`, notably not as a type class, to emphasize that
+subgroups are simply subsets of groups satisfying specific properties.
 -/
 structure Subgroup (G : Type*) [Group G] where
   /--
-  We represent the subgroup's corresponding set using Mathlib's `Set` type. Upon viewing the Mathlib
+  We represent the subgroup's underlying set using Mathlib's `Set` type. Upon viewing the Mathlib
   documentation for the set (if you are viewing this file in Visual Studio Code, you may Ctrl-Click
   on the keyword to consult its definiton), we see that it is merely a wrapper for `G → Prop`,
   meaning it is a function that determines what is and is not in the set.
@@ -26,7 +26,7 @@ structure Subgroup (G : Type*) [Group G] where
   carrier : Set G
   /--
   This proposition asserts that the subgroup contains the identity of G. This also asserts that the
-  subgroup is nonempty.
+  subgroup is not the empty set.
   -/
   has_id : 𝕖 ∈ carrier
   /--
@@ -38,11 +38,12 @@ structure Subgroup (G : Type*) [Group G] where
 
 variable {G : Type*} [Group G]
 
-/-- This instance coerces `Subgroup G` to `Set G`. -/
+/-- This instance coerces `Subgroup G` to `Set G` by extracting the underlying set. -/
 instance : Coe (Subgroup G) (Set G) := ⟨λ H ↦ H.carrier⟩
 /-
 This instance permits the use of `H : Subgroup G`. An element `a : H`, will have two properties:
-`a.val`, which is of type `G`, and `a.property`, which is the hypothesis that `a.val ∈ H`.
+`a.val`, which is of type `G`, and `a.property`, which is the hypothesis that `a.val ∈ H`. Under the
+hood, this uses the built in `Subtype` type.
 -/
 instance : CoeSort (Subgroup G) (Type _) := ⟨λ H ↦ H.carrier⟩
 /-
@@ -58,9 +59,9 @@ attribute [coe] Subgroup.carrier
 
 /--
 The instances above allow us to assert that `H : Subgroup G` is itself a group. We do this by
-implementing our `Group` interface on all `H`. As you complete the proofs yourself, you will
-notice that many of the properties are inherited from the parent group's structure, so the
-mere assertion of closure of H under μ and ι are sufficient to prove that H is a group!
+implementing our `Group` interface on all `H`. As you complete the proofs yourself, you will notice
+that many of the properties are inherited from the parent group's structure, so the mere assertion
+of closure of H under μ and ι are sufficient to prove that H is a group!
 -/
 instance {H : Subgroup G} : Group H where
   /-
@@ -114,8 +115,8 @@ instance {H : Subgroup G} : Group H where
     apply inv_op
 
 /--
-The largest possible subgroup of G contains every element of G. We call this subgroup as
-`Maximal`, and it represents the specific case H ≤ G where H = G.
+The largest possible subgroup of G contains every element of G. We call this subgroup the `Maximal`
+subgroup.
 -/
 def Maximal (G : Type*) [Group G] : Subgroup G where
   carrier := Set.univ
@@ -132,9 +133,8 @@ def Maximal (G : Type*) [Group G] : Subgroup G where
     exact λ _ ↦ trivial
 
 /--
-The smallest possible subgroup of G is called the _trivial_ subgroup. What would this
-smallest subgroup be? To avoid confusion with the already defined `trivial` in Lean, we will
-call this `Minimal`.
+The smallest possible subgroup of G is called the `Minimal` subgroup. Consider what this smallest
+subgroup would be, and then complete the proof that the set you choose is a subgroup.
 -/
 def Minimal (G : Type*) [Group G] : Subgroup G where
   -- BELOW ARE SOLUTIONS
@@ -162,18 +162,12 @@ theorem ext (H K : Subgroup G) (h : H.carrier = K.carrier) : H = K := by
   done
 
 /--
-We have defined a subgroup to be a subset of a group closed underoperation and three additional
-properties. However, to show H is a subgroup of G it suffices to show two things:
+We have defined a subgroup to be a subset of a group that is closed under each of the group
+operations and contains the group identity. Here, we show that we can derive these three properties
+from the two properties below.
 
 1. H ≠ ∅
 2. for all x, y ∈ H, μ x (ι y) ∈ H
-
-That is, a subset H of G is a subgroup IF AND ONLY IF the two properties above hold. Notice that the
-language nonempty we used to define a subgroup earlier may be slightly misleading. Earlier, we
-asserted nonempty by claiming the identity existed in the subset. However, this criterion truly only
-requires the subset to be nonempty-then the second condition can be used to show that the identity
-must be in the subgroup. The proof is outlined below and each thing to show (`nonempty`,
-`inv_closure`, `mul_closure`) follows from the last.
 -/
 def Subgroup_Criterion (S : Set G) (he : ∃ (s : G), s ∈ S)
 (hc : ∀ (x y : G), x ∈ S → y ∈ S → (μ x (ι y)) ∈ S)

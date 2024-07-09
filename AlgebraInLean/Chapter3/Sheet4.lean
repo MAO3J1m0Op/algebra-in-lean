@@ -90,6 +90,8 @@ instance : Inter (Subgroup G) := ⟨Intersect⟩
 /--
 If G is a finite group, and H is a subgroup of G with |H| = |G|, then H = G. This will become
 important as we move into our discussion of generators and cyclic subgroups.
+
+hint: consider the theorem `set_fintype_card_eq_univ_iff` defined in Mathlib.
 -/
 theorem subgroup_eq_Maximal_of_card_eq_G (H : Subgroup G) [Fintype G] [Fintype H]
   (h : Fintype.card G = Fintype.card H)

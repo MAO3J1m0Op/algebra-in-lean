@@ -76,17 +76,17 @@ end Mpow
 section Gpow
 
 /--
-Now, we define the power function for groups. Since groups have inverses, there becomes a
-natural notion of negative exponentiation. Notice that `Int` has two constructors.
+Now, we define the power function for groups. Since groups have inverses, there becomes a natural
+notion of negative exponentiation. Notice that `Int` has two constructors.
 -/
 def gpow {G : Type*} [Group G] (x : G) : ℤ → G
 /- `Int.ofNat` covers the positive end of the integers. -/
 | Int.ofNat n => mpow x n
 /-
-Since the integer zero is already covered by `Int.ofNat 0`, it is not helpful for the
-negative constructor to have its own notion of zero. Instead, the negative constructor
-offsets the provided natural number by one before negating it. So, (0 : ℕ) maps to (-1 : ℤ),
-(1 : ℕ) maps to (-2 : ℤ), and so on. Keep this in mind as you work with `gpow`.
+Since the integer zero is already covered by `Int.ofNat 0`, it is not helpful for the negative
+constructor to have its own notion of zero. Instead, the negative constructor offsets the provided
+natural number by one before negating it. So, (0 : ℕ) maps to (-1 : ℤ), (1 : ℕ) maps to (-2 : ℤ),
+and so on. Keep this in mind as you work with `gpow`.
 -/
 | Int.negSucc n => ι (μ (mpow x n) x)
 
