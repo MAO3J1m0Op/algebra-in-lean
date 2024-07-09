@@ -219,20 +219,6 @@ theorem Centralizer_def {S : Set G} {a : G} (h : a ∈ Centralizer S) :
 
 def Center : Subgroup G := Centralizer Set.univ
 
-/--
-The theorem below may seem trivial, but it is an important theorem, as it connects our two notions
-of `normal` in a subgroup.
--/
-theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = H := by
-  -- EXERCISE
-  -- TODO
-  apply Iff.intro
-  · intro hH
-    apply le_antisymm
-    · sorry
-    · sorry
-  · sorry
-
 /-
 A homomorphism is injective if and only if the kernel is trivial. The backwards proof is quite
 simple, in order for a homomorphism φ : G → G' to be injective it must be that φ maps ONLY 𝕖 ∈ G to
