@@ -143,7 +143,7 @@ namespace Sheet3
     def ψ [Group G] (g x : G) : G := μ (μ g x) (ι g)
 
     /-
-    This definition, because it is under an arbitraty group action, has to conform
+    This definition, because it is under an arbitrary group action, has to conform
     with the definitions that we previously defined for groups. Don't worry too much
     if you don't understand the specific syntax here, but just know that μ is an
     arbitrary group operation, and (ι g) is g⁻¹.
