@@ -188,60 +188,6 @@ def Subgroup_Criterion (S : Set G) (he : ∃ s : G, s ∈ S) (hc : ∀ x y, x �
     apply ha at hb
     exact hb
 
--- An important property of subroups is that for any group G with subgroup H, and K a subgroup
--- of H (note this works since H itself is a group) then it must be that K is a subgroup of G.
--- That is, transitivity for subgroups holds and K ≤ H ≤ G → K ≤ G.
-def subgroup_trans (H : Subgroup G) (K : Subgroup H) : Subgroup G where
-  carrier := {g : G | ∃ h : H, h ∈ K.carrier ∧ g = h}
-  nonempty := by
-    use (𝕖 : H)
-    constructor
-    · exact K.nonempty
-    · rfl
-  mul_closure := by
-    intros x y hx hy
-    obtain ⟨hx, hxK, x_eq⟩ := hx
-    obtain ⟨hy, hyK, y_eq⟩ := hy
-    use (μ hx hy : H)
-    constructor
-    · exact K.mul_closure hxK hyK
-    · rw [x_eq, y_eq]
-      rfl
-  inv_closure := by
-    intros x hx
-    obtain ⟨hx, hxK, xhx⟩ := hx
-    use (ι (hx) : H)
-    constructor
-    · exact K.inv_closure hxK
-    · rw [xhx]
-      rfl
-
--- An extension of this transitivity that may be useful is considering three subgroups K, J, L
--- of G. It follows that if K ≤ J and J ≤ L then K ≤ L. Try proving this one yourself.
-theorem sgp_trans [Group G] (J K L : Subgroup G) (kj : K.carrier ⊆ J.carrier) (jl : J.carrier ⊆ L.carrier) : K.carrier ⊆ L.carrier := by
-  --EXERCISE
-  intros x hx
-  apply jl
-  apply kj
-  exact hx
-
--- Subgroups also hold under intersection. That is, given two subgroups H and K of a group G,
--- H ∩ K is also a subgroup of G. Let's prove it.
-def subgroup_intersection [Group G] {H K : Set G} (hH : Subgroup G) (hK : Subgroup G) (hHset : H = hH.carrier) (hKset : K = hK.carrier) : Subgroup G where
-  carrier := H ∩ K
-  --EXERCISE
-  nonempty := by
-    simp [hHset, hKset]
-    exact ⟨hH.nonempty, hK.nonempty⟩
-  mul_closure := by
-    intro a b ha hb
-    simp [hHset, hKset] at *
-    exact ⟨hH.mul_closure ha.left hb.left, hK.mul_closure ha.right hb.right⟩
-  inv_closure := by
-    intros a ha
-    simp [hHset, hKset] at *
-    exact ⟨hH.inv_closure ha.left, hK.inv_closure ha.right⟩
-
 end Subgroups
 
 end Defs
