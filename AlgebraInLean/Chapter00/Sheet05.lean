@@ -5,7 +5,7 @@ This is a solutions sheet.
 import Mathlib.Tactic
 
 set_option linter.unusedVariables false
-
+set_option linter.unusedTactic false
 /-
 Let's wrap up our intro to Lean with some more straightforward tactics. We will quickly go over:
 
