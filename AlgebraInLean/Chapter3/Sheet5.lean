@@ -118,8 +118,8 @@ Can you figure out how g · (a · b) · g⁻¹ = (g · a · g⁻¹) · (g · b �
 theorem conjugate_op (a b : G) : conjugate (μ a b) = conjugate a ∘ conjugate b := by
   funext s
   rw [conjugate_def, Function.comp_apply, inv_anticomm]
-  simp only [op_assoc]
-  sorry
+  repeat rw [conjugate_def]
+  repeat rw [op_assoc]
 
 /--
 We'll use capital `Conjugate` to define conjugating a set by an element g. This notation is
