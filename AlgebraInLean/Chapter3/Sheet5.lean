@@ -5,9 +5,10 @@ namespace Subgroups
 
 variable {G G' : Type*} [Group G] [Group G']
 
--- Based on what we know about homomorphisms and group identities, it should be that a
--- homomorphism maps the identity of the domain to the identity of the codomain.
--- Let's prove it.
+/--
+Based on what we know about homomorphisms and group identities, it should be that a homomorphism
+maps the identity of the domain to the identity of the codomain. Let's prove it.
+-/
 theorem homomorphism_id_map_id (φ : G → G') (hφ : Homomorphism φ) : φ (𝕖 : G) = (𝕖 : G') := by
   -- EXERCISE
   have h1 : φ 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
@@ -20,8 +21,10 @@ theorem homomorphism_id_map_id (φ : G → G') (hφ : Homomorphism φ) : φ (�
   symm
   exact h1
 
--- One property that follows directly from the last is that for any a ∈ G, φ(a⁻¹) = φ(a)⁻¹.
--- We can show this by using φ(𝕖) = φ(a · a⁻¹) = φ(a) · φ(a⁻¹) and the uniqe identity property.
+/--
+One property that follows directly from the last is that for any a ∈ G, φ(a⁻¹) = φ(a)⁻¹.
+We can show this by using φ(𝕖) = φ(a · a⁻¹) = φ(a) · φ(a⁻¹) and the uniqe identity property.
+-/
 theorem homomorphism_id_inv (φ : G → G') (hφ : Homomorphism φ) : ∀ a : G, φ (ι a) = ι (φ a) := by
   -- EXERCISE
   intro a
@@ -33,10 +36,12 @@ theorem homomorphism_id_inv (φ : G → G') (hφ : Homomorphism φ) : ∀ a : G,
   rw [op_inv, h1] at h2
   sorry --complete proof with unique inverse theorem
 
--- This naturally leads to the idea of the kernel of a homomorphism. Generally, when a group G
--- acts on a set S, the kernel of the action is defined as {g ∈ G | g ⬝ s = s ∀ s ∈ S}.
--- For a homomorphism φ : G → G', the kernel of φ (kerφ) is defined by {g ∈ G | φ (g) = 𝕖}.
--- Try proving that the kernel of a homomorphism is a subgroup of G.
+/--
+This naturally leads to the idea of the kernel of a homomorphism. Generally, when a group G acts on
+a set S, the kernel of the action is defined as {g ∈ G | g ⬝ s = s ∀ s ∈ S}. For a homomorphism φ :
+G → G', the kernel of φ (kerφ) is defined by {g ∈ G | φ (g) = 𝕖}. Try proving that the kernel of a
+homomorphism is a subgroup of G.
+-/
 def Kernel (φ : G → G') (h : Homomorphism φ) : Subgroup G where
   carrier := {g | φ g = 𝕖}
   -- EXERCISES
@@ -52,10 +57,13 @@ def Kernel (φ : G → G') (h : Homomorphism φ) : Subgroup G where
     rw [Set.mem_setOf_eq, homomorphism_id_inv φ, ha, inv_id]
     exact h
 
--- The image of a homomorphism φ is a subgroup of G' (not G as the kernel was) that contains all
--- elements which φ maps to. That is, all elements g' ∈ G' such that there is some element g ∈ G
--- where φ(g) = g'.
--- Try proving that the image of a homomorphism is a subgroup of G'.
+/--
+The image of a homomorphism φ is a subgroup of G' (not G as the kernel was) that contains all
+elements which φ maps to. That is, all elements g' ∈ G' such that there is some element g ∈ G where
+φ(g) = g'.
+
+Try proving that the image of a homomorphism is a subgroup of G'.
+-/
 def Image (φ : G → G') (h : Homomorphism φ) : Subgroup G' where
   carrier := {x : G' | ∃ g, φ g = x}
   -- EXERCISES
@@ -73,16 +81,21 @@ def Image (φ : G → G') (h : Homomorphism φ) : Subgroup G' where
     rw [←hx, homomorphism_id_inv φ]
     exact h
 
--- The conjugate of an element n by g is defined as the specific left and right operations
--- g · n · g⁻¹.
--- Note that g and n are in group G so the conjugate also exists in G.
+/--
+The conjugate of an element n by g is defined as the specific left and right operations g · n · g⁻¹.
+
+Note that g and n are in group G so the conjugate also exists in G.
+-/
 def conjugate (g n : G) : G := μ (μ g n) (ι g)
 
 @[simp]
 theorem conjugate_def {g n : G}: conjugate g n = μ (μ g n) (ι g) := by rfl
 
--- Let's give simp access to some simple theorems.
--- Firstly, conjugating an element g by 𝕖 gives g back. Can you see why this works?
+/-
+Let's give `simp` access to some simple theorems.
+
+Firstly, conjugating an element g by 𝕖 gives g back. Can you see why this works?
+-/
 @[simp]
 theorem conjugate_by_id : conjugate (𝕖 : G) = id := by
   -- EXERCISE
@@ -90,14 +103,17 @@ theorem conjugate_by_id : conjugate (𝕖 : G) = id := by
   rw [conjugate_def, id_op, inv_id, op_id]
   rfl
 
--- Secondly, conjugating 𝕖 by any element yields the identity. This uses the op_inv property.
+/-- Secondly, conjugating 𝕖 by any element yields the identity. This uses the `op_inv` property. -/
 @[simp]
 theorem conjugate_id (g : G) : conjugate g 𝕖 = 𝕖 := by
   -- EXERCISE
   rw [conjugate_def, op_id, op_inv]
 
--- Thirdly, the conjugate of `a · b` is just conjugate of `a` composed with conjugate of `b`.
--- Can you figure out how g · (a · b) · g⁻¹ = (g · a · g⁻¹) · (g · b · g⁻¹)?
+/--
+Thirdly, the conjugate of `a · b` is just conjugate of `a` composed with conjugate of `b`.
+
+Can you figure out how g · (a · b) · g⁻¹ = (g · a · g⁻¹) · (g · b · g⁻¹)?
+-/
 @[simp]
 theorem conjugate_op (a b : G) : conjugate (μ a b) = conjugate a ∘ conjugate b := by
   funext s
@@ -105,15 +121,19 @@ theorem conjugate_op (a b : G) : conjugate (μ a b) = conjugate a ∘ conjugate 
   simp only [op_assoc]
   sorry
 
--- We'll use capital `Conjugate` to define conjugating a set by an element g. This notation is
--- equivalent to the set {g · s · g⁻¹ | s ∈ S}, that is {conjugate s | s : S}.
+/--
+We'll use capital `Conjugate` to define conjugating a set by an element g. This notation is
+equivalent to the set {g · s · g⁻¹ | s ∈ S}, that is {conjugate s | s : S}.
+-/
 def Conjugate (g : G) (S : Set G) : Set G := conjugate g '' S
 
 @[simp]
 theorem Conjugate_def {g : G} {S : Set G} : Conjugate g S = conjugate g '' S := by rfl
 
--- We define a subgroup to be `normal` if the subgroup is closed under
--- conjugation with any element of G.
+/--
+We define a subgroup to be `normal` if the subgroup is closed under conjugation with any element of
+G.
+-/
 def normal (H : Subgroup G) : Prop :=
   ∀ g h : G, h ∈ H → conjugate g h ∈ H
 
@@ -124,7 +144,7 @@ theorem Minimal_normal : normal (Minimal G) := by
   rw [hh, conjugate_id]
   trivial
 
--- Try proving that the Maximal subgroup define din sheet 1 is a normal subgroup.
+-- Try proving that the Maximal subgroup defined in sheet 1 is a normal subgroup.
 theorem Maximal_normal : normal (Maximal G) := by
   -- EXERCISE
   intro _ _ _
@@ -138,9 +158,11 @@ theorem Kernel_normal (φ : G → G') (h : Homomorphism φ) : normal (Kernel φ 
   · exact this
   rw [conjugate_def, ←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ h]
 
--- The normalizer of a set S (of a group G) is the set of all elements in G that when conjugated
--- with S return S. The normalizer will never be empty since 𝕖 conjugates in such a way. Now
--- show that this subset of G is a subgroup of G.
+/--
+The normalizer of a set S (of a group G) is the set of all elements in G that when conjugated with S
+return S. The normalizer will never be empty since 𝕖 conjugates in such a way. Now show that this
+subset of G is a subgroup of G.
+-/
 def Normalizer (S : Set G) : Subgroup G where
   carrier := {g | ∀ s ∈ S, Conjugate g S = S}
   -- EXERCISES? These are hard...
@@ -161,9 +183,11 @@ def Normalizer (S : Set G) : Subgroup G where
     funext x
     rw [Conjugate_def, ←Set.image_comp, ←conjugate_op, inv_op, conjugate_by_id, Set.image_id]
 
--- The centralizer of a set S (of a group G) is the set of all elements in G that commute with
--- all elements of S. The centralizer will never be empty since 𝕖 commutes in such a way. Now
--- show that this subset of G is a subgroup of G. What would happen if G is abelian?
+/--
+The centralizer of a set S (of a group G) is the set of all elements in G that commute with all
+elements of S. The centralizer will never be empty since 𝕖 commutes in such a way. Now how that
+this subset of G is a subgroup of G. What would happen if G is abelian?
+-/
 def Centralizer (S : Set G) : Subgroup G where
   -- FIXME : all are written with primitive group axioms. If more robust
   -- ones are provided in ch. 1, we can work to use those instead.
@@ -195,8 +219,10 @@ theorem Centralizer_def {S : Set G} {a : G} (h : a ∈ Centralizer S) :
 
 def Center : Subgroup G := Centralizer Set.univ
 
--- This may sound trivial, but try proving a subgroup H is normal if and only if its normalizer
--- is the full subgroup H.
+/--
+The theorem below may seem trivial, but it is an important theorem, as it connects our two notions
+of `normal` in a subgroup.
+-/
 theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = H := by
   -- EXERCISE
   -- TODO
@@ -207,11 +233,14 @@ theorem normal_normalizer (H : Subgroup G) : normal H ↔ Normalizer H = H := by
     · sorry
   · sorry
 
--- A homomorphism is injective if and only if the kernel is trivial. The backwards proof is
--- quite simple, in order for a homomorphism φ : G → G' to be injective it must be that φ maps
--- ONLY 𝕖 ∈ G to 𝕖 ∈ G'. The forward way is slightly more tricky, requiring you to show that
--- if φ a = φ b then a = b.
--- hint : try using Iff.intro to start the proof.
+/-
+A homomorphism is injective if and only if the kernel is trivial. The backwards proof is quite
+simple, in order for a homomorphism φ : G → G' to be injective it must be that φ maps ONLY 𝕖 ∈ G to
+𝕖 ∈ G'. The forward way is slightly more tricky, requiring you to show that if φ a = φ b then a =
+b.
+
+hint : try using Iff.intro to start the proof.
+-/
 theorem homomorphism_inj_iff_kernel_trivial (φ : G → G') (h : Homomorphism φ) :
     Function.Injective φ ↔ Kernel φ h = Minimal G := by
   -- EXERCISE
@@ -246,9 +275,11 @@ theorem homomorphism_inj_iff_kernel_trivial (φ : G → G') (h : Homomorphism φ
     -- @william11339 needs to fix
     -- Need some more homomorphism machinery EDIT : solved but messy
 
--- In order for a homomorphism φ : G → G' to be surjective, it must be that each element in G'
--- is mapped to by an element from G. That is, each element in G' is mapped to, so it must be
--- that the image is complete. Try proving both directions of the IFF proof here.
+/-
+In order for a homomorphism φ : G → G' to be surjective, it must be that each element in G' is
+mapped to by an element from G. That is, each element in G' is mapped to, so it must be that the
+image is complete. Try proving both directions of the IFF proof here.
+-/
 theorem homomorphism_surj_iff_image_complete  (φ : G → G') (h : Homomorphism φ) :
     Function.Surjective φ ↔ Image φ h = Maximal G' := by
   -- EXERCISE
@@ -298,7 +329,7 @@ theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
 -- Subgroup H is abelian
 def isAbelian (H : Subgroup G) : Prop := ∀ (x y : G), x ∈ H → y ∈ H → μ x y = μ y x
 
---Show that H ≤ C_G (H) if and only if H is abelian
+/- Show that H ≤ C_G (H) if and only if H is abelian -/
 theorem abelian_iff_subgroup_centralizer_self (H : Subgroup G) : H ≤ Centralizer H ↔ isAbelian H := by
 constructor
 · intro h x y hx hy

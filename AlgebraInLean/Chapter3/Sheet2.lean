@@ -3,16 +3,20 @@ import AlgebraInLean.Chapter3.Sheet1
 namespace Defs
 namespace Subgroups
 
--- In this sheet, we build the theory of repeated application of the group operation. If the
--- group operation is multiplication, the functions we define in this sheet are equivalent to
--- exponentiation.
+/-
+In this sheet, we build the theory of repeated application of the group operation. If the
+group operation is multiplication, the functions we define in this sheet are equivalent to
+exponentiation.
 
--- First, we define the power function `mpow` for monoids. Since monoids do not have a notion of
--- inverses, we consider only natural numbers as input.
+First, we define the power function `mpow` for monoids. Since monoids do not have a notion of
+inverses, we consider only natural numbers as input.
+-/
 section Mpow
 
--- We define this function inductively. `mpow x n` gives the element equal to multiplying the
--- identity element `n` times by `x`.
+/--
+We define this function inductively. `mpow x n` gives the element equal to multiplying the
+identity element `n` times by `x`.
+-/
 def mpow {M : Type*} [Monoid M] (x : M) : ℕ → M
 | Nat.zero => 𝕖
 | Nat.succ n => μ (mpow x n) x
@@ -71,15 +75,19 @@ end Mpow
 
 section Gpow
 
--- Now, we define the power function for groups. Since groups have inverses, there becomes a
--- natural notion of negative exponentiation. Notice that `Int` has two constructors.
+/--
+Now, we define the power function for groups. Since groups have inverses, there becomes a
+natural notion of negative exponentiation. Notice that `Int` has two constructors.
+-/
 def gpow {G : Type*} [Group G] (x : G) : ℤ → G
--- `Int.ofNat` covers the positive end of the integers.
+/- `Int.ofNat` covers the positive end of the integers. -/
 | Int.ofNat n => mpow x n
--- Since the integer zero is already covered by `Int.ofNat 0`, it is not helpful for the
--- negative constructor to have its own notion of zero. Instead, the negative constructor
--- offsets the provided natural number by one before negating it. So, (0 : ℕ) maps to (-1 : ℤ),
--- (1 : ℕ) maps to (-2 : ℤ), and so on. Keep this in mind as you work with `gpow`.
+/-
+Since the integer zero is already covered by `Int.ofNat 0`, it is not helpful for the
+negative constructor to have its own notion of zero. Instead, the negative constructor
+offsets the provided natural number by one before negating it. So, (0 : ℕ) maps to (-1 : ℤ),
+(1 : ℕ) maps to (-2 : ℤ), and so on. Keep this in mind as you work with `gpow`.
+-/
 | Int.negSucc n => ι (μ (mpow x n) x)
 
 variable {G : Type*} [Group G] (x : G)
@@ -100,8 +108,11 @@ lemma gpow_two : gpow x 2 = μ x x := by
   -- EXERCISE (*)
   rw [←Int.ofNat_two, gpow_ofNat, mpow_two]
 
--- Going between integers and natural numbers requires precision, and can be difficult at times.
--- Consult the documentation on `Int` if you're running into trouble.
+/-
+Going between integers and natural numbers requires precision, and can be difficult at times.
+Consult the documentation on `Int` if you're running into trouble.
+-/
+
 lemma gpow_neg_mpow (n : ℕ) : gpow x (-n) = ι (mpow x n) := by
   -- EXERCISE (**)
   cases n with
@@ -163,7 +174,10 @@ lemma gpow_mul (m n : ℤ) : gpow x (m * n) = gpow (gpow x m) n := by
   -- EXERCISE (???)
   sorry
 
--- The first thing we will prove about `gpow` is that subgroups are closed under the function.
+/--
+The first thing pertaining to subgroups we will prove about `gpow` is that all subgroups are closed
+under the function.
+-/
 theorem gpow_closure {H : Subgroup G} {n : ℤ} : x ∈ H → gpow x n ∈ H := by
   -- EXERCISE (*)
   intro h

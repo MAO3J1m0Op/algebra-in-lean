@@ -4,38 +4,42 @@ namespace Defs
 namespace Subgroups
 section MonoidOrder
 
--- Classical logic relies on the Law of Excluded Middle, which states that every proposition is
--- either true or false. In other terms, for any proposition `p`, either `p` is true or its
--- negation `¬p` is true. In Lean, the story is more complicated, as Lean is a programming
--- language--meaning it must be capable of producing a program evaluatable by a computer. So if
--- we were to write a function including the snippet below, where `p` is an arbitrary `Prop`:
---
--- ```
--- if p then 1 else 0
--- ```
---
--- then what if `p` is equal to a proposition not yet proven in Lean? The code snippet would be
--- impossible to evaluate. However, if this computability requirement is not needed, and a
--- definition is only meant to be reasoned about in theorems, Lean has the `noncomputable`
--- keyword for such cases. For example, in the definition below, Lean cannot compute for an
--- arbitrary monoid whether there is some nonzero power that yields the identity, so we are
--- required to use the classical law of excluded middle (utilized through the `classical`)
--- keyword to construct the definition.
---
--- For further reading, consult the documentation on the below definitions:
---
--- * `Decidable` type class (Init.Prelude)
--- * `Classical` namespace
+/--
+Classical logic relies on the Law of Excluded Middle, which states that every proposition is either
+true or false. In other terms, for any proposition `p`, either `p` is true or its negation `¬p` is
+true. In Lean, the story is more complicated, as Lean is a programming language meaning it must be
+capable of producing a program evaluatable by a computer. So if we were to write a function
+including the snippet below, where `p` is an arbitrary `Prop`:
+
+```
+if p then 1 else 0
+```
+
+then what if `p` is equal to a proposition not yet proven in Lean? The code snippet would be
+impossible to evaluate. However, if this computability requirement is not needed, and a definition
+is only meant to be reasoned about in theorems, Lean has the `noncomputable` keyword for such cases.
+For example, in the definition below, Lean cannot compute for an arbitrary monoid whether there is
+some nonzero power that yields the identity, so we are required to use the classical law of excluded
+middle (utilized through the `classical`) keyword to construct the definition.
+
+For further reading, consult the documentation on the below definitions:
+
+* `Decidable` type class (Init.Prelude)
+* `Classical` namespace
+-/
 noncomputable def order {M : Type*} [Monoid M] (x : M) : ℕ := by
   classical exact if h : ∃ (n : ℕ), n ≠ 0 ∧ mpow x n = 𝕖 then Nat.find h else 0
 
 variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
 
--- If a tactic fails with an error pertaining to failure to synthesize instance of `Decidable`,
--- `DecidablePred`, or other type classes belonging to the decidable family, prefixing the
--- failing tactic with the `classical` tactic should remove these errors. It does so by using
--- noncomputable instances of these type classes implemented on all `Prop`s. Keep this in mind
--- for this and future exercises. Similarly, you may find `split_ifs` to be a helpful tactic.
+/-
+If a tactic fails with an error pertaining to failure to synthesize instance of `Decidable`,
+`DecidablePred`, or other type classes belonging to the decidable family, prefixing the
+failing tactic with the `classical` tactic should remove these errors. It does so by using
+noncomputable instances of these type classes implemented on all `Prop`s. Keep this in mind
+for this and future exercises. Similarly, you may find `split_ifs` to be a helpful tactic.
+-/
+
 theorem mpow_order_zero (h₀ : order x = 0) : mpow x n = 𝕖 → n = 0 := by
   -- EXERCISE (*.5)
   intro hn
