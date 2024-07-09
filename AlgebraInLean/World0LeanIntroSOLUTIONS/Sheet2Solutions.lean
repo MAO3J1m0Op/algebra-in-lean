@@ -8,10 +8,10 @@ set_option linter.unusedVariables false
 /-this allows us to define variables that go on to be unused in an exercise-/
 
 /-
-Credit for some exercises goes to Kevin Buzzard and his Formalizing Mathematics course OR to the
-Natural Number Game. If you would like to learn more about Lean, Buzzard's course goes more in depth
-in relation to numerous undergraduate math topics. When exercises are from either of these sources,
-they will be clearly marked so as to give credit.
+Some exercises in this chapter are adapted from Kevin Buzzard's Natural Number Game, as well as his
+course Formalising Mathematics. If you would like to learn more about Lean, Buzzard's Formalising
+Mathematics course goes more in depth in relation to numerous undergraduate math topics. Exercises
+adapted from Buzzard's work will be marked as such.
 
 Formalising Mathematics can be found here:
 <https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024/index.html>
