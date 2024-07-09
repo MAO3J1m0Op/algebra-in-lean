@@ -67,9 +67,3 @@ theorem right_cancel (a b c : G) : μ b a = μ c a → b = c := by
   intro h
   rw[←(op_id b), ←(op_id c), ←(op_inv a), ←op_assoc, ←op_assoc, h]
   -- END OF SAMPLE SOLUTION
-
-theorem right_cancel [Group G] (a b c : G) : μ b a = μ c a → b = c := by
-  -- sorry
-  -- SAMPLE SOLUTION
-  intro h
-  rw[←(op_id b), ←(op_id c), ←(op_inv a), ←op_assoc, ←op_assoc, h]
