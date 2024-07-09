@@ -137,14 +137,12 @@ G.
 def normal (H : Subgroup G) : Prop :=
   ∀ g h : G, h ∈ H → conjugate g h ∈ H
 
--- Try proving that the Minimal subgroup defined in sheet 1 is a normal subgroup.
 theorem Minimal_normal : normal (Minimal G) := by
   -- EXERCISE
   intro g h hh
   rw [hh, conjugate_id]
   trivial
 
--- Try proving that the Maximal subgroup defined in sheet 1 is a normal subgroup.
 theorem Maximal_normal : normal (Maximal G) := by
   -- EXERCISE
   intro _ _ _
@@ -185,8 +183,7 @@ def Normalizer (S : Set G) : Subgroup G where
 
 /--
 The centralizer of a set S (of a group G) is the set of all elements in G that commute with all
-elements of S. The centralizer will never be empty since 𝕖 commutes in such a way. Now how that
-this subset of G is a subgroup of G. What would happen if G is abelian?
+elements of S. This can be thought of a measure of how close a group is to being abelian.
 -/
 def Centralizer (S : Set G) : Subgroup G where
   -- FIXME : all are written with primitive group axioms. If more robust
@@ -213,9 +210,8 @@ def Centralizer (S : Set G) : Subgroup G where
     apply congr <;> try rfl
     exact ha s hs
 
--- TODO: figure out how to make this an iff rather than a one way implication
-theorem Centralizer_def {S : Set G} {a : G} (h : a ∈ Centralizer S) :
-  ∀ s ∈ S, μ a s = μ s a := h
+theorem Centralizer_def {S : Set G} {a : G} : a ∈ Centralizer S ↔ ∀ s ∈ S, μ a s = μ s a :=
+  Iff.of_eq rfl
 
 def Center : Subgroup G := Centralizer Set.univ
 
@@ -318,7 +314,7 @@ theorem abelian_iff_subgroup_centralizer_self (H : Subgroup G) : H ≤ Centraliz
 constructor
 · intro h x y hx hy
   specialize h hx
-  exact Centralizer_def h y hy
+  exact h y hy
 · intro h x hx s hs
   exact h x s hx hs
 
