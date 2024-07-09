@@ -77,9 +77,11 @@ Let's move on beyond the NNG to do some exercises you haven't seen before. The f
 are from Kevin Buzzard's Formalizing Mathematics.
 -/
 
+/-
+This variable declaration indicates that for the rest of the file, references to P, Q, R, S
+and T will all be references to arbitrary values of type Prop.
+-/
 variable (P Q R S T : Prop)
-/- This variable declaration indicates that for the rest of the file, references to P, Q, R, S
-and T will all be references to arbitrary values of type Prop. -/
 
 /- FM Section 1 Sheet 1 -/
 example : P → P := by
@@ -88,8 +90,10 @@ example : P → P := by
   done
 
 /- FM Section 1 Sheet 1 -/
-/-Note going forward that the function arrow → is right-associative, so
-P → Q → P is the same thing as P → (Q → P).-/
+/-
+Note going forward that the function arrow → is right-associative, so P → Q → P is the same thing
+as P → (Q → P).
+-/
 example : P → Q → P := by
   intro h1
   intro h2
@@ -296,7 +300,7 @@ similarly to `nth_rewrite`). This example from the NNG shows it in use:
 /- NNG Advanced Addition World Level 3 -/
 example (x y : Nat) : x + y = y → x = 0 := by
   intro h1
-  nth_rw 2 [← zero_add y] at h1
+  nth_rw 2 [←zero_add y] at h1
   apply add_right_cancel at h1
   exact h1
   done
