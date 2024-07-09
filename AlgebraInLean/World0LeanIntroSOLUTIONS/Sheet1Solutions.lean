@@ -38,8 +38,10 @@ To get you used to reading Lean, let us begin with a very basic exercise from th
 Game.
 -/
 
+/-START EXAMPLE-/
 example (x q : Nat) : 37 * x + q = 37 * x + q := by
   rfl
+/-END EXAMPLE-/
 
 /-
 The above example is the very first level of the Natural Number Game. In the Natural Number Game,

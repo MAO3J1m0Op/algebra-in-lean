@@ -15,6 +15,7 @@ Let's take a look at the example below:
 
 variable (P Q R S T : Prop)
 
+/-START EXAMPLE-/
 /- FM Section 1 Sheet 4 -/
 example : P → Q → P ∧ Q := by
   intro h1 h2
@@ -22,6 +23,7 @@ example : P → Q → P ∧ Q := by
   · exact h1
   · exact h2
   done
+/-END EXAMPLE-/
 
 /-
 Note that `constructor` breaks up the goal `⊢ P ∧ Q` into `⊢ P` and `⊢ Q`.
@@ -38,6 +40,7 @@ the new `·` are indented to indicate that they are associated with this specifi
 For example:
 -/
 
+/-START EXAMPLE-/
 /- FM Section 1 Sheet 5 -/
 example : (P ↔ Q) ↔ (Q ↔ P) := by
   constructor
@@ -46,6 +49,7 @@ example : (P ↔ Q) ↔ (Q ↔ P) := by
   · intro h2
     rw [h2]
   done
+/-END EXAMPLE-/
 
 /-
 Note that in the above example, `constructor` is used to break up an if and only if statement.

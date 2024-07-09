@@ -25,6 +25,7 @@ For example, just as `exact` and `apply` have `exact?` and `apply?`, `simp` has 
 Let's look at a couple examples:
 -/
 
+/-START EXAMPLES-/
 /- NNG Inequality World Level 1 -/
 example (x : Nat) : x ≤ x := by
   simp
@@ -34,6 +35,7 @@ example (x y : Nat) (h1 : x = 13) (h2 : y = 2) : x + y = 15 := by
   simp [h2]
   exact h1
   done
+/-END EXAMPLES-/
 
 /- Now, see if you can complete the following exercises. -/
 
@@ -57,9 +59,11 @@ if `∃ x` appears. `use x` will have you prove that `x` satisfies the condition
 For example:
 -/
 
+/-START EXAMPLE-/
 example : ∃ (x : Nat), x + 3 = 34 := by
   use 31
   done
+/-END EXAMPLE-/
 
 /- Complete the exercises below. `simp` could also come in handy here. -/
 
@@ -85,10 +89,12 @@ relation `~` is symmetric or has previously been proven to be symmetric, such as
 For example:
 -/
 
+/-START EXAMPLE-/
 example (x y : Nat) (h1 : x = y) : y = x := by
   symm
   exact h1
   done
+/-END EXAMPLE-/
 
 /- Here's a quick exercise for you: -/
 
@@ -142,10 +148,12 @@ the goal is edited to match a hypothesis. Both approaches work in proofs here.
 For example:
 -/
 
+/-START EXAMPLE-/
 example (a : Nat) : a + 0 = a := by
   have h1 := add_zero a
   exact h1
   done
+/-END EXAMPLE-/
 
 /- Here's a short exercise to wrap up. -/
 

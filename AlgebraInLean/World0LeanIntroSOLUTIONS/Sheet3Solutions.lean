@@ -38,6 +38,7 @@ with Lean3. Let's now go over how to use the `cases` tactic in Lean4.
 First, let's look at an example:
 -/
 
+/-START EXAMPLE-/
 /- FM Section 1 Sheet 4 -/
 example : P ∧ Q → P := by
   intro h1
@@ -45,6 +46,7 @@ example : P ∧ Q → P := by
   | intro left right =>
     exact left
   done
+/-END EXAMPLE-/
 
 /-
 Note that the syntax of the tactic looks a bit different. A shortcut to getting this syntax
@@ -52,7 +54,7 @@ automatically generated rather than having to type it all out is to just type `c
 perform the code action "Generate an explicit pattern match" when available (in VSCode, this shows
 up as a yellow lightbulb to the left).
 
-See if you can fill in the blank below:
+See if you can fill in the blank structure below:
 -/
 
 /- FM Section 1 Sheet 4 -/
@@ -60,7 +62,9 @@ example : P ∧ Q → Q := by
   intro h1
   cases h1 with
   | intro left right =>
+    /-START EXAMPLE-/
     exact right
+    /-END EXAMPLE-/
   done
 
 /-

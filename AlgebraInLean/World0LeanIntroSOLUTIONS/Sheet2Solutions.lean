@@ -77,11 +77,11 @@ Let's move on beyond the NNG to do some exercises you haven't seen before. The f
 are from Kevin Buzzard's Formalizing Mathematics.
 -/
 
+variable (P Q R S T : Prop)
 /-
 This variable declaration indicates that for the rest of the file, references to P, Q, R, S
 and T will all be references to arbitrary values of type Prop.
 -/
-variable (P Q R S T : Prop)
 
 /- FM Section 1 Sheet 1 -/
 example : P → P := by
@@ -214,10 +214,12 @@ If the goal is `True`, it can be solved with the tactic `trivial`.
 For example:
 -/
 
+/-START EXAMPLE-/
 /- FM Section 1 Sheet 2 -/
 example : True := by
   trivial
   done
+/-END EXAMPLE-/
 
 /- Let's do some exercises, adding `trivial` to our list of tactics. -/
 
@@ -267,12 +269,14 @@ everything follows").
 For example:
 -/
 
+/-START EXAMPLE-/
 /- FM Section 1 Sheet 2 -/
 example : False → P := by
   intro h1
   exfalso
   exact h1
   done
+/-END EXAMPLE-/
 
 /- Let's do some exercises. -/
 
@@ -297,6 +301,7 @@ To wrap up this part, note that the more advanced form of the `rw` tactic is `nt
 similarly to `nth_rewrite`). This example from the NNG shows it in use:
 -/
 
+/-START EXAMPLE-/
 /- NNG Advanced Addition World Level 3 -/
 example (x y : Nat) : x + y = y → x = 0 := by
   intro h1
@@ -304,6 +309,7 @@ example (x y : Nat) : x + y = y → x = 0 := by
   apply add_right_cancel at h1
   exact h1
   done
+/-END EXAMPLE-/
 
 /-
 Note that tactics `exact` and `apply` both have variants, `exact?` and `apply?`, which both go into
