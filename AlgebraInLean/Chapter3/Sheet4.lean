@@ -1,362 +1,362 @@
-import «AlgebraInLean».Chapter3.Sheet3
+import AlgebraInLean.Chapter3.Sheet3
 
 namespace Defs
-  namespace Subgroups
+namespace Subgroups
 
-    variable {G : Type*} [Group G]
+variable {G : Type*} [Group G]
 
-    -- In mathematics, a general _relation_ is a function that takes in two values of a type, and
-    -- returns a `Prop` indicating whether the two values are related. In other words, a relation
-    -- `R` on a set `S` is denoted as `R ⊆ S × S`. In Lean, we consider the relation to be a
-    -- function: `R : S → S → Prop`.
+-- In mathematics, a general _relation_ is a function that takes in two values of a type, and
+-- returns a `Prop` indicating whether the two values are related. In other words, a relation
+-- `R` on a set `S` is denoted as `R ⊆ S × S`. In Lean, we consider the relation to be a
+-- function: `R : S → S → Prop`.
 
-    -- Particularly, a relation is considered a _partial order_ if it satisfies three axioms. If x
-    -- and y are related by this relation, we write x ≤ y.
-    -- 1. Reflexivity: x ≤ x
-    -- 2. Transitivity: If x ≤ y and y ≤ z, then x ≤ z.
-    -- 3. Antisymmetry: If x ≤ y and y ≤ x, then x = y.
-    -- Notably, this doesn't mean that every element in a partial order is comparable.
+-- Particularly, a relation is considered a _partial order_ if it satisfies three axioms. If x
+-- and y are related by this relation, we write x ≤ y.
+-- 1. Reflexivity: x ≤ x
+-- 2. Transitivity: If x ≤ y and y ≤ z, then x ≤ z.
+-- 3. Antisymmetry: If x ≤ y and y ≤ x, then x = y.
+-- Notably, this doesn't mean that every element in a partial order is comparable.
 
-    -- The definition of partial order is encoded in Lean using Mathlib's `PartialOrder` type class.
-    -- Here, we demonstrate that inclusion (or H ⊆ K for H and K being subgroups of G), creates a
-    -- partial order over our type of subgroups.
-    instance subgroupOrder [Group G] : PartialOrder (Subgroup G) where
-      le H K := (H : Set G) ⊆ K
-      le_refl := by
-        intro H
-        -- If `unfold` does not fully expand the definition as desired, try using
-        -- it as a lemma in `dsimp`.
-        dsimp only [LE.le]
-        trivial
-      le_trans := by
-        -- EXERCISE
-        intro H₁ H₂ H₃ h12 h23 hx h1_x
-        dsimp only [LE.le] at *
-        apply h23
-        apply h12
-        exact h1_x
-      -- Here would be a good application of the `ext` tactic discussed in Sheet 1.
-      le_antisymm := by
-        -- EXERCISE
-        intro H K hH hK
-        ext x
-        apply Iff.intro
-        · intro hx
-          apply hH
-          exact hx
-        · intro hx
-          apply hK
-          exact hx
-
-    theorem Minimal_smallest [Group G] (H : Subgroup G) : Minimal G ≤ H := by
-      -- EXERCISE
-      intro e he
-      rw [he]
-      exact H.nonempty
-
-    theorem Maximal_largest [Group G] (H : Subgroup G) : H ≤ Maximal G := by
-      -- EXERCISE
-      intro x _
-      trivial
-
-    -- The intersection of two subgroups is itself a subgroup. Prove this by completing the
-    -- definition below.
-    def Intersect (H K : Subgroup G) : Subgroup G where
-      carrier := H ∩ K
-      -- EXERCISES
-      nonempty := by
-        exact And.intro H.nonempty K.nonempty
-      mul_closure := by
-        intro a b ha hb
-        apply And.intro
-        · exact H.mul_closure ha.left hb.left
-        · exact K.mul_closure ha.right hb.right
-      inv_closure := by
-        intro a ha
-        apply And.intro
-        · exact H.inv_closure ha.left
-        · exact K.inv_closure ha.right
-
-    -- This allows us to use the H ∩ K notation.
-    instance : Inter (Subgroup G) := ⟨Intersect⟩
-
-    -- If G is a finite group, and H is a subgroup of G with |H| = |G|, then H = G. This will become
-    -- important as we move into our discussion of generators and cyclic subgroups.
-    theorem subgroup_eq_Maximal_of_card_eq_G (H : Subgroup G) [Fintype G] [Fintype H]
-      (h : Fintype.card G = Fintype.card H)
-      : H = Maximal G := by
-      apply ext
-      dsimp [Maximal]
-      rw [←set_fintype_card_eq_univ_iff]
-      exact Eq.symm h
-      done
-
-    -- The exercises below make use of the `congr` tactic. Learn more about the tactic by hovering
-    -- over its definition in the example below.
-    example : ∀ f : α → β, x = y → f x = f y := by
-      intro f heq
-      congr
-
-    theorem inter_comm (H K : Subgroup G) : H ∩ K = K ∩ H := by
-      -- EXERCISE
-      dsimp only [Inter.inter, Intersect]
-      congr
-      apply Set.inter_comm
-
-    theorem inter_assoc (H₁ H₂ H₃ : Subgroup G) : (H₁ ∩ H₂) ∩ H₃ = H₁ ∩ (H₂ ∩ H₃) := by
-      -- EXERCISE
-      dsimp only [Inter.inter, Intersect]
-      congr
-      apply Set.inter_assoc
-
-    -- Here, we prove that H ∩ K is the "greatest lower bound", or the largest
-    -- subgroup that is smaller than both H and K.
-    theorem le_intersect_self (H K : Subgroup G): H ∩ K ≤ H := by
-      -- EXERCISE
-      intro g hg
-      exact hg.left
-
-    -- The subgroup generated by a subset `S` is defined to be the smallest subgroup that contains
-    -- all of `S`. This definition is equivalent to the intersection of all subgroups containing
-    -- `S`.
-    def Generate (S : Set G) : Subgroup G where
-      carrier := {g : G | ∀ H : Subgroup G, S ⊆ H → g ∈ H}
-      -- EXERCISE
-      nonempty := by
-        intro H _
-        exact H.nonempty
-      mul_closure := by
-        dsimp at *
-        intro a b ha hb H hH
-        apply H.mul_closure
-        · exact ha H hH
-        · exact hb H hH
-      inv_closure := by
-        intro a ha H hH
-        apply H.inv_closure
-        exact ha H hH
-
-    theorem Generate_empty : Generate ∅ = Minimal G := by
-      -- EXERCISE
-      apply le_antisymm
-      · intro g hg
-        unfold Generate at hg
-        dsimp only at hg
-        specialize hg (Minimal G)
-        apply hg
-        apply Set.empty_subset
-      · apply Minimal_smallest
-
-    -- The three lemmas below define the behavior of our `Generate` subset.
-    theorem Generate_contain_set (S : Set G) : S ⊆ Generate S := by
-      intro x hx
-      unfold Generate
-      intro H hS
-      apply hS
+-- The definition of partial order is encoded in Lean using Mathlib's `PartialOrder` type class.
+-- Here, we demonstrate that inclusion (or H ⊆ K for H and K being subgroups of G), creates a
+-- partial order over our type of subgroups.
+instance subgroupOrder [Group G] : PartialOrder (Subgroup G) where
+  le H K := (H : Set G) ⊆ K
+  le_refl := by
+    intro H
+    -- If `unfold` does not fully expand the definition as desired, try using
+    -- it as a lemma in `dsimp`.
+    dsimp only [LE.le]
+    trivial
+  le_trans := by
+    -- EXERCISE
+    intro H₁ H₂ H₃ h12 h23 hx h1_x
+    dsimp only [LE.le] at *
+    apply h23
+    apply h12
+    exact h1_x
+  -- Here would be a good application of the `ext` tactic discussed in Sheet 1.
+  le_antisymm := by
+    -- EXERCISE
+    intro H K hH hK
+    ext x
+    apply Iff.intro
+    · intro hx
+      apply hH
+      exact hx
+    · intro hx
+      apply hK
       exact hx
 
-    theorem Generate_self_eq_self (H : Subgroup G) : Generate H = H := by
-      -- EXERCISE
-      apply le_antisymm
-      · intro g hg
-        specialize hg H
-        apply hg
-        rfl
-      · intro g hg
-        intro K hK
-        apply hK
-        exact hg
+theorem Minimal_smallest [Group G] (H : Subgroup G) : Minimal G ≤ H := by
+  -- EXERCISE
+  intro e he
+  rw [he]
+  exact H.nonempty
 
-    theorem Generate_smallest_closure (S : Set G) (H : Subgroup G)
-      : S ⊆ H ∧ H ≤ Generate S → H = Generate S := by
-      -- EXERCISE
-      intro ⟨hl, hr⟩
-      apply le_antisymm
-      · exact hr
-      · intro g hg
-        apply hg H
-        exact hl
+theorem Maximal_largest [Group G] (H : Subgroup G) : H ≤ Maximal G := by
+  -- EXERCISE
+  intro x _
+  trivial
 
-    -- This subgroup is the set of all group elements that can be written as the power of some `x`
-    -- in the group.
-    def Pows (x : G) : Subgroup G where
-      carrier := {g : G | ∃ a, gpow x a = g}
-      -- EXERCISES
-      nonempty := by
-        use 0
-        rw [gpow_zero]
-      mul_closure := by
-        intro g₁ g₂ ⟨a, ha⟩ ⟨b, hb⟩
-        use a + b
-        rw [←ha, ←hb, gpow_add]
-      inv_closure := by
-        intro g ⟨a, ha⟩
-        use -a
-        have : ∀ i : G, μ i g = 𝕖 → i = ι g := sorry -- inverse unique
-        apply this
-        rw [←ha, gpow_neg, inv_op]
+-- The intersection of two subgroups is itself a subgroup. Prove this by completing the
+-- definition below.
+def Intersect (H K : Subgroup G) : Subgroup G where
+  carrier := H ∩ K
+  -- EXERCISES
+  nonempty := by
+    exact And.intro H.nonempty K.nonempty
+  mul_closure := by
+    intro a b ha hb
+    apply And.intro
+    · exact H.mul_closure ha.left hb.left
+    · exact K.mul_closure ha.right hb.right
+  inv_closure := by
+    intro a ha
+    apply And.intro
+    · exact H.inv_closure ha.left
+    · exact K.inv_closure ha.right
 
-    theorem Pows_contain_self (x : G) : x ∈ Pows x := by
-      -- EXERCISE
-      use 1
-      exact gpow_one x
+-- This allows us to use the H ∩ K notation.
+instance : Inter (Subgroup G) := ⟨Intersect⟩
 
-    -- This is an important theorem in relating the `Generate` subgroup, the powers of an element,
-    -- and the cyclic group.
-    theorem Pows_eq_Generate_singleton (x : G) : Pows x = Generate {x} := by
-      apply le_antisymm
-      · intro g hg
-        intro H hH
-        rw [Set.singleton_subset_iff] at hH
-        obtain ⟨a, ha⟩ := hg
-        rw [←ha]
-        apply gpow_closure
-        exact hH
-      · intro g hg
-        dsimp [Pows]
-        dsimp [Generate] at hg
-        have : {x} ⊆ (Pows x).carrier
-        · rw [Set.singleton_subset_iff]
-          apply Pows_contain_self
-        specialize hg (Pows x) this
-        obtain ⟨n, hn⟩ := hg
-        use n
+-- If G is a finite group, and H is a subgroup of G with |H| = |G|, then H = G. This will become
+-- important as we move into our discussion of generators and cyclic subgroups.
+theorem subgroup_eq_Maximal_of_card_eq_G (H : Subgroup G) [Fintype G] [Fintype H]
+  (h : Fintype.card G = Fintype.card H)
+  : H = Maximal G := by
+  apply ext
+  dsimp [Maximal]
+  rw [←set_fintype_card_eq_univ_iff]
+  exact Eq.symm h
+  done
 
-    def gpowMap (x : G) (n : ℤ) : Pows x := by
-      apply Subtype.mk (gpow x n)
-      -- EXERCISE
-      apply gpow_closure
-      exact Pows_contain_self x
+-- The exercises below make use of the `congr` tactic. Learn more about the tactic by hovering
+-- over its definition in the example below.
+example : ∀ f : α → β, x = y → f x = f y := by
+  intro f heq
+  congr
 
-    def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpowMap x k
+theorem inter_comm (H K : Subgroup G) : H ∩ K = K ∩ H := by
+  -- EXERCISE
+  dsimp only [Inter.inter, Intersect]
+  congr
+  apply Set.inter_comm
 
-    theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0)
-      -- EXERCISE
-      : Function.Bijective (gpowMap x) := by
-      apply And.intro
-      · intro a b heq
-        apply gpow_inj_of_order_zero x
-        · exact h
-        · dsimp [finPowMap, gpowMap] at heq
-          rw [Subtype.ext_iff] at heq
-          exact heq
-      · intro ⟨g, hg⟩
-        obtain ⟨a, ha⟩ := hg
-        use a
-        unfold gpowMap
-        congr
+theorem inter_assoc (H₁ H₂ H₃ : Subgroup G) : (H₁ ∩ H₂) ∩ H₃ = H₁ ∩ (H₂ ∩ H₃) := by
+  -- EXERCISE
+  dsimp only [Inter.inter, Intersect]
+  congr
+  apply Set.inter_assoc
 
-    theorem finPowMap_order_bijective (x : G) (h : order x ≠ 0)
-      : Function.Bijective (finPowMap x (order x)) := by
-      -- EXERCISE
-      apply And.intro
-      · intro ⟨a, ha⟩ ⟨b, hb⟩ heq
-        congr
-        apply mpow_inj_of_lt_order x
-        · exact ha
-        · exact hb
-        · repeat rw [←gpow_ofNat]
-          dsimp [finPowMap, gpowMap] at heq
-          rw [Subtype.ext_iff] at heq
-          exact heq
-      · intro ⟨g, hg⟩
-        obtain ⟨a, ha⟩ := hg
-        set k := (a % order x).toNat with kdef
-        have hk : k < order x
-        · rw [kdef]
-          rw [Int.toNat_lt]
-          · apply Int.emod_lt_of_pos
-            apply Ne.lt_of_le
-            · symm
-              rw [Int.ofNat_ne_zero]
-              exact h
-            · exact Int.ofNat_zero_le (order x)
-          · apply Int.emod_nonneg
-            rw [Int.ofNat_ne_zero]
-            exact h
-        use Fin.mk k hk
-        dsimp [finPowMap, gpowMap]
-        congr
-        rw [kdef, Int.toNat_of_nonneg, ←ha]
-        · exact gpow_mod_order x a
-        · apply Int.emod_nonneg
+-- Here, we prove that H ∩ K is the "greatest lower bound", or the largest
+-- subgroup that is smaller than both H and K.
+theorem le_intersect_self (H K : Subgroup G): H ∩ K ≤ H := by
+  -- EXERCISE
+  intro g hg
+  exact hg.left
+
+-- The subgroup generated by a subset `S` is defined to be the smallest subgroup that contains
+-- all of `S`. This definition is equivalent to the intersection of all subgroups containing
+-- `S`.
+def Generate (S : Set G) : Subgroup G where
+  carrier := {g : G | ∀ H : Subgroup G, S ⊆ H → g ∈ H}
+  -- EXERCISE
+  nonempty := by
+    intro H _
+    exact H.nonempty
+  mul_closure := by
+    dsimp at *
+    intro a b ha hb H hH
+    apply H.mul_closure
+    · exact ha H hH
+    · exact hb H hH
+  inv_closure := by
+    intro a ha H hH
+    apply H.inv_closure
+    exact ha H hH
+
+theorem Generate_empty : Generate ∅ = Minimal G := by
+  -- EXERCISE
+  apply le_antisymm
+  · intro g hg
+    unfold Generate at hg
+    dsimp only at hg
+    specialize hg (Minimal G)
+    apply hg
+    apply Set.empty_subset
+  · apply Minimal_smallest
+
+-- The three lemmas below define the behavior of our `Generate` subset.
+theorem Generate_contain_set (S : Set G) : S ⊆ Generate S := by
+  intro x hx
+  unfold Generate
+  intro H hS
+  apply hS
+  exact hx
+
+theorem Generate_self_eq_self (H : Subgroup G) : Generate H = H := by
+  -- EXERCISE
+  apply le_antisymm
+  · intro g hg
+    specialize hg H
+    apply hg
+    rfl
+  · intro g hg
+    intro K hK
+    apply hK
+    exact hg
+
+theorem Generate_smallest_closure (S : Set G) (H : Subgroup G)
+  : S ⊆ H ∧ H ≤ Generate S → H = Generate S := by
+  -- EXERCISE
+  intro ⟨hl, hr⟩
+  apply le_antisymm
+  · exact hr
+  · intro g hg
+    apply hg H
+    exact hl
+
+-- This subgroup is the set of all group elements that can be written as the power of some `x`
+-- in the group.
+def Pows (x : G) : Subgroup G where
+  carrier := {g : G | ∃ a, gpow x a = g}
+  -- EXERCISES
+  nonempty := by
+    use 0
+    rw [gpow_zero]
+  mul_closure := by
+    intro g₁ g₂ ⟨a, ha⟩ ⟨b, hb⟩
+    use a + b
+    rw [←ha, ←hb, gpow_add]
+  inv_closure := by
+    intro g ⟨a, ha⟩
+    use -a
+    have : ∀ i : G, μ i g = 𝕖 → i = ι g := sorry -- inverse unique
+    apply this
+    rw [←ha, gpow_neg, inv_op]
+
+theorem Pows_contain_self (x : G) : x ∈ Pows x := by
+  -- EXERCISE
+  use 1
+  exact gpow_one x
+
+-- This is an important theorem in relating the `Generate` subgroup, the powers of an element,
+-- and the cyclic group.
+theorem Pows_eq_Generate_singleton (x : G) : Pows x = Generate {x} := by
+  apply le_antisymm
+  · intro g hg
+    intro H hH
+    rw [Set.singleton_subset_iff] at hH
+    obtain ⟨a, ha⟩ := hg
+    rw [←ha]
+    apply gpow_closure
+    exact hH
+  · intro g hg
+    dsimp [Pows]
+    dsimp [Generate] at hg
+    have : {x} ⊆ (Pows x).carrier
+    · rw [Set.singleton_subset_iff]
+      apply Pows_contain_self
+    specialize hg (Pows x) this
+    obtain ⟨n, hn⟩ := hg
+    use n
+
+def gpowMap (x : G) (n : ℤ) : Pows x := by
+  apply Subtype.mk (gpow x n)
+  -- EXERCISE
+  apply gpow_closure
+  exact Pows_contain_self x
+
+def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpowMap x k
+
+theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0)
+  -- EXERCISE
+  : Function.Bijective (gpowMap x) := by
+  apply And.intro
+  · intro a b heq
+    apply gpow_inj_of_order_zero x
+    · exact h
+    · dsimp [finPowMap, gpowMap] at heq
+      rw [Subtype.ext_iff] at heq
+      exact heq
+  · intro ⟨g, hg⟩
+    obtain ⟨a, ha⟩ := hg
+    use a
+    unfold gpowMap
+    congr
+
+theorem finPowMap_order_bijective (x : G) (h : order x ≠ 0)
+  : Function.Bijective (finPowMap x (order x)) := by
+  -- EXERCISE
+  apply And.intro
+  · intro ⟨a, ha⟩ ⟨b, hb⟩ heq
+    congr
+    apply mpow_inj_of_lt_order x
+    · exact ha
+    · exact hb
+    · repeat rw [←gpow_ofNat]
+      dsimp [finPowMap, gpowMap] at heq
+      rw [Subtype.ext_iff] at heq
+      exact heq
+  · intro ⟨g, hg⟩
+    obtain ⟨a, ha⟩ := hg
+    set k := (a % order x).toNat with kdef
+    have hk : k < order x
+    · rw [kdef]
+      rw [Int.toNat_lt]
+      · apply Int.emod_lt_of_pos
+        apply Ne.lt_of_le
+        · symm
           rw [Int.ofNat_ne_zero]
           exact h
-
-    theorem Pows_card_eq_order (x : G) : Nat.card (Pows x) = order x := by
-      by_cases h : order x ≠ 0
-      · -- EXERCISE
-        apply Nat.card_eq_of_equiv_fin
-        apply Equiv.symm
-        apply Equiv.ofBijective (finPowMap x (order x))
-        apply finPowMap_order_bijective x
+        · exact Int.ofNat_zero_le (order x)
+      · apply Int.emod_nonneg
+        rw [Int.ofNat_ne_zero]
         exact h
-      · -- EXERCISE
-        rw [ne_eq, Decidable.not_not] at h
-        rw [h]
-        apply Set.Infinite.card_eq_zero
-        have e : ℤ ≃ Pows x
-        · apply Equiv.ofBijective (gpowMap x)
-          apply gpowMap_bijective_of_order_zero x
-          exact h
-        rw [←Set.infinite_coe_iff, ←Equiv.infinite_iff e]
-        exact Int.infinite
-      done
+    use Fin.mk k hk
+    dsimp [finPowMap, gpowMap]
+    congr
+    rw [kdef, Int.toNat_of_nonneg, ←ha]
+    · exact gpow_mod_order x a
+    · apply Int.emod_nonneg
+      rw [Int.ofNat_ne_zero]
+      exact h
 
-    -- FIXME: REPLACE ALL Cn CODE WITH AN IMPORT FROM CHAPTER 1
+theorem Pows_card_eq_order (x : G) : Nat.card (Pows x) = order x := by
+  by_cases h : order x ≠ 0
+  · -- EXERCISE
+    apply Nat.card_eq_of_equiv_fin
+    apply Equiv.symm
+    apply Equiv.ofBijective (finPowMap x (order x))
+    apply finPowMap_order_bijective x
+    exact h
+  · -- EXERCISE
+    rw [ne_eq, Decidable.not_not] at h
+    rw [h]
+    apply Set.Infinite.card_eq_zero
+    have e : ℤ ≃ Pows x
+    · apply Equiv.ofBijective (gpowMap x)
+      apply gpowMap_bijective_of_order_zero x
+      exact h
+    rw [←Set.infinite_coe_iff, ←Equiv.infinite_iff e]
+    exact Int.infinite
+  done
 
-    def Cn (n : ℕ): Type := Fin n
-    /- Fin n already has an add function that automatically takes mod n. This is
-    equivalent to a rotation of more than 360° being converted to a rotation of
-    less than 360°-/
-    def fCn (n : ℕ) : (Cn n) → (Cn n) → (Cn n) := Fin.add
-    /- Again we define the inverse function before proving that Cn is a group-/
-    def fCn_inv (n : ℕ): (Fin n) → (Fin n) := fun x => -x
-    instance {n : ℕ} [hpos : NeZero n]: Defs.Group (Cn n) where
-      op := fCn n
-      op_assoc := by
-        intro a b c
-        have h : ∀ (a b c : Fin n), a + b + c = a + (b + c)
-        exact fun a b c => add_assoc a b c
-        exact h a b c
-        done
-      /- Elements in Fin n, which is how we are representing Cn, are defined as a
-      natural number x, along with a proof that x < n. Fin n also has many of
-      the properties we need to show already proven. -/
-      id := {val := 0, isLt := Fin.size_pos'}
-      /- Try to prove the other group axioms. If you are struggling, similar proofs
-      to the proof for op_assoc can work for the other axioms.-/
-      op_id := by
-        -- sorry
-        -- SAMPLE SOLUTION
-        intro a
-        exact Fin.add_zero a
-        -- END OF SAMPLE SOLUTION
-      id_op := by
-        -- sorry
-        -- SAMPLE SOLUTION
-        intro a
-        have h : ∀ (a : Fin n), 0 + a = a
-        exact fun a => Fin.zero_add a
-        exact h a
-        -- END OF SAMPLE SOLUTION
-      inv := fCn_inv n
-      inv_op := by
-        -- sorry
-        -- SAMPLE SOLUTION
-        intro a
-        have h : ∀ (a : Fin n), -a + a = 0
-        exact fun a => neg_add_self a
-        exact h a
-        -- END OF SAMPLE SOLUTION
+-- FIXME: REPLACE ALL Cn CODE WITH AN IMPORT FROM CHAPTER 1
 
-    def Homomorphism [Group G] [Group G'] (φ : G → G') : Prop :=
-      ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
+def Cn (n : ℕ): Type := Fin n
+/- Fin n already has an add function that automatically takes mod n. This is
+equivalent to a rotation of more than 360° being converted to a rotation of
+less than 360°-/
+def fCn (n : ℕ) : (Cn n) → (Cn n) → (Cn n) := Fin.add
+/- Again we define the inverse function before proving that Cn is a group-/
+def fCn_inv (n : ℕ): (Fin n) → (Fin n) := fun x => -x
+instance {n : ℕ} [hpos : NeZero n]: Defs.Group (Cn n) where
+  op := fCn n
+  op_assoc := by
+    intro a b c
+    have h : ∀ (a b c : Fin n), a + b + c = a + (b + c)
+    exact fun a b c => add_assoc a b c
+    exact h a b c
+    done
+  /- Elements in Fin n, which is how we are representing Cn, are defined as a
+  natural number x, along with a proof that x < n. Fin n also has many of
+  the properties we need to show already proven. -/
+  id := {val := 0, isLt := Fin.size_pos'}
+  /- Try to prove the other group axioms. If you are struggling, similar proofs
+  to the proof for op_assoc can work for the other axioms.-/
+  op_id := by
+    -- sorry
+    -- SAMPLE SOLUTION
+    intro a
+    exact Fin.add_zero a
+    -- END OF SAMPLE SOLUTION
+  id_op := by
+    -- sorry
+    -- SAMPLE SOLUTION
+    intro a
+    have h : ∀ (a : Fin n), 0 + a = a
+    exact fun a => Fin.zero_add a
+    exact h a
+    -- END OF SAMPLE SOLUTION
+  inv := fCn_inv n
+  inv_op := by
+    -- sorry
+    -- SAMPLE SOLUTION
+    intro a
+    have h : ∀ (a : Fin n), -a + a = 0
+    exact fun a => neg_add_self a
+    exact h a
+    -- END OF SAMPLE SOLUTION
 
-    def Isomorphic [Group G] [Group G'] (φ : G → G') : Prop :=
-      Function.Bijective φ ∧ Homomorphism φ
+def Homomorphism [Group G] [Group G'] (φ : G → G') : Prop :=
+  ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
-    -- TODO: Create isomorphism between Cn and Pows n
+def Isomorphic [Group G] [Group G'] (φ : G → G') : Prop :=
+  Function.Bijective φ ∧ Homomorphism φ
 
-  end Subgroups
+-- TODO: Create isomorphism between Cn and Pows n
+
+end Subgroups
 end Defs
