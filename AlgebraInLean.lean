@@ -1,7 +1,7 @@
 import AlgebraInLean.Basic
-import AlgebraInLean.World0LeanIntroSOLUTIONS.Sheet1Solutions
-import AlgebraInLean.World0LeanIntroSOLUTIONS.Sheet2Solutions
-import AlgebraInLean.World0LeanIntroSOLUTIONS.Sheet3Solutions
-import AlgebraInLean.World0LeanIntroSOLUTIONS.Sheet4Solutions
-import AlgebraInLean.World0LeanIntroSOLUTIONS.Sheet5Solutions
-import AlgebraInLean.World0LeanIntroSOLUTIONS.Sheet6Solutions
+import AlgebraInLean.Chapter00.Sheet01
+import AlgebraInLean.Chapter00.Sheet02
+import AlgebraInLean.Chapter00.Sheet03
+import AlgebraInLean.Chapter00.Sheet04
+import AlgebraInLean.Chapter00.Sheet05
+import AlgebraInLean.Chapter00.Sheet06
