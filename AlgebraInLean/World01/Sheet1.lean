@@ -13,10 +13,11 @@ other ideas can all be understood through algebra. -/
 /-- The most common structure in algebra is the group. A group is defined as a set G along with some
 operation μ on that set. The operation also must have certain properties when acting on elements in
 the set. This is represented in lean as a type class. Type classes are just objects that share
-certain properties.The group class has the properties listed below, and a group G is
+certain properties. The group class has the properties listed below, and a group G is
 written as [Group G]. -/
 class Group (G : Type*) where /- Type* means that G can be a type, a type consisting of types, or
-  any nested amount of types within types.-/
+  any nested amount of types within types. This is explained further in chapter 2, or you can look
+  here: https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html-/
 
   -- This is the function acting on the group, which must be closed
   μ : G → G → G
