@@ -215,6 +215,21 @@ theorem Centralizer_def {S : Set G} {a : G} : a ∈ Centralizer S ↔ ∀ s ∈ 
 
 def Center : Subgroup G := Centralizer Set.univ
 
+/--
+We have the `AbelianGroup` type class that we defined in chapter 1, but here we codify a subgroup
+being abelian into a `Prop`. This lends itself to nice proofs like the one below.
+-/
+def Abelian (H : Subgroup G) : Prop := ∀ (x y : G), x ∈ H → y ∈ H → μ x y = μ y x
+
+theorem subgroup_abelian_iff_centralizer_self (H : Subgroup G)
+  : H ≤ Centralizer H ↔ Abelian H := by
+  constructor
+  · intro h x y hx hy
+    specialize h hx
+    exact h y hy
+  · intro h x hx s hs
+    exact h x s hx hs
+
 /-
 A homomorphism is injective if and only if the kernel is trivial. The backwards proof is quite
 simple, in order for a homomorphism φ : G → G' to be injective it must be that φ maps ONLY 𝕖 ∈ G to
@@ -305,18 +320,6 @@ theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
       rw [← op_assoc]
       simp only [op_inv, id_op]
   done
-
--- Subgroup H is abelian
-def isAbelian (H : Subgroup G) : Prop := ∀ (x y : G), x ∈ H → y ∈ H → μ x y = μ y x
-
-/- Show that H ≤ C_G (H) if and only if H is abelian -/
-theorem abelian_iff_subgroup_centralizer_self (H : Subgroup G) : H ≤ Centralizer H ↔ isAbelian H := by
-constructor
-· intro h x y hx hy
-  specialize h hx
-  exact h y hy
-· intro h x hx s hs
-  exact h x s hx hs
 
 end Subgroups
 end Defs
