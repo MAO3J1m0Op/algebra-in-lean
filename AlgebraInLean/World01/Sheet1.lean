@@ -4,68 +4,94 @@ namespace AlgebraInLean
 
 namespace GroupIntro
 
-/- Abstract algebra is the branch of mathematics concerning sets and operations on those sets. For
+/-
+Abstract algebra is the branch of mathematics concerning sets and operations on those sets. For
 example, consider the set of integers and the operation of addition on them. This operation has
 certain properties, such as associativity and commutativity. The integers are one of many different
 structures that algebra studies. Function composition, symmetries of regular polygons, and many
-other ideas can all be understood through algebra. -/
+other ideas can all be understood through algebra.
+-/
 
-/-- The most common structure in algebra is the group. A group is defined as a set G along with some
-operation μ on that set. The operation also must have certain properties when acting on elements in
-the set. This is represented in lean as a type class. Type classes are just objects that share
-certain properties. The group class has the properties listed below, and a group G is
-written as [Group G]. -/
-class Group (G : Type*) where /- Type* means that G can be a type, a type consisting of types, or
-  any nested amount of types within types. This is explained further in chapter 2, or you can look
-  here: https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html-/
+/--
+The most common structure in algebra is the group. A group is defined as a set G along with some
+binary operation on that set that satisfies some properties (listed below). This is represented in
+Lean as a type class, which are objects that share certain properties. For a given type `G`, the
+type `Group G` corresponds to it being a group; as an argument, this is often written `[Group G]`,
+which makes Lean automatically look for an implementation of such.
+-/
+class Group (G : Type*) where
+  /-
+  The syntax `Type*` is explained further in chapter 2, but for now you can interpret it as just
+  meaning that `G` can be really any type. More information here:
+  <https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html>
+  -/
 
-  -- This is the function acting on the group, which must be closed
-  μ : G → G → G
+  /--
+  The group operation as a binary function. This type signature implies that it is necessarily
+  closed.
+  -/
+  op : G → G → G
 
-  -- The group operation must be associative
-  op_assoc : ∀ a b c : G, μ (μ a b) c = μ a (μ b c)
+  /-- (a ⬝ b) ⬝ c = a ⬝ (b ⬝ c) -/
+  op_assoc : ∀ (a b c : G), op (op a b) c = op a (op b c)
 
-  -- The group must have an identity element with properties described below
+  /-- The identity element of the group, with properties described below -/
   id : G
 
-  -- Multiplying any element by the identity returns the element
-  op_id : ∀ a : G, μ a id = a
+  /-- a ⬝ 1 = a -/
+  op_id : ∀ (a : G), op a id = a
 
-  -- Multiplying the identity by any element returns the element
-  id_op : ∀ a : G, μ id a = a
+  /-- 1 ⬝ a = a -/
+  id_op : ∀ (a : G), op id a = a
 
-  -- Each element must also have an inverse, which is represented by an inverse function
+  /-- For `x : G`, `inv x` is its inverse, with the property described below -/
   inv : G → G
 
-  -- Multiplying by an inverse returns the identity
-  inv_op : ∀ a : G, μ (inv a) a = id
+  /-- a⁻¹ ⬝ a = 1 -/
+  inv_op : ∀ (a : G), op (inv a) a = id
 
-  -- This is another property of groups, but can be shown without extra assumptions
-  -- op_inv : ∀ a : G, μ a (inv a) = id
+  /-
+  This is another property of the inverse, but it can be shown from the other properties without
+  additional assumptions, as shown below.
+  -/
+  -- op_inv : ∀ (a : G), μ a (inv a) = id
 
-/- Now that groups have been defined, you can state the group axioms as theorems and definitions to
-make them easier to use-/
+/-
+Now that groups have been defined, you can state the group axioms as theorems and definitions to
+make them easier to use.
+-/
 
--- We still represent the group function as μ (written as \m)
-def μ [Group G] : G → G → G := Group.μ
+variable {G : Type*} [Group G] -- This allows us to omit these arguments from type signatures
 
-theorem op_assoc [Group G] (a b c : G) : μ (μ a b) c = μ a (μ b c) := Group.op_assoc a b c
+/-- The group operation -/
+def μ : G → G → G := Group.op -- type μ with "\m"
 
--- We represent the identity as 𝕖 (written as \bbe)
-def 𝕖 [Group G] : G := Group.id
+/-- (a ⬝ b) ⬝ c = a ⬝ (b ⬝ c) -/
+theorem op_assoc : ∀ (a b c : G), μ (μ a b) c = μ a (μ b c) := Group.op_assoc
 
-theorem op_id [Group G] (a : G) : μ a 𝕖 = a := Group.op_id a
+/-- The identity element of the group -/
+def 𝕖 : G := Group.id -- type 𝕖 with "\bbe"
 
-theorem id_op [Group G] (a : G) : μ 𝕖 a = a := Group.id_op a
+/-- a ⬝ 1 = a -/
+theorem op_id : ∀ (a : G), μ a 𝕖 = a := Group.op_id
 
--- We represent the inverse function as ι (written as \io)
-def ι [Group G] : G → G := Group.inv
+/-- 1 ⬝ a = a -/
+theorem id_op : ∀ (a : G), μ 𝕖 a = a := Group.id_op
 
+/-- The inverse map of the gorup -/
+def ι [Group G] : G → G := Group.inv -- type ι with "\io"
+
+/-- a⁻¹ ⬝ a = 1 -/
 theorem inv_op [Group G] (a : G) : μ (ι a) a = 𝕖 := Group.inv_op a
 
-/- Now, we can start writing proofs with groups-/
+/- Now, we can start writing proofs with groups -/
 
--- This is a proof that multiplying by the inverse gives the identity
+/-- a ⬝ a⁻¹ = 1 -/
 theorem op_inv [Group G] (a : G) : μ a (ι a) = 𝕖 := by
-  rw [(id_op (μ a (ι a))).symm, ←(inv_op (ι a))]
-  rw [op_assoc, ←(op_assoc (ι a) a (ι a)), inv_op, id_op]
+  rw [ ←id_op (μ a _)
+     , ←inv_op (ι a)
+     , op_assoc
+     , ←op_assoc (ι a)
+     , inv_op
+     , id_op
+     ]

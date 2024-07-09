@@ -2,56 +2,67 @@ import AlgebraInLean.World01.Sheet2
 
 namespace AlgebraInLean
 
--- This allows us to not have to say [Group G] when stating all the theorems below.
-variable {G : Type*} [Group G]
+variable {α : Type*}
 
-/- When we defined groups, we only required existance of an identity and inverses. This means that
-there could be multiple identities and inverse functions. However, this is not possible, and we can
-show that the identity and inverse are unique. -/
+/-
+When we defined the monoids and groups, we only required the *existence* of identity and inverses,
+but not their uniqueness. However, it does happen that they must be unique, as shown below.
+-/
 
-/- Since the proof of op_inv used the previous definition of Group, we need to reprove it using the
-new definitions. -/
-theorem op_inv (a : G) : μ a (ι a) = 𝕖 := by
-  rw [←(id_op (μ a (ι a))), ←(inv_op (ι a))]
-  rw [op_assoc, ←(op_assoc (ι a) a (ι a)), inv_op, id_op]
-
-
-/- This proves that the identity is unique. This theorem only requires G to be a monoid, so that is
-all we will assume. The obtain tactic may be useful for dealing with the and as a hypothesis. When
-h is a hypothesis of P ∧ Q, obtain ⟨h1, h2⟩ := h creates hypotheses h1 and h2 which state P and Q
-respectively. -/
-theorem id_unique [Monoid M] (e2 : M) : (∀ a : M, (μ a e2 = a ∧ μ e2 a = a)) → e2 = 𝕖 := by
+/--
+Uniqueness of the identity element in a monoid. If any element e₂ "behaves like" the identity, then
+it must be equal to the identity.
+-/
+theorem id_unique [Monoid α] (e₂ : α) (h : ∀ (a : α), (μ a e₂ = a ∧ μ e₂ a = a)) : e₂ = 𝕖 := by
+  /-
+  The `obtain` tactic may be useful. Given a hypothesis `h : P ∧ Q`, `obtain ⟨h₁, h₂⟩ := h` creates
+  hypotheses `h₁ : P` and `h₂ : Q`. This also works to destructure other types like `∃`.
+  -/
   -- sorry
   -- SAMPLE SOLUTION
-  intro ha
-  specialize ha 𝕖
-  obtain ⟨ha1, ha2⟩ := ha
-  rw [id_op] at ha1
-  exact ha1
+  specialize h 𝕖
+  obtain ⟨h, _⟩ := h -- we don't care about the property on the right, so we use `_` instead.
+  rw [id_op] at h
+  exact h
   -- END OF SAMPLE SOLUTION
 
-/- This proves that inverses are unique. -/
-theorem inv_unique (a i : G) : (μ a i = 𝕖 ∧ μ i a = 𝕖) → i = ι a := by
+variable [Group α]
+
+/--
+Uniqueness of the inverse of an element. If any element i "behaves like" the inverse of a, then it
+must be equal to the inverse of a.
+-/
+theorem inv_unique (a i : α) (h : μ a i = 𝕖 ∧ μ i a = 𝕖) : i = ι a := by
   -- sorry
   -- SAMPLE SOLUTION
-  intro ha
-  obtain ⟨ha1, _⟩ := ha
-  rw [←(op_id (ι a)), ←ha1, ←(op_assoc (ι a) a i), inv_op, id_op]
+  obtain ⟨h, _⟩ := h
+  rw [←op_id (ι a), ←h, ←op_assoc (ι a), inv_op, id_op]
   -- END OF SAMPLE SOLUTION
 
-/- Now that we have the uniqueness theorems, we can prove some more interesting theorems about the
-identity and inverses. -/
-theorem shoes_and_socks (a b : G) : ι (μ a b) = μ (ι b) (ι a) := by
+/-
+Now that we have the uniqueness theorems, we can prove some more interesting theorems about the
+identity and inverses.
+-/
+
+/--
+(a ⬝ b)⁻¹ = b⁻¹ ⬝ a⁻¹
+
+Colloquially, the "shoes and socks theorem" because you put on your socks before your shoes, but you
+take off your shoes before your socks. "Anticommutativity" is the fancy name for this: a function
+that "commutes" with the operation but inverts the order of the operands.
+-/
+theorem inv_anticomm (a b : α) : ι (μ a b) = μ (ι b) (ι a) := by
   -- sorry
   -- SAMPLE SOLUTION
   symm
   apply inv_unique
   constructor
-  · rw[op_assoc, ←(op_assoc b (ι b) (ι a)), op_inv, id_op, op_inv]
-  · rw[op_assoc, ←(op_assoc (ι a) a b), inv_op, id_op, inv_op]
+  · rw [op_assoc, ←op_assoc b, op_inv, id_op, op_inv]
+  · rw [op_assoc, ←op_assoc (ι a), inv_op, id_op, inv_op]
   -- END OF SAMPLE SOLUTION
 
-theorem inv_inv (a : G) : ι (ι a) = a := by
+/-- (a⁻¹)⁻¹ = a -/
+theorem inv_inv (a : α) : ι (ι a) = a := by
   --sorry
   -- SAMPLE SOLUTION
   symm
@@ -61,9 +72,20 @@ theorem inv_inv (a : G) : ι (ι a) = a := by
   · exact op_inv a
   -- END OF SAMPLE SOLUTION
 
-theorem right_cancel (a b c : G) : μ b a = μ c a → b = c := by
+/-- 1⁻¹ = 1 -/
+theorem inv_id [Group α] : ι 𝕖 = (𝕖 : α) := by
   -- sorry
   -- SAMPLE SOLUTION
-  intro h
-  rw[←(op_id b), ←(op_id c), ←(op_inv a), ←op_assoc, ←op_assoc, h]
+  symm
+  apply inv_unique
+  constructor
+  · exact op_id 𝕖
+  · exact op_id 𝕖
+  -- END OF SAMPLE SOLUTION
+
+/-- b ⬝ a = c ⬝ a ⇒ b = c -/
+theorem right_cancel (a b c : α) (h : μ b a = μ c a) : b = c := by
+  -- sorry
+  -- SAMPLE SOLUTION
+  rw[←op_id b, ←op_id c, ←op_inv a, ←op_assoc, ←op_assoc, h]
   -- END OF SAMPLE SOLUTION

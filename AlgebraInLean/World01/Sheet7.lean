@@ -2,105 +2,97 @@ import AlgebraInLean.World01.Sheet6
 
 namespace AlgebraInLean
 
-/- The last group we will cover in this section is the symmetric group. This is defined by the
-different ways of permuting n elements. The group operation is composition. For example, S3 has
-6 elements, which permute (1, 2, 3) into (1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2),
-and (3, 2, 1). Elements in Sn can also be thought of as bijective, or invertable, functions. We can
-write an element in Sn as a function from Fin n to Fin n, along with a proof that that function is
-bijective. -/
-def Sn (n : ℕ) : Type := {f : Fin n → Fin n // Function.Bijective f}
+/-
+The last groups we will cover in this chapter are the symmetric groups. This is defined by the
+different ways of permuting n elements. The group operation is composition. For example, S₃ has 6
+elements, which permute (1, 2, 3) into (1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), and
+(3, 2, 1). Elements in Sₙ can also be thought of as bijections (invertible functions) from a set of
+n elements to itself. We define Sₙ as a function from Fin n to Fin n, along with a proof that it is
+bijective (note that the group structure of Fin n is not relevant here).
+-/
 
-/- The group operation is function composition, along with a proof that the composition of two
-bijective functions is also bijective. -/
-def Sn_op {n : ℕ} (f g : Sn n) : Sn n := {val := f.val ∘ g.val , property := Function.Bijective.comp f.property g.property}
+/-- A symmetric group is a bijection Fin n → Fin n -/
+def Symmetric (n : ℕ) : Type := {f : Fin n → Fin n // Function.Bijective f}
 
-/- Again, we rewrite the definition as a theorem for ease of use. -/
-theorem op_def (n : ℕ) {f g : Sn n} : Sn_op f g = {val := f.val ∘ g.val , property := Function.Bijective.comp f.property g.property} := rfl
+variable {n : ℕ}
 
-/- Finding the inverse function is tricky. Since elements of Sn are bijections, there must exist an
-inverse, but knowing that something exists and actually finding the value are different tasks.
-This theorem shows that an inverse must exist. -/
-theorem inverse_exists (f : Fin n → Fin n) (h : Function.Bijective f) : ∃ g : Fin n → Fin n, Function.LeftInverse g f ∧ Function.RightInverse g f := by
-  exact Function.bijective_iff_has_inverse.mp h
 
-/- This computes the value of the inverse function, but it still does not have a proof that the
-inverse is a bijection, so it isn't an element of Sn yet. This uses .choose, which extracts a value
-from a ∃ statement. The noncomputable keyword means that the computer cannot actually compute the
-value, and can only give it a name. -/
-noncomputable def Sn_inv_val : (Sn n) → (Fin n → Fin n) := fun f => (inverse_exists f.val f.property).choose
-
-/- Restating the definition as a theorem again. -/
-theorem Sn_inv_def (f : Sn n) : Sn_inv_val f = (inverse_exists f.val f.property).choose := rfl
-
-/- This uses .choose_spec, which shows that elements chosen through .choose retain the property that
-the ∃ implies. This example shows that the inverse chosen is actually an inverse. -/
-theorem inverse_prop (f : Sn n) : Function.LeftInverse (Sn_inv_val f) f.val ∧ Function.RightInverse (Sn_inv_val f) f.val := by
-  rw [Sn_inv_def]
-  exact (inverse_exists f.val f.property).choose_spec
-
-/- Now, using the value gotten earlier along with the proof that the inverse is an inverse, we can
-prove that the inverse is a bijection, so we can write it as an element of Sn and complete the
-definition of the inverse. -/
-noncomputable def Sn_inv : (Sn n) → (Sn n) := fun f => {val := Sn_inv_val f, property := by have h:= inverse_prop f; rw [Function.bijective_iff_has_inverse]; use f.val; exact And.comm.mp h}
-
-/- This theorem allows us to extract the function value from an object in Sn. This means that if we
-can prove that two functions are equal, the Sn objects they represent are equal. -/
-@[ext]
-theorem Sn.ext {n : ℕ} {f g : Sn n} : f.val = g.val → f = g := by
-  intro h
-  unfold Sn at *
-  ext
-  rw [h]
+/--
+Two elements of the same symmetric group are equal when the underlying functions are the same.
+-/
+@[ext] -- this allows the "ext" tactic to work on elements of Sₙ
+theorem Symmetric.ext {n : ℕ} {f g : Symmetric n} (h : f.val = g.val) : f = g := by
+  unfold Symmetric at *
+  ext : 1
+  exact h
   done
 
-/- We define the identity as the identity function.-/
-def Sn_id : Sn n := {val := id, property := Function.bijective_id}
 
-/- We can now claim that Sn is a group. -/
-noncomputable instance (n : ℕ) : Group (Sn n) where
-  op := Sn_op
+/--
+The group operation is function composition, along with a proof that the composition of two
+bijective functions is also bijective.
+-/
+protected def Symmetric.op (f g : Symmetric n) : Symmetric n where
+  val := f.val ∘ g.val
+  property := Function.Bijective.comp f.prop g.prop
 
-  op_assoc := by
+
+/-- The inverse of an element of Sₙ is just the inverse of the underlying function. -/
+protected noncomputable def Symmetric.inv (f : Symmetric n) : Symmetric n := by
+  -- `choose` invokes the axiom of choice (see `Classical.choose` and `Classical.choose_spec`)
+  choose g h using Function.bijective_iff_has_inverse.mp f.prop
+  use g
+  apply Function.bijective_iff_has_inverse.mpr
+  use f.val
+  exact h.symm
+  done
+
+/-
+This theorem allows for easier use of `.inv` defined above so you do not have to dig into how the
+`choose` tactic works.
+-/
+protected theorem Symmetric.inv_spec (f : Symmetric n)
+  : Function.LeftInverse f.inv.val f.val ∧ Function.RightInverse f.inv.val f.val :=
+  Classical.choose_spec (Function.bijective_iff_has_inverse.mp f.prop)
+
+
+noncomputable instance (n : ℕ) : Group (Symmetric n) where
+  op := Symmetric.op
+
+  op_assoc a b c := by
     -- sorry
     -- SAMPLE SOLUTION
-    intro a b c
     rfl
     -- END OF SAMPLE SOLUTION
 
-  id := Sn_id
+  id := by
+    use id
+    exact Function.bijective_id
 
-  op_id := by
+  op_id a := by
     -- sorry
     -- SAMPLE SOLUTION
-    intro a
     rfl
     -- END OF SAMPLE SOLUTION
 
-  id_op := by
+  id_op a := by
     -- sorry
     -- SAMPLE SOLUTION
-    intro a
     rfl
     -- END OF SAMPLE SOLUTION
 
-  inv := Sn_inv
+  inv := Symmetric.inv
 
-  /- Prooving inv_op is more involved than the other group axioms. If you get
-  stuck, look at the proofs in the other sheets for help. Also remember to use
-  ext to turn a goal that two Sn objects are equal into having to show that the
-  two corresponding functions are equal.-/
-  inv_op := by
+  /-
+  Proving this is more involved than the others. If you get stuck, try using the
+  `Symmetric.inv_spec` theorem, the `ext` tactic, and looking at the proofs in the other sheets for
+  help.
+  -/
+  inv_op a := by
     -- sorry
     -- SAMPLE SOLUTION
-    have h : ∀ a : Sn n, (Sn_op) (Sn_inv a) a = Sn_id
-    intro a
-    have h2 :  (Sn_op (Sn_inv a) a).val = Sn_id.val
-    rw [op_def n]
-    simp
-    have h_inverse_prop := inverse_prop a
-    obtain ⟨hl, _⟩ := h_inverse_prop
-    exact Function.RightInverse.id hl
-    ext
-    rw [h2]
-    exact fun a => h a
+    ext : 1
+    simp only [μ, Symmetric.op, 𝕖, Symmetric.inv]
+    apply Function.LeftInverse.comp_eq_id
+    exact a.inv_spec.left
     -- END OF SAMPLE SOLUTION

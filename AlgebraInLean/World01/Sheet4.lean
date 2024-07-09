@@ -2,21 +2,20 @@ import AlgebraInLean.World01.Sheet3
 
 namespace AlgebraInLean
 
-/- Now that we know how to define a group, and some basic properties of groups, we can find
-important examples of groups. -/
+/-
+Now that we know how to define a group, and some basic properties of groups, we can find important
+examples of groups.
+-/
 
-/- The group you are likely most familiar with is the integers, with addition as the group
-operation. -/
+/-
+The group you are likely most familiar with is the integers, with addition as the group operation.
+-/
 instance : Group ℤ where
-  -- fun x y => x + y means that op is a function where op x y is defined as x + y
-  op := fun x y => x + y
+  op a b := a + b
 
-  -- Mathlib already has proofs for all of these properties, try to use those.
+  -- Mathlib already has all of these proven, you just need to figure out what they are called.
   op_assoc := by
-    -- sorry
-    -- SAMPLE SOLUTION
     exact add_assoc
-    -- END OF SAMPLE SOLUTION
 
   id :=
     -- sorry
@@ -36,10 +35,10 @@ instance : Group ℤ where
     exact zero_add
     -- END OF SAMPLE SOLUTION
 
-  inv :=
+  inv x :=
     -- sorry
     -- SAMPLE SOLUTION
-    fun a => -a
+    -x
     -- END OF SAMPLE SOLUTION
 
   inv_op := by
@@ -48,72 +47,68 @@ instance : Group ℤ where
     exact add_left_neg
     -- END OF SAMPLE SOLUTION
 
-/- Structures other than numbers also have the group properties. Take the rotational symmetries of a
-polygon, for example. Each element could be a rotation that maintains the symmetries of the polygon,
-and the group operation can be composition of these rotations. For example, consider the rotations
-of a triangle. All symmetric rotations must be multiples of 120°, of which there are three:
-{0°, 120°, 240°}. Any other rotations can be written as one of these three and some amount of
-360° rotations. Now, we can prove that this set, commonly called C3, is a group.-/
-
-/- The inductive keyword allows us to define a type with specific elements. In this case, we define
-C3 to have 3 elements: rot0, rot120, and rot240. These three elements are the three rotational
-symmetries of a triangle. -/
-inductive C3 : Type
-  | rot0 : C3
-  | rot120 : C3
-  | rot240 : C3
-
-/- In order to define how we compose different rotations, we have to first define functions for each
-of the three rotations, then define the group operation based on these functions. -/
-
--- Rotation by 0°
-def fun_rot0 : C3 → C3
-  | C3.rot0 => C3.rot0 -- This means rot0 maps to rot0 after a rotation of 0°
-  | C3.rot120 => C3.rot120
-  | C3.rot240 => C3.rot240
-
--- Rotation by 120°
-def fun_rot120 : C3 → C3
-  | C3.rot0 => C3.rot120
-  | C3.rot120 => C3.rot240
-  | C3.rot240 => C3.rot0
-
--- Rotation by 240°
-def fun_rot240 : C3 → C3
-  | C3.rot0 => C3.rot240
-  | C3.rot120 => C3.rot0
-  | C3.rot240 => C3.rot120
-
-/- Now, we can define the group operation using these three functions. -/
-def fC3 : C3 → C3 → C3
-  | C3.rot0 => fun_rot0
-  | C3.rot120 => fun_rot120
-  | C3.rot240 => fun_rot240
-
-/- We should also define the inverse function, which should "undo" rotation. -/
-def fC3inv : C3 → C3
-  | C3.rot0 =>
+/- Moreover, the group formed by the integers is abelian -/
+instance : AbelianGroup ℤ where
+  op_comm := by
     -- sorry
     -- SAMPLE SOLUTION
-    C3.rot0
-    -- END OF SAMPLE SOLUTION
-  | C3.rot120 =>
-    -- sorry
-    -- SAMPLE SOLUTION
-    C3.rot240
-    -- END OF SAMPLE SOLUTION
-  | C3.rot240 =>
-    -- sorry
-    -- SAMPLE SOLUTION
-    C3.rot120
+    exact add_comm
     -- END OF SAMPLE SOLUTION
 
-/- Now, we can prove that C3 is a group.
-The cases tactic is very useful here, along with the all_goals tactic, which allows you to solve
-multiple goals at the same time. Once you have an equation such as μ C3.rot120 C3.rot240 = C3.rot0,
-the rfl tactic will solve the goal. -/
-instance : Group C3 where
-  op := fC3
+/-
+Structures other than numbers also have the group properties. Take the rotational symmetries of a
+regular polygon, for example. Each element could be a rotation that maintains the symmetries of the
+polygon, and the group operation can be composition of these rotations. For example, consider the
+rotations of such a triangle. All symmetric rotations must be multiples of 120°, of which there are
+three: 0°, 120°, and 240°. Any other rotations can be written as one of these three and some amount
+of 360° rotations. Now, we can prove that this set, commonly called C₃, is a group.
+-/
+
+/-
+The inductive keyword allows us to define a type with specific elements/constructors. In this case,
+we define C₃ to have the 3 elements C₃.rot0, C₃.rot120, and C₃.rot240 (the `C₃` before the `.` can
+sometimes be omitted.
+-/
+/-- The rotational symmetries of a regular triangle. -/
+inductive C₃ : Type
+| rot0 : C₃
+| rot120 : C₃
+| rot240 : C₃
+
+protected def C₃.op : C₃ → C₃ → C₃
+| .rot0, .rot0 => .rot0
+| .rot0, .rot120 => .rot120
+| .rot0, .rot240 => .rot240
+| .rot120, .rot0 => .rot120
+| .rot120, .rot120 => .rot240
+| .rot120, .rot240 => .rot0
+| .rot240, .rot0 => .rot240
+| .rot240, .rot120 => .rot0
+| .rot240, .rot240 => .rot120
+
+protected def C₃.inv : C₃ → C₃
+  | .rot0 =>
+    -- sorry
+    -- SAMPLE SOLUTION
+    .rot0
+    -- END OF SAMPLE SOLUTION
+  | .rot120 =>
+    -- sorry
+    -- SAMPLE SOLUTION
+    .rot240
+    -- END OF SAMPLE SOLUTION
+  | .rot240 =>
+    -- sorry
+    -- SAMPLE SOLUTION
+    .rot120
+    -- END OF SAMPLE SOLUTION
+
+/-
+Now, we can prove that C₃ is a group. The tactics `cases` and `all_goals` (which applies a tactic
+to all current goals) are useful here. Note that you can omit the `with | ...` part from `cases`.
+-/
+instance : Group C₃ where
+  op := .op
 
   op_assoc := by
     -- sorry
@@ -128,7 +123,7 @@ instance : Group C3 where
   id :=
     -- sorry
     -- SAMPLE SOLUTION
-    C3.rot0
+    .rot0
     -- END OF SAMPLE SOLUTION
 
   op_id := by
@@ -147,7 +142,7 @@ instance : Group C3 where
     all_goals rfl
     -- END OF SAMPLE SOLUTION
 
-  inv := fC3inv
+  inv := .inv
 
   inv_op := by
     -- sorry
@@ -156,3 +151,5 @@ instance : Group C3 where
     cases a
     all_goals rfl
     -- END OF SAMPLE SOLUTION
+
+/- C₃ is also abelian, but we leave a proof of that for the next section -/
