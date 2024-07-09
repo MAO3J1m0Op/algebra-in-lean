@@ -2,29 +2,26 @@ import AlgebraInLean.World01.Sheet5
 
 namespace AlgebraInLean
 
-/- The next example of a group we will go over is the dihedral group, Dn. Similarly to
-the cyclic group, Dn is a group of the symmetries of a regular n-gon. However, in
-the dihedral group, both rotations and reflections are allowed. The group action
-is again composition of these symmetries. -/
+/- The next example of a group we will go over is the dihedral group, Dn. Similarly to the cyclic
+group, Dn is a group of the symmetries of a regular n-gon. However, in the dihedral group, both
+rotations and reflections are allowed. The group action is again composition of these symmetries. -/
 
-/- Dn has 2n elements: the n rotations already in Cn, and the reflections of all
-of these rotations. This means that we can represent Dn as an ordered pair, with
-a boolean representing whether or not this element is a reflection, and a natural
-number less than n representing which spot the first vertex gets sent to.-/
+/- Dn has 2n elements: the n rotations already in Cn, and all of these rotations after rotating
+around a vertical line. This means that we can represent Dn as an ordered pair, with a boolean
+representing whether or not this element is a reflection, and a natural number less than n
+representing which spot the first vertex gets sent to. -/
 def Dn (n : ℕ) : Type := Bool × (Fin n)
 
 /- Both these functions are used as helper functions in the Dn_op function. -/
-/- f_no_ref describes composing a rotation by another element in Dn. Due to how
-function composition works, this other element goes first. This means that applying
-a pure rotation after any other element preserves whether or not the element is a
-reflection, and adds the new rotation to how much the other element rotated the polygon
-This is done with an if-then-else block, which allows you to return different values
-depending on if you have a rotation or reflection. -/
-/- f_ref is similar, except if describes composing a reflection with anothee element.
-This time, whether the element is a reflection or not is switched, since composing two
-reflections gives a rotation, and composing a reflection and a rotation returns a
-reflection. Now, the two rotations are subtracted, since the reflection switches which
-direction of the rotation of the first element. -/
+/- f_no_ref describes composing a rotation by another element in Dn. Due to how function composition
+works, this other element happens first. This means that applying a pure rotation after any other
+element preserves whether or not the element is a reflection, and adds the new rotation to how much
+the other element rotated the polygon. This is done with an if-then-else block, which allows you to
+return different values depending on if you have a rotation or reflection. -/
+/- f_ref is similar, except it describes composing a reflection with another element. This time,
+whether the element is a reflection or not is switched, since composing two reflections gives a
+rotation, and composing a reflection and a rotation returns a reflection. Now, the two rotations are
+subtracted, since the reflection switches which direction of the rotation of the first element. -/
 def f_no_ref (n : ℕ) : (Dn n) → (Dn n) → (Dn n) := fun x y => if (y.1 = true) then {1 := true, 2 := Fin.add x.2 y.2} else {1 := false, 2 := Fin.add x.2 y.2}
 
 def f_ref (n : ℕ) : (Dn n) → (Dn n) → (Dn n) := fun x y => if (y.1 = true) then {1 := false, 2 := Fin.sub x.2 y.2} else {1 := true, 2 := Fin.sub x.2 y.2}
