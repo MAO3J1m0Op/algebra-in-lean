@@ -67,28 +67,28 @@ inductive C3 : Type
 of the three rotations, then define the group operation based on these functions. -/
 
 -- Rotation by 0°
-def frot0 : C3 → C3
+def fun_rot0 : C3 → C3
   | C3.rot0 => C3.rot0 -- This means rot0 maps to rot0 after a rotation of 0°
   | C3.rot120 => C3.rot120
   | C3.rot240 => C3.rot240
 
 -- Rotation by 120°
-def frot120 : C3 → C3
+def fun_rot120 : C3 → C3
   | C3.rot0 => C3.rot120
   | C3.rot120 => C3.rot240
   | C3.rot240 => C3.rot0
 
 -- Rotation by 240°
-def frot240 : C3 → C3
+def fun_rot240 : C3 → C3
   | C3.rot0 => C3.rot240
   | C3.rot120 => C3.rot0
   | C3.rot240 => C3.rot120
 
 /- Now, we can define the group operation using these three functions. -/
 def fC3 : C3 → C3 → C3
-  | C3.rot0 => frot0
-  | C3.rot120 => frot120
-  | C3.rot240 => frot240
+  | C3.rot0 => fun_rot0
+  | C3.rot120 => fun_rot120
+  | C3.rot240 => fun_rot240
 
 /- We should also define the inverse function, which should "undo" rotation. -/
 def fC3inv : C3 → C3
