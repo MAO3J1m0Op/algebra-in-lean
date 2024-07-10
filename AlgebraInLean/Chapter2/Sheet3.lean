@@ -1,223 +1,137 @@
-import «AlgebraInLean».Basic
 import Mathlib.Tactic
 
 namespace Defs
 
-namespace Morphisms
-
-namespace Sheet3
-
--- Injectivity, Surjectivity, Bijectivity
-  def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
-
-  def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
-
-  def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
-
-  -- Basic Morphisms ("imported" from Sheet 1)
-  def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
-  a) (φ b) = φ (μ a b)
-
-  def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
-  Bijective φ)
-
--- ## Endomorphisms and Automorphisms
-
-  section Endomorphisms
-    /-
-
-    In Sheet 1 of this chapter, you were introduced to homomorphisms and isomorphisms. In this
-    sheet, we will take a deeper dive with morphisms and some attributes that definitionally
-    separate different kids of morphisms.
-
-    Particularly, we will begin with endomorphims.
-
-    We define an endomorphism to be a homorphism from an object onto itself. In the case of
-    `AlgebraInLean`, this means that a _group_ endomporphism is a group homomorphism from an
-    arbitrary group G back to itself.
-
-    As you have seen previously, in the context of Algebra, "group" is often omitted when discussing
-    group endomorphisms. An endomorphism (and morphisms in general) can be defined among many
-    different types of mathematical objects, but in AlgebraInLean it will always refer to a group
-    endomorphism.
-
-    Let's take a look at how this would be defined in Lean:
-
-    -/
-    def Endomorphism [Group G] (φ : G → G) : Prop := Homomorphism φ
-
-    /-
-
-    A fairly simple definition, but important as we move on.
-
-    Aside from group endomorphisms, a common example of an endomorphism is in linear algebra when
-    considering some vector space V. f: V → V is an endomorphism on a vector space V, and we define
-    _End(V)_ to be the set of all endomorphisms of V, which we know to be nonempty because of the
-    existence of the endomorphism mapping some arbitrary vector v ↦ 0, and the identity mapping v ↦
-    v.
-
-    -/
-
-  end Endomorphisms
-
-  section Automorphisms
-
-    /-
-
-    An automorphism is defined to be an endomorphism that is also a bijection. You will recognize
-    the following definition is similar to how we defined bijectivity in the first place.
-
-    -/
-    def Automorphism [Group G] (φ : G → G) : Prop := Endomorphism φ ∧ Bijective φ
-
-    /-
-
-    You can think of it like a permutation from a group to itself, although it is important that
-    this permutation respects the group structure. see more specifically what "respecting the group
-    structure" looks like in the next chapter (keep an eye out for orders!).
-
-    As an exercise, let's prove that a specific function mapping within the group of integers under
-    addition is a group automorphism.
-
-    Specifically, fix G = ⟨ℤ, +⟩, and φ : G → G, x ↦ -x (the function fx = -x).
-
-    Note that in order to prove this, we do not necessarily need to "prove" that our φ is an
-    endomorphism. We are already defining it as the map φ : G → G (a group onto itself), so it
-    suffices to prove that φ is a homomorphism. That may be useful going forward with this proof.
-
-    -/
-
-    -- A brief definition of our φ:
-    def φ (x : ℤ) : ℤ := -x
-    -- φ : G → G, x ↦ -x
-
-    -- Show that φ is a group automorphism
-    theorem φ_automorphism : ∀ x y : ℤ, φ (x + y) = φ x + φ y ∧ Bijective φ := by
-      intros x y
-      constructor
-      -- Prove homomorphism
-      · unfold φ
-        rw[neg_add]
-      -- Prove Bijectivity
-      · rw[Bijective]
-        constructor
-        -- Injectivity
-        · intros x y h
-          unfold φ at h
-          exact neg_inj.mp h
-        -- Surjectivity
-        · intro z
-          use -z
-          unfold φ
-          rw[neg_neg]
-      done
-
-
-    /-
-
-    Now that you have done a basic proof with automorphisms, we will move on to one that is slightly
-    more complex (which also introduces a new concept). _conjugation_ is defined to be the specific
-    relation between two elements of some group where a,b ∈ G are _conjugates_ if there is also some
-    g ∈ G such that b = gag⁻¹
-
-    Specifically, in the case of the general linear group of invertible matrices, _GL(n)_, this
-    conjugacy relation is called matrix similarity, which may be more familiar. (Recall that two
-    matrices A,B are similar iff there is also some matrix D such that B = DAD⁻¹).
-
-    We claim that conjugation is an automorphism under an arbitrary group and group operation,
-    meaning:
-
-    ψ : G → G, x ↦ gxg⁻¹ is a group automorphism. Let's prove this!
-
-    As with before, a brief definition of our ψ:
-
-    -/
-    def ψ [Group G] (g x : G) : G := μ (μ g x) (ι g)
-
-    /-
-
-    This definition, because it is under an arbitrary group action, has to conform with the
-    definitions that we previously defined for groups. Don't worry too much if you don't understand
-    the specific syntax here, but just know that μ is an arbitrary group operation, and (ι g) is
-    g⁻¹.
-
-    THIS PROOF WILL BE TOUGH, especially when it comes to the syntax of our arbitrary group
-    operation definitions! As a reminder, `μ g x` means g*x, where * is the implicit group
-    operation. `μ (y) (μ g x)` means y*(g*x). The associativity is important here as Lean will
-    automatically associate group elements that directly follow the `μ` operator. However, using
-    theorems from the group definitions sheet, you can rearrange this associativity (since that is a
-    key part of a group definition anwyays)! You may want to revisit Chapter 1 for those theorems.
-
-    Tip: You will want to approach this proof similarly to how you proved that the inversion
-    function for integers under addition was a group automorphism. Split the proof up into its
-    different components (i.e., proving the homorphism property and then the bijectivity property
-    separately).
-
-    The following helper lemmas may be helpful to you when proving the bijectivity property of the
-    conjugation automorphism.
-
-    -/
-    lemma left_cancel [Group G] (x y g : G) (h : μ g x = μ g y) : x = y := by
-      have h1 : μ g x = μ g y → μ (ι g) (μ g x) = μ (ι g) (μ g y) := by
-        intro h
-        rw [h]
-      apply h1 at h
-      rw [← op_assoc, inv_op, ← op_assoc, inv_op, id_op, id_op] at h
-      exact h
-
-    lemma right_cancel [Group G] (x y g : G) (h : μ x g = μ y g) : x = y := by
-      have h1 : μ x g = μ y g → μ (μ x g) (ι g) = μ (μ y g) (ι g) := by
-        intro h
-        rw [h]
-      apply h1 at h
-      rw [op_assoc, op_inv, op_assoc, op_inv, op_id, op_id] at h
-      exact h
-    -- ## END HELPERS
-
-    -- Show that ψ is a group automorphism
-    theorem ψ_automorphism [Group G] (g : G) : ∀ x y : G, ψ g (μ x y) = μ (ψ g x) (ψ g y)
-    ∧ Bijective (ψ g) := by
-      intros x y
-      constructor
-      -- Prove homomorphism
-      · unfold ψ
-        simp only [op_assoc]
-        rw[← op_assoc (ι g), inv_op, id_op]
-      -- Prove bijectivity
-      · rw[Bijective]
-        constructor
-        -- Injectivity
-        · intros x y h
-          unfold ψ at h
-          have h1 : μ (μ g x) (ι g) = μ (μ g y) (ι g) → μ g x = μ g y := by
-            intro h
-            apply right_cancel at h
-            exact h
-          apply h1 at h
-          apply left_cancel at h
-          exact h
-        -- Surjectivity
-        · intro z
-          use μ (ι g) (μ z g)
-          unfold ψ
-          simp only [op_assoc]
-          rw [← op_assoc g, op_inv, id_op, op_id]
-      done
-
-    /-
-
-    That proof was tough! But, it was a great exercise for you to prove in the most arbitrary sense,
-    since such a proof will be useful later when learning about group actions and automorphism
-    groups (meaning this sheet will likely be referenced in later chapters as one to come back to)!
-
-    -/
-  end Automorphisms
-
 /-
 
-That's all we have for morphisms. Feel free to move on to Chapter 3: Subgroups!
-## HAVE FUN!
+## Isomorphisms
+
+In Mathlib, isomorphisms come with additional structure; they are not simply defined as bijective
+homomorphisms.
+
+They are defined as a structure, bundled up with some useful fields:
+- `to_fun` (a map from a group G → group H)
+- `inv_fun` (a map from group H → group G)
+- `left_inv` & `right_inv` (both inverses exist, thus a unique inverse exists)
+- `map_mul'` (a proof of homomorphism/preservation of operation)
+
+So to prove an isomorphism, we have to provide proofs for each of these fields.
+
+Mathlib also lets us say that two groups are isomorphic by using the symbol `≃+` for additive
+groups, and `≃*` for multiplicative groups.
+
+Using this structure, we can come up with an arbitrary bijection and prove that it is an isomorphism
+(or not), like in the trivial example below. The identity map that takes each element of the
+additive group of integers to itself is clearly an isomorphism. In fact, as you might've guessed,
+this holds for any arbitrary group.
 
 -/
 
-end Sheet3
+-- Example, not exercise
+-- The identity map is an isomorphism
+example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
+  let hom_map : ℤ ≃ ℤ := by
+    constructor
+    have ha : Function.LeftInverse φ φ
+    -- Function.LeftInverse g f means that g is a left inverse to f. Ditto for
+    -- RightInverse, aside from the obvious difference.
+    · intro x
+      repeat rw [h1]
+    exact ha
+    have hb : Function.RightInverse φ φ
+    · intro x
+      repeat rw [h1]
+    exact hb
+  constructor
+  intro x y
+  have hc : hom_map.toFun = φ := by rfl
+  rw [hc, h1 x, h1 y]
+  exact h1 (x + y)
+
+/-
+
+What about the bijection that takes each member of the additive group of integers to its negation?
+Is this an isomorphism? This proof will be extremely similar to the example above.
+
+Since we are using integers in this proof, you might find the tactic `linarith` helpful.
+
+-/
+
+-- Exercise
+example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
+  let hom_map : ℤ ≃ ℤ := by
+    constructor
+    have ha : Function.LeftInverse φ φ
+    · intro x
+      simp [h1]
+    exact ha
+    have hb : Function.RightInverse φ φ
+    · intro x
+      simp [h1]
+    exact hb
+  constructor
+  intro x y
+  have hc : hom_map.toFun = φ := by rfl
+  rw [hc]
+  simp [h1]
+  linarith
+
+/-
+
+Consider the bijection ℤ → ℤ that maps x to x + 1. Is this an isomorphism? Where does the proof
+break?
+
+-/
+
+example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
+  let hom_map : ℤ ≃ ℤ := by
+    constructor
+    have ha : Function.LeftInverse (fun x => x - 1) φ
+    · intro x
+      rw [h1 x]
+      exact Int.add_sub_cancel x 1
+    exact ha
+    have hb : Function.RightInverse (fun x => x - 1) φ
+    · intro x
+      rw [h1 (x - 1)]
+      linarith
+    exact hb
+  constructor
+  intro x y
+  have hc : hom_map.toFun = φ := by rfl
+  rw [hc]
+  sorry
+
+/-
+
+Optional: Uncomment the code template below, try choosing a group and a bijection, and prove that
+the map is an isomorphism (or conversely, prove that it is not an isomorphism). Fill in the
+underscores with your preferred groups, bijection, and proofs. An example might be a map from the
+group of integers to itself, the map being the function that takes an integer x to 2x.
+
+-/
+
+/-
+
+example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
+  let hom_map : _ ≃ _ := by
+  { constructor
+    have ha : Function.LeftInverse φ φ
+    · sorry
+    sorry
+    have hb : Function.RightInverse φ φ
+    · sorry
+    sorry
+  }
+  sorry
+
+-/
+
+/-
+
+Group isomorphisms from a group to itself, also called automorphisms, might seem uninteresting at
+first. Any group will have at least one induced automorphism: the identity map. Boring. However,
+there are much more interesting examples of nontrivial automorphisms, which you will focus on next
+chapter; we'll also be pivoting back to our implementation of morphisms.
+
+-/

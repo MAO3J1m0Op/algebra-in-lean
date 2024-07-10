@@ -242,6 +242,6 @@ end Defs
 You have two options on where to go next. If you're familiar with basic modular arithmetic
 (including gcds, lcms, and the Euclidean algorithm), you can go straight to Sheet2. If you would
 like a refresher, or simply to see how these concepts are implemented in Lean, feel free to go to
-the sheet named `Sheet1-ModArith.lean`.
+the sheet named `Sheet2.lean`.
 
 -/
