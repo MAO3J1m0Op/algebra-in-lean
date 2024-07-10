@@ -10,10 +10,10 @@ In Mathlib, isomorphisms come with additional structure; they are not simply def
 homomorphisms.
 
 They are defined as a structure, bundled up with some useful fields:
-- to_fun (a map from a group G → group H)
-- inv_fun (a map from group H → group G)
-- left_inv & right_inv (both inverses exist, thus a unique inverse exists)
-- map_mul' (a proof of homomorphism/preservation of operation)
+- `to_fun` (a map from a group G → group H)
+- `inv_fun` (a map from group H → group G)
+- `left_inv` & `right_inv` (both inverses exist, thus a unique inverse exists)
+- `map_mul'` (a proof of homomorphism/preservation of operation)
 
 So to prove an isomorphism, we have to provide proofs for each of these fields.
 
@@ -51,12 +51,10 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
 
 /-
 
-What about the bijection that takes each member of the additive group of
-integers to its negation? Is this an isomorphism? This proof will be
-extremely similar to the example above.
+What about the bijection that takes each member of the additive group of integers to its negation?
+Is this an isomorphism? This proof will be extremely similar to the example above.
 
-Since we are using integers in this proof, you might find the tactic
-`linarith` helpful.
+Since we are using integers in this proof, you might find the tactic `linarith` helpful.
 
 -/
 
@@ -103,13 +101,14 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
   sorry
 /-
 
-Optional: Try choosing a group and a bijection, and prove that the map is an
-isomorphism (or conversely, prove that it is not an isomorphism). Fill in
-the underscores with your preferred groups, bijection, and proofs. An
-example might be a map from the group of integers to itself, the map being
-the function that takes an integer x to 2x.
+Optional: Uncomment the code template below, try choosing a group and a bijection, and prove that
+the map is an isomorphism (or conversely, prove that it is not an isomorphism). Fill in the
+underscores with your preferred groups, bijection, and proofs. An example might be a map from the
+group of integers to itself, the map being the function that takes an integer x to 2x.
 
 -/
+
+/-
 
 example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
   let hom_map : _ ≃ _ := by
@@ -123,11 +122,13 @@ example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
   }
   sorry
 
+-/
+
 /-
 
 Group isomorphisms from a group to itself, also called automorphisms, might seem uninteresting at
-first. Any group will have at least one induced automorphism: the identity map. Boring.
-However, there are much more interesting examples of nontrivial automorphisms, which
-you will focus on next chapter; we'll also be pivoting back to our implementation of morphisms.
+first. Any group will have at least one induced automorphism: the identity map. Boring. However,
+there are much more interesting examples of nontrivial automorphisms, which you will focus on next
+chapter; we'll also be pivoting back to our implementation of morphisms.
 
 -/

@@ -81,10 +81,9 @@ namespace Interlude
 
     /-
 
-    Working backwards
-    Tip: A new tactic, `rcases` may be helpful with proving this. Hover over `rcases`
-    to see syntax and usage. This particular tactic peforms cases recursively and can
-    take in arguments as is the norm with `cases`.
+    Working backwards Tip: A new tactic, `rcases` may be helpful with proving this. Hover over
+    `rcases` to see syntax and usage. This particular tactic peforms cases recursively and can take
+    in arguments as is the norm with `cases`.
 
     -/
     example (f : X → Y) (g : Y → Z) : Surjective (g ∘ f) → Surjective g := by
@@ -98,9 +97,9 @@ namespace Interlude
 
     Corrollary: bijectivity composition
 
-    Obviously, this one can be made easier based on the previous two proofs we just
-    completed. So, let's turn those into theorems in this same namespace that we can
-    `apply` them for this next bijectivitiy example.
+    Obviously, this one can be made easier based on the previous two proofs we just completed. So,
+    let's turn those into theorems in this same namespace that we can `apply` them for this next
+    bijectivitiy example.
 
     -/
     theorem injective_comp {α β γ : Type*} (f : α → β) (g : β → γ) (h1 : Injective f)
@@ -124,8 +123,8 @@ namespace Interlude
 
     /-
 
-    You may want to read up more about `Add.intro` that works to split a logical `∧`
-    into its two different parts. Alternatively, you could use the tactic `constructor`.
+    You may want to read up more about `Add.intro` that works to split a logical `∧` into its two
+    different parts. Alternatively, you could use the tactic `constructor`.
 
     -/
     example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g) :
@@ -145,9 +144,9 @@ namespace Interlude
 
     /-
 
-    In the same spirit, let's turn that bijective composition proof into a theorem,
-    but now it is your turn to do that. This may help you further understand how
-    L∃∀N categorizes its different types
+    In the same spirit, let's turn that bijective composition proof into a theorem, but now it is
+    your turn to do that. This may help you further understand how L∃∀N categorizes its different
+    types
 
     -/
     theorem bijective_comp {α β γ : Type} (f : α → β) (g : β → γ) (h1 : Bijective f)
@@ -190,9 +189,9 @@ namespace Interlude
 
   /-
 
-   That's all we 'have' for this refresher! Hopefully you have a grasp on our definitions
-   of injectivity and surjectivity in Lean because proofs are about to get a bit more
-   advanced in this chapter and in later chapters
+   That's all we 'have' for this refresher! Hopefully you have a grasp on our definitions of
+   injectivity and surjectivity in Lean because proofs are about to get a bit more advanced in this
+   chapter and in later chapters
 
   ## GOOD LUCK!!
 

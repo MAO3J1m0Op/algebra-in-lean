@@ -26,22 +26,20 @@ namespace Sheet3
   section Endomorphisms
     /-
 
-    In Sheet 1 of this chapter, you were introduced to homomorphisms
-    and isomoprhisms. In this sheet, we will take a deeper dive with
-    morphisms and some attributes that definitionally separate
-    different kids of morphisms.
+    In Sheet 1 of this chapter, you were introduced to homomorphisms and isomorphisms. In this
+    sheet, we will take a deeper dive with morphisms and some attributes that definitionally
+    separate different kids of morphisms.
 
     Particularly, we will begin with endomorphims.
 
-    We define an endomorphism to be a homorphism from an object onto
-    itself. In the case of `AlgebraInLean`, this means that a _group_
-    endomporphism is a group homomorphism from an abritrary group G
-    back to itself.
-    As you have seen previously, in the context of Algebra, "group"
-    is often omitted when discussing group endomorphisms.
-    An endomorphism (and morphisms in general) can be defined
-    among many different types of mathematical objects, but in AlgebraInLean it
-    will always refer to a group endomorphism.
+    We define an endomorphism to be a homorphism from an object onto itself. In the case of
+    `AlgebraInLean`, this means that a _group_ endomporphism is a group homomorphism from an
+    arbitrary group G back to itself.
+
+    As you have seen previously, in the context of Algebra, "group" is often omitted when discussing
+    group endomorphisms. An endomorphism (and morphisms in general) can be defined among many
+    different types of mathematical objects, but in AlgebraInLean it will always refer to a group
+    endomorphism.
 
     Let's take a look at how this would be defined in Lean:
 
@@ -52,12 +50,11 @@ namespace Sheet3
 
     A fairly simple definition, but important as we move on.
 
-    Aside from group endomorphisms, a common example of an endomorphism is
-    in linear algebra when considering some vector space V.
-    f: V → V is an endomorphism on a vector space V, and we define _End(V)_
-    to be the set of all endomorphisms of V, which we know to be nonempty
-    because of the existence of the endomorphism mapping some arbitrary vector
-    v ↦ 0, and the identity mapping v ↦ v.
+    Aside from group endomorphisms, a common example of an endomorphism is in linear algebra when
+    considering some vector space V. f: V → V is an endomorphism on a vector space V, and we define
+    _End(V)_ to be the set of all endomorphisms of V, which we know to be nonempty because of the
+    existence of the endomorphism mapping some arbitrary vector v ↦ 0, and the identity mapping v ↦
+    v.
 
     -/
 
@@ -67,30 +64,26 @@ namespace Sheet3
 
     /-
 
-    An automorphism is defined to be an endomorphism that is also a bijection.
-    You will recognize the following definition is similar to how we defined
-    bijectivity in the first place.
+    An automorphism is defined to be an endomorphism that is also a bijection. You will recognize
+    the following definition is similar to how we defined bijectivity in the first place.
 
     -/
     def Automorphism [Group G] (φ : G → G) : Prop := Endomorphism φ ∧ Bijective φ
 
     /-
 
-    You can think of it like a permutation from a group to itself, although it
-    is important that this permutation respects the group structure.
-    see more specifically what "respecting the group structure" looks like in
-    the next chapter (keep an eye out for orders!).
+    You can think of it like a permutation from a group to itself, although it is important that
+    this permutation respects the group structure. see more specifically what "respecting the group
+    structure" looks like in the next chapter (keep an eye out for orders!).
 
-    As an exercise, let's prove that a specific function mapping within the
-    group of integers under addition is a group automorphism.
+    As an exercise, let's prove that a specific function mapping within the group of integers under
+    addition is a group automorphism.
 
-    Spefically, fix G = ⟨ℤ, +⟩, and φ : G → G, x ↦ -x
-    (the function fx = -x).
+    Specifically, fix G = ⟨ℤ, +⟩, and φ : G → G, x ↦ -x (the function fx = -x).
 
-    Note that in order to prove this, we do not necessarily need to "prove" that
-    our φ is an endomorphism. We are already defining it as the map φ : G → G
-    (a group onto itself), so it suffices to prove that φ is a homomorphism.
-    That may be useful going forward with this proof.
+    Note that in order to prove this, we do not necessarily need to "prove" that our φ is an
+    endomorphism. We are already defining it as the map φ : G → G (a group onto itself), so it
+    suffices to prove that φ is a homomorphism. That may be useful going forward with this proof.
 
     -/
 
@@ -122,19 +115,18 @@ namespace Sheet3
 
     /-
 
-    Now that you have done a basic proof with automorphisms, we will move on to
-    one that is slightly more complex (which also introduces a new concept).
-    _conjugation_ is defined to be the specific relation between two elements of
-    some group where a,b ∈ G are _conjugates_ if there is also some g ∈ G such that
-    b = gag⁻¹
+    Now that you have done a basic proof with automorphisms, we will move on to one that is slightly
+    more complex (which also introduces a new concept). _conjugation_ is defined to be the specific
+    relation between two elements of some group where a,b ∈ G are _conjugates_ if there is also some
+    g ∈ G such that b = gag⁻¹
 
-    Specifically, in the case of the general linear group of invertible matrices,
-    _GL(n)_, this conjugacy relation is called matrix similarity, which may be
-    more familiar. (Recall that two matrices A,B are similar iff there is also some
-    matrix D such that B = DAD⁻¹).
+    Specifically, in the case of the general linear group of invertible matrices, _GL(n)_, this
+    conjugacy relation is called matrix similarity, which may be more familiar. (Recall that two
+    matrices A,B are similar iff there is also some matrix D such that B = DAD⁻¹).
 
-    We claim that conjugation is an automorphism under an arbitrary group and
-    group operation, meaning:
+    We claim that conjugation is an automorphism under an arbitrary group and group operation,
+    meaning:
+
     ψ : G → G, x ↦ gxg⁻¹ is a group automorphism. Let's prove this!
 
     As with before, a brief definition of our ψ:
@@ -143,26 +135,26 @@ namespace Sheet3
     def ψ [Group G] (g x : G) : G := μ (μ g x) (ι g)
 
     /-
-    This definition, because it is under an arbitrary group action, has to conform
-    with the definitions that we previously defined for groups. Don't worry too much
-    if you don't understand the specific syntax here, but just know that μ is an
-    arbitrary group operation, and (ι g) is g⁻¹.
 
-    THIS PROOF WILL BE TOUGH, especially when it comes to the syntax of our arbitrary
-    group operation definitions! As a reminder, `μ g x` means g*x, where * is the implicit
-    group operation. `μ (y) (μ g x)` means y*(g*x). The associativity is important here as
-    Lean will automatically associate group elements that directly follow the `μ` operator.
-    However, using theorems from the group definitions sheet, you can rearrange this
-    associativity (since that is a key part of a group definition anwyays)!
-    You may want to revisit Chapter 1 for those theorems.
+    This definition, because it is under an arbitrary group action, has to conform with the
+    definitions that we previously defined for groups. Don't worry too much if you don't understand
+    the specific syntax here, but just know that μ is an arbitrary group operation, and (ι g) is
+    g⁻¹.
 
-    Tip: You will want to approach this proof similarly to how you proved that the
-    inversion function for integers under addition was a group automorphism.
-    Split the proof up into its different components (i.e., proving the homorphism
-    property and then the bijectivity property separately).
+    THIS PROOF WILL BE TOUGH, especially when it comes to the syntax of our arbitrary group
+    operation definitions! As a reminder, `μ g x` means g*x, where * is the implicit group
+    operation. `μ (y) (μ g x)` means y*(g*x). The associativity is important here as Lean will
+    automatically associate group elements that directly follow the `μ` operator. However, using
+    theorems from the group definitions sheet, you can rearrange this associativity (since that is a
+    key part of a group definition anwyays)! You may want to revisit Chapter 1 for those theorems.
 
-    The following helper lemmas may be helpful to you when proving the bijectivity
-    property of the conjugation automorphism.
+    Tip: You will want to approach this proof similarly to how you proved that the inversion
+    function for integers under addition was a group automorphism. Split the proof up into its
+    different components (i.e., proving the homorphism property and then the bijectivity property
+    separately).
+
+    The following helper lemmas may be helpful to you when proving the bijectivity property of the
+    conjugation automorphism.
 
     -/
     lemma left_cancel [Group G] (x y g : G) (h : μ g x = μ g y) : x = y := by
@@ -214,10 +206,9 @@ namespace Sheet3
 
     /-
 
-    That proof was tough! But, it was a great exercise for you to prove in the most
-    arbitrary sense, since such a proof will be useful later when learning about
-    group actions and automorphism groups (meaning this sheet will likely be
-    referenced in later chapters as one to come back to)!
+    That proof was tough! But, it was a great exercise for you to prove in the most arbitrary sense,
+    since such a proof will be useful later when learning about group actions and automorphism
+    groups (meaning this sheet will likely be referenced in later chapters as one to come back to)!
 
     -/
   end Automorphisms

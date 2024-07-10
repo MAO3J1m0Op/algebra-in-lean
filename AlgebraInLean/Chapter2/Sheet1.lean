@@ -8,16 +8,13 @@ namespace Defs
 
   # Morphisms
 
-  Morphisms are structure-preserving maps between objects in a category.
-  In category theory, morphisms are arrows between objects and adhere
-  to certain composition and identity rules.
+  Morphisms are structure-preserving maps between objects in a category. In category theory,
+  morphisms are arrows between objects and adhere to certain composition and identity rules.
 
-  Examples of morphisms you may have seen before are functions between
-  sets, homomorphisms between algebraic structures, continuous functions
-  between topological spaces, etc.
+  Examples of morphisms you may have seen before are functions between sets, homomorphisms between
+  algebraic structures, continuous functions between topological spaces, etc.
 
-  But before we dive into morphisms, we prove a few useful theorems about
-  group elements.
+  But before we dive into morphisms, we prove a few useful theorems about group elements.
 
   -/
 
@@ -37,15 +34,13 @@ namespace Defs
 
     /-
 
-    `calc`, like `have`, is an example of what is called "forward reasoning"
-    in Lean. Usually with tactic-style proofs, we are trying to go
-    backwards, transforming our goal to one of our assumed hypotheses. With
-    forward reasoning, we are trying to transform our assumptions into the
-    goal.
+    `calc`, like `have`, is an example of what is called "forward reasoning" in Lean. Usually with
+    tactic-style proofs, we are trying to go backwards, transforming our goal to one of our assumed
+    hypotheses. With forward reasoning, we are trying to transform our assumptions into the goal.
 
-    `calc` might be more familiar than you think, since it closely reflects
-    some pen-and-paper proofs via a chain of equalities and algebraic
-    manipulations. Hover over `calc` to see the syntax.
+    `calc` might be more familiar than you think, since it closely reflects some pen-and-paper
+    proofs via a chain of equalities and algebraic manipulations. Hover over `calc` to see the
+    syntax.
 
     -/
 
@@ -82,10 +77,9 @@ namespace Defs
 
     /-
 
-    `unfold` does what it sounds like: unfolding a symbol to its
-    underlying definition. It isn't best practice; it's usually better to
-    write a definition to use `rw` with. However, for a one-off use-case,
-    `unfold` suffices.
+    `unfold` does what it sounds like: unfolding a symbol to its underlying definition. It isn't
+    best practice; it's usually better to write a definition to use `rw` with. However, for a
+    one-off use-case, `unfold` suffices.
 
     You saw the following examples in Sheet 0, but in a much different way.
     It may be useful to review different approaches for the following proofs:
@@ -153,13 +147,13 @@ namespace Defs
 
     /-
 
-    Part of what we mean when we say a homomorphism "respects the group
-    structure" is that homomorphisms (and therefore isomorphisms) map inverses
-    elements of group G to corresponding inverse elements of group H. We will
-    explore this and examples like these in the following exercise.
+    Part of what we mean when we say a homomorphism "respects the group structure" is that
+    homomorphisms (and therefore isomorphisms) map inverses elements of group G to corresponding
+    inverse elements of group H. We will explore this and examples like these in the following
+    exercise.
 
-    Below are some basic proofs of homomorphisms: that they map identities to
-    identities, and inverses to inverses.
+    Below are some basic proofs of homomorphisms: that they map identities to identities, and
+    inverses to inverses.
 
     -/
     theorem hom_id_to_id [Group G] [Group H] (φ : G → H) (hp :
@@ -192,9 +186,8 @@ namespace Defs
 
   /-
 
-  Note that the inverse of a group element is also the element's unique
-  inverse. Why? (Hint: Remember the inverse map is injective, as we proved
-  earlier in the sheet.)
+  Note that the inverse of a group element is also the element's unique inverse. Why? (Hint:
+  Remember the inverse map is injective, as we proved earlier in the sheet.)
 
   -/
 
@@ -218,10 +211,9 @@ end Defs
 
 /-
 
-You have two options on where to go next. If you're familiar with basic
-modular arithmetic (including gcds, lcms, and the Euclidean algorithm), you
-can go straight to Sheet2. If you would like a refresher, or simply to see
-how these concepts are implemented in Lean, feel free to go to the sheet
-named `ModularArithmetic.lean`.
+You have two options on where to go next. If you're familiar with basic modular arithmetic
+(including gcds, lcms, and the Euclidean algorithm), you can go straight to Sheet2. If you would
+like a refresher, or simply to see how these concepts are implemented in Lean, feel free to go to
+the sheet named `ModularArithmetic.lean`.
 
 -/
