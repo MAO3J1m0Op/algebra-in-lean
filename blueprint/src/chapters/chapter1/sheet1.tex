@@ -5,12 +5,15 @@
     \lean{AlgebraInLean.Group}
     \leanok
     \uses{definition : Monoid}
-    A group is a set $G$ with the following properties:
+    A \emph{group} is a nonempty set $G$ with a \textbf{closed} binary operation
+    ($\mu : G \times G \rightarrow G$), satisfying the following group axioms:
     \begin{itemize}
-        \item It must have a binary operation $\mu : G \times G \rightarrow G$.
-        \item This operation must be associative, so $\forall \,a, b, c \in G, \mu(\mu(a, b), c) = \mu(a, \mu(b, c))$
-        \item $G$ must contain an identity $\mathbb{e}$ where $\forall\,a \in G, \mu (a, \mathbb{e}) = \mu(\mathbb{e}, a) = a$
-        \item There must also be an inverse function $\iota$, where $\forall\,a \in G, \mu(\iota(a), a) = \mathbb{e}$
+        \item textbf{Associativity}: $\forall \,a, b, c \in G, \mu(\mu(a, b), c) =
+        \mu(a, \mu(b, c))$
+        \item textbf{Identity element}: $\mathbb{e}\in G$ where $\forall\,a \in G,
+        \mu (a, \mathbb{e}) = \mu(\mathbb{e}, a) = a$
+        \item \textbf{Inverses ($\iota$)}: $\forall\,a \in G, \mu(\iota(a), a) =
+        \mathbb{e}$
     \end{itemize}
 \end{definition}
 
@@ -19,5 +22,6 @@
     \lean{AlgebraInLean.Sheet1.op_inv}
     \leanok
     \uses{definition : Group}
-    Applying the group operation to an element and its inverse returns the identity: $\forall a \in G, \mu(a, \iota(a)) = \mathbb{e}$
+    Applying the group operation to an element and its inverse returns the
+    identity: $\forall a \in G, \mu(a, \iota(a)) = \mathbb{e}$
 \end{theorem}
