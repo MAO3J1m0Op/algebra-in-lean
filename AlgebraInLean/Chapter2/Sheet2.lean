@@ -31,7 +31,7 @@ this holds for any arbitrary group.
 -- The identity map is an isomorphism
 example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
   let hom_map : ℤ ≃ ℤ := by
-  { constructor
+    constructor
     have ha : Function.LeftInverse φ φ
     -- Function.LeftInverse g f means that g is a left inverse to f. Ditto for
     -- RightInverse, aside from the obvious difference.
@@ -42,7 +42,6 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
     · intro x
       repeat rw [h1]
     exact hb
-  }
   constructor
   intro x y
   have hc : hom_map.toFun = φ := by rfl
@@ -61,7 +60,7 @@ Since we are using integers in this proof, you might find the tactic `linarith` 
 -- Exercise
 example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
   let hom_map : ℤ ≃ ℤ := by
-  { constructor
+    constructor
     have ha : Function.LeftInverse φ φ
     · intro x
       simp [h1]
@@ -70,7 +69,6 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
     · intro x
       simp [h1]
     exact hb
-  }
   constructor
   intro x y
   have hc : hom_map.toFun = φ := by rfl
@@ -78,11 +76,16 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
   simp [h1]
   linarith
 
-/- Consider the bijection ℤ → ℤ that maps x to x + 1. Is this an isomorphism? Where does the proof
-break? -/
+/-
+
+Consider the bijection ℤ → ℤ that maps x to x + 1. Is this an isomorphism? Where does the proof
+break?
+
+-/
+
 example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
   let hom_map : ℤ ≃ ℤ := by
-  { constructor
+    constructor
     have ha : Function.LeftInverse (fun x => x - 1) φ
     · intro x
       rw [h1 x]
@@ -93,12 +96,12 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
       rw [h1 (x - 1)]
       linarith
     exact hb
-  }
   constructor
   intro x y
   have hc : hom_map.toFun = φ := by rfl
   rw [hc]
   sorry
+
 /-
 
 Optional: Uncomment the code template below, try choosing a group and a bijection, and prove that
