@@ -18,9 +18,9 @@ namespace Interlude
     Brace yourself for a type theory interlude! In Lean's type theory, the Calculus of
     Constructions, there is an infinite hierarchy of types that contain one another. Type 0 (or
     simply just "Type" is contained in Type 1, Type 1 is contained in Type 2, and so on. A type can
-    never contain itself; if that were to happen, we would run into a logical paradox! We classify
-    types using what are called "universes"; in other words, a universe is a family of types. For
-    more information on Lean's type system, see
+    never contain itself; if that were to happen, we would run into a logical paradox (formally
+    referred to as Russell's Paradox)! We classify types using what are called "universes"; in other
+    words, a universe is a family of types. For more information on Lean's type system, see
     https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html.
 
     You are free to think of α, β, and γ as sets.
@@ -37,13 +37,14 @@ namespace Interlude
     /- Surjectivity, injectivity, and bijectivity of maps -/
 
     def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
-    -- Otherwise known as "one-to-one".
+    /- Otherwise known as "one-to-one". -/
 
     def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
-    -- Otherwise known as "onto".
+    /- Otherwise known as "onto". -/
 
     def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
-    -- A map is bijective if it is both injective and surjective.
+    /- A map is bijective if it is both injective and surjective. -/
+
 
     /-
 
@@ -52,11 +53,11 @@ namespace Interlude
 
     -/
 
-    /-- A map is bijective if and only if it is injective and surjective. -/
+    /- A map is bijective if and only if it is injective and surjective. -/
     example {α β : Type} (f : α → β) (h1 : Injective f) (h2 : Surjective f) : Bijective f :=
       ⟨h1, h2⟩
 
-    -- Surjectivity composition
+    /- Surjectivity composition -/
     example {α β γ : Type} (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g) :
     Surjective (g ∘ f) := by
       intro z
@@ -70,7 +71,7 @@ namespace Interlude
       rfl
       done
 
-    -- Injectivity composition
+    /- Injectivity composition -/
     example (f : α → β) (g : β → γ) (h1: Injective f) (h2 : Injective g) :
     Injective (g ∘ f) := by
       intros a1 a2 h
@@ -79,9 +80,10 @@ namespace Interlude
       exact h
       done
 
+
     /-
 
-    Working backwards Tip: A new tactic, `rcases` may be helpful with proving this. Hover over
+    Working backwards - Tip: A new tactic, `rcases` may be helpful with proving this. Hover over
     `rcases` to see syntax and usage. This particular tactic peforms cases recursively and can take
     in arguments as is the norm with `cases`.
 
@@ -95,7 +97,7 @@ namespace Interlude
 
     /-
 
-    Corrollary: bijectivity composition
+    Corollary: bijectivity composition
 
     Obviously, this one can be made easier based on the previous two proofs we just completed. So,
     let's turn those into theorems in this same namespace that we can `apply` them for this next
@@ -121,10 +123,11 @@ namespace Interlude
       rw [← hy, ← hx]
       rfl
 
+
     /-
 
-    You may want to read up more about `Add.intro` that works to split a logical `∧` into its two
-    different parts. Alternatively, you could use the tactic `constructor`.
+    You may want to read up more about the tactic `constructor` that works to split a logical `∧`
+    into its two different parts. Alternatively, you could use `And.intro` with `apply`.
 
     -/
     example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g) :
@@ -163,13 +166,14 @@ namespace Interlude
         · apply hg
       done
 
+
   /-
 
   You just proved lots about two injective maps `f, g` and the composition of those maps `g ∘ f`.
   Nice to see all those classic L∃∀N tactics again, right? Make sure you are fully comfortable with
-  the tactics `intros, apply, exact, rw, cases, specialize`. See `Chapter 0` for a refresher. These
-  are basic, but before moving on to the next chapter, it is necessary to be quite familiar with
-  them.
+  the tactics `intros`, `apply`, `exact`, `rw`, `cases`, `specialize`. See `Chapter 0` for a
+  refresher. These are basic, but before moving on to the next chapter, it is necessary to be quite
+  familiar with them.
 
   Another crucial tactic you saw in earlier chapters was `have`. Here is the same theorem about
   surjectivity composition that you proved earlier. However, try using the `have` tactic with this

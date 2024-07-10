@@ -1,137 +1,159 @@
-import Mathlib.Tactic
-
-namespace Defs
+-- ## Modular arithmetic interlude
 
 /-
 
-## Isomorphisms
-
-In Mathlib, isomorphisms come with additional structure; they are not simply defined as bijective
-homomorphisms.
-
-They are defined as a structure, bundled up with some useful fields:
-- `to_fun` (a map from a group G → group H)
-- `inv_fun` (a map from group H → group G)
-- `left_inv` & `right_inv` (both inverses exist, thus a unique inverse exists)
-- `map_mul'` (a proof of homomorphism/preservation of operation)
-
-So to prove an isomorphism, we have to provide proofs for each of these fields.
-
-Mathlib also lets us say that two groups are isomorphic by using the symbol `≃+` for additive
-groups, and `≃*` for multiplicative groups.
-
-Using this structure, we can come up with an arbitrary bijection and prove that it is an isomorphism
-(or not), like in the trivial example below. The identity map that takes each element of the
-additive group of integers to itself is clearly an isomorphism. In fact, as you might've guessed,
-this holds for any arbitrary group.
+Disclaimer: This sheet covers basic concepts of modular arithmetic at a high-level, introducing
+already-existing mechanisms in Lean, and does not require you to write any proofs. At the end is an
+interesting quirk of recursive functions in Lean, which we recommend you to check out.
 
 -/
 
--- Example, not exercise
--- The identity map is an isomorphism
-example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
-  let hom_map : ℤ ≃ ℤ := by
-    constructor
-    have ha : Function.LeftInverse φ φ
-    -- Function.LeftInverse g f means that g is a left inverse to f. Ditto for
-    -- RightInverse, aside from the obvious difference.
-    · intro x
-      repeat rw [h1]
-    exact ha
-    have hb : Function.RightInverse φ φ
-    · intro x
-      repeat rw [h1]
-    exact hb
-  constructor
-  intro x y
-  have hc : hom_map.toFun = φ := by rfl
-  rw [hc, h1 x, h1 y]
-  exact h1 (x + y)
+-- ### GCD and LCM
+
+namespace Nat
 
 /-
 
-What about the bijection that takes each member of the additive group of integers to its negation?
-Is this an isomorphism? This proof will be extremely similar to the example above.
+From the output of `#check Nat.gcd`, we can see that the _greatest common denominator_ function
+takes in two natural numbers and outputs the largest natural number that will divide both inputs.
+Particularly, the gcd of any number and 0 is the number itself.
 
-Since we are using integers in this proof, you might find the tactic `linarith` helpful.
+-/
+#check Nat.gcd
+
+-- The command `#print` is useful to see what is going on beneath the hood
+
+#print Nat.gcd
+
+#eval gcd 1 2
+#eval gcd 100 45
+#eval gcd 73 0
+
+/-
+
+Similarly, we define the _least common multiple_. It is a function which takes in two natural
+numbers and outputs the minimal natural number that is divisible by both inputs. The `lcm` of any
+number and 0 is 0, since 0 divided by any number is 0.
+
+-/
+#check lcm
+#print lcm
+
+#eval lcm 1 2
+#eval lcm 100 45
+#eval lcm 73 0
+
+variable (n : Nat)
+
+#check (gcd_zero_right n : gcd n 0 = n)
+#check (gcd_zero_left n : gcd 0 n = n)
+#check (lcm_zero_right n : lcm n 0 = 0)
+#check (lcm_zero_left n : lcm 0 n = 0)
+
+/-
+
+Note that the definition for `lcm` uses `gcd`.
+
+Efficiently computing the `gcd` is a seemingly boring problem, but its implications quite literally
+form the backbone of the internet as we know it today.
+
+The "naive" way to compute the `gcd` is through _prime factorization_; break up each of the numbers
+into their constituent, atomic parts, and then find the largest part they have in common. But this
+brute-force algorithm scales very poorly for large numbers, a performance bottleneck that
+cryptographic schemes like RSA depend on.
+
+Thankfully, there is a quicker way to find the `gcd` (and therefore the `lcm`) via the Euclidean
+Algorithm.
+
+To introduce the Euclidean Algorithm, first we have to cover modular arithmetic. Basic number theory
+might seem completely separate from abstract algebra at first, but it shows up increasingly in areas
+like ring theory, so bear with us.
+
+### Congruence modulo some integer `m`
+
+Given two integers `a` and `b`, with `b` non-zero, there exist unique integers `q` and `r` such
+that:
+
+a = bq + r, where 0 ≤ r < |b|.
+
+In other words, we can write an integer a as a multiple of some other integer `b`, plus a positive
+remainder `r` with `r` strictly less than `b`. (What would happen if `r` were equal to or greater
+than `b`?)
+
+When we talk about some integer `n` modulo `q`, we are simply disregarding the first term in the
+sum, `bq`, and only considering the remainder `r`.
+
+A common real-world example is the analog clock. The clock runs modulo 12; once we get to the 12th
+hour, we "roll over" and start at 1 again. Thus, 13 modulo 12 is 1. Another way to look at it is
+that 13 divided by 12 is 1 with remainder 1.
+
+Another useful and small piece of notation is the vertical bar `∣`, not to be confused with the
+"pipe" operator `|` on your keyboard. You can write it as `\mid`.
+
+Given two integers `a` and `b`, `a ∣ b` simply means that `a` divides `b`, or `a` is a factor of
+`b`. `a ∤ b` means the inverse; `a` does not divide `b`.
+
+-/
+#eval Nat.mod 4 5
+
+-- `%` represents the mod operation.
+#eval 4 % 5
+
+/-
+
+Sometimes we will want to compare two numbers after taking a modulus. This notion of comparison is
+called _congruence modulo n_, where `n` is some integer.
 
 -/
 
--- Exercise
-example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
-  let hom_map : ℤ ≃ ℤ := by
-    constructor
-    have ha : Function.LeftInverse φ φ
-    · intro x
-      simp [h1]
-    exact ha
-    have hb : Function.RightInverse φ φ
-    · intro x
-      simp [h1]
-    exact hb
-  constructor
-  intro x y
-  have hc : hom_map.toFun = φ := by rfl
-  rw [hc]
-  simp [h1]
-  linarith
+-- Here are some identities regarding mod:
+
+#check (∀ a b m : Nat, (a + b).mod m = ((a.mod m) + (b.mod m)).mod m)
+
+#check (∀ a b m : Nat, (a * b).mod m = ((a.mod m) * (b.mod m)).mod m)
 
 /-
 
-Consider the bijection ℤ → ℤ that maps x to x + 1. Is this an isomorphism? Where does the proof
-break?
+Perhaps you would expect `a + b (mod m)` to equal `(a mod m) + (b mod m)`. Similarly, `a * b (mod
+m)` does not simply equal `(a mod m) * (b mod m)`. Why do we need the extra `(mod m)` at the end?
+Try computing an example where the extra `(mod m)` is not included. We leave this as a (hopefully)
+thought-provoking exercise to the reader.
+
+### The Euclidean Algorithm
+
+As mentioned before, the Euclidean Algorithm offers a quicker way (than the brute-force method) for
+finding the `gcd`, relying on a recursive definition of the `gcd` function.
+
+Simply, `gcd(a, b)` equals `gcd(b, a mod b)`. This is our recursive case. The termination step (or
+in more computer science-y terms, the "base case") of the Euclidean algorithm is `gcd(n, 0) = 0`; in
+other words, `when b = 0`.
+
+Here's our homemade, and of course, recursive version of the `gcd` function. Note how it reflects the
+inductive definition of the natural numbers, which you have seen hinted at in the NNG (all natural
+numbers are either 0, or a successor to a natural number).
 
 -/
 
-example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
-  let hom_map : ℤ ≃ ℤ := by
-    constructor
-    have ha : Function.LeftInverse (fun x => x - 1) φ
-    · intro x
-      rw [h1 x]
-      exact Int.add_sub_cancel x 1
-    exact ha
-    have hb : Function.RightInverse (fun x => x - 1) φ
-    · intro x
-      rw [h1 (x - 1)]
-      linarith
-    exact hb
-  constructor
-  intro x y
-  have hc : hom_map.toFun = φ := by rfl
-  rw [hc]
-  sorry
+def gcd' (a b : Nat) : Nat :=
+  match b with
+    | 0 => a
+    | n + 1 => have : a % (n + 1) < n + 1 := by
+    { have h₁ : n + 1 > 0 := succ_pos n
+      have h₂ : a % (n + 1) < n + 1 := mod_lt a h₁
+      exact h₂
+    }
+      gcd' (n + 1) (a % (n + 1))
+  termination_by b
 
 /-
 
-Optional: Uncomment the code template below, try choosing a group and a bijection, and prove that
-the map is an isomorphism (or conversely, prove that it is not an isomorphism). Fill in the
-underscores with your preferred groups, bijection, and proofs. An example might be a map from the
-group of integers to itself, the map being the function that takes an integer x to 2x.
+What is that bracketed proof nestled in the recursive case? It turns out that Lean is awfully (and
+rightfully) picky about the structure of its recursive arguments. If it isn't immediately obvious
+that the recursive case will _always result in an output smaller in some way_, Lean will panic and
+throw an error: `unable to prove termination`. As far as Lean is concerned, recursion has its
+dangers and a recursive function is guilty of stack overflow until proven innocent.
 
--/
-
-/-
-
-example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
-  let hom_map : _ ≃ _ := by
-  { constructor
-    have ha : Function.LeftInverse φ φ
-    · sorry
-    sorry
-    have hb : Function.RightInverse φ φ
-    · sorry
-    sorry
-  }
-  sorry
-
--/
-
-/-
-
-Group isomorphisms from a group to itself, also called automorphisms, might seem uninteresting at
-first. Any group will have at least one induced automorphism: the identity map. Boring. However,
-there are much more interesting examples of nontrivial automorphisms, which you will focus on next
-chapter; we'll also be pivoting back to our implementation of morphisms.
+Once we provide a proof that `a % (n + 1)` is always lesser than `n + 1`, and stick in a
+`termination_by b` at the end, Lean will stop complaining.
 
 -/
