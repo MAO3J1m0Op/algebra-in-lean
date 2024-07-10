@@ -1,4 +1,4 @@
-import AlgebraInLean.Chapter2.Sheet2
+import AlgebraInLean.Chapter02.Sheet02
 
 namespace AlgebraInLean
 

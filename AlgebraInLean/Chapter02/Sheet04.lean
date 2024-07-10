@@ -1,4 +1,4 @@
-import AlgebraInLean.Chapter2.Sheet3
+import AlgebraInLean.Chapter02.Sheet03
 
 set_option linter.unusedTactic false
 
