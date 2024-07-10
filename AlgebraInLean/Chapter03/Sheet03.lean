@@ -109,10 +109,13 @@ lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
     exact hk
   apply Nat.eq_zero_of_dvd_of_lt
   · rw [←order_divides_iff_mpow_id x]
-    have op_cancel_left : ∀ a u v : M, μ a u = μ a v → u = v := sorry
-    apply op_cancel_left (mpow x m)
-    rw [op_id, mpow_add, hk]
-    exact Eq.symm h
+    rw [←mpow_mod_order]
+    have : k < order x := by linarith
+    suffices : k = 0
+    ·
+    rw [order_divides_iff_mpow_id]
+    refine Nat.dvd_of_mod_eq_zero ?this.w.H
+
   · rw [←hk] at hn
     linarith
   done
