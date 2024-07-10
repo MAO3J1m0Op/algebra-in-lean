@@ -33,8 +33,10 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
   let hom_map : ℤ ≃ ℤ := by
     constructor
     have ha : Function.LeftInverse φ φ
-    -- Function.LeftInverse g f means that g is a left inverse to f. Ditto for
-    -- RightInverse, aside from the obvious difference.
+    /-
+    Function.LeftInverse g f means that g is a left inverse to f. Ditto for RightInverse, aside from
+    the obvious difference.
+    -/
     · intro x
       repeat rw [h1]
     exact ha
@@ -104,10 +106,10 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
 
 /-
 
-Optional: Uncomment the code template below, try choosing a group and a bijection, and prove that
-the map is an isomorphism (or conversely, prove that it is not an isomorphism). Fill in the
-underscores with your preferred groups, bijection, and proofs. An example might be a map from the
-group of integers to itself, the map being the function that takes an integer x to 2x.
+Optional exercise: Uncomment the code template below, try choosing a group and a bijection, and
+prove that the map is an isomorphism (or conversely, prove that it is not an isomorphism). Fill in
+the underscores with your preferred groups, bijection, and proofs. An example might be a map from
+the group of integers to itself, the map being the function that takes an integer x to 2x.
 
 -/
 
@@ -115,14 +117,13 @@ group of integers to itself, the map being the function that takes an integer x 
 
 example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
   let hom_map : _ ≃ _ := by
-  { constructor
+    constructor
     have ha : Function.LeftInverse φ φ
     · sorry
     sorry
     have hb : Function.RightInverse φ φ
     · sorry
     sorry
-  }
   sorry
 
 -/
