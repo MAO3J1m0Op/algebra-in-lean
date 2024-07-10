@@ -4,11 +4,13 @@ namespace AlgebraInLean
 
 /-
 Groups aren't the only important structures in algebra. By including or excluding certain properties
-from our definition, we can create different structures.
+from our definition, we create different structures.
 -/
 
-/-- A magma is the simplest algebraic structure. It is a set along with a binary operation with no
-  additional properties imposed -/
+/--
+A magma is the simplest algebraic structure. It is a set along with a binary operation with no
+additional properties imposed
+-/
 class Magma (α : Type*) where
   /-
   `protected` means that this definition should always be referenced as `Magma.op` since `μ` (below)

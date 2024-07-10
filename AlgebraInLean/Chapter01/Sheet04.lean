@@ -61,8 +61,8 @@ regular polygon, for example. Each element could be a rotation that maintains th
 polygon, and the group operation can be composition of these rotations. For example, consider the
 rotations of a triangle. All symmetric rotations must be multiples of 120°, of which there are
 three: 0°, 120°, and 240°. Any other rotations can be written as one of these three composed with an
-arbitrary amount of 360° rotations. We consider a rotation of 120° and a rotation of 480° to be
-equivalent (i.e. they are the same element of the group), for example, because they are off by a
+arbitrary number of 360° rotations. We consider a rotation of 120° and a rotation of 480° to be
+equivalent (i.e. they are the same element of the group), for example, because their difference is a
 multiple of 360°. Now, we can prove that this set, commonly called C₃, is a group.
 -/
 
