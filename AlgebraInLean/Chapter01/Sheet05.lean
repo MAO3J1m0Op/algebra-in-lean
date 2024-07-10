@@ -12,7 +12,7 @@ the type-class version of the `Prop` n ≠ 0. You can hover over [NeZero n] to s
 instance (n : ℕ) [NeZero n] : AbelianGroup (Fin n) where
   /-
   Fin.add adds the two underlying integers and then considers its remainder under division by n
-  (i.e. addition modulo n). Since n itself is equivalent to a full rotation, this means that going
+  (i.e., addition modulo n). Since n itself is equivalent to a full rotation, this means that going
   over a full rotation wraps around to being less than 360°, like in the C₃ case.
   -/
   op := Fin.add
