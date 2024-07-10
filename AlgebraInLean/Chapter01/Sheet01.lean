@@ -27,7 +27,7 @@ class Group (G : Type*) where
   -/
 
   /--
-  The group operation as a binary function. This type signature implies that it is necessarily
+  The group operation is a binary function. This type signature implies that it is necessarily
   closed.
   -/
   op : G → G → G

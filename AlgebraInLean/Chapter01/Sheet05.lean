@@ -6,13 +6,14 @@ namespace AlgebraInLean
 To represent Cₙ, the group of rotational symmetries of a regular n-gon, we will use a type already
 in Mathlib called `Fin`. `Fin n` is the type of all natural numbers less than n. Elements are
 represented as a pair of a natural number and a proof that it is less than n. A value `k : Fin n`
-represents a rotation by 2kπ/n radians. Like the integers, this group is also abelian.
+represents a rotation by 2kπ/n radians. Like the integers, this group is also abelian. [NeZero n] is
+the type-class version of the `Prop` n ≠ 0. You can hover over [NeZero n] to see this in more detail
 -/
 instance (n : ℕ) [NeZero n] : AbelianGroup (Fin n) where
   /-
-  Fin.add adds the two underlying integers and then considers its remainder under division by n.
-  Since n itself is equivalent to a full rotation, this means that going over a full rotation wraps
-  around to being less than 360°, like in the C₃ case.
+  Fin.add adds the two underlying integers and then considers its remainder under division by n
+  (i.e. addition modulo n). Since n itself is equivalent to a full rotation, this means that going
+  over a full rotation wraps around to being less than 360°, like in the C₃ case.
   -/
   op := Fin.add
 
