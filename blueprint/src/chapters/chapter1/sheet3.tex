@@ -1,39 +1,41 @@
 \section{Uniqueness Theorems}
 
 \begin{theorem}
-    \label{theorem : id_unique}
-    \lean{AlgebraInLean.id_unique}
+    \label{theorem : identity_uniqueness}
+    \lean{AlgebraInLean.identity_uniqueness}
     \leanok
     \uses{definition : Monoid}
     In a monoid, the identity element is unique:
-    $\forall a \in G, (\forall b \in G, \mu(a, b) = \mu(b, a) = b) \Rightarrow a = \mathbb{e}$
+    $\forall a \in G, ~(\forall b \in G, ~\mu(a,~ b) = \mu(b,~ a) = b)
+    \Rightarrow a = \mathbb{e}$
   \end{theorem}
 
 \begin{theorem}
-    \label{theorem : inv_unique}
-    \lean{AlgebraInLean.inv_unique}
+    \label{theorem : inverse_uniqueness}
+    \lean{AlgebraInLean.inverse_uniqueness}
     \leanok
     \uses{definition : Group}
     In a group, each element has a unique inverse:
-    $\forall a, b \in G, (\mu(a, b) = \mu(b, a) = \mathbb{e}) \Rightarrow b = \iota(a)$
+    $\forall a,~ b \in G,~ (\mu(a,~ b) = \mu(b,~ a) = \mathbb{e}) \Rightarrow b
+     = \iota(a)$
   \end{theorem}
 
-\begin{theorem}
-  \label{theorem : inv_anticomm}
-  \lean{AlgebraInLean.inv_anticomm}
+\begin{theorem}[Shoes and Socks Theorem]
+  \label{theorem : shoes_and_socks}
+  \lean{AlgebraInLean.shoes_and_socks}
   \leanok
-  \uses{theorem : inv_unique, theorem : op_inv}
+  \uses{theorem : inverse_uniqueness, theorem : op_inv}
   The inverse of a product is the product of the inverses in reverse order:
-  $\forall a, b \in G, \iota(\mu(a, b)) = \mu(\iota(b), \iota(a))$
+  $\forall a,~ b \in G,~ \iota(\mu(a,~ b)) = \mu(\iota(b),~ \iota(a))$
 \end{theorem}
 
 \begin{theorem}
   \label{theorem : inv_inv}
   \lean{AlgebraInLean.inv_inv}
   \leanok
-  \uses{theorem : inv_unique, theorem : op_inv}
+  \uses{theorem : inverse_uniqueness, theorem : op_inv}
   The inverse of the inverse of an element is that element:
-  $\forall a \in G, \iota(\iota(a)) = a$
+  $\forall a \in G,~ \iota(\iota(a)) = a$
 \end{theorem}
 
 \begin{theorem}
@@ -41,6 +43,6 @@
   \lean{AlgebraInLean.right_cancel}
   \leanok
   \uses{definition : Group}
-  Right-multiplication by the same element on both sides of an equation can be cancelled.
-  $\forall a, b, c \in G, \mu(b, a) = \mu(c, a) \Rightarrow b = c$
+  A group has the right cancellation property
+  $\forall a, ~b, ~c \in G,~ \mu(b,~ a) = \mu(c,~ a) \Rightarrow b = c$
 \end{theorem}
