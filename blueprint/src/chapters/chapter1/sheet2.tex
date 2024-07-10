@@ -51,3 +51,12 @@
     A group has the left cancellation property
     $\forall a,~ b,~ c \in G, ~\mu(a,~ b) = \mu(a,~ c) \Rightarrow b = c$
 \end{theorem}
+
+\begin{theorem}
+    \label{definition : right_cancel}
+    \lean{AlgebraInLean.right_cancel}
+    \leanok
+    \uses{definition : Group, theorem : op_inv}
+    A group has the right cancellation property
+    $\forall a, ~b, ~c \in G,~ \mu(b,~ a) = \mu(c,~ a) \Rightarrow b = c$
+  \end{theorem}
