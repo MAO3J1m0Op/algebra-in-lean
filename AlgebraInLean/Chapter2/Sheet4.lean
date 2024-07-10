@@ -82,7 +82,6 @@ namespace Sheet3
 
     -/
 
-
     /- You may be able to intuitively discern that all automorphisms are also isomoprhisms.
     Lets do a brief exercise to prove this before jumping into some more complex examples. -/
     theorem aut_isomoprhism [Group G] (φ : G → G) (h : Automorphism φ) : Isomorphism φ := by
