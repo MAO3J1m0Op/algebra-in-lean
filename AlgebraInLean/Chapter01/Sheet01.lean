@@ -84,14 +84,16 @@ def ι [Group G] : G → G := Group.inv
 /-- a⁻¹ ⬝ a = e -/
 theorem inv_op [Group G] (a : G) : μ (ι a) a = 𝕖 := Group.inv_op a
 
-/- Now, we can start writing proofs with groups -/
+/-
+Now, we can start writing proofs with groups. Walk through this example, making sure you understand
+every step.
+-/
 
 /-- a ⬝ a⁻¹ = e -/
 theorem op_inv [Group G] (a : G) : μ a (ι a) = 𝕖 := by
-  rw [ ←id_op (μ a _)
-     , ←inv_op (ι a)
-     , op_assoc
-     , ←op_assoc (ι a)
-     , inv_op
-     , id_op
-     ]
+  rw [←id_op (μ a _)]
+  rw [←inv_op (ι a)]
+  rw [op_assoc]
+  rw [←op_assoc (ι a)]
+  rw [inv_op]
+  rw [id_op]
