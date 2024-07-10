@@ -87,6 +87,7 @@ protected def C₃.op : C₃ → C₃ → C₃
 | .rot240, .rot0 => .rot240
 | .rot240, .rot120 => .rot0
 | .rot240, .rot240 => .rot120
+-- rotating by 240° and again by 240° is equivalent to a 120° rotation (480 = 120 + 360)
 
 /- What are the inverses of each of these rotations? -/
 protected def C₃.inv : C₃ → C₃
