@@ -4,6 +4,16 @@ This is a solutions sheet.
 
 import Mathlib.Tactic
 
+/-
+The `linter.unusedTactic` command permits the usage of the `done` tactic without warnings. You will
+see this in every sheet.
+
+FIXME: Find a more optimal solution for disabling this linter globally.
+-/
+set_option linter.unusedTactic false
+/-
+The `linter.unusedVariables` command ignores unused variables warnings in select sheets.
+-/
 set_option linter.unusedVariables false
 /-this allows us to define variables that go on to be unused in an exercise-/
 
