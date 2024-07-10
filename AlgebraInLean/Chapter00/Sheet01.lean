@@ -4,6 +4,7 @@ This is a solutions sheet.
 
 import Mathlib.Tactic
 
+set_option linter.unusedTactic false
 /-
 Welcome!
 
