@@ -1,0 +1,49 @@
+\section{More Definitions}
+
+\begin{definition}[Magma]
+    \label{definition : Magma}
+    \lean{AlgebraInLean.Magma}
+    \leanok
+    A magma is a set G with an operation $\mu : G \rightarrow G \rightarrow G$
+\end{definition}
+
+\begin{definition}[Semigroup]
+    \label{definition : Semigroup}
+    \lean{AlgebraInLean.Semigroup}
+    \leanok
+    \uses{definition : Magma}
+    A semigroup is a magma with the associative property: $\forall a, b, c \in G, \mu(\mu(a, b), c) = \mu(a, \mu(b, c))$
+\end{definition}
+
+\begin{definition}[Monoid]
+    \label{definition : Monoid}
+    \lean{AlgebraInLean.Monoid}
+    \leanok
+    \uses{definition : Semigroup}
+    A monoid is a semigroup with an identity $\mathbb{e}$ where $\forall a \in G, \mu (a, \mathbb{e}) = \mu(\mathbb{e}, a) = a$
+\end{definition}
+
+\begin{definition}[Commutative Monoid]
+    \label{definition : CommMonoid}
+    \lean{AlgebraInLean.CommMonoid}
+    \leanok
+    \uses{definition : Monoid}
+    A commutative monoid is a monoid with the commutative property: $\forall a, b \in G, \mu(a, b) = \mu(b, a)$
+\end{definition}
+
+\begin{definition}[Abelian Group]
+    \label{definition : AbelianGroup}
+    \lean{AlgebraInLean.AbelianGroup}
+    \leanok
+    \uses{definition : Group, definition : CommMonoid}
+    An abelian group is a group with the commutative property: $\forall a, b \in G, \mu(a, b) = \mu(b, a)$
+\end{definition}
+
+\begin{theorem}
+    \label{definition : left_cancel}
+    \lean{AlgebraInLean.left_cancel}
+    \leanok
+    \uses{definition : Group}
+    You can cancel out the left side of an equation:
+    $\forall a, b, c \in G, \mu(a, b) = \mu(a, c) \Rightarrow b = c$
+\end{theorem}

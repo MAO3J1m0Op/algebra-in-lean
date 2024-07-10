@@ -1,4 +1,7 @@
-import Mathlib.Tactic
+import AlgebraInLean.Chapter01.Sheet07
+
+set_option linter.unusedTactic false
+
 /-
 
 Let's take a brief break from Algebra to orient ourselves.
@@ -9,9 +12,9 @@ seen some of these already!)
 
 -/
 
-namespace Defs
+namespace AlgebraInLean
 
-namespace Interlude
+variable {α β γ : Type*}
 
     /-
 
@@ -88,7 +91,7 @@ namespace Interlude
     in arguments as is the norm with `cases`.
 
     -/
-    example (f : X → Y) (g : Y → Z) : Surjective (g ∘ f) → Surjective g := by
+    example (f : α → β) (g : β → γ) : Surjective (g ∘ f) → Surjective g := by
       intros h z
       rcases h z with ⟨x, rfl⟩
       use f x
@@ -104,7 +107,7 @@ namespace Interlude
     bijectivitiy example.
 
     -/
-    theorem injective_comp {α β γ : Type*} (f : α → β) (g : β → γ) (h1 : Injective f)
+    theorem injective_comp (f : α → β) (g : β → γ) (h1 : Injective f)
     (h2 : Injective g) : Injective (g ∘ f) := by
       intros a1 a2 h
       apply h1
@@ -112,7 +115,7 @@ namespace Interlude
       exact h
       done
 
-    theorem surjective_comp {α β γ : Type} (f : α → β) (g : β → γ) (h1 : Surjective f)
+    theorem surjective_comp (f : α → β) (g : β → γ) (h1 : Surjective f)
     (h2 : Surjective g) : Surjective (g ∘ f) := by
       intro z
       rw [Surjective] at h2
@@ -152,7 +155,7 @@ namespace Interlude
     types
 
     -/
-    theorem bijective_comp {α β γ : Type} (f : α → β) (g : β → γ) (h1 : Bijective f)
+    theorem bijective_comp (f : α → β) (g : β → γ) (h1 : Bijective f)
     (h2 : Bijective g) : Bijective (g ∘ f) := by
       obtain ⟨finv, hf⟩ := h1
       obtain ⟨ginv, hg⟩ := h2
@@ -180,7 +183,7 @@ namespace Interlude
   one for practice. We've gotten you started below:
 
   -/
-  theorem surjective_comp_have {α β γ : Type} (f : α → β) (g : β → γ) (h1 : Surjective f)
+  theorem surjective_comp_have (f : α → β) (g : β → γ) (h1 : Surjective f)
   (h2 : Surjective g) : Surjective (g ∘ f) := by
     intro z
     have h3 := h2 z

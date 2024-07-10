@@ -1,34 +1,13 @@
-import «AlgebraInLean».Basic
-import Mathlib.Tactic
+import AlgebraInLean.Chapter02.Sheet03
 
-namespace Defs
+set_option linter.unusedTactic false
 
-namespace Morphisms
+namespace AlgebraInLean
 
-namespace Sheet3
-
--- ## THESE WILL BE DELETED UPON RESOLVING IMPORT & NAMESPACE ISSUES AFTER CH1 MERGE
-
--- Injectivity, Surjectivity, Bijectivity
-  def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
-
-  def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
-
-  def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
-
-  -- Basic Morphisms ("imported" from Sheet 1)
-  def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ
-  a) (φ b) = φ (μ a b)
-
-  def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧
-  Bijective φ)
-
--- ## END REMOVABLE SECTION
-
+variable {G : Type*} [Group G]
 
 -- ## Endomorphisms and Automorphisms
 
-  section Endomorphisms
     /-
 
     In Sheet 1 of this chapter, you were introduced to homomorphisms and isomorphisms. In this
@@ -49,7 +28,7 @@ namespace Sheet3
     Let's take a look at how this would be defined in Lean:
 
     -/
-    def Endomorphism [Group G] (φ : G → G) : Prop := Homomorphism φ
+    def Endomorphism (φ : G → G) : Prop := Homomorphism φ
 
     /-
 
@@ -63,9 +42,7 @@ namespace Sheet3
 
     -/
 
-  end Endomorphisms
 
-  section Automorphisms
 
     /-
 
@@ -73,7 +50,7 @@ namespace Sheet3
     the following definition is similar to how we defined bijectivity in the first place.
 
     -/
-    def Automorphism [Group G] (φ : G → G) : Prop := Endomorphism φ ∧ Bijective φ
+    def Automorphism (φ : G → G) : Prop := Endomorphism φ ∧ Bijective φ
     /-
 
     You can think of it like a permutation from a group to itself, although it is important that
@@ -84,7 +61,7 @@ namespace Sheet3
 
     /- You may be able to intuitively discern that all automorphisms are also isomoprhisms.
     Lets do a brief exercise to prove this before jumping into some more complex examples. -/
-    theorem aut_isomoprhism [Group G] (φ : G → G) (h : Automorphism φ) : Isomorphism φ := by
+    theorem aut_isomoprhism (φ : G → G) (h : Automorphism φ) : Isomorphism φ := by
       obtain ⟨h_endomorphism, h_bijective⟩ := h
       unfold Isomorphism
       constructor
@@ -152,7 +129,7 @@ namespace Sheet3
     As with before, a brief definition of our ψ:
 
     -/
-    def Conjugate [Group G] (g x : G) : G := μ (μ g x) (ι g)
+    def Conjugate (g x : G) : G := μ (μ g x) (ι g)
     /- We define this specifically to be `Conjugate`, however we will also refer to this mapping
     as ψ. It is common to see φ and ψ to represent these homomorphic and automorphic maps, but since
     conjugation will come back up later, this definition is named as such. -/
@@ -176,30 +153,10 @@ namespace Sheet3
     function for integers under addition was a group automorphism. Split the proof up into its
     different components (i.e., proving the homorphism property and then the bijectivity property
     separately).
-
-    The following helper lemmas may be helpful to you when proving the bijectivity property of the
-    conjugation automorphism.
-
     -/
-    lemma left_cancel [Group G] (x y g : G) (h : μ g x = μ g y) : x = y := by
-      have h1 : μ g x = μ g y → μ (ι g) (μ g x) = μ (ι g) (μ g y) := by
-        intro h
-        rw [h]
-      apply h1 at h
-      rw [← op_assoc, inv_op, ← op_assoc, inv_op, id_op, id_op] at h
-      exact h
-
-    lemma right_cancel [Group G] (x y g : G) (h : μ x g = μ y g) : x = y := by
-      have h1 : μ x g = μ y g → μ (μ x g) (ι g) = μ (μ y g) (ι g) := by
-        intro h
-        rw [h]
-      apply h1 at h
-      rw [op_assoc, op_inv, op_assoc, op_inv, op_id, op_id] at h
-      exact h
-    -- ## END HELPERS
 
     -- Show that ψ is a group automorphism
-    theorem ψ_automorphism [Group G] (g : G) : ∀ x y : G, Conjugate g (μ x y) = μ (Conjugate g x)
+    theorem ψ_automorphism (g : G) : ∀ x y : G, Conjugate g (μ x y) = μ (Conjugate g x)
     (Conjugate g y) ∧ Bijective (Conjugate g) := by
       intros x y
       constructor
@@ -235,7 +192,6 @@ namespace Sheet3
     groups (meaning this sheet will likely be referenced in later chapters as one to come back to)!
 
     -/
-  end Automorphisms
 
 
 /-
@@ -244,5 +200,3 @@ That's all we have for morphisms. Feel free to move on to Chapter 3: Subgroups!
 ## HAVE FUN!
 
 -/
-
-end Sheet3
