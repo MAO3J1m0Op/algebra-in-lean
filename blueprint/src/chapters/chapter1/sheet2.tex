@@ -1,10 +1,10 @@
-\section{More Definitions}
+\section{Other Algebraic Structures}
 
 \begin{definition}[Magma]
     \label{definition : Magma}
     \lean{AlgebraInLean.Magma}
     \leanok
-    A magma is a set G with an operation $\mu : G \rightarrow G \rightarrow G$
+    A \emph{magma} is a set G with an operation $\mu : G \rightarrow G \rightarrow G$
 \end{definition}
 
 \begin{definition}[Semigroup]
@@ -12,7 +12,8 @@
     \lean{AlgebraInLean.Semigroup}
     \leanok
     \uses{definition : Magma}
-    A semigroup is a magma with the associative property: $\forall a, b, c \in G, \mu(\mu(a, b), c) = \mu(a, \mu(b, c))$
+    A \emph{semigroup} is a magma with the associative property:
+    $\forall a,~ b,~ c \in G, ~\mu(\mu(a, b), c) = \mu(a,~ \mu(b, c))$
 \end{definition}
 
 \begin{definition}[Monoid]
@@ -20,7 +21,8 @@
     \lean{AlgebraInLean.Monoid}
     \leanok
     \uses{definition : Semigroup}
-    A monoid is a semigroup with an identity $\mathbb{e}$ where $\forall a \in G, \mu (a, \mathbb{e}) = \mu(\mathbb{e}, a) = a$
+    A \emph{monoid} is a semigroup with an identity $\mathbb{e}$ where
+    $\forall a \in G, ~\mu (a, \mathbb{e}) = \mu(\mathbb{e},~ a) = a$
 \end{definition}
 
 \begin{definition}[Commutative Monoid]
@@ -28,7 +30,8 @@
     \lean{AlgebraInLean.CommMonoid}
     \leanok
     \uses{definition : Monoid}
-    A commutative monoid is a monoid with the commutative property: $\forall a, b \in G, \mu(a, b) = \mu(b, a)$
+    A \emph{commutative monoid} is a monoid with the commutative property:
+    $\forall a,~ b \in G, ~\mu(a, b) = \mu(b, a)$
 \end{definition}
 
 \begin{definition}[Abelian Group]
@@ -36,7 +39,8 @@
     \lean{AlgebraInLean.AbelianGroup}
     \leanok
     \uses{definition : Group, definition : CommMonoid}
-    An abelian group is a group with the commutative property: $\forall a, b \in G, \mu(a, b) = \mu(b, a)$
+    An \emph{abelian group} is a group with the commutative property:
+    $\forall a,~ b \in G, ~\mu(a,~ b) = \mu(b,~ a)$
 \end{definition}
 
 \begin{theorem}
@@ -44,6 +48,6 @@
     \lean{AlgebraInLean.left_cancel}
     \leanok
     \uses{definition : Group}
-    You can cancel out the left side of an equation:
-    $\forall a, b, c \in G, \mu(a, b) = \mu(a, c) \Rightarrow b = c$
+    A group has the left cancellation property
+    $\forall a,~ b,~ c \in G, ~\mu(a,~ b) = \mu(a,~ c) \Rightarrow b = c$
 \end{theorem}
