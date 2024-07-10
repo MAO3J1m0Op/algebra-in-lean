@@ -1,7 +1,6 @@
 import AlgebraInLean.Chapter03.Sheet01
 
-namespace Defs
-namespace Subgroups
+namespace AlgebraInLean
 
 /-
 In this sheet, we build the theory of repeated application of the group operation. If the
@@ -198,5 +197,3 @@ theorem gpow_closure {H : Subgroup G} {n : ℤ} : x ∈ H → gpow x n ∈ H := 
   done
 
 end Gpow
-end Subgroups
-end Defs

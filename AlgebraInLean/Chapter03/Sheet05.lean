@@ -1,7 +1,6 @@
 import AlgebraInLean.Chapter03.Sheet04
 
-namespace Defs
-namespace Subgroups
+namespace AlgebraInLean
 
 variable {G G' : Type*} [Group G] [Group G']
 
@@ -319,6 +318,3 @@ theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
       rw [← op_assoc]
       simp only [op_inv, id_op]
   done
-
-end Subgroups
-end Defs

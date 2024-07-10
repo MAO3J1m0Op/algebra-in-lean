@@ -1,7 +1,6 @@
 import AlgebraInLean.Chapter03.Sheet02
 
-namespace Defs
-namespace Subgroups
+namespace AlgebraInLean
 section MonoidOrder
 
 /--
@@ -183,5 +182,3 @@ theorem mod_order_eq_of_gpow_eq {m n : ℤ}
   sorry
 
 end GroupOrder
-end Subgroups
-end Defs

@@ -1,8 +1,6 @@
-import AlgebraInLean.Basic
+import AlgebraInLean.Chapter01.Sheet07
 
-namespace Defs
-
-namespace Subgroups
+namespace AlgebraInLean
 
 /--
 If G is a group, then a subgroup H of G is a subset of G that is itself a group under G's group
@@ -211,7 +209,3 @@ def Subgroup_Criterion (S : Set G) (he : ∃ (s : G), s ∈ S)
     apply hc3 at ha
     apply ha at hb
     exact hb
-
-end Subgroups
-
-end Defs
