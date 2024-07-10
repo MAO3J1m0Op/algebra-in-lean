@@ -7,7 +7,10 @@ Groups aren't the only important structures in algebra. By including or excludin
 from our definition, we create different structures.
 -/
 
-/-- A magma is the simples algebraic structure, which only has a closed binary operation -/
+/--
+A magma is the simplest algebraic structure. It is a set along with a binary operation with no
+additional properties imposed
+-/
 class Magma (α : Type*) where
   /-
   `protected` means that this definition should always be referenced as `Magma.op` since `μ` (below)
@@ -28,7 +31,7 @@ class Semigroup (α : Type*) extends Magma α where
 /-- (a ⬝ b) ⬝ c = a ⬝ (b ⬝ c) -/
 theorem op_assoc [Semigroup α] (a b c : α) : μ (μ a b) c = μ a (μ b c) := Semigroup.op_assoc a b c
 
-/-- A monoid is a semigroup with identity -/
+/-- A monoid is a semigroup with an identity element -/
 class Monoid (α : Type*) extends Semigroup α where
   protected id : α
   protected op_id : ∀ (a : α), μ a id = a

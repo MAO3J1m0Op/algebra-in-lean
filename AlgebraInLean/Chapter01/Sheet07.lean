@@ -3,6 +3,8 @@ import AlgebraInLean.Chapter01.Sheet06
 namespace AlgebraInLean
 
 /-
+## Challenge Sheet
+
 The last groups we will cover in this chapter are the symmetric groups. This is defined by the
 different ways of permuting n elements. The group operation is composition. For example, S₃ has 6
 elements, which permute (1, 2, 3) into (1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), and
@@ -23,7 +25,7 @@ Two elements of the same symmetric group are equal when the underlying functions
 @[ext] -- this allows the "ext" tactic to work on elements of Sₙ
 theorem Symmetric.ext {n : ℕ} {f g : Symmetric n} (h : f.val = g.val) : f = g := by
   unfold Symmetric at *
-  ext : 1
+  ext : 1  -- hover over `ext` to see the documentation that explains this syntax
   exact h
   done
 

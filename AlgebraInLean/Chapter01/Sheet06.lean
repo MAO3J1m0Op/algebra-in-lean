@@ -3,9 +3,12 @@ import AlgebraInLean.Chapter01.Sheet05
 namespace AlgebraInLean
 
 /-
+## Challenge Sheet
+
 The next example of groups we will go over are the dihedral groups Dₙ. Similarly to the cyclic
 groups, the dihedral groups also represent symmetries on a regular n-gon. However, Dₙ includes both
-rotations and reflections.
+rotations and reflections. Feel free to skip this section and come back to it at a later time if the
+content is overwhelming.
 -/
 
 /--

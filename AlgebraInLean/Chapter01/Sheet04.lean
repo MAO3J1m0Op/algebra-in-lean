@@ -8,7 +8,7 @@ examples of groups.
 -/
 
 /-
-The group you are likely most familiar with is the integers, with addition as the group operation.
+The group you are likely most familiar with is the integers with addition as the group operation.
 -/
 instance : Group ℤ where
   op a b := a + b
@@ -59,9 +59,11 @@ instance : AbelianGroup ℤ where
 Structures other than numbers also have the group properties. Take the rotational symmetries of a
 regular polygon, for example. Each element could be a rotation that maintains the symmetries of the
 polygon, and the group operation can be composition of these rotations. For example, consider the
-rotations of such a triangle. All symmetric rotations must be multiples of 120°, of which there are
-three: 0°, 120°, and 240°. Any other rotations can be written as one of these three and some amount
-of 360° rotations. Now, we can prove that this set, commonly called C₃, is a group.
+rotations of a triangle. All symmetric rotations must be multiples of 120°, of which there are
+three: 0°, 120°, and 240°. Any other rotations can be written as one of these three composed with an
+arbitrary number of 360° rotations. We consider a rotation of 120° and a rotation of 480° to be
+equivalent (i.e. they are the same element of the group), for example, because their difference is a
+multiple of 360°. Now, we can prove that this set, commonly called C₃, is a group.
 -/
 
 /-
@@ -80,12 +82,14 @@ protected def C₃.op : C₃ → C₃ → C₃
 | .rot0, .rot120 => .rot120
 | .rot0, .rot240 => .rot240
 | .rot120, .rot0 => .rot120
-| .rot120, .rot120 => .rot240
+| .rot120, .rot120 => .rot240 -- rotating by 120° and again by 120° is equivalent to a 240° rotation
 | .rot120, .rot240 => .rot0
 | .rot240, .rot0 => .rot240
 | .rot240, .rot120 => .rot0
 | .rot240, .rot240 => .rot120
+-- rotating by 240° and again by 240° is equivalent to a 120° rotation (480 = 120 + 360)
 
+/- What are the inverses of each of these rotations? -/
 protected def C₃.inv : C₃ → C₃
   | .rot0 =>
     -- sorry
