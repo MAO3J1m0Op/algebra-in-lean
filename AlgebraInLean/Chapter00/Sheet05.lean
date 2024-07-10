@@ -170,11 +170,12 @@ Note that there could be many solutions to any given exercise.
 Tactics like `assumption` and `specialize` are also helpful for dealing with multiple hypotheses.
 
 You now know enough tactics to progress beyond these simpler exercises to applying what you know
-about Lean to abstract algebra. In future worlds, we go beyond only working with the natural numbers
-or simple Prop variables to creating algebraic structures such as groups. This means that the types
-you will be working with will become more intricate and complex.
+about Lean to abstract algebra. In future chapters, we go beyond only working with the natural
+numbers or simple Prop variables to creating algebraic structures such as groups. This means that
+the types you will be working with will become more intricate and complex.
 
-The final sheet in World 0 is a list of tactics mentioned so far and is for your use as you see fit.
+The final sheet in Chapter 0 is a list of tactics mentioned so far and is for your use as you see
+fit.
 
-On to the next world!
+On to the next chapter!
 -/

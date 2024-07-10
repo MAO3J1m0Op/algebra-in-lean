@@ -13,26 +13,26 @@ proving theorems on groups, rings, and fields, you'll become comfortable with us
 you verify theorems in a user-friendly way.
 
 This problem set is written under the assumption that you, the user, have already completed the
-Natural Number Game: <https://adam.math.hhu.de/#/g/leanprover-community/nng4> Additionally, it is
+Natural Number Game: <https://adam.math.hhu.de/#/g/leanprover-community/nng4>. Additionally, it is
 assumed that the user is in the process of taking (or is already familiar with) an abstract algebra
 class, so explanations of concepts will be more concise than a textbook's.
 
 There are solutions provided for your reference. Should you be interested in learning more about
 specific tactics, Lean 4 documentation is available online.
 
-Learn about all things Lean 4 here: <https://leanprover-community.github.io/index.html> Full
-documentation can be found here: <https://leanprover-community.github.io/mathlib4_docs/>
+Learn about all things Lean 4 here: <https://leanprover-community.github.io/index.html>
+Full documentation can be found here: <https://leanprover-community.github.io/mathlib4_docs/>
 
 ****
 
-Before we dive into abstract algebra in World 1, we will begin with the basics of Lean in World 0.
-If you are already familiar with using Lean, feel free to skip World 0 and dive straight into World
-1. Additionally, if on any sheet you feel comfortable with a tactic, feel free to skip exercises and
-move on to learning the next one, as some exercises can be repetitive.
+Before we dive into abstract algebra in Chapter 1, we will begin with the basics of Lean in Chapter
+0. If you are already familiar with using Lean, feel free to skip Chapter 0 and dive straight into
+Chapter 1. Additionally, if on any sheet you feel comfortable with a tactic, feel free to skip
+exercises and move on to learning the next one, as some exercises can be repetitive.
 
-As you saw in the Natural Number Game, in Lean, theorems are proven using the help of tactics. World
-0 will familiarize you with a few basic tactics through some exercises concerning logic and basic
-arithmetic.
+As you saw in the Natural Number Game, in Lean, theorems are proven using the help of tactics.
+Chapter 0 will familiarize you with a few basic tactics through some exercises concerning logic and
+basic arithmetic.
 
 To get you used to reading Lean, let us begin with a very basic exercise from the Natural Number
 Game.
