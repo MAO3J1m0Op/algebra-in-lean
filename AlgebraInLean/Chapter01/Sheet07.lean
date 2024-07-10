@@ -14,9 +14,9 @@ For example, S3 has 6 elements, which permute the tuple (1, 2, 3) into one of: (
 In Lean, we use the `Equiv` type, notated `α ≃ β`, which is the set of all bijections from a type
 `α` to a type `β`.
 -/
-def Sn (n : ℕ) : Type := Fin n ≃ Fin n
+def Symmetric (n : ℕ) : Type := Fin n ≃ Fin n
 
-instance (n : ℕ) : Group (Sn n) where
+instance (n : ℕ) : Group (Symmetric n) where
   op := Equiv.trans
   op_assoc := λ _ _ _ ↦ rfl
   id := Equiv.refl (Fin n)
