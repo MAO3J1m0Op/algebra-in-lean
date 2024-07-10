@@ -1,6 +1,7 @@
 import AlgebraInLean.Chapter01.Sheet06
 
 namespace AlgebraInLean
+set_option linter.unusedTactic false
 
 /-
 The last group we will cover in this section is the symmetric group. This is defined as the set of
