@@ -15,9 +15,10 @@ other ideas can all be understood through algebra.
 /--
 The most common structure in algebra is the group. A group is defined as a set G along with some
 binary operation on that set that satisfies some properties (listed below). This is represented in
-Lean as a type class, which are objects that share certain properties. For a given type `G`, the
-type `Group G` corresponds to it being a group; as an argument, this is often written `[Group G]`,
-which makes Lean automatically look for an implementation of such.
+Lean as a type `class`, which are objects that share certain properties (a proof that a type
+satisfies a given type class is called an `instance`). For a given type `G`, the type `Group G`
+corresponds to it being a group; as an argument, this is often written `[Group G]`, which makes Lean
+automatically look for an implementation of such.
 -/
 class Group (G : Type*) where
   /-

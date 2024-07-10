@@ -13,8 +13,9 @@ additional properties imposed
 -/
 class Magma (α : Type*) where
   /-
-  `protected` means that this definition should always be referenced as `Magma.op` since `μ` (below)
-  should be used instead
+  `protected` means that this definition should always be referenced as `Magma.op` to prevent
+  ambiguity with other things that may be called `op` in Lean. You should use `μ` to reference this
+  instead (see below).
   -/
   protected op : α → α → α
 
@@ -58,7 +59,7 @@ class Group (α : Type*) extends Monoid α where
   protected inv : α → α
   protected inv_op : ∀ (a : α), μ (inv a) a = 𝕖
 
--- The inverse map of a group or derived structure -/
+/-- The inverse map of a group or derived structure -/
 def ι [Group α] : α → α := Group.inv
 
 /-- a⁻¹ ⬝ a = 𝕖 -/
@@ -73,11 +74,15 @@ instance [AbelianGroup α] : CommMonoid α where
 
 
 /-
-These are the definitions that will be used moving forwards. Since the previous proof of `op_inv`
-used the other definition of `Group`, we need to reprove it.
+These are the definitions that will be used moving forwards. Try to prove some theorems with the new
+definitions.
+
+Since the previous proof of `op_inv` used the other definition of `Group`, it needs to be re-proved.
 -/
 /-- a ⬝ a⁻¹ = e -/
 theorem op_inv [Group α] (a : α) : μ a (ι a) = 𝕖 := by
+  -- sorry
+  -- SAMPLE SOLUTION
   rw [ ←id_op (μ a _)
      , ←inv_op (ι a)
      , op_assoc
@@ -85,6 +90,7 @@ theorem op_inv [Group α] (a : α) : μ a (ι a) = 𝕖 := by
      , inv_op
      , id_op
      ]
+  -- END OF SAMPLE SOLUTION
 
 /- Try to prove a theorem using the new definitions. -/
 /-- a ⬝ b = a ⬝ c ⇒ b = c -/
@@ -92,4 +98,11 @@ theorem left_cancel [Group α] (a b c : α) (h : μ a b = μ a c) : b = c := by
   -- sorry
   -- SAMPLE SOLUTION
   rw [←id_op b, ←id_op c, ←inv_op a, op_assoc, op_assoc, h]
+  -- END OF SAMPLE SOLUTION
+
+/-- b ⬝ a = c ⬝ a ⇒ b = c -/
+theorem right_cancel [Group α] (a b c : α) (h : μ b a = μ c a) : b = c := by
+  -- sorry
+  -- SAMPLE SOLUTION
+  rw [←op_id b, ←op_id c, ←op_inv a, ←op_assoc, ←op_assoc, h]
   -- END OF SAMPLE SOLUTION

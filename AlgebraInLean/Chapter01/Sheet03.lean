@@ -7,6 +7,9 @@ variable {α : Type*}
 /-
 When we defined the monoids and groups, we only required the *existence* of identity and inverses,
 but not their uniqueness. However, it does happen that they must be unique, as shown below.
+
+It may be useful to write out the following theorems in standard math notation, like we did in the
+previous theorems.
 -/
 
 /--
@@ -45,8 +48,6 @@ identity and inverses.
 -/
 
 /--
-(a ⬝ b)⁻¹ = b⁻¹ ⬝ a⁻¹
-
 Colloquially, the "shoes and socks theorem" because you put on your socks before your shoes, but you
 take off your shoes before your socks. "Anticommutativity" is the fancy name for this: a function
 that "commutes" with the operation but inverts the order of the operands.
@@ -61,7 +62,7 @@ theorem inv_anticomm (a b : α) : ι (μ a b) = μ (ι b) (ι a) := by
   · rw [op_assoc, ←op_assoc (ι a), inv_op, id_op, inv_op]
   -- END OF SAMPLE SOLUTION
 
-/-- (a⁻¹)⁻¹ = a -/
+/-- The inverse of the inverse of an element is itself -/
 theorem inv_inv (a : α) : ι (ι a) = a := by
   --sorry
   -- SAMPLE SOLUTION
@@ -72,7 +73,7 @@ theorem inv_inv (a : α) : ι (ι a) = a := by
   · exact op_inv a
   -- END OF SAMPLE SOLUTION
 
-/-- 1⁻¹ = 1 -/
+/-- The inverse of the identity element is the identity element -/
 theorem inv_id [Group α] : ι 𝕖 = (𝕖 : α) := by
   -- sorry
   -- SAMPLE SOLUTION
@@ -81,11 +82,4 @@ theorem inv_id [Group α] : ι 𝕖 = (𝕖 : α) := by
   constructor
   · exact op_id 𝕖
   · exact op_id 𝕖
-  -- END OF SAMPLE SOLUTION
-
-/-- b ⬝ a = c ⬝ a ⇒ b = c -/
-theorem right_cancel (a b c : α) (h : μ b a = μ c a) : b = c := by
-  -- sorry
-  -- SAMPLE SOLUTION
-  rw[←op_id b, ←op_id c, ←op_inv a, ←op_assoc, ←op_assoc, h]
   -- END OF SAMPLE SOLUTION
