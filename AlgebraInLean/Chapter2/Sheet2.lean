@@ -1,3 +1,5 @@
+import AlgebraInLean.Chapter2.Sheet1
+
 -- ## Modular arithmetic interlude
 
 /-

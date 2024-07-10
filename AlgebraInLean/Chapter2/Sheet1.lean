@@ -1,8 +1,6 @@
-import «AlgebraInLean».Chapter2.Sheet0
-import AlgebraInLean.Basic
-import Mathlib.Tactic
+import AlgebraInLean.Chapter2.Sheet0
 
-namespace Defs
+namespace AlgebraInLean
 
 /-
 
@@ -22,10 +20,10 @@ But before we dive into morphisms, we prove a few useful theorems about group el
 
 -/
 
-namespace Interlude
+variable {G H : Type*} [Group G] [Group H]
 
 /-- For all a, b, c ∈ G, ab = ac → b = c -/
-theorem mul_left_eq [Group G] (a b c : G) (h : μ a b = μ a c) : b = c
+theorem mul_left_eq (a b c : G) (h : μ a b = μ a c) : b = c
 :=
   calc
     b = μ 𝕖 b := by rw [id_op]
@@ -51,7 +49,7 @@ the syntax. Don't let it scare you!
 -/
 
 /-- For all g ∈ G, (g⁻¹)⁻¹ = g -/
-theorem inv_inv_eq_self [Group G] : ∀ g : G, ι (ι g) = g := by
+theorem inv_inv_eq_self : ∀ g : G, ι (ι g) = g := by
   intro g
   have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
   · intro a
@@ -64,7 +62,7 @@ theorem inv_inv_eq_self [Group G] : ∀ g : G, ι (ι g) = g := by
   rw [mul_left_eq (ι g) (ι (ι g)) g hq]
 
 /-- For all a, b ∈ G, a⁻¹ = b⁻¹ → a = b -/
-example [Group G] : ∀ a b : G, ι a = ι b → a = b := by
+example : ∀ a b : G, ι a = ι b → a = b := by
   intro a b
   intro hinv
   have hinj : ∀ (g : G), ι (ι g) = g
@@ -73,7 +71,7 @@ example [Group G] : ∀ a b : G, ι a = ι b → a = b := by
   rw [hinv]
 
 /-- The inverse function is injective -/
-theorem inv_inj [Group G]: Injective (ι: G → G) := by
+theorem inv_inj : Injective (ι: G → G) := by
   unfold Injective
   have hinv : ∀ (x : G), ι (ι x) = x
   · intro x
@@ -91,6 +89,8 @@ You saw the following examples in Sheet 0, but in a much different way. It may b
 different approaches for the following proofs:
 
 -/
+
+variable {α β γ : Type*}
 
 /-- An injective and surjective function is bijective -/
 example (f : α → β) (h1 : Injective f) (h2 : Surjective f)
@@ -164,11 +164,11 @@ next sheet!
 
 -/
 
-def Homomorphism [Group G] [Group H] (φ : G → H) : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
+def Homomorphism (φ : G → H) : Prop := ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
 
-theorem Homomorphism_def [Group G] [Group H] (φ : G → H) : Homomorphism φ ↔ ∀ (a b : G), μ (φ a) (φ b) = φ (μ a b) := by rfl
+theorem Homomorphism_def (φ : G → H) : Homomorphism φ ↔ ∀ (a b : G), μ (φ a) (φ b) = φ (μ a b) := by rfl
 
-def Isomorphism [Group G] [Group H] (φ : G → H) : Prop := (Homomorphism φ ∧ Bijective φ)
+def Isomorphism (φ : G → H) : Prop := (Homomorphism φ ∧ Bijective φ)
 
 /-
 
@@ -182,7 +182,7 @@ to inverses.
 -/
 
 /-- Suppose φ : G → H is a homomorphism. Then φ(e) = e. -/
-  theorem hom_id_to_id [Group G] [Group H] (φ : G → H) (hp : Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
+  theorem hom_id_to_id (φ : G → H) (hp : Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
     have h₁ : φ (μ 𝕖 𝕖) = μ (φ 𝕖) (φ 𝕖) := by
       rw [Homomorphism_def] at hp
       specialize hp 𝕖 𝕖
@@ -203,7 +203,7 @@ To prove that homomorphisms take inverses to inverses, first show that if a * b 
 -/
 
 /-- For all a, b ∈ G, ab = 1 → b = a⁻¹ -/
-theorem two_sided_inv [Group G] (a b : G) (h1 : μ a b = 𝕖): b = ι a := by
+theorem two_sided_inv (a b : G) (h1 : μ a b = 𝕖): b = ι a := by
   have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
   · intro g
     rw [inv_op g]
@@ -221,7 +221,7 @@ Remember the inverse map is injective, as we proved earlier in the sheet.)
 -/
 
 /-- Suppose φ : G → H is a homomorphism. If g ∈ G, then φ(g⁻¹) = φ(g)⁻¹ -/
-theorem hom_inv_to_inv [Group G] [Group H] (φ : G → H) (hp : Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
+theorem hom_inv_to_inv (φ : G → H) (hp : Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
   have h1 : μ (φ (ι g)) (φ g) = φ (μ (ι g) g)
   · rw [Homomorphism_def] at hp
     rw [hp (ι g) g]
@@ -232,10 +232,6 @@ theorem hom_inv_to_inv [Group G] [Group H] (φ : G → H) (hp : Homomorphism φ)
   rw [two_sided_inv (φ (ι g)) (φ g) h1]
   rw [inv_inv_eq_self]
 
-
-end Interlude
-
-end Defs
 
 /-
 

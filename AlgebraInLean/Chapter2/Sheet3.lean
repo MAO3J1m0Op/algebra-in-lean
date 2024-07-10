@@ -1,6 +1,6 @@
-import Mathlib.Tactic
+import AlgebraInLean.Chapter2.Sheet2
 
-namespace Defs
+namespace AlgebraInLean
 
 /-
 
