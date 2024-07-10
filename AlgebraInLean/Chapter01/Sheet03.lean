@@ -29,8 +29,8 @@ theorem id_unique [Monoid α] (e₂ : α) (h : ∀ (a : α), (μ a e₂ = a ∧ 
 variable [Group α]
 
 /--
-Uniqueness of the inverse of an element. If any element i "behaves like" the inverse of a, then it
-must be equal to the inverse of a.
+Uniqueness of the inverse of an element. If any element `i` "behaves like" the inverse of `a`, then
+it must be equal to the inverse of `a`.
 -/
 theorem inv_unique (a i : α) (h : μ a i = 𝕖 ∧ μ i a = 𝕖) : i = ι a := by
   -- sorry

@@ -6,8 +6,12 @@ namespace AlgebraInLean
 To represent Cₙ, the group of rotational symmetries of a regular n-gon, we will use a type already
 in Mathlib called `Fin`. `Fin n` is the type of all natural numbers less than n. Elements are
 represented as a pair of a natural number and a proof that it is less than n. A value `k : Fin n`
-represents a rotation by 2πk/n radians. Like the integers, this group is also abelian. [NeZero n] is
-the type-class version of the `Prop` n ≠ 0. You can hover over [NeZero n] to see this in more detail
+represents a rotation by 2πk/n radians. Like the integers, this group is also abelian.
+
+The argument `[NeZero n]` is the type-class version of the proposition that `n ≠ 0` (hover over it
+for more information); this is done instead of including `n ≠ 0` as an argument directly because it
+helps Lean with automatically deducing certain things. You can try removing that argument to see
+what happens.
 -/
 instance (n : ℕ) [NeZero n] : AbelianGroup (Fin n) where
   /-

@@ -13,7 +13,12 @@ The group you are likely most familiar with is the integers with addition as the
 instance : Group ℤ where
   op a b := a + b
 
-  -- Mathlib already has all of these proven, you just need to figure out what they are called.
+  /-
+  Mathlib already has all of these proven, you just need to figure out what they are called. The
+  websites <https://loogle.lean-lang.org/> and <https://www.moogle.ai/> may be helpful, or you can
+  try playing around with tactics like `exact?` and `apply?` (using them together with `have` is
+  sometimes useful), or you can just try guessing what you think the name is.
+  -/
   op_assoc := by
     exact add_assoc
 

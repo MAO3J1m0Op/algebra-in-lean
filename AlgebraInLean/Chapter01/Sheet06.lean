@@ -7,13 +7,17 @@ namespace AlgebraInLean
 
 The next example of groups we will go over are the dihedral groups Dₙ. Similarly to the cyclic
 groups, the dihedral groups also represent symmetries on a regular n-gon. However, Dₙ includes both
-rotations and reflections. Feel free to skip this section and come back to it at a later time if the
-content is overwhelming.
+rotations and reflections. It is instructive to think about why the following definition properly
+represents this group.
+
+Feel free to skip this section and come back to it at a later time if the content is overwhelming.
 -/
 
 /--
 The dihedral group Dₙ has 2n elements: the n rotations already in Cₙ, and the reflections of all
-of these rotations (reflection first, then rotation).
+of these rotations. In particular, an object `.rotation k : Dihedral n` represents a rotation by
+2kπ/n radians, like the elements of Cₙ, and an object `.reflection k : Dihedral n` represents a
+reflection (across some particular line) followed by a rotation by 2kπ/n radians.
 -/
 inductive Dihedral (n : ℕ) [NeZero n] : Type
 | rotation : Fin n → Dihedral n

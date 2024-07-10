@@ -9,8 +9,15 @@ The last groups we will cover in this chapter are the symmetric groups. This is 
 different ways of permuting n elements. The group operation is composition. For example, S₃ has 6
 elements, which permute (1, 2, 3) into (1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), and
 (3, 2, 1). Elements in Sₙ can also be thought of as bijections (invertible functions) from a set of
-n elements to itself. We define Sₙ as a function from Fin n to Fin n, along with a proof that it is
-bijective (note that the group structure of Fin n is not relevant here).
+n elements to itself.
+
+We define Sₙ as a function from Fin n to Fin n, along with a proof that it is bijective (note that
+the group structure of Fin n is not relevant here). This is done with Lean `Subtype`s: for an
+arbitrary type `a` and predicate `p : α → Prop`, `{x : α // p x}` is the subtype of `α` satisfying
+`p`, like with set builder notation (note that `Set`s are also present in Lean, and they are similar
+to but distinct from subtypes). This might remind you of `∃ (x : α), p x`, and while they are
+related, objects of a subtype must actually include an `x`, while objects of the latter need only
+include a proof that `x` exists (which can be converted to the other using the axiom of choice).
 -/
 
 /-- A symmetric group is a bijection Fin n → Fin n -/
