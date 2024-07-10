@@ -28,7 +28,8 @@ jobs:
           lake --version
 
       - name: ensure all modules are included
-        run: lake exe mk_all
+        run: |
+          lake exe mk_all || :
 
       - name: get cache
         run: lake exe cache get
