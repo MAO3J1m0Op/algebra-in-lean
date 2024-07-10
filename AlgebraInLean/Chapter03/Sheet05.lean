@@ -22,7 +22,7 @@ theorem homomorphism_id_map_id (φ : G → G') (hφ : Homomorphism φ) : φ (�
 
 /--
 One property that follows directly from the last is that for any a ∈ G, φ(a⁻¹) = φ(a)⁻¹.
-We can show this by using φ(𝕖) = φ(a · a⁻¹) = φ(a) · φ(a⁻¹) and the uniqe identity property.
+We can show this by using φ(𝕖) = φ(a · a⁻¹) = φ(a) · φ(a⁻¹) and the unique identity property.
 -/
 theorem homomorphism_id_inv (φ : G → G') (hφ : Homomorphism φ) : ∀ a : G, φ (ι a) = ι (φ a) := by
   -- EXERCISE

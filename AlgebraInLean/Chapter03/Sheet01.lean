@@ -3,16 +3,16 @@ import AlgebraInLean.Chapter01.Sheet07
 namespace AlgebraInLean
 
 /--
-If G is a group, then a subgroup H of G is a subset of G that is itself a group under G's group
-operation satisfying three properties.
+If G is a group, then a subgroup H of G is a subset of G along with G's operation satisfying three
+properties:
 
 1. The identity in G is the identity in H (H is therefore nonempty)
 2. ∀ a, b ∈ H then μ a b ∈ H
 3. ∀ a ∈ H, then ι a ∈ H
 
-To denote a subgroup on paper, we write that H ≤ G (we will explore why this notation is used in
-Sheet 4). We encode a subgroup as a Lean `structure`, notably not as a type class, to emphasize that
-subgroups are simply subsets of groups satisfying specific properties.
+If H is a subgroup of G, we write H ≤ G (we will explore why this notation is used in Sheet 4). We
+encode a subgroup as a Lean `structure`, notably not as a type class, to emphasize that subgroups
+are simply subsets of groups satisfying specific properties.
 -/
 structure Subgroup (G : Type*) [Group G] where
   /--

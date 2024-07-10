@@ -3,12 +3,13 @@ import AlgebraInLean.Chapter03.Sheet01
 namespace AlgebraInLean
 
 /-
-In this sheet, we build the theory of repeated application of the group operation. If the
-group operation is multiplication, the functions we define in this sheet are equivalent to
-exponentiation.
+## Challenge Sheet
 
-First, we define the power function `mpow` for monoids. Since monoids do not have a notion of
-inverses, we consider only natural numbers as input.
+In this sheet, we build the theory of repeated application of the group operation. If the group
+operation is multiplication, the functions we define in this sheet are equivalent to exponentiation.
+
+First, we define the power function `mpow` for monoids. Let M be a Monoid and m ∈ M. Since monoids
+do not have a notion of inverses, we only define mⁿ for n ∈ ℕ.
 -/
 section Mpow
 
@@ -17,7 +18,7 @@ We define this function inductively. `mpow x n` gives the element equal to multi
 identity element `n` times by `x`.
 -/
 def mpow {M : Type*} [Monoid M] (x : M) : ℕ → M
-| Nat.zero => 𝕖
+| Nat.zero => 𝕖   -- m⁰ = 𝕖
 | Nat.succ n => μ (mpow x n) x
 
 variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)

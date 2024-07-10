@@ -4,6 +4,8 @@ namespace AlgebraInLean
 section MonoidOrder
 
 /--
+## Challenge Sheet
+
 Classical logic relies on the Law of Excluded Middle, which states that every proposition is either
 true or false. In other terms, for any proposition `p`, either `p` is true or its negation `¬p` is
 true. In Lean, the story is more complicated, as Lean is a programming language meaning it must be
