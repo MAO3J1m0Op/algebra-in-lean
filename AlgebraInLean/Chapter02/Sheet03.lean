@@ -27,8 +27,7 @@ this holds for any arbitrary group.
 
 -/
 
--- Example, not exercise
--- The identity map is an isomorphism
+/- The identity map is an isomorphism -/
 example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
   let hom_map : ℤ ≃ ℤ := by
     constructor
@@ -57,8 +56,8 @@ Since we are using integers in this proof, you might find the tactic `linarith` 
 
 -/
 
--- Exercise
 example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
+  -- SAMPLE SOLUTION
   let hom_map : ℤ ≃ ℤ := by
     constructor
     have ha : Function.LeftInverse φ φ
@@ -75,6 +74,7 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = -x) : ℤ ≃+ ℤ := by
   rw [hc]
   simp [h1]
   linarith
+-- END SAMPLE SOLUTION
 
 /-
 
@@ -82,8 +82,8 @@ Consider the bijection ℤ → ℤ that maps x to x + 1. Is this an isomorphism?
 break?
 
 -/
-
 example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
+  -- SAMPLE SOLUTION
   let hom_map : ℤ ≃ ℤ := by
     constructor
     have ha : Function.LeftInverse (fun x => x - 1) φ
@@ -101,6 +101,7 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
   have hc : hom_map.toFun = φ := by rfl
   rw [hc]
   sorry
+  -- END SAMPLE SOLUTION
 
 /-
 

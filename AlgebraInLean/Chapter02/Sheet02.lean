@@ -1,6 +1,6 @@
 import AlgebraInLean.Chapter02.Sheet01
 
--- ## Modular arithmetic interlude
+/- ## Modular arithmetic interlude -/
 
 /-
 
@@ -10,7 +10,7 @@ interesting quirk of recursive functions in Lean, which we recommend you to chec
 
 -/
 
--- ### GCD and LCM
+/- ### GCD and LCM -/
 
 namespace Nat
 
@@ -23,7 +23,7 @@ Particularly, the gcd of any number and 0 is the number itself.
 -/
 #check Nat.gcd
 
--- The command `#print` is useful to see what is going on beneath the hood
+/- The command `#print` is useful to see what is going on beneath the hood. -/
 
 #print Nat.gcd
 
@@ -99,7 +99,7 @@ Given two integers `a` and `b`, `a ∣ b` simply means that `a` divides `b`, or 
 -/
 #eval Nat.mod 4 5
 
--- `%` represents the mod operation.
+/- `%` represents the mod operation. -/
 #eval 4 % 5
 
 /-
@@ -109,7 +109,7 @@ called _congruence modulo n_, where `n` is some integer.
 
 -/
 
--- Here are some identities regarding mod:
+/- Here are some identities regarding mod: -/
 
 #check (∀ a b m : Nat, (a + b).mod m = ((a.mod m) + (b.mod m)).mod m)
 

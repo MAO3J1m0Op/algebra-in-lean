@@ -22,9 +22,10 @@ But before we dive into morphisms, we prove a few useful theorems about group el
 
 variable {G H : Type*} [Group G] [Group H]
 
-/-- For all a, b, c ∈ G, ab = ac → b = c -/
+/- For all a, b, c ∈ G, ab = ac → b = c -/
 theorem mul_left_eq (a b c : G) (h : μ a b = μ a c) : b = c
 :=
+  -- SAMPLE SOLUTION
   calc
     b = μ 𝕖 b := by rw [id_op]
     _ = μ (μ (ι a) a) b := by rw [← inv_op a]
@@ -33,7 +34,7 @@ theorem mul_left_eq (a b c : G) (h : μ a b = μ a c) : b = c
     _ = μ (μ (ι a) a) c := by rw [op_assoc]
     _ = μ 𝕖 c := by rw [inv_op a]
     _ = c := by rw [id_op]
-
+  -- END SAMPLE SOLUTION
 /-
 
 This is a familiar proof from Chapter 1, but this time we're using the very nifty tactic `calc`.
@@ -48,8 +49,9 @@ the syntax. Don't let it scare you!
 
 -/
 
-/-- For all g ∈ G, (g⁻¹)⁻¹ = g -/
+/- For all g ∈ G, (g⁻¹)⁻¹ = g -/
 theorem inv_inv_eq_self : ∀ g : G, ι (ι g) = g := by
+  -- SAMPLE SOLUTION
   intro g
   have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
   · intro a
@@ -60,25 +62,29 @@ theorem inv_inv_eq_self : ∀ g : G, ι (ι g) = g := by
   symm at hq
   rw [← inv_op g] at hq
   rw [mul_left_eq (ι g) (ι (ι g)) g hq]
+  -- END SAMPLE SOLUTION
 
-/-- For all a, b ∈ G, a⁻¹ = b⁻¹ → a = b -/
+/- For all a, b ∈ G, a⁻¹ = b⁻¹ → a = b -/
 example : ∀ a b : G, ι a = ι b → a = b := by
+  -- SAMPLE SOLUTION
   intro a b
   intro hinv
   have hinj : ∀ (g : G), ι (ι g) = g
   · apply inv_inv_eq_self
   rw [← hinj a, ← hinj b]
   rw [hinv]
+  -- END SAMPLE SOLUTION
 
-/-- The inverse function is injective -/
+/- The inverse function is injective -/
 theorem inv_inj : Injective (ι: G → G) := by
+  -- SAMPLE SOLUTION
   unfold Injective
   have hinv : ∀ (x : G), ι (ι x) = x
   · intro x
     rw [inv_inv_eq_self x]
   intro a b hab
   rw [← hinv a, ← hinv b, hab]
-
+  -- END SAMPLE SOLUTION
 /-
 
 `unfold` does what it sounds like: unfolding a symbol to its underlying definition. It isn't best
@@ -92,7 +98,7 @@ different approaches for the following proofs:
 
 variable {α β γ : Type*}
 
-/-- An injective and surjective function is bijective -/
+/- An injective and surjective function is bijective -/
 example (f : α → β) (h1 : Injective f) (h2 : Surjective f)
 : (Bijective f) := by
   rw [Bijective]
@@ -119,7 +125,7 @@ instructive to take a look at them in action.
 
 -/
 
-/-- The composition of surjective functions is surjective -/
+/- The composition of surjective functions is surjective -/
 example (f : α → β) (g : β → γ) (h₁: Surjective f) (h₂ : Surjective g) : Surjective (g ∘ f) := by
   rw [Surjective] at *
   /-
@@ -181,20 +187,22 @@ to inverses.
 
 -/
 
-/-- Suppose φ : G → H is a homomorphism. Then φ(e) = e. -/
-  theorem hom_id_to_id (φ : G → H) (hp : Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
-    have h₁ : φ (μ 𝕖 𝕖) = μ (φ 𝕖) (φ 𝕖) := by
-      rw [Homomorphism_def] at hp
-      specialize hp 𝕖 𝕖
-      exact hp.symm
-    have h₂ : μ (φ 𝕖) 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
-      rw [op_id]
-      nth_rewrite 1 [← op_id 𝕖]
-      exact h₁
-    have h₃ : 𝕖 = φ 𝕖 := by
-      rw [mul_left_eq (φ 𝕖) 𝕖 (φ 𝕖)]
-      exact h₂
-    exact h₃.symm
+/- Suppose φ : G → H is a homomorphism. Then φ(e) = e. -/
+theorem hom_id_to_id (φ : G → H) (hp : Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
+  -- SAMPLE SOLUTION
+  have h₁ : φ (μ 𝕖 𝕖) = μ (φ 𝕖) (φ 𝕖) := by
+    rw [Homomorphism_def] at hp
+    specialize hp 𝕖 𝕖
+    exact hp.symm
+  have h₂ : μ (φ 𝕖) 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
+    rw [op_id]
+    nth_rewrite 1 [← op_id 𝕖]
+    exact h₁
+  have h₃ : 𝕖 = φ 𝕖 := by
+    rw [mul_left_eq (φ 𝕖) 𝕖 (φ 𝕖)]
+    exact h₂
+  exact h₃.symm
+  -- END SAMPLE SOLUTION
 
 /-
 
@@ -202,8 +210,9 @@ To prove that homomorphisms take inverses to inverses, first show that if a * b 
 
 -/
 
-/-- For all a, b ∈ G, ab = 1 → b = a⁻¹ -/
+/- For all a, b ∈ G, ab = 1 → b = a⁻¹ -/
 theorem two_sided_inv (a b : G) (h1 : μ a b = 𝕖): b = ι a := by
+  -- END SAMPLE SOLUTION
   have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
   · intro g
     rw [inv_op g]
@@ -212,7 +221,7 @@ theorem two_sided_inv (a b : G) (h1 : μ a b = 𝕖): b = ι a := by
   have hp : μ a b = μ a (ι a)
   · rw [h1, op_inv]
   rw [mul_left_eq a b (ι a) hp]
-
+  -- END SAMPLE SOLUTION
 /-
 
 Note that the inverse of a group element is also the element's unique inverse. Why? (Hint:
@@ -220,8 +229,9 @@ Remember the inverse map is injective, as we proved earlier in the sheet.)
 
 -/
 
-/-- Suppose φ : G → H is a homomorphism. If g ∈ G, then φ(g⁻¹) = φ(g)⁻¹ -/
+/- Suppose φ : G → H is a homomorphism. If g ∈ G, then φ(g⁻¹) = φ(g)⁻¹ -/
 theorem hom_inv_to_inv (φ : G → H) (hp : Homomorphism φ) (g : G) : φ (ι g) = ι (φ g) := by
+  -- SAMPLE SOLUTION
   have h1 : μ (φ (ι g)) (φ g) = φ (μ (ι g) g)
   · rw [Homomorphism_def] at hp
     rw [hp (ι g) g]
@@ -231,6 +241,7 @@ theorem hom_inv_to_inv (φ : G → H) (hp : Homomorphism φ) (g : G) : φ (ι g)
   rw [hom_id_to_id φ hp g] at h1
   rw [two_sided_inv (φ (ι g)) (φ g) h1]
   rw [inv_inv_eq_self]
+  -- END SAMPLE SOLUTION
 
 
 /-
@@ -238,6 +249,6 @@ theorem hom_inv_to_inv (φ : G → H) (hp : Homomorphism φ) (g : G) : φ (ι g)
 You have two options on where to go next. If you're familiar with basic modular arithmetic
 (including gcds, lcms, and the Euclidean algorithm), you can go straight to Sheet2. If you would
 like a refresher, or simply to see how these concepts are implemented in Lean, feel free to go to
-the sheet named `Sheet2.lean`.
+the sheet named `Sheet02.lean`.
 
 -/
