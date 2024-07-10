@@ -3,14 +3,55 @@ import AlgebraInLean.Chapter03.Sheet02
 namespace AlgebraInLean
 section MonoidOrder
 
-/--
+/-
 ## Challenge Sheet
 
-Classical logic relies on the Law of Excluded Middle, which states that every proposition is either
-true or false. In other terms, for any proposition `p`, either `p` is true or its negation `¬p` is
-true. In Lean, the story is more complicated, as Lean is a programming language meaning it must be
-capable of producing a program evaluatable by a computer. So if we were to write a function
-including the snippet below, where `p` is an arbitrary `Prop`:
+Let M be a monoid, and let x : M. The order of x is the smallest nonzero natural number n such that
+xⁿ = e if such an n exists. Otherwise, the order of x is defined to be 0. How would you implement
+this definition in Lean?
+
+A starting point would be to consider the proposition
+-/
+
+def isFiniteOrder {M : Type*} [Monoid M] (x : M): Prop := ∃ (n : ℕ), n ≠ 0 ∧ mpow x n = 𝕖
+
+/-
+If this proposition is true, we can access the value of n that yields xⁿ = e. But we do not simply
+want any `n : ℕ` that satisfies mpow x n = 𝕖, we want the smallest! After a quick search of the Nat
+namespace in mathlib, there appears to be a function `Nat.find`, that takes in a proposition `h` and
+returns the smallest natural number that satisfies `h`.
+
+Then, we could use an if statement to define `order`: if `h : isFiniteOrder x`, then `order x` is
+`Nat.find h`. Else, `order x` should be 0.
+
+Try uncommenting the following lines to see if this idea works:
+
+def order {M : Type*} [Monoid M] (x : M) : ℕ := if h : isFiniteOrder x then Nat.find h else 0
+
+The issue is subtle.
+
+The definition above asserts that `if h : isFiniteOrder x then Nat.find h else 0` has type `ℕ`.
+However, when Lean type-checks this definition, it doesn't know whether the proposition
+`isFiniteOrder x` is true or false, and so it can't decide what the type of the entire if-block
+above is either.
+
+You may object to this: if `isFiniteOrder x` is true, then the expression is the natural number
+returned by Nat.find and if `isFiniteOrder x` is false, then the expression is the natural number 0.
+In either case, the expression has type `ℕ`. Shouldn't Lean be able to figure this out?
+
+Implicit in this intuition is the idea that every proposition is either true or false, even if we
+don't necessarily have a way to compute the result. In other words, for any proposition `p`, either
+`p` is true or its negation `¬p` is true. However, this seemingly trivial claim, called the Law of
+the Excluded Middle, is not true in constructive mathematics! Moreover, Lean's foundations for
+proving theorems is constructive: if you want to prove a proposition `p`, you have to construct a
+term that has type p (i.e., a term of type `p` is a proof of `p`). What we need is classical logic!
+
+[TODO: Unsatisfactory transition]
+
+Classical logic asserts the Law of Excluded Middle as an axiom. In Lean, the story is complicated.
+Since Lean is a programming language it must be capable of producing a program that can be
+evaulated by a computer. So if we were to write a function including the snippet below, where `p` is
+an arbitrary `Prop`:
 
 ```
 if p then 1 else 0
@@ -29,7 +70,7 @@ For further reading, consult the documentation on the below definitions:
 * `Classical` namespace
 -/
 noncomputable def order {M : Type*} [Monoid M] (x : M) : ℕ := by
-  classical exact if h : ∃ (n : ℕ), n ≠ 0 ∧ mpow x n = 𝕖 then Nat.find h else 0
+  classical exact if h : isFiniteOrder x then Nat.find h else 0
 
 variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
 
