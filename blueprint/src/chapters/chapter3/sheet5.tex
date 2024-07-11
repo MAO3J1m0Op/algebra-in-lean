@@ -2,7 +2,7 @@
 
 \begin{definition}
     \label{definition : Kernel}
-    \lean{Defs.Subgroups.Kernel}
+    \lean{AlgebraInlean.Subgroups.Kernel}
     \leanok
     \uses{definition : Subgroup}
     Let $\phi : G \rightarrow G'$ be a group homomorphism. The \textit{kernel} of $\phi$, denoted $\text{ker}(\phi)$, is defined as
@@ -14,7 +14,7 @@
 
 \begin{definition}
     \label{definition : Image}
-    \lean{Defs.Subgroups.Image}
+    \lean{AlgebraInlean.Subgroups.Image}
     \leanok
     \uses{definition : Subgroup}
     Let $\phi : G \rightarrow G'$ be a group homomorphism. The \textit{kernel} of $\phi$, denoted $\text{img}(\phi)$, is defined as
@@ -26,7 +26,7 @@
 
 \begin{definition}
     \label{definition : normal}
-    \lean{Defs.Subgroups.normal}
+    \lean{AlgebraInlean.Subgroups.normal}
     \leanok
     \uses{definition : Subgroup}
     A subgroup $H$ of a group $G$ is \textit{normal} if a subgroup is closed under conjugation of any element in $G$. In other terms, for any $g \in G$ and $h \in H$, $ghg^{-1} \in H$.
@@ -34,7 +34,7 @@
 
 \begin{theorem}
     \label{theorem : Minimal_normal}
-    \lean{Defs.Subgroups.Minimal_normal}
+    \lean{AlgebraInlean.Subgroups.Minimal_normal}
     \leanok
     \uses{definition : Subgroup, definition : Minimal}
     The minimal subgroup of $G$ is a normal subgroup of $G$.
@@ -42,7 +42,7 @@
 
 \begin{theorem}
     \label{theorem : Maximal_normal}
-    \lean{Defs.Subgroups.Maximal_normal}
+    \lean{AlgebraInlean.Subgroups.Maximal_normal}
     \leanok
     \uses{definition : Subgroup, definition : Maximal}
     The maximal subgroup of $G$ is a normal subgroup of $G$.
@@ -50,7 +50,7 @@
 
 \begin{theorem}
     \label{theorem : Kernel_normal}
-    \lean{Defs.Subgroups.Kernel_normal}
+    \lean{AlgebraInlean.Subgroups.Kernel_normal}
     \leanok
     \uses{definition : Subgroup, definition : Kernel, definition : normal}
     If $\phi$ is a group homomorphism with domain $G$, then $ker(\phi)$ is a normal subgroup of $G$.
@@ -58,7 +58,7 @@
 
 \begin{definition}
     \label{definition : Normalizer}
-    \lean{Defs.Subgroups.Normalizer}
+    \lean{AlgebraInlean.Subgroups.Normalizer}
     \leanok
     \uses{definition : Subgroup}
     Let $G$ be a group and $S \subset G$. The \textit{normalizer} in $G$ of $S$, denoted $N_G(S)$, is defined as
@@ -70,7 +70,7 @@
 
 \begin{definition}
     \label{definition : Centralizer}
-    \lean{Defs.Subgroups.Centralizer}
+    \lean{AlgebraInlean.Subgroups.Centralizer}
     \leanok
     \uses{definition : Subgroup}
     Let $G$ be a group and $S \subset G$. The \textit{centralizer} in $G$ of $S$, denoted $C_G(S)$, is defined as
@@ -82,7 +82,7 @@
 
 \begin{definition}
     \label{definition : Center}
-    \lean{Defs.Subgroups.Center}
+    \lean{AlgebraInlean.Subgroups.Center}
     \leanok
     \uses{definition : Centralizer}
     The \textit{center} of $G$, denoted $Z(G)$, is the set of all elements that commute with every element of $G$, or $C_G(G)$.
@@ -90,7 +90,7 @@
 
 \begin{theorem}
     \label{theorem : homomorphism_inj_iff_kernel_trivial}
-    \lean{Defs.Subgroups.homomorphism_inj_iff_kernel_trivial}
+    \lean{AlgebraInlean.Subgroups.homomorphism_inj_iff_kernel_trivial}
     \leanok
     \uses{definition : Kernel, theorem : Minimal_smallest}
     If $\phi : G \rightarrow G'$ is a group homomorphism, then it is injective if and only if $\text{ker}(\phi)$ is trivial, meaning $\text{ker}(\phi) = \{e\}$.
@@ -98,7 +98,7 @@
 
 \begin{theorem}
     \label{theorem : homomorphism_surj_iff_image_complete}
-    \lean{Defs.Subgroups.homomorphism_surj_iff_image_complete}
+    \lean{AlgebraInlean.Subgroups.homomorphism_surj_iff_image_complete}
     \leanok
     \uses{definition : Image, theorem : Maximal_largest}
     If $\phi : G \rightarrow G'$ is a group homomorphism, then it is surjective if and only if $\text{img}(\phi) = G$.

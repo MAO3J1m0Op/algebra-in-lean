@@ -4,7 +4,7 @@ Let $M$ be a monoid and $G$ be a group.
 
 \begin{definition}
     \label{definition : mpow}
-    \lean{Defs.Subgroups.mpow}
+    \lean{AlgebraInlean.Subgroups.mpow}
     \leanok
     \uses{definition : Monoid}
     For $x \in M$, the \textit{$n$th power} of $x$ (where $n \in \mathbb{N}$) is defined as the left-multiplication of $x$ with the identity of $M$ $n$ times. It is defined inductively below
@@ -19,7 +19,7 @@ Let $M$ be a monoid and $G$ be a group.
 
 \begin{definition}
     \label{definition : gpow}
-    \lean{Defs.Subgroups.gpow}
+    \lean{AlgebraInlean.Subgroups.gpow}
     \leanok
     \uses{definition : mpow, definition : Group}
     For a group $G$ and $x \in G$, we extend the domain of the power function to include all of $\mathbb{Z}$ such that if $n < 0$, then $x^n$ is equal to $\iota(x^{-n})$. It is defined inductively below:
