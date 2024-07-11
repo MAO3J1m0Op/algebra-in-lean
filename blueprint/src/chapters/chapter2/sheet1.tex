@@ -1,77 +1,35 @@
 \section{Intro to Morphisms}
 
 \begin{definition}[Homomorphism]
-    \label{definition : homomorphism}
+    \label{definition : Homomorphism}
     \lean{Homomorphism}
     \leanok
     Of a map \( \phi \) mapping from a group \( G \) to a group \( H \), for
-    elements \( g \in G \) and \( h \in H \), \( \phi \) is a homomorphism if and only if:
+    elements \( g \in G \) and \( h \in H \), \( \phi \) is a
+    \emph{homomorphism} if and only if:
     \[
         \phi(g)\phi(h) = \phi(gh)
     \]
 \end{definition}
-
-\begin{theorem}[Homomorphism_def]
-    \label{theorem : homomorphism}
-    \lean{Homomorphism}
-    \leanok
-    Of a map \( \phi \) mapping from a group \( G \) to a group \( H \), for
-    elements \( g \in G \) and \( h \in H \), \( \phi \) is a homomorphism if and only if:
-    \[
-        \phi(g)\phi(h) = \phi(gh)
-    \]
-\end{definition}
-
-\begin{proof}
-    \leanok
-    \uses{}
-    This obviously follows from what we did so far.
-\end{proof}
 
 \begin{definition}[Isomorphism]
-    \label{definition : isomorphism}
+    \label{definition : Isomorphism}
     \lean{Isomorphism}
     \leanok
+    Of a map \( \phi \) mapping from a group \( G \) to a group \( H \), \( \phi
+    \) is an \emph{isomorphism} if and only if it is a bijective homomorphism.
 \end{definition}
 
-\begin{theorem}[Suppose \( \phi : G \rightarrow H \) is a homomorphism. Then,
-\( \phi(e) = e \).]
+\begin{theorem}
     \label{theorem : hom_id_to_id}
     \lean{hom_id_to_id}
     \leanok
-    Of a map \( \phi \) mapping from a group \( G \) to a group \( H \), for
-    elements \( g \in G \) and \( h \in H \), \( \phi \) is a homomorphism if and only if:
-    \[
-        \phi(g)\phi(h) = \phi(gh)
-    \]
-\end{definition}
+    Suppose \( \phi : G \rightarrow H \) is a homomorphism. Then \( \phi(e) = e \).
+\end{theorem}
 
-\begin{proof}
-    \leanok
-    \uses{}
-    This obviously follows from what we did so far.
-\end{proof}
-
-\begin{theorem}[For all \( a, b \in G, ab = e \implies b = a^{-1}]
-    \label{theorem : two_sided_inv}
-    \lean{two_sided_inv}
-    \leanok
-\end{definition}
-
-\begin{proof}
-    \leanok
-    \uses{}
-    This obviously follows from what we did so far.
-\end{proof}
-
-\begin{theorem}[Suppose \( \phi : G \rightarrow H \) is a homomorphism. If \(g \in G \), then \( \phi(g^{-1}) = \phi(g)^{-1} \).]
+\begin{theorem}
     \label{theorem : hom_inv_to_inv}
     \lean{hom_inv_to_inv}
     \leanok
-\end{definition}
-
-\begin{proof}
-    \leanok
-    \uses{}
-    This obviously follows from what we did so far.
-\end{proof}
+    Suppose \( \phi : G \rightarrow H \) is a homomorphism. If \(g \in G \), then \( \phi(g^{-1}) = \phi(g)^{-1} \).
+\end{theorem}

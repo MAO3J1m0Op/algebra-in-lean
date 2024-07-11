@@ -1,6 +1,8 @@
+\section{Maps}
+
 \begin{definition}[Injective]
-    \label{definition : injective}
-    \lean{Defs.Interlude.Injective}
+    \label{definition : Injective}
+    \lean{AlgebraInLean.Injective}
     \leanok
     Given a function \( f \) mapping from a set \( X \) to a set \( Y \):
     \[
@@ -10,46 +12,20 @@
 \end{definition}
 
 \begin{definition}[Surjective]
-    \label{definition : surjective}
-    \lean{Defs.Interlude.Surjective}
+    \label{definition : Surjective}
+    \lean{AlgebraInLean.Surjective}
     \leanok
     Given a function \( f \) mapping from a set \( X \) to a set \( Y \):
     \[
-        \forall y \in Y, \exists x \in X, f(x) = y
+        \forall y \in Y,~ \exists x \in X,~ f(x) = y
     \]
     Otherwise known as an ``onto'' function.
 \end{definition}
 
 \begin{definition}[Bijective]
-    \label{definition : bijective}
-    \lean{Defs.Interlude.Bijective}
+    \label{definition : Bijective}
+    \lean{AlgebraInLean.Bijective}
     \leanok
-    A function that is both injective and surjective.
+    A bijective function is one that is both injective and surjective.
 \end{definition}
-
-\begin{theorem}[Composition of surjective functions]
-    \label{theorem : surjective_comp}
-    \lean{Defs.Interlude.surjective_comp}
-    \leanok
-    WIP
-\end{theorem}
-
-\begin{proof}
-    \leanok
-    \uses{}
-    This obviously follows from what we did so far.
-\end{proof}
-
-\begin{theorem}[Composition of bijective functions]
-    \label{theorem : bijective_comp}
-    \lean{Defs.Interlude.bijective_comp}
-    \leanok
-    WIP
-\end{theorem}
-
-\begin{proof}
-    \leanok
-    \uses{}
-    This obviously follows from what we did so far.
-\end{proof}
 
