@@ -25,6 +25,7 @@ variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
 @[simp]
 theorem mpow_zero : mpow x 0 = 𝕖 := rfl
 
+@[simp]
 theorem mpow_succ_right : mpow x (n+1) = μ (mpow x n) x := rfl
 
 @[simp]
@@ -46,7 +47,7 @@ theorem mpow_succ_left : mpow x (n+1) = μ x (mpow x n) := by
     nth_rw 2 [mpow_succ_right]
     rw [ih, op_assoc]
 
-theorem mpow_add : μ (mpow x m) (mpow x n) = mpow x (m + n) := by
+theorem mpow_add : mpow x (m + n) = μ (mpow x m) (mpow x n) := by
   -- EXERCISE (*)
   induction n with
   | zero => rw [mpow_zero, op_id, Nat.add_zero]
@@ -59,7 +60,7 @@ theorem mpow_mul : mpow x (m * n) = mpow (mpow x m) n := by
   | zero =>
     rw [mul_zero, mpow_zero, mpow_zero]
   | succ n ih =>
-    simp_rw [Nat.mul_succ, ←mpow_add, ih, mpow_one]
+    simp_rw [Nat.mul_succ, mpow_add, ih, mpow_one]
   done
 
 @[simp]
@@ -68,6 +69,23 @@ theorem mpow_id : mpow 𝕖 n = (𝕖 : M) := by
   induction n with
   | zero => rfl
   | succ n ih => rw [mpow_succ_right, ih, op_id]
+  done
+
+theorem mpow_comm_self : μ (mpow x n) x = μ x (mpow x n) := by
+  induction n with
+  | zero => rw [mpow_zero, op_id, id_op]
+  | succ n ih =>
+    nth_rw 1 [mpow_succ_left, mpow_succ_right]
+    rw [op_assoc, ih]
+  done
+
+theorem mpow_comm_mpow : μ (mpow x n) (mpow x m) = μ (mpow x m) (mpow x n) := by
+  induction n with
+  | zero => rw [mpow_zero, op_id, id_op]
+  | succ n ih =>
+    rw [mpow_succ_left, op_assoc, ih]
+    nth_rw 2 [←op_assoc]
+    rw [mpow_comm_self, op_assoc]
   done
 
 end Mpow
@@ -87,13 +105,22 @@ constructor to have its own notion of zero. Instead, the negative constructor of
 natural number by one before negating it. So, (0 : ℕ) maps to (-1 : ℤ), (1 : ℕ) maps to (-2 : ℤ),
 and so on. Keep this in mind as you work with `gpow`.
 -/
-| Int.negSucc n => ι (μ (mpow x n) x)
+| Int.negSucc n => mpow (ι x) (n+1)
 
 variable {G : Type*} [Group G] (x : G)
 
 lemma gpow_ofNat (n : ℕ) : gpow x ↑n = mpow x n := rfl
 
-lemma gpow_negSucc (n : ℕ) : gpow x (Int.negSucc n) = ι (μ (mpow x n) x) := rfl
+lemma gpow_negSucc (n : ℕ) : gpow x (Int.negSucc n) = mpow (ι x) (n+1) := rfl
+
+theorem inv_mpow (n : ℕ) : ι (mpow x n) = mpow (ι x) n := by
+  induction n with
+  | zero =>
+    simp_rw [mpow_zero]
+    exact inv_id
+  | succ n ih =>
+    simp_rw [mpow_add, inv_anticomm, ih, mpow_one, mpow_comm_self]
+  done
 
 @[simp]
 lemma gpow_zero : gpow x 0 = 𝕖 := rfl
@@ -119,21 +146,12 @@ lemma gpow_neg_mpow (n : ℕ) : gpow x (-n) = ι (mpow x n) := by
     rw [Int.ofNat_zero, Int.neg_zero, gpow_zero, mpow_zero, inv_id]
   | succ n =>
     have : -↑(n + 1) = Int.negSucc n := rfl
-    rw [this, gpow_negSucc, ←mpow_succ_right, mpow_succ_left]
+    rw [this, gpow_negSucc, inv_mpow]
 
 @[simp]
 lemma gpow_neg_one : gpow x (-1) = ι x := by
   -- EXERCISE (*)
   rw [←Int.ofNat_one, gpow_neg_mpow, mpow_one]
-
-lemma gpow_neg (n : ℤ) : gpow x (-n) = ι (gpow x n) := by
-  -- EXERCISE (**)
-  induction n using Int.induction_on with
-  | hz => simp [inv_id]
-  | hp n ih =>
-    rw [←Int.cast_one]
-    sorry
-  | hn n ih => sorry
 
 @[simp]
 -- EXERCISE (**)
@@ -146,38 +164,60 @@ lemma gpow_succ (n : ℤ) : gpow x (n + 1) = μ (gpow x n) x := by
     repeat rw [gpow_ofNat]
     rfl
   | hn n _ =>
-    sorry
+    rw [←Int.negSucc_coe', gpow_negSucc, mpow_succ_right, op_assoc, inv_op, op_id]
+    rw [Int.negSucc_eq, Int.neg_add, Int.neg_add_cancel_right, gpow_neg_mpow]
+    exact inv_mpow x n
 
-lemma gpow_pred (n : ℤ) : μ (gpow x n) (ι x) = gpow x (n-1) := by
+lemma gpow_pred {n : ℤ} : μ (gpow x n) (ι x) = gpow x (n - 1) := by
+  induction n with
+  | ofNat n =>
+    simp only [Int.ofNat_eq_coe]
+    cases n with
+    | zero =>
+      simp only [CharP.cast_eq_zero, gpow_zero, id_op, zero_sub, Int.reduceNeg, gpow_neg_one]
+    | succ n =>
+      simp only [gpow, Nat.cast_add, Nat.cast_one, add_sub_cancel_right]
+      rw [mpow_add, mpow_one, op_assoc, op_inv, op_id]
+  | negSucc n =>
+    dsimp only [gpow, Int.negSucc_sub_one]
+    rw [←mpow_succ_right]
+  done
+
+theorem gpow_add {m n : ℤ} : μ (gpow x m) (gpow x n) = gpow x (m + n) := by
+  -- EXERCISE (*)
+  -- Adapted from Mathlib (see the proof of `zpow_add`).
+  induction n using Int.induction_on with
+  | hz => rw [add_zero, gpow_zero, op_id]
+  | hp n ihn =>
+      simp only [←Int.add_assoc, gpow_succ, op_assoc]
+      rw [←ihn]
+      repeat rw [←op_assoc]
+  | hn n ihn =>
+    rw [←gpow_pred, ←op_assoc, ihn, gpow_pred, Int.add_sub_assoc]
+  done
+
+lemma gpow_neg (n : ℤ) : gpow x (-n) = ι (gpow x n) := by
   -- EXERCISE (**)
   induction n using Int.induction_on with
-  | hz => simp only [gpow_zero, id_op, zero_sub, gpow_neg_one]
-  | hp n _ =>
-    rw [gpow_succ, gpow_ofNat, op_assoc, op_inv, op_id]
-    rw [add_sub_cancel_right, gpow_ofNat]
-  | hn n _ =>
-    sorry
+  | hz => rw [neg_zero, gpow_zero, inv_id]
+  | hp n ih =>
+    rw [Int.neg_add, ←Int.sub_eq_add_neg, ←gpow_pred, ih, ←inv_anticomm, add_comm]
+    rw [←gpow_add, gpow_one]
+  | hn n ih =>
+    simp at *
+    rw [add_comm, gpow_succ, ih, ←gpow_pred, gpow_neg_mpow, inv_anticomm]
+    repeat rw [inv_inv]
+    rw [←mpow_succ_right, mpow_succ_left]
 
-@[simp]
-lemma gpow_add (m n : ℤ) : μ (gpow x m) (gpow x n) = gpow x (m + n) := by
-  -- EXERCISE (**)
-  sorry
+  done
 
 @[simp]
 lemma gpow_sub (m n : ℤ) : μ (gpow x m) (ι (gpow x n)) = gpow x (m - n) := by
   -- EXERCISE (*)
   rw [sub_eq_add_neg, ←gpow_add, gpow_neg]
 
-@[simp]
-lemma gpow_mul (m n : ℤ) : gpow x (m * n) = gpow (gpow x m) n := by
-  -- EXERCISE (???)
-  sorry
-
-/--
-The first thing pertaining to subgroups we will prove about `gpow` is that all subgroups are closed
-under the function.
--/
-theorem gpow_closure {H : Subgroup G} {n : ℤ} : x ∈ H → gpow x n ∈ H := by
+-- The first thing we will prove about `gpow` is that subgroups are closed under the function.
+theorem gpow_closure {H : Subgroup G} {n : ℤ}: x ∈ H → gpow x n ∈ H := by
   -- EXERCISE (*)
   intro h
   induction n using Int.induction_on with

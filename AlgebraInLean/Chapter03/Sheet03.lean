@@ -63,7 +63,7 @@ theorem mpow_mod_order : mpow x (m % order x) = mpow x m := by
   -- EXERCISE (*)
   set n := order x
   nth_rw 2 [←Nat.mod_add_div m n]
-  rw [←mpow_add, mpow_mul, mpow_order, mpow_id, op_id]
+  rw [mpow_add, mpow_mul, mpow_order, mpow_id, op_id]
   done
 
 theorem order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
@@ -148,11 +148,12 @@ theorem gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n =
   | negSucc n =>
     -- TODO: this is not elegant
     have inv_inj : ∀ a b : G, ι a = ι b → a = b := sorry -- inverse injective
-    rw [gpow_negSucc, ←mpow_succ_right, ←inv_id] at h
-    apply inv_inj at h
-    apply mpow_order_zero at h
-    linarith
-    exact h₀
+    rw [gpow_negSucc, mpow_succ_right, ←inv_id] at h
+    sorry
+    -- apply inv_inj at h
+    -- apply mpow_order_zero at h
+    -- linarith
+    -- exact h₀
 
 theorem gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
   -- EXERCISE (**)
