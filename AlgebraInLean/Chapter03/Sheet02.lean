@@ -2,6 +2,8 @@ import AlgebraInLean.Chapter03.Sheet01
 
 namespace AlgebraInLean
 
+namespace Subgroups
+
 /-
 In this sheet, we build the theory of repeated application of the group operation. If the
 group operation is multiplication, the functions we define in this sheet are equivalent to
