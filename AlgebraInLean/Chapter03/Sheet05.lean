@@ -33,7 +33,9 @@ theorem homomorphism_id_inv (φ : G → G') (hφ : Homomorphism φ) : ∀ a : G,
   have h2 : φ (μ a (ι a)) = μ (φ a) (φ (ι a)) := by
     rw [hφ]
   rw [op_inv, h1] at h2
-  sorry --complete proof with unique inverse theorem
+  symm at h2
+  apply unique_inv (φ a) (φ (ι a)) at h2
+  exact h2
 
 /--
 This naturally leads to the idea of the kernel of a homomorphism. Generally, when a group G acts on
