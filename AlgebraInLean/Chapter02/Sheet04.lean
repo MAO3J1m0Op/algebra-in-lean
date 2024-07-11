@@ -154,8 +154,8 @@ different components (i.e., proving the homorphism property and then the bijecti
 separately).
 -/
 
-/- Show that ψ is a group automorphism -/
-theorem ψ_automorphism (g : G) : ∀ x y : G, Conjugate g (μ x y) = μ (Conjugate g x)
+/- Show that conjugation is a group automorphism -/
+theorem conj_automorphism (g : G) : ∀ x y : G, Conjugate g (μ x y) = μ (Conjugate g x)
 (Conjugate g y) ∧ Bijective (Conjugate g) := by
   -- SAMPLE SOLUTION
   intros x y
