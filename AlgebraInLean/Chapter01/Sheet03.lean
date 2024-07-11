@@ -29,6 +29,13 @@ theorem id_unique [Monoid α] (e₂ : α) (h : ∀ (a : α), (μ a e₂ = a ∧ 
   exact h
   -- END OF SAMPLE SOLUTION
 
+theorem unique_id [Monoid α] (e₂ : α) (h : ∀ (a : α), (μ a e₂ = a)) : e₂ = 𝕖 := by
+  -- SAMPLE SOLUTION
+  specialize h 𝕖
+  rw [id_op] at h
+  exact h
+  -- END OF SAMPLE SOLUTION
+
 variable [Group α]
 
 /--
@@ -39,6 +46,11 @@ theorem inv_unique (a i : α) (h : μ a i = 𝕖 ∧ μ i a = 𝕖) : i = ι a :
   -- sorry
   -- SAMPLE SOLUTION
   obtain ⟨h, _⟩ := h
+  rw [←op_id (ι a), ←h, ←op_assoc (ι a), inv_op, id_op]
+  -- END OF SAMPLE SOLUTION
+
+theorem unique_inv (a i : α) (h : μ a i = 𝕖) : i = ι a := by
+  -- SAMPLE SOLUTION
   rw [←op_id (ι a), ←h, ←op_assoc (ι a), inv_op, id_op]
   -- END OF SAMPLE SOLUTION
 
