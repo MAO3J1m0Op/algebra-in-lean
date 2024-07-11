@@ -48,27 +48,39 @@ theorem Group.isomorphic_reflexive : Isomorphic G G := by
   done
 
 /- The tactic `rintro`, which combines `intro` and `rcases` may be useful here -/
-/-- If G is isomorphic to H and H is isomorphic to K, then G is isomorphic to K -/
-theorem Group.isomorphic_transitive : Isomorphic G H → Isomorphic H K → Isomorphic G K := by
+/-- The composition of isomorphisms is an isomorphism -/
+theorem Group.isomorphism_comp {φ : G → H} {ψ : H → K}
+  : Isomorphism φ → Isomorphism ψ → Isomorphism (ψ ∘ φ) := by
   -- SAMPLE SOLUTION
-  rintro ⟨φ, ⟨hφ₁, hφ₂⟩⟩ ⟨ψ, ⟨hψ₁, hψ₂⟩⟩
-  use ψ ∘ φ
+  rintro ⟨hφ₁, hφ₂⟩ ⟨hψ₁, hψ₂⟩
   constructor
   · exact homomorphism_comp hφ₁ hψ₁
   · exact bijective_comp hφ₂ hψ₂
   -- END SAMPLE SOLUTION
   done
 
-/-- If G is isomorphic to H, then H is isomorphic to G -/
-theorem Group.isomorphic_symm : Isomorphic G H → Isomorphic H G := by
+/-- If G is isomorphic to H and H is isomorphic to K, then G is isomorphic to K -/
+theorem Group.isomorphic_transitive : Isomorphic G H → Isomorphic H K → Isomorphic G K := by
   -- SAMPLE SOLUTION
-  rintro ⟨φ, ⟨hφ₁, hφ₂⟩⟩
-  obtain ⟨ψ, hψ⟩ := inv_from_bijective hφ₂
-  use ψ
+  rintro ⟨φ, hφ⟩ ⟨ψ, hψ⟩
+  use ψ ∘ φ
+  exact isomorphism_comp hφ hψ
+  -- END SAMPLE SOLUTION
+  done
+
+/- Hint: look back the proof for `bijective_inv` -/
+/-- The inverse of an isomorphism is an isomorphism -/
+theorem Group.isomorphism_inv {φ : G → H} (h : Isomorphism φ)
+  : Isomorphism (inv_of_bijective h.right) := by
+  -- SAMPLE SOLUTION
+  obtain ⟨h₁, h₂⟩ := h
+  unfold inv_of_bijective
+  obtain hψ := (inv_from_bijective h₂).choose_spec
+  set ψ := (inv_from_bijective h₂).choose
   constructor
   · intro a b
-    apply hφ₂.left
-    rw [←hφ₁]
+    apply h₂.left
+    rw [←h₁]
     have : ∀ (x : H), φ (ψ x) = x := by
       intro x
       rw [← @Function.comp_apply _ _ _ φ, hψ.right]
@@ -78,6 +90,15 @@ theorem Group.isomorphic_symm : Isomorphic G H → Isomorphic H G := by
     use φ
     apply And.symm
     exact hψ
+  -- END SAMPLE SOLUTION
+  done
+
+/-- If G is isomorphic to H, then H is isomorphic to G -/
+theorem Group.isomorphic_symm : Isomorphic G H → Isomorphic H G := by
+  -- SAMPLE SOLUTION
+  rintro ⟨φ, h⟩
+  use inv_of_bijective h.right
+  exact Group.isomorphism_inv h
   -- END SAMPLE SOLUTION
   done
 

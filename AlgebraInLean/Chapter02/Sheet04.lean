@@ -121,5 +121,92 @@ theorem Group.conj_automorphism (g : G) : Isomorphism (conj g) := by
 
 /-
 That proof was tough, but it is very important! Its merits will become more apparent later when
-learning about group actions.
+learning about group actions. We finish this off with one last definition which will show its use
+later.
+
+****
+
+As we proved before, isomorphism is preserved under function composition and inversion. Thus, if we
+consider the automorphisms of a particular group G, it is closed under function composition and
+inversion. Thus, it forms a group.
+
+To construct the type of automorphisms, we use Lean's subtypes. For some type `α` and predicate
+`p : α → Prop`, `{x : α // p x}` is a `Subtype` containing the elements of `α` that satisfy `p`.
+Formally, an object `y` of such a type is built from an object `y.val : α` and a proof
+`y.property : p y.val`. This should be reminiscent of `∃`, but the latter represents just the idea
+that such an element exists, which specifying which one it is (to extract this element, one needs to
+invoke the axiom of choice).
+-/
+
+/-- The type of automorphisms of G -/
+def Group.Automorphisms (G : Type*) [Group G] : Type _ := {φ : G → G // Isomorphism φ}
+
+@[ext] -- allows the `ext` tactic to use this theorem automatically
+theorem Group.Automorphisms.ext {a b : Automorphisms G} : a.val = b.val → a = b := Subtype.ext
+
+noncomputable instance : Group (Group.Automorphisms G) where
+  op a b := {
+    val := a.val ∘ b.val
+    property := by
+      -- SAMPLE SOLUTION
+      exact Group.isomorphism_comp b.prop a.prop
+      -- END SAMPLE SOLUTION
+      done
+  }
+
+  op_assoc a b c := by
+    -- SAMPLE SOLUTION
+    rfl
+    -- END SAMPLE SOLUTION
+    done
+
+  id := {
+    val :=
+      -- SAMPLE SOLUTION
+      id
+      -- END SAMPLE SOLUTION
+    property := by
+      -- SAMPLE SOLUTION
+      exact Group.id_isomorphism
+      -- END SAMPLE SOLUTION
+      done
+  }
+
+  op_id a := by
+    -- SAMPLE SOLUTION
+    rfl
+    -- END SAMPLE SOLUTION
+    done
+
+  id_op a := by
+    -- SAMPLE SOLUTION
+    rfl
+    -- END SAMPLE SOLUTION
+    done
+
+  inv a := {
+    val := inv_of_bijective a.prop.right
+    property := by
+      -- SAMPLE SOLUTION
+      exact Group.isomorphism_inv a.prop
+      -- END SAMPLE SOLUTION
+      done
+  }
+
+  inv_op a := by
+    -- SAMPLE SOLUTION
+    unfold μ
+    ext : 1
+    simp
+    exact (inv_of_bijective_spec a.prop.right).left
+    -- END SAMPLE SOLUTION
+    done
+
+/-
+We could also consider automorphisms of other algebraic structures (or even other categories). In
+the most basic case where there are no operations or properties to preserve, we that the
+automorphisms are just bijections from a set to itself, which (in the finite case) is just the
+symmetric group! This means that group-automorphism group is contained within a symmetric group,
+which means that it is a subgroup. The next chapter discusses this relation between groups more
+in-depth.
 -/

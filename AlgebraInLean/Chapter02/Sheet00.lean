@@ -162,8 +162,40 @@ theorem bijective_iff_inv {f : α → β} : Bijective f ↔ ∃ (g : β → α),
   ⟨inv_from_bijective, bijective_from_inv⟩
 
 
+/-
+This definition is marked as `noncomputable` because `Exists.choose` invokes the axiom of choice.
+Since Lean can't evaluate the axiom of choice in a program (i.e., you can't use `#eval` on it), we
+need to explicitly opt-in to using it in definitions by marking them as `noncomputable`.
+-/
+/-- The inverse of a bijective function -/
+noncomputable def inv_of_bijective {f : α → β} (h : Bijective f) : β → α :=
+  (inv_from_bijective h).choose
+
+/-- Show that `inv_of_bijective` actually produces an inverse -/
+noncomputable def inv_of_bijective_spec {f : α → β} (h : Bijective f)
+  : (inv_of_bijective h) ∘ f = id ∧ f ∘ (inv_of_bijective h) = id :=
+  (inv_from_bijective h).choose_spec
+
+/-- The inverse of a bijective function is a bijection -/
+theorem bijective_inv {f : α → β} (h : Bijective f) : Bijective (inv_of_bijective h) := by
+  unfold inv_of_bijective
+  have hg := (inv_from_bijective h).choose_spec
+  /-
+  The tactic `set` here defines `g` as `(inv_from_bijective h).choose` and automatically tries to
+  replace all instances of `(inv_from_bijective h).choose` in the goal and context with `g`.
+  -/
+  set g := (inv_from_bijective h).choose
+  /- Try to finish out this proof yourself -/
+  -- SAMPLE SOLUTION
+  apply bijective_from_inv
+  use f
+  exact hg.symm
+  -- END SAMPLE SOLUTION
+  done
+
+
 /-- The inverse map of a group is bijective -/
-theorem inv_bijective {G : Type*} [Group G] : Bijective (ι : G → G) := by
+theorem Group.inv_bijective {G : Type*} [Group G] : Bijective (ι : G → G) := by
   -- SAMPLE SOLUTION
   constructor
   · intros x y h
