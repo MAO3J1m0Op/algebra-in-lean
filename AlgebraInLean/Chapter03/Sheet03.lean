@@ -59,6 +59,11 @@ theorem mpow_order : mpow x (order x) = 𝕖 := by
   · rfl
   done
 
+theorem order_nonzero (h : order x ≠ 0) : ∃ n ≠ 0, mpow x n = 𝕖 := by
+  use order x
+  apply And.intro h
+  exact mpow_order x
+
 theorem mpow_mod_order : mpow x (m % order x) = mpow x m := by
   -- EXERCISE (*)
   set n := order x
@@ -96,6 +101,38 @@ theorem order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
     rw [mpow_mul, mpow_order, mpow_id]
   done
 
+lemma mpow_nonzero_order (n : ℕ) (hn : n ≠ 0) (h : order x ≠ 0) : order (mpow x n) ≠ 0 := by
+  have : ∃ m ≠ 0, mpow x m = 𝕖
+  · exact order_nonzero x h
+  obtain ⟨m, hm⟩ := this
+  suffices : ∃ k ≠ 0, mpow (mpow x k) m = 𝕖
+  · obtain ⟨k, hk⟩ := this
+    suffices : order x ∣ k
+    · sorry
+    sorry
+  use n
+  apply And.intro
+  · exact hn
+  · rw [←mpow_mul, mul_comm, mpow_mul, hm.right, mpow_id]
+
+lemma inverse_of_nonzero_order (h : order x ≠ 0) : ∃ (y : M), μ x y = 𝕖 ∧ μ y x = 𝕖 := by
+  use mpow x (order x - 1)
+  apply And.intro
+  · nth_rw 1 [←mpow_one x]
+    rw [←mpow_add, add_comm]
+    rw [Nat.sub_add_cancel]
+    · exact mpow_order x
+    · exact Nat.one_le_iff_ne_zero.mpr h
+  · nth_rw 3 [←mpow_one x]
+    rw [←mpow_add]
+    rw [Nat.sub_add_cancel]
+    · exact mpow_order x
+    · exact Nat.one_le_iff_ne_zero.mpr h
+
+-- lemma inv_unique_of_nonzero_order {y y' : M} (h : order x ≠ 0) (hy : μ x y = 𝕖) (hy' : μ x y' = 𝕖)
+--   : y = y' := by
+--   sorry
+
 lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
   : mpow x m = mpow x n → m = n := by
   -- EXERCISE (**)
@@ -110,11 +147,13 @@ lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
   apply Nat.eq_zero_of_dvd_of_lt
   · rw [←order_divides_iff_mpow_id x]
     rw [←mpow_mod_order]
-    have : k < order x := by linarith
-    suffices : k = 0
-    ·
-    rw [order_divides_iff_mpow_id]
-    refine Nat.dvd_of_mod_eq_zero ?this.w.H
+    rw [←op_id (mpow x (k % order x))]
+    have this : ∃ y : M, μ (mpow x m) y = 𝕖 := sorry
+    obtain ⟨y, hy⟩ := this
+    rw [←hy, ←op_assoc, ←mpow_add]
+    have : k % order x = k := sorry
+    rw [this, add_comm, hk, hy]
+    sorry
 
   · rw [←hk] at hn
     linarith
