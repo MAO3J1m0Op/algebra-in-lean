@@ -46,8 +46,6 @@ the Excluded Middle, is not always true in constructive mathematics! Moreover, L
 proving theorems is constructive: if you want to prove a proposition `p`, you have to construct a
 term that has type p (i.e., a term of type `p` is a proof of `p`).
 
-[TODO: Unsatisfactory transition]
-
 Meanwhile, classical logic asserts the Law of Excluded Middle as an axiom. In Lean, the story is complicated.
 Since Lean is a programming language it must be capable of producing a program that can be
 evaulated by a computer. So if we were to write a function including the snippet below, where `p` is
@@ -76,24 +74,27 @@ variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
 
 /-
 If a tactic fails with an error pertaining to failure to synthesize instance of `Decidable`,
-`DecidablePred`, or other type classes belonging to the decidable family, prefixing the
-failing tactic with the `classical` tactic should remove these errors. It does so by using
-noncomputable instances of these type classes implemented on all `Prop`s. Keep this in mind
-for this and future exercises. Similarly, you may find `split_ifs` to be a helpful tactic.
+`DecidablePred`, or other type classes belonging to the decidable family, prefixing the failing
+tactic with the `classical` tactic should remove these errors. `classical` works by running the
+tactics in scope where all propositions are decidable (i.e., every proposition is an isntance of the
+type-class Classical.propDecidable). Keep this in mind for this and future exercises. Similarly, you
+may find `split_ifs` and `Nat.find_spec` to be helpful tactics.
 -/
 
-theorem mpow_order_zero (h₀ : order x = 0) : mpow x n = 𝕖 → n = 0 := by
+/-- If xⁿ = e → n = 0 -/
+lemma mpow_order_zero (h₀ : order x = 0) : mpow x n = 𝕖 → n = 0 := by
   -- EXERCISE (*.5)
   intro hn
   dsimp [order] at h₀
   split_ifs at h₀ with h
   · absurd h₀
-    classical have : ¬(Nat.find h) = 0 ∧ mpow x (Nat.find h) = 𝕖 := Nat.find_spec h
-    exact this.left
+    classical have hFinite : ¬(Nat.find h) = 0 ∧ mpow x (Nat.find h) = 𝕖 := Nat.find_spec h
+    exact hFinite.left
   · contrapose! h
     use n
 
-theorem mpow_order : mpow x (order x) = 𝕖 := by
+/-- If n is the order of x, then xⁿ = e -/
+lemma mpow_order : mpow x (order x) = 𝕖 := by
   -- EXERCISE (*.5)
   set n := order x with hn
   dsimp [order] at hn
@@ -102,19 +103,22 @@ theorem mpow_order : mpow x (order x) = 𝕖 := by
   · rfl
   done
 
-theorem order_nonzero (h : order x ≠ 0) : ∃ n ≠ 0, mpow x n = 𝕖 := by
+/-- If the order of x is nonzero, then there exists an n : ℕ such that xⁿ = e -/
+lemma order_nonzero (h : order x ≠ 0) : ∃ n ≠ 0, mpow x n = 𝕖 := by
   use order x
   apply And.intro h
   exact mpow_order x
 
-theorem mpow_mod_order : mpow x (m % order x) = mpow x m := by
+/-- Let m be the order x. Write m = nq + r with 0 ≤ r < m. Then, xʳ = xⁿ  -/
+lemma mpow_mod_order : mpow x (m % order x) = mpow x m := by
   -- EXERCISE (*)
   set n := order x
   nth_rw 2 [←Nat.mod_add_div m n]
   rw [mpow_add, mpow_mul, mpow_order, mpow_id, op_id]
   done
 
-theorem order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
+/-- Let n be the order of x. xᵐ = e ↔ n | m -/
+lemma order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
   apply Iff.intro
   · intro hm
     by_cases hm0 : m = 0
@@ -144,6 +148,7 @@ theorem order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
     rw [mpow_mul, mpow_order, mpow_id]
   done
 
+/-- Let m be the order of x and let n : ℕ with n ≠ 0. If m ≠ 0, then the order of xⁿ is nonzero -/
 lemma mpow_nonzero_order (n : ℕ) (hn : n ≠ 0) (h : order x ≠ 0) : order (mpow x n) ≠ 0 := by
   have : ∃ m ≠ 0, mpow x m = 𝕖
   · exact order_nonzero x h
@@ -176,6 +181,7 @@ lemma inverse_of_nonzero_order (h : order x ≠ 0) : ∃ (y : M), μ x y = 𝕖 
 --   : y = y' := by
 --   sorry
 
+/-- Suppose m, n < `order x`. If xᵐ = xⁿ, then m = n -/
 lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
   : mpow x m = mpow x n → m = n := by
   -- EXERCISE (**)
@@ -202,7 +208,8 @@ lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
     linarith
   done
 
-theorem mod_order_eq_of_mpow_eq (h : order x ≠ 0)
+/-- Let r ≠ 0 be the order of x. If xᵐ = xⁿ, then m is congruent to n (mod r) -/
+lemma mod_order_eq_of_mpow_eq (h : order x ≠ 0)
   -- EXERCISE (*)
   : mpow x m = mpow x n → m % (order x) = n % (order x) := by
   intro heq
@@ -221,10 +228,12 @@ section GroupOrder
 
 variable {G : Type*} [Group G] (x : G)
 
-theorem gpow_order : gpow x (order x) = 𝕖 := by
+/-- Let n be the order x. Then, xⁿ = e -/
+lemma gpow_order : gpow x (order x) = 𝕖 := by
   rw [gpow_ofNat, mpow_order]
 
-theorem gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n = 0 := by
+/-- Suppose the order of x is 0. Then, xⁿ = e, then n = 0 -/
+lemma gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n = 0 := by
   intro h
   cases n with
   | ofNat n =>
@@ -240,7 +249,8 @@ theorem gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n =
     -- linarith
     -- exact h₀
 
-theorem gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
+/-- Let m be the order x. Write m = nq + r with 0 ≤ r < m. Then, xʳ = xⁿ  -/
+lemma gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
   -- EXERCISE (**)
   cases n with
   | ofNat n =>
@@ -249,7 +259,8 @@ theorem gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
   | negSucc n =>
     sorry
 
-theorem gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = gpow x n) : m = n := by
+/-- Suppose the order of x is 0. Then xᵐ = xⁿ → m = n-/
+lemma gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = gpow x n) : m = n := by
   induction n using Int.induction_on generalizing m with
   | hz =>
     apply gpow_order_zero x h
@@ -263,7 +274,7 @@ theorem gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = g
 --   : order x = 0 := by
 --   sorry
 
-theorem mod_order_eq_of_gpow_eq {m n : ℤ}
+lemma mod_order_eq_of_gpow_eq {m n : ℤ}
   : gpow x m = gpow x n → m % (order x) = n % (order x) := by
   sorry
 
