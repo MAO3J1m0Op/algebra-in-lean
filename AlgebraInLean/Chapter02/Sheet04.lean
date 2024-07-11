@@ -176,7 +176,7 @@ theorem conj_automorphism (g : G) : ∀ x y : G, Conjugate g (μ x y) = μ (Conj
         apply right_cancel at h
         exact h
       apply h1 at h
-      apply left_cancel at h
+      apply op_left_cancel at h
       exact h
     -- Surjectivity
     · intro z

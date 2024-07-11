@@ -210,7 +210,7 @@ theorem Group.inv_bijective {G : Type*} [Group G] : Bijective (ι : G → G) := 
   -- SAMPLE SOLUTION
   constructor
   · intros x y h
-    apply left_cancel (ι x)
+    apply op_left_cancel (ι x)
     nth_rw 2 [h]
     rw [inv_op, inv_op]
   · intro y
