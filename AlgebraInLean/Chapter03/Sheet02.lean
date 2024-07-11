@@ -19,27 +19,32 @@ identity element `n` times by `x`.
 -/
 def mpow {M : Type*} [Monoid M] (x : M) : ℕ → M
 | Nat.zero => 𝕖   -- m⁰ = 𝕖
-| Nat.succ n => μ (mpow x n) x
+| Nat.succ n => μ (mpow x n) x  -- m ^ (n + 1) = m * m ^ n
 
 variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
 
+-- These are true by definition
 @[simp]
 theorem mpow_zero : mpow x 0 = 𝕖 := rfl
 
 @[simp]
 theorem mpow_succ_right : mpow x (n+1) = μ (mpow x n) x := rfl
 
+/-- x¹ = x -/
 @[simp]
 theorem mpow_one : mpow x 1 = x := by
   -- EXERCISE (DIFFICULTY *)
   rw [mpow, mpow_zero, id_op]
 
+/-- x² = x * x -/
 theorem mpow_two : mpow x 2 = μ x x := by
   -- EXERCISE (*)
   rw [mpow, mpow_one]
 
 -- Induction will prove helpful for the following exercises.
-theorem mpow_succ_left : mpow x (n+1) = μ x (mpow x n) := by
+
+/-- x ^ (n + 1) = x * x ^ n-/
+lemma mpow_succ_left : mpow x (n+1) = μ x (mpow x n) := by
   -- EXERCISE (*)
   induction n with
   | zero => rw [zero_add, mpow_one, mpow_zero, op_id]
@@ -48,14 +53,16 @@ theorem mpow_succ_left : mpow x (n+1) = μ x (mpow x n) := by
     nth_rw 2 [mpow_succ_right]
     rw [ih, op_assoc]
 
-theorem mpow_add : mpow x (m + n) = μ (mpow x m) (mpow x n) := by
+/-- x ^ m * x ^ n = x ^ (m + n) -/
+lemma mpow_add : mpow x (m + n) = μ (mpow x m) (mpow x n) := by
   -- EXERCISE (*)
   induction n with
   | zero => rw [mpow_zero, op_id, Nat.add_zero]
   | succ n ih =>
     rw [←Nat.add_assoc, mpow_succ_right, mpow_succ_right, ←op_assoc, ih]
 
-theorem mpow_mul : mpow x (m * n) = mpow (mpow x m) n := by
+/-- x ^ (m * n) = (x ^ m) ^ n-/
+lemma mpow_mul : mpow x (m * n) = mpow (mpow x m) n := by
   -- EXERCISE (*)
   induction n with
   | zero =>
@@ -64,8 +71,9 @@ theorem mpow_mul : mpow x (m * n) = mpow (mpow x m) n := by
     simp_rw [Nat.mul_succ, mpow_add, ih, mpow_one]
   done
 
+/-- e ^ n = e -/
 @[simp]
-theorem mpow_id : mpow 𝕖 n = (𝕖 : M) := by
+lemma mpow_id : mpow 𝕖 n = (𝕖 : M) := by
   -- EXERCISE (*)
   induction n with
   | zero => rfl
@@ -91,11 +99,16 @@ theorem mpow_comm_mpow : μ (mpow x n) (mpow x m) = μ (mpow x m) (mpow x n) := 
 
 end Mpow
 
+/-
+This concludes our theory of monoid powers. Are there any other properties you think monoid
+powers should have? Try to state and prove them!
+-/
+
 section Gpow
 
 /--
 Now, we define the power function for groups. Since groups have inverses, there becomes a natural
-notion of negative exponentiation. Notice that `Int` has two constructors.
+notion of negative exponentiation. Notice that `Int` has two constructors of type `Nat → Int`.
 -/
 def gpow {G : Type*} [Group G] (x : G) : ℤ → G
 /- `Int.ofNat` covers the positive end of the integers. -/
