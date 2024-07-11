@@ -1,0 +1,39 @@
+\section{Automorphisms}
+
+\begin{definition}[Endomorphism]
+    \label{definition : Endomorphism}
+    \lean{AlgebraInLean.Endomorphism}
+    \leanok
+    \uses{definition : Group, definition : Homomorphism}
+    An \emph{endomorphism} is a homomorphism \( \phi \) mapping from a group \( G \) to itself.
+\end{definition}
+
+\begin{definition}[Automorphism]
+    \label{definition : Automorphism}
+    \lean{AlgebraInLean.Automorphism}
+    \leanok
+    \uses{definition : Group, definition : Isomorphism, definition :
+    Endomorphism}
+    An \emph{automorphism} is a bijective endomorphism; i.e.~an isomorphism
+    from a group \( G \) to itself.
+\end{definition}
+
+\begin{definition}[Conjugate]
+    \label{definition : Conjugate}
+    \lean{AlgebraInLean.Conjugate}
+    \leanok
+    \uses{definition : Group}
+    Two elements \( a,~b \) of a group \( G \) are \emph{conjugates} if there
+    exists another element \( g \) in \( G \) such that \( b = gag^{-1} \) (i.e.,~ \(
+    \mu(\mu(g,~a),~\iota(g)) \) ).
+\end{definition}
+
+\begin{theorem}
+    \label{theorem : conj_automorphism}
+    \lean{AlgebraInLean.conj_automorphism}
+    \leanok
+    \uses{definition : Group, definition : Automorphism}
+    Given a group \( G \) and an element \( a \in G \), conjugation by \( a \)
+    is an automorphism.
+\end{theorem}
+
