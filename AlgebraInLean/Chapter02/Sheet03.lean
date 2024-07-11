@@ -1,51 +1,116 @@
 import AlgebraInLean.Chapter02.Sheet02
 
+set_option linter.unusedTactic false
+
 namespace AlgebraInLean
 
 /-
+An isomorphism is a special kind of homomorphism (or, more generally, morphism) with the additional
+condition that it must be invertible. For a function φ, invertibility is the same as being
+bijective, so we use that instead.
 
-## Isomorphisms
-
-In Mathlib, isomorphisms come with additional structure; they are not simply defined as bijective
-homomorphisms.
-
-They are defined as a structure, bundled up with some useful fields:
-- `to_fun` (a map from a group G → group H)
-- `inv_fun` (a map from group H → group G)
-- `left_inv` & `right_inv` (both inverses exist, thus a unique inverse exists)
-- `map_mul'` (a proof of homomorphism/preservation of operation)
-
-So to prove an isomorphism, we have to provide proofs for each of these fields.
-
-Mathlib also lets us say that two groups are isomorphic by using the symbol `≃+` for additive
-groups, and `≃*` for multiplicative groups.
-
-Using this structure, we can come up with an arbitrary bijection and prove that it is an isomorphism
-(or not), like in the trivial example below. The identity map that takes each element of the
-additive group of integers to itself is clearly an isomorphism. In fact, as you might've guessed,
-this holds for any arbitrary group.
-
+When there exists an isomorphism between two groups, they are said to be "isomorphic" (greek for
+"equal shape"). Groups (or other algebraic structures) that are isomorphic are indistinguishable
+from each other by structure alone, and this is often expressed by the phrase "equal up to
+isomorphism".
 -/
 
-/- The identity map is an isomorphism -/
-example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x) : ℤ ≃+ ℤ := by
-  let hom_map : ℤ ≃ ℤ := by
-    constructor
-    have ha : Function.LeftInverse φ φ
-    -- Function.LeftInverse g f means that g is a left inverse to f. Ditto for
-    -- RightInverse, aside from the obvious difference.
-    · intro x
-      repeat rw [h1]
-    exact ha
-    have hb : Function.RightInverse φ φ
-    · intro x
-      repeat rw [h1]
-    exact hb
+variable {G H K : Type*} [Group G] [Group H] [Group K]
+
+def Group.Isomorphism (φ : G → H) : Prop := Homomorphism φ ∧ Bijective φ
+
+def Group.Isomorphic (G H : Type*) [Group G] [Group H] : Prop := ∃ (φ : G → H), Isomorphism φ
+
+/-
+If we say that isomorphic groups are "indistinguishable", then we should certainly hope that a group
+is isomorphic to itself. That is indeed the case, and the isomorphism is the identity function
+-/
+/-- The identity function is a group isomorphism -/
+theorem Group.id_isomorphism : Isomorphism (id : G → G) := by
+  -- SAMPLE SOLUTION
   constructor
-  intro x y
-  have hc : hom_map.toFun = φ := by rfl
-  rw [hc, h1 x, h1 y]
-  exact h1 (x + y)
+  · exact id_homomorphism
+  · constructor
+    · intro x y h
+      exact h
+    · intro y
+      use y
+      rfl
+  -- END SAMPLE SOLUTION
+  done
+
+/-- A group is isomorphic to itself -/
+theorem Group.isomorphic_reflexive : Isomorphic G G := by
+  -- SAMPLE SOLUTION
+  use id
+  exact id_isomorphism
+  -- END SAMPLE SOLUTION
+  done
+
+/- The tactic `rintro`, which combines `intro` and `rcases` may be useful here -/
+/-- The composition of isomorphisms is an isomorphism -/
+theorem Group.isomorphism_comp {φ : G → H} {ψ : H → K}
+  : Isomorphism φ → Isomorphism ψ → Isomorphism (ψ ∘ φ) := by
+  -- SAMPLE SOLUTION
+  rintro ⟨hφ₁, hφ₂⟩ ⟨hψ₁, hψ₂⟩
+  constructor
+  · exact homomorphism_comp hφ₁ hψ₁
+  · exact bijective_comp hφ₂ hψ₂
+  -- END SAMPLE SOLUTION
+  done
+
+/-- If G is isomorphic to H and H is isomorphic to K, then G is isomorphic to K -/
+theorem Group.isomorphic_transitive : Isomorphic G H → Isomorphic H K → Isomorphic G K := by
+  -- SAMPLE SOLUTION
+  rintro ⟨φ, hφ⟩ ⟨ψ, hψ⟩
+  use ψ ∘ φ
+  exact isomorphism_comp hφ hψ
+  -- END SAMPLE SOLUTION
+  done
+
+/- Hint: look back the proof for `bijective_inv` -/
+/-- The inverse of an isomorphism is an isomorphism -/
+theorem Group.isomorphism_inv {φ : G → H} (h : Isomorphism φ)
+  : Isomorphism (inv_of_bijective h.right) := by
+  -- SAMPLE SOLUTION
+  obtain ⟨h₁, h₂⟩ := h
+  unfold inv_of_bijective
+  obtain hψ := (inv_from_bijective h₂).choose_spec
+  set ψ := (inv_from_bijective h₂).choose
+  constructor
+  · intro a b
+    apply h₂.left
+    rw [←h₁]
+    have : ∀ (x : H), φ (ψ x) = x := by
+      intro x
+      rw [← @Function.comp_apply _ _ _ φ, hψ.right]
+      rfl
+    repeat rw [this]
+  · apply bijective_from_inv
+    use φ
+    apply And.symm
+    exact hψ
+  -- END SAMPLE SOLUTION
+  done
+
+/-- If G is isomorphic to H, then H is isomorphic to G -/
+theorem Group.isomorphic_symm : Isomorphic G H → Isomorphic H G := by
+  -- SAMPLE SOLUTION
+  rintro ⟨φ, h⟩
+  use inv_of_bijective h.right
+  exact Group.isomorphism_inv h
+  -- END SAMPLE SOLUTION
+  done
+
+/-
+These three properties (reflexivity, transitivity, and symmetry) make "being isomorphic" into an
+equivalence relation. This idea will be explored further in quotient groups, and it shows up all the
+time in mathematics.
+-/
+
+
+-- TODO: remove below
+
 
 /-
 
