@@ -8,22 +8,6 @@
     Inclusion ($\subseteq$) forms a partial order over the set of all subgroups of $G$.
 \end{theorem}
 
-\begin{theorem}
-    \label{theorem : Minimal_smallest}
-    \lean{AlgebraInLean.Subgroups.Minimal_smallest}
-    \leanok
-    \uses{definition : Minimal, theorem : subgroupOrder}
-    Every subgroup $H$ has order greater than or equal to the minimal subgroup.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : Maximal_largest}
-    \lean{AlgebraInLean.Subgroups.Maximal_largest}
-    \leanok
-    \uses{definition : Maximal, theorem : subgroupOrder}
-    Every subgroup $H$ has order less than or equal to the maximal subgroup.
-\end{theorem}
-
 \begin{definition}
     \label{definition : Generate}
     \lean{AlgebraInLean.Subgroups.Generate}
@@ -35,30 +19,6 @@
         \langle S \rangle := \bigcap_{\genfrac{}{}{0pt}{}{G \le H}{S \subset H}} H
     \end{equation*}
 \end{definition}
-
-\begin{theorem}
-    \label{theorem : Generate_empty}
-    \lean{AlgebraInLean.Subgroups.Generate_empty}
-    \leanok
-    \uses{definition : Generate}
-    $\langle \emptyset \rangle = \{\mathbb{e}\}$, the minimal subgroup.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : Generate_contain_set}
-    \lean{AlgebraInLean.Subgroups.Generate_contain_set}
-    \leanok
-    \uses{definition : Generate}
-    $S \subset \langle S \rangle$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : Generate_self_eq_self}
-    \lean{AlgebraInLean.Subgroups.Generate_self_eq_self}
-    \leanok
-    \uses{definition : Generate}
-    If $H$ is a subgroup of $G$, then $\langle H \rangle = H$.
-\end{theorem}
 
 \begin{definition}
     \label{definition : Pows}

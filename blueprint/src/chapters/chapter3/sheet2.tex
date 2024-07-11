@@ -12,7 +12,7 @@ Let $M$ be a monoid and $G$ be a group.
     \begin{equation*}
         x^n := \begin{cases}
             \mathbb{e}, & n = 0 \\
-            \mu(x^{n-1}, x), & n \gt 0
+            \mu(x^{n-1}, x), & n ~>~ 0
         \end{cases}
     \end{equation*}
 \end{definition}
@@ -22,13 +22,13 @@ Let $M$ be a monoid and $G$ be a group.
     \lean{AlgebraInLean.Subgroups.gpow}
     \leanok
     \uses{definition : mpow, definition : Group}
-    For a group $G$ and $x \in G$, we extend the domain of the power function to include all of $\mathbb{Z}$ such that if $n \lt 0$, then $x^n$ is equal to $\iota(x^{-n})$. It is defined inductively below:
+    For a group $G$ and $x \in G$, we extend the domain of the power function to include all of $\mathbb{Z}$ such that if $n ~<~ 0$, then $x^n$ is equal to $\iota(x^{-n})$. It is defined inductively below:
 
     \begin{equation*}
         x^n := \begin{cases}
             \mathbb{e}, & n = 0 \\
-            \mu(x^{n-1}, x), & n \gt 0 \\
-            \iota(\mu(x^{n+1}, x)), & n \lt 0
+            \mu(x^{n-1}, x), & n ~>~ 0 \\
+            \iota(\mu(x^{n+1}, x)), & n ~<~ 0
         \end{cases}
     \end{equation*}
 \end{definition}
