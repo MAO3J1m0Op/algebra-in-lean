@@ -4,6 +4,7 @@
     \label{definition : Endomorphism}
     \lean{AlgebraInLean.Endomorphism}
     \leanok
+    \uses{definition : Group, definition : Homomorphism}
     An \emph{endomorphism} is a homomorphism \( \phi \) mapping from a group \( G \) to itself.
 \end{definition}
 
@@ -11,16 +12,29 @@
     \label{definition : Automorphism}
     \lean{AlgebraInLean.Automorphism}
     \leanok
-    An \emph{automorphism} \( \phi \) maps from a group \( G \) to a group \( H \), \( \phi
-    \) is an \emph{isomorphism} if and only if it is a bijective homomorphism.
+    \uses{definition : Group, definition : Isomorphism, definition :
+    Endomorphism}
+    An \emph{automorphism} is a bijective endomorphism; i.e.~an isomorphism
+    from a group \( G \) to itself.
 \end{definition}
 
 \begin{definition}[Conjugate]
     \label{definition : Conjugate}
     \lean{AlgebraInLean.Conjugate}
     \leanok
+    \uses{definition : Group}
     Given a group \( G \), we define \emph{conjugation} by an element
-    \( g \) in \( G \) with the operation \( g ag^{-1} \) where \( a \) is an
+    \( g \) in \( G \) with the operation \( g ag^{-1} \) (i.e.,~ \(
+    \mu(\mu(g,a),\iota(g)) \) ) where \( a \) is an
     element of \( G \).
 \end{definition}
+
+\begin{theorem}
+    \label{theorem : conj_automorphism}
+    \lean{AlgebraInLean.conj_automorphism}
+    \leanok
+    \uses{definition : Group, definition : Automorphism}
+    Given a group \( G \) and an element \( a \in G \), conjugation by \( a \)
+    is an automorphism.
+\end{theorem}
 
