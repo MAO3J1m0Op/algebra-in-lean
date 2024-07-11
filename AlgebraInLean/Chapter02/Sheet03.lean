@@ -82,6 +82,8 @@ Consider the bijection ℤ → ℤ that maps x to x + 1. Is this an isomorphism?
 break?
 
 -/
+/-
+
 example : ℤ ≃+ ℤ := by
   set φ : ℤ → ℤ := λ x ↦ x + 1 with h1
   -- SAMPLE SOLUTION
@@ -103,6 +105,7 @@ example : ℤ ≃+ ℤ := by
   sorry
   -- END SAMPLE SOLUTION
 
+-/
 
 /-
 
