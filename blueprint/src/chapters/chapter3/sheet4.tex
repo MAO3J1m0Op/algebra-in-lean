@@ -5,7 +5,7 @@
     \lean{AlgebraInLean.Subgroups.subgroupOrder}
     \leanok
     \uses{definition : Subgroup}
-    Inclusion ($\subset$) forms a partial order over the set of all subgroups of $G$.
+    Inclusion ($\subseteq$) forms a partial order over the set of all subgroups of $G$.
 \end{theorem}
 
 \begin{theorem}
@@ -22,13 +22,6 @@
     \leanok
     \uses{definition : Maximal, theorem : subgroupOrder}
     Every subgroup $H$ has order less than or equal to the maximal subgroup.
-\end{theorem}
-
-\begin{theorem}
-    \label{definition : subgroup_eq_Maximal_of_card_eq_G}
-    \lean{AlgebraInLean.Subgroups.subgroup_eq_Maximal_of_card_eq_G}
-    \uses{theorem : subgroupOrder}
-    If $G$ is a finite group, and $H$ is a subgroup of $G$ with $|H| = |G|$, then $H = G$.
 \end{theorem}
 
 \begin{definition}
@@ -48,7 +41,7 @@
     \lean{AlgebraInLean.Subgroups.Generate_empty}
     \leanok
     \uses{definition : Generate}
-    $\langle \emptyset \rangle = \{e\}$, the minimal subgroup.
+    $\langle \emptyset \rangle = \{\mathbbe\}$, the minimal subgroup.
 \end{theorem}
 
 \begin{theorem}
