@@ -37,31 +37,3 @@
     \uses{definition : Subgroup}
     Two subgroups $H$ and $K$ are equal in the same way that two sets are equal: if $H \subset K$ and $K \subset H$, then $H = K$.
 \end{theorem}
-
-\begin{proposition}
-    \label{proposition : Subgroup_Criterion}
-    \lean{Defs.Subgroups.Subgroup_Criterion}
-    \leanok
-    \uses{definition : Subgroup}
-    Let $G$ be a group. A \textit{subset} $H$ of $G$ is a \textit {subgroup} if and only if
-    \begin{enumerate}
-        \item $H \neq \emptyset$
-        \item For any $x, y \in H$, $\mu(x, \iota (y))) \in H$
-    \end{enumerate}
-\end{proposition}
-
-\begin{theorem}
-    \label{theorem : subgroup_trans}
-    \lean{Defs.Subgroups.subgroup_trans}
-    \leanok
-    \uses{definition : Subgroup}
-    Let $G$, $H$, and $K$ be groups such that $K \leq H$ and $H \leq G$. Then $K \leq G$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : subgroup_intersection}
-    \lean{Defs.Subgroups.subgroup_intersection}
-    \leanok
-    \uses{definition : Subgroup}
-    Let $H$ and $K$ be subgroups of group $G$. Then $H \cap K$ is a subgroup of $G$.
-\end{theorem}

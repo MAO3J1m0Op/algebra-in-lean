@@ -19,27 +19,11 @@ For the following theorems, let $x \in M$ and let $m,n \in \mathbb{N}$.
 \end{theorem}
 
 \begin{theorem}
-    \label{theorem : mpow_order}
-    \lean{Defs.Subgroups.mpow_order}
-    \leanok
-    \uses{definition : order}
-    $x^{|x|} = e$.
-\end{theorem}
-
-\begin{theorem}
     \label{theorem : mpow_mod_order}
     \lean{Defs.Subgroups.mpow_order}
     \leanok
     \uses{theorem : mpow_add, theorem : mpow_mul, theorem : mpow_order, theorem : mpow_id}
     Let $n'$ be the modulus of $n$ by $|x|$ Then $x^{n'} = x^n$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : order_divides_iff_mpow_id}
-    \lean{Defs.Subgroups.mpow_order}
-    \leanok
-    \uses{definition : order, theorem : mpow_mod_order, theorem : mpow_order, theorem : mpow_mul, theorem : mpow_id}
-    $x^n = e$ if and only if $n$ divides $|x|$.
 \end{theorem}
 
 \begin{lemma}

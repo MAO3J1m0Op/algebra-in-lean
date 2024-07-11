@@ -25,43 +25,10 @@
 \end{theorem}
 
 \begin{theorem}
-    \label{definition : Intersect}
-    \lean{Defs.Subgroups.Intersect}
-    \leanok
-    \uses{definition : Subgroup}
-    The intersection of subgroups is itself a subgroup.
-\end{theorem}
-
-\begin{theorem}
     \label{definition : subgroup_eq_Maximal_of_card_eq_G}
     \lean{Defs.Subgroups.subgroup_eq_Maximal_of_card_eq_G}
     \uses{theorem : subgroupOrder, }
     If $G$ is a finite group, and $H$ is a subgroup of $G$ with $|H| = |G|$, then $H = G$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : inter_assoc}
-    \lean{Defs.Subgroups.inter_assoc}
-    \leanok
-    \uses{definition : Intersect}
-    The intersection of subgroups is commutative, that is, for subgroups $H$, $K$, and $L$ of $G$,
-    $(H \cap K) \cap L = H \cap (K \cap L)$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : inter_comm}
-    \lean{Defs.Subgroups.inter_comm}
-    \leanok
-    \uses{definition : Intersect}
-    The intersection of subgroups is commutative, that is $H \cap K = K \cap H$ for subgroups $H$ and $K$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : le_intersect_self}
-    \lean{Defs.Subgroups.le_intersect_self}
-    \leanok
-    \uses{definition : Intersect, theorem : subgroupOrder}
-    For subgroups $H$ and $K$ of group $G$, $H \cap K \subset H$.
 \end{theorem}
 
 \begin{definition}
@@ -100,14 +67,6 @@
     If $H$ is a subgroup of $G$, then $\langle H \rangle = H$.
 \end{theorem}
 
-\begin{theorem}
-    \label{theorem : Generate_smallest_closure}
-    \lean{Defs.Subgroups.Generate_smallest_closure}
-    \leanok
-    \uses{definition : Subgroup, definition : Generate}
-    $\langle S \rangle$ is the smallest subgroup containing $S$. In other terms, if $S \subset H$ and $H \le \langle S \rangle$, then $H = \langle S \rangle$.
-\end{theorem}
-
 \begin{definition}
     \label{definition : Pows}
     \lean{Defs.Subgroups.Pows}
@@ -119,14 +78,6 @@
 \end{definition}
 
 For the following theorems, let $G$ be a group and let $x \in G$.
-
-\begin{theorem}
-    \label{theorem : Pows_contain_self}
-    \lean{Defs.Subgroups.Pows_contain_self}
-    \leanok
-    \uses{definition : Pows}
-    $x \in \text{Pows}(x)$.
-\end{theorem}
 
 \begin{theorem}
     \label{theorem : Pows_eq_Generate_singleton}
