@@ -42,13 +42,13 @@ In either case, the expression has type `ℕ`. Shouldn't Lean be able to figure 
 Implicit in this intuition is the idea that every proposition is either true or false, even if we
 don't necessarily have a way to compute the result. In other words, for any proposition `p`, either
 `p` is true or its negation `¬p` is true. However, this seemingly trivial claim, called the Law of
-the Excluded Middle, is not true in constructive mathematics! Moreover, Lean's foundations for
+the Excluded Middle, is not always true in constructive mathematics! Moreover, Lean's foundations for
 proving theorems is constructive: if you want to prove a proposition `p`, you have to construct a
-term that has type p (i.e., a term of type `p` is a proof of `p`). What we need is classical logic!
+term that has type p (i.e., a term of type `p` is a proof of `p`).
 
 [TODO: Unsatisfactory transition]
 
-Classical logic asserts the Law of Excluded Middle as an axiom. In Lean, the story is complicated.
+Meanwhile, classical logic asserts the Law of Excluded Middle as an axiom. In Lean, the story is complicated.
 Since Lean is a programming language it must be capable of producing a program that can be
 evaulated by a computer. So if we were to write a function including the snippet below, where `p` is
 an arbitrary `Prop`:
@@ -133,7 +133,7 @@ theorem order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
         · nth_rw 2 [hn] at this
           classical apply Nat.find_min h this
           apply And.intro
-          · rw [←Nat.dvd_iff_mod_eq_zero]
+          · rw [ne_eq, ←Nat.dvd_iff_mod_eq_zero n m]
             exact hnm
           · rw [mpow_mod_order, hm]
       · exfalso

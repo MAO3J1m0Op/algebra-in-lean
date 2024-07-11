@@ -8,8 +8,8 @@ namespace AlgebraInLean
 In this sheet, we build the theory of repeated application of the group operation. If the group
 operation is multiplication, the functions we define in this sheet are equivalent to exponentiation.
 
-First, we define the power function `mpow` for monoids. Let M be a Monoid and m ∈ M. Since monoids
-do not have a notion of inverses, we only define mⁿ for n ∈ ℕ.
+First, we define the power function `mpow` for monoids. Let M be a Monoid and x ∈ M. Since monoids
+do not have a notion of inverses, we only define xⁿ for n ∈ ℕ.
 -/
 section Mpow
 
