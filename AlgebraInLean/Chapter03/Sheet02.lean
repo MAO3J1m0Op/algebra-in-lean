@@ -25,19 +25,19 @@ variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
 
 -- These are true by definition
 @[simp]
-theorem mpow_zero : mpow x 0 = 𝕖 := rfl
+lemma mpow_zero : mpow x 0 = 𝕖 := rfl
 
 @[simp]
-theorem mpow_succ_right : mpow x (n+1) = μ (mpow x n) x := rfl
+lemma mpow_succ_right : mpow x (n+1) = μ (mpow x n) x := rfl
 
 /-- x¹ = x -/
 @[simp]
-theorem mpow_one : mpow x 1 = x := by
+lemma mpow_one : mpow x 1 = x := by
   -- EXERCISE (DIFFICULTY *)
   rw [mpow, mpow_zero, id_op]
 
 /-- x² = x * x -/
-theorem mpow_two : mpow x 2 = μ x x := by
+lemma mpow_two : mpow x 2 = μ x x := by
   -- EXERCISE (*)
   rw [mpow, mpow_one]
 
@@ -53,7 +53,7 @@ lemma mpow_succ_left : mpow x (n+1) = μ x (mpow x n) := by
     nth_rw 2 [mpow_succ_right]
     rw [ih, op_assoc]
 
-/-- x ^ m * x ^ n = x ^ (m + n) -/
+/--  x ^ (m + n) = x ^ m * x ^ n -/
 lemma mpow_add : mpow x (m + n) = μ (mpow x m) (mpow x n) := by
   -- EXERCISE (*)
   induction n with
@@ -80,7 +80,7 @@ lemma mpow_id : mpow 𝕖 n = (𝕖 : M) := by
   | succ n ih => rw [mpow_succ_right, ih, op_id]
   done
 
-theorem mpow_comm_self : μ (mpow x n) x = μ x (mpow x n) := by
+lemma mpow_comm_self : μ (mpow x n) x = μ x (mpow x n) := by
   induction n with
   | zero => rw [mpow_zero, op_id, id_op]
   | succ n ih =>
@@ -88,7 +88,7 @@ theorem mpow_comm_self : μ (mpow x n) x = μ x (mpow x n) := by
     rw [op_assoc, ih]
   done
 
-theorem mpow_comm_mpow : μ (mpow x n) (mpow x m) = μ (mpow x m) (mpow x n) := by
+lemma mpow_comm_mpow : μ (mpow x n) (mpow x m) = μ (mpow x m) (mpow x n) := by
   induction n with
   | zero => rw [mpow_zero, op_id, id_op]
   | succ n ih =>
@@ -127,7 +127,7 @@ lemma gpow_ofNat (n : ℕ) : gpow x ↑n = mpow x n := rfl
 
 lemma gpow_negSucc (n : ℕ) : gpow x (Int.negSucc n) = mpow (ι x) (n+1) := rfl
 
-theorem inv_mpow (n : ℕ) : ι (mpow x n) = mpow (ι x) n := by
+lemma inv_mpow (n : ℕ) : ι (mpow x n) = mpow (ι x) n := by
   induction n with
   | zero =>
     simp_rw [mpow_zero]
@@ -197,7 +197,7 @@ lemma gpow_pred {n : ℤ} : μ (gpow x n) (ι x) = gpow x (n - 1) := by
     rw [←mpow_succ_right]
   done
 
-theorem gpow_add {m n : ℤ} : μ (gpow x m) (gpow x n) = gpow x (m + n) := by
+lemma gpow_add {m n : ℤ} : μ (gpow x m) (gpow x n) = gpow x (m + n) := by
   -- EXERCISE (*)
   -- Adapted from Mathlib (see the proof of `zpow_add`).
   induction n using Int.induction_on with
