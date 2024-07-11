@@ -6,6 +6,8 @@ import Mathlib.Tactic
 
 set_option linter.unusedVariables false
 
+set_option linter.unusedTactic false
+
 /-
 Let's wrap up our intro to Lean with some more straightforward tactics. We will quickly go over:
 
@@ -170,11 +172,14 @@ Note that there could be many solutions to any given exercise.
 Tactics like `assumption` and `specialize` are also helpful for dealing with multiple hypotheses.
 
 You now know enough tactics to progress beyond these simpler exercises to applying what you know
-about Lean to abstract algebra. In future worlds, we go beyond only working with the natural numbers
-or simple Prop variables to creating algebraic structures such as groups. This means that the types
-you will be working with will become more intricate and complex.
 
-The final sheet in World 0 is a list of tactics mentioned so far and is for your use as you see fit.
+about Lean to abstract algebra. In future chapters, we go beyond only working with the natural
+numbers or simple Prop variables to creating algebraic structures such as groups. This means that
+the types you will be working with will become more intricate and complex.
 
-On to the next world!
+The final sheet in Chapter 0 is a list of tactics mentioned so far and is for your use as you see
+fit.
+
+On to the next chapter!
+
 -/

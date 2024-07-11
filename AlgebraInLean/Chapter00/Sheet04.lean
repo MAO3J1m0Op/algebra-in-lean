@@ -4,6 +4,8 @@ This is a solutions sheet.
 
 import Mathlib.Tactic
 
+set_option linter.unusedTactic false
+
 /-
 The tactic `constructor` should be completely new to you. It is very useful for deconstructing
 goals that use `∧` ("and"). It is similar to the `cases` tactic in the way that it breaks up one

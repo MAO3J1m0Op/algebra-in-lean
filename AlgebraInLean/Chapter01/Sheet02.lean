@@ -41,10 +41,10 @@ class Monoid (α : Type*) extends Semigroup α where
 /-- The identity element of a monoid or derived structure -/
 def 𝕖 [Monoid α] : α := Monoid.id
 
-/-- a ⬝ e = a -/
+/-- a ⬝𝕖= a -/
 theorem op_id [Monoid α] : ∀ (a : α), μ a 𝕖 = a := Monoid.op_id
 
-/-- e ⬝ a = a -/
+/--𝕖⬝ a = a -/
 theorem id_op [Monoid α] : ∀ (a : α), μ 𝕖 a = a := Monoid.id_op
 
 /-- Commutative monoids have the additional property that the operation is commutative -/
@@ -79,7 +79,9 @@ definitions.
 
 Since the previous proof of `op_inv` used the other definition of `Group`, it needs to be re-proved.
 -/
-/-- a ⬝ a⁻¹ = e -/
+
+/-- a ⬝ a⁻¹ =𝕖-/
+
 theorem op_inv [Group α] (a : α) : μ a (ι a) = 𝕖 := by
   -- sorry
   -- SAMPLE SOLUTION
@@ -94,14 +96,15 @@ theorem op_inv [Group α] (a : α) : μ a (ι a) = 𝕖 := by
 
 /- Try to prove a theorem using the new definitions. -/
 /-- a ⬝ b = a ⬝ c ⇒ b = c -/
-theorem left_cancel [Group α] (a b c : α) (h : μ a b = μ a c) : b = c := by
+theorem op_left_cancel [Group α] (a b c : α) (h : μ a b = μ a c) : b = c := by
+
   -- sorry
   -- SAMPLE SOLUTION
   rw [←id_op b, ←id_op c, ←inv_op a, op_assoc, op_assoc, h]
   -- END OF SAMPLE SOLUTION
 
 /-- b ⬝ a = c ⬝ a ⇒ b = c -/
-theorem right_cancel [Group α] (a b c : α) (h : μ b a = μ c a) : b = c := by
+theorem op_right_cancel [Group α] (a b c : α) (h : μ b a = μ c a) : b = c := by
   -- sorry
   -- SAMPLE SOLUTION
   rw [←op_id b, ←op_id c, ←op_inv a, ←op_assoc, ←op_assoc, h]

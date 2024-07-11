@@ -4,9 +4,10 @@
     \label{definition : Int}
     \lean{Int}
     \leanok
-    \uses{definition : AbelianGroup}
-    $(\mathbb{Z}, +)$, the integers over addition, form a group, The identity of the group is $0$,
-    and the inverse of an element $x \in \mathbb{Z}$ is $-x$.
+    \uses{definition : Group}
+    $(\mathbb{Z},~ +)$, the integers over addition, form a group, The identity
+    of the group is $0$, and the inverse of an element
+    $x \in \mathbb{Z}$ is $-x$.
 \end{definition}
 
 \begin{definition}[$C_3$]
@@ -14,7 +15,8 @@
     \lean{AlgebraInLean.C₃}
     \leanok
     \uses{definition : Cn}
-    $C_3$ is the group of rotational symmetries of an equilateral triangle with the group operation being the composition of symmetries.
+    $C_3$ is the group of rotational symmetries of an equilateral triangle with
+    the group operation being the composition of symmetries.
     This is treated as an inductive type with three elements. The
     identity is a $ 0 ^{\circ} $ rotation, and the inverse of an  $x ^{\circ} $
     rotation is a $(360 - x)^{\circ} $ rotation.
