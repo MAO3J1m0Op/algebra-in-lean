@@ -8,40 +8,6 @@
     Let $M$ be a monoid and $x \in M$. Then the \textit{order} of $x$, denoted $|x|$, is the smallest $n \in \mathbb{N}$ satisfying $x^n = e$. If no such $n$ exists, then we define the order of $x$ to be zero.
 \end{definition}
 
-For the following theorems, let $x \in M$ and let $m,n \in \mathbb{N}$.
-
-\begin{theorem}
-    \label{theorem : mpow_order_zero}
-    \lean{Defs.Subgroups.mpow_order_zero}
-    \leanok
-    \uses{definition : order}
-    Let $|x| = 0$. Then if $x^n = e$, $n = 0$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : mpow_mod_order}
-    \lean{Defs.Subgroups.mpow_order}
-    \leanok
-    \uses{theorem : mpow_add, theorem : mpow_mul, theorem : mpow_order, theorem : mpow_id}
-    Let $n'$ be the modulus of $n$ by $|x|$ Then $x^{n'} = x^n$.
-\end{theorem}
-
-\begin{lemma}
-    \label{theorem : mpow_inj_of_lt_order}
-    \lean{Defs.Subgroups.mpow_order}
-    \leanok
-    \uses{theorem : mpow_add, theorem : order_divides_iff_mpow_id}
-    If $m$ and $n$ are strictly less than $|x|$, and $x^m = x^n$, then $m = n$.
-\end{lemma}
-
-\begin{theorem}
-    \label{theorem : mod_order_eq_of_mpow_eq}
-    \lean{Defs.Subgroups.mpow_order}
-    \leanok
-    \uses{theorem : mpow_inj_of_lt_order}
-    Let $|x| \ne 0$. If $x^m = x^n$, then $x^{m'} = x^{n'}$, where $m'$ and $m'$ are the respective moduli of $m$ and $n$ by $|x|$.
-\end{theorem}
-
 For the following theorems, let $G$ be a group, $x \in G$, and let $m,n \in \mathbb{Z}$.
 
 \begin{theorem}
@@ -50,33 +16,4 @@ For the following theorems, let $G$ be a group, $x \in G$, and let $m,n \in \mat
     \leanok
     \uses{definition : gpow, theorem : mpow_order}
     If $x^n = e$, then $n = 0$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : gpow_order_zero}
-    \lean{Defs.Subgroups.gpow_order_zero}
-    \leanok
-    \uses{theorem : mpow_order_zero, theorem : mpow_succ_right, definition : gpow}
-    $x^{|x|} = e$.
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : gpow_mod_order}
-    \lean{Defs.Subgroups.gpow_mod_order}
-    Let $n'$ be the modulus of $n$ by $|x|$ Then $x^{n'} = x^n$.
-    \uses{definition : gpow}
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : gpow_inj_of_order_zero}
-    \lean{Defs.Subgroups.gpow_inj_of_order_zero}
-    Let $|x| = 0$. Then for any $m,n \in \mathbb{Z}$, if $x^m = x^n$, then $m = n$.
-    \uses{definition : gpow, definition : order}
-\end{theorem}
-
-\begin{theorem}
-    \label{theorem : mod_order_eq_of_gpow_eq}
-    \lean{Defs.Subgroups.mod_order_eq_of_gpow_eq}
-    Let $|x| = 0$. If $x^m = x^n$, then $x^{m'} = x^{n'}$, where $m'$ and $m'$ are the respective moduli of $m$ and $n$ by $|x|$.
-    \uses{definition : gpow, definition : order}
 \end{theorem}
