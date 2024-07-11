@@ -173,7 +173,7 @@ theorem conj_automorphism (g : G) : ∀ x y : G, Conjugate g (μ x y) = μ (Conj
       unfold Conjugate at h
       have h1 : μ (μ g x) (ι g) = μ (μ g y) (ι g) → μ g x = μ g y := by
         intro h
-        apply right_cancel at h
+        apply op_right_cancel at h
         exact h
       apply h1 at h
       apply op_left_cancel at h
