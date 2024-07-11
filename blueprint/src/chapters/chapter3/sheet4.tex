@@ -2,7 +2,7 @@
 
 \begin{theorem}
     \label{theorem : subgroupOrder}
-    \lean{AlgebraInLean.Subgroup.subgroupOrder}
+    \lean{AlgebraInLean.Subgroups.subgroupOrder}
     \leanok
     \uses{definition : Subgroup}
     Inclusion ($\subset$) forms a partial order over the set of all subgroups of $G$.
@@ -12,7 +12,7 @@
     \label{theorem : Minimal_smallest}
     \lean{AlgebraInLean.Subgroups.Minimal_smallest}
     \leanok
-    \uses{definition : Subgroup_Minimal, theorem : subgroupOrder}
+    \uses{definition : Minimal, theorem : subgroupOrder}
     Every subgroup $H$ has order greater than or equal to the minimal subgroup.
 \end{theorem}
 
@@ -20,14 +20,14 @@
     \label{theorem : Maximal_largest}
     \lean{AlgebraInLean.Subgroups.Maximal_largest}
     \leanok
-    \uses{definition : Subgroup_Maximal, theorem : subgroupOrder}
+    \uses{definition : Maximal, theorem : subgroupOrder}
     Every subgroup $H$ has order less than or equal to the maximal subgroup.
 \end{theorem}
 
 \begin{theorem}
     \label{definition : subgroup_eq_Maximal_of_card_eq_G}
     \lean{AlgebraInLean.Subgroups.subgroup_eq_Maximal_of_card_eq_G}
-    \uses{theorem : subgroupOrder, }
+    \uses{theorem : subgroupOrder}
     If $G$ is a finite group, and $H$ is a subgroup of $G$ with $|H| = |G|$, then $H = G$.
 \end{theorem}
 
@@ -45,7 +45,7 @@
 
 \begin{theorem}
     \label{theorem : Generate_empty}
-    \lean{AlgebraInLean.Subgroup.Generate_empty}
+    \lean{AlgebraInLean.Subgroups.Generate_empty}
     \leanok
     \uses{definition : Generate}
     $\langle \emptyset \rangle = \{e\}$, the minimal subgroup.
@@ -53,7 +53,7 @@
 
 \begin{theorem}
     \label{theorem : Generate_contain_set}
-    \lean{AlgebraInLean.Subgroup.Generate_contain_set}
+    \lean{AlgebraInLean.Subgroups.Generate_contain_set}
     \leanok
     \uses{definition : Generate}
     $S \subset \langle S \rangle$.
@@ -61,7 +61,7 @@
 
 \begin{theorem}
     \label{theorem : Generate_self_eq_self}
-    \lean{AlgebraInLean.Subgroup.Generate_self_eq_self}
+    \lean{AlgebraInLean.Subgroups.Generate_self_eq_self}
     \leanok
     \uses{definition : Generate}
     If $H$ is a subgroup of $G$, then $\langle H \rangle = H$.
