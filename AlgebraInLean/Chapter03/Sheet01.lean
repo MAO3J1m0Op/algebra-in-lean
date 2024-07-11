@@ -2,6 +2,8 @@ import AlgebraInLean.Chapter01.Sheet07
 
 namespace AlgebraInLean
 
+namespace Subgroups
+
 /--
 If G is a group, then a subgroup H of G is a subset of G that is itself a group under G's group
 operation satisfying three properties.

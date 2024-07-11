@@ -1,6 +1,9 @@
 import AlgebraInLean.Chapter03.Sheet02
 
 namespace AlgebraInLean
+
+namespace Subgroups
+
 section MonoidOrder
 
 /--

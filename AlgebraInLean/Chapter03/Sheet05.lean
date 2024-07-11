@@ -2,6 +2,8 @@ import AlgebraInLean.Chapter03.Sheet04
 
 namespace AlgebraInLean
 
+namespace Subgroups
+
 variable {G G' : Type*} [Group G] [Group G']
 
 /--
