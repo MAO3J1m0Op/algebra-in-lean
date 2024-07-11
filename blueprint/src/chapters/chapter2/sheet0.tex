@@ -1,0 +1,55 @@
+\begin{definition}[Injective]
+    \label{definition : injective}
+    \lean{Defs.Interlude.Injective}
+    \leanok
+    Given a function \( f \) mapping from a set \( X \) to a set \( Y \):
+    \[
+        \forall x,~ x' \in X,~ f(x) = f(x') \implies x = x'.
+    \]
+    Otherwise known as a ``one-to-one'' function.
+\end{definition}
+
+\begin{definition}[Surjective]
+    \label{definition : surjective}
+    \lean{Defs.Interlude.Surjective}
+    \leanok
+    Given a function \( f \) mapping from a set \( X \) to a set \( Y \):
+    \[
+        \forall y \in Y, \exists x \in X, f(x) = y
+    \]
+    Otherwise known as an ``onto'' function.
+\end{definition}
+
+\begin{definition}[Bijective]
+    \label{definition : bijective}
+    \lean{Defs.Interlude.Bijective}
+    \leanok
+    A function that is both injective and surjective.
+\end{definition}
+
+\begin{theorem}[Composition of surjective functions]
+    \label{theorem : surjective_comp}
+    \lean{Defs.Interlude.surjective_comp}
+    \leanok
+    WIP
+\end{theorem}
+
+\begin{proof}
+    \leanok
+    \uses{}
+    This obviously follows from what we did so far.
+\end{proof}
+
+\begin{theorem}[Composition of bijective functions]
+    \label{theorem : bijective_comp}
+    \lean{Defs.Interlude.bijective_comp}
+    \leanok
+    WIP
+\end{theorem}
+
+\begin{proof}
+    \leanok
+    \uses{}
+    This obviously follows from what we did so far.
+\end{proof}
+
