@@ -3,13 +3,10 @@ import AlgebraInLean.Chapter01.Sheet07
 set_option linter.unusedTactic false
 
 /-
+Let's take a brief break from Algebra to orient ourselves. We are going to explore injectivity and
+surjectivity of functions.
 
-Let's take a brief break from Algebra to orient ourselves.
-We are going to explore injectivity and surjectivity of functions.
-
-Let's start with some basic definitions (you have likely
-seen some of these already!)
-
+Let's start with some basic definitions (you have likely seen some of these already!)
 -/
 
 namespace AlgebraInLean
@@ -17,53 +14,42 @@ namespace AlgebraInLean
 variable {α β γ : Type*}
 
 /-
+Brace yourself for a type theory interlude! In Lean's type theory, which is based on the Calculus of
+Constructions, there is an infinite hierarchy of types that contain one another. `Type 0` (or just
+`Type`) of type `Type 1`, `Type 1 : Type 2`, and so on. A type can never contain itself; if that
+were to happen, we would run into a logical paradox (formally referred to as Girard's Paradox, which
+is similar to Russel's Paradox)! We classify types using what are called "universes"; in other
+words, a universe is a family of types. The special syntax `Type*` means a type of any universe. For
+more information on Lean's type system, see
+<https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html>.
 
-Brace yourself for a type theory interlude! In Lean's type theory, the Calculus of
-Constructions, there is an infinite hierarchy of types that contain one another. Type 0 (or
-simply just "Type" is contained in Type 1, Type 1 is contained in Type 2, and so on. A type can
-never contain itself; if that were to happen, we would run into a logical paradox (formally
-referred to as Russell's Paradox)! We classify types using what are called "universes"; in other
-words, a universe is a family of types. For more information on Lean's type system, see
-https://lean-lang.org/theorem_proving_in_lean4/dependent_type_theory.html.
+You are free to think of the types `α`, `β`, and `γ` as sets.
 
-You are free to think of α, β, and γ as sets.
+****
 
-We have already seen many injective functions. One of them is the function which takes any group
-element to its inverse!
-
-To prove that the inverse function is injective, we need to prove two intuitive propositions.
-The first is a simple group identity. The second is a proof that given a group G and an element
-g in G, the inverse of the inverse of g is g itself (i.e. (g⁻¹)⁻¹ = g).
-
+We will now discuss some general properties of functions that are not specific to abstract algebra.
+First, we define some terms.
 -/
 
-/- Surjectivity, injectivity, and bijectivity of maps -/
-
+/-- A map is injective (or "one-to-one") when f(x) = f(y) only when x = y -/
 def Injective (f : α → β) : Prop := ∀ (x y : α), f x = f y → x = y
-/- Otherwise known as "one-to-one". -/
 
+/-- A map is surjective (or "onto") when its image is the entire codomain -/
 def Surjective (f : α → β) : Prop := ∀ (y : β), ∃ (x : α), f x = y
-/- Otherwise known as "onto". -/
 
+/-- A map is bijective if it is both injective and surjective -/
 def Bijective (f : α → β) : Prop := (Injective f ∧ Surjective f)
-/- A map is bijective if it is both injective and surjective. -/
 
 
 /-
-
-Now let's take a look at some basic problems about bijective maps that will test all of the
-tactics you have learned thus far.
-
+The tactic `unfold` is helpful for reminding yourself of what a definition means. Try doing
+`unfold Surjective` in this proof.
 -/
-
-/- A map is bijective if and only if it is injective and surjective. -/
-example {α β : Type} (f : α → β) (h1 : Injective f) (h2 : Surjective f) : Bijective f :=
-  ⟨h1, h2⟩
-
-/- Surjectivity composition -/
-example {α β γ : Type} (f : α → β) (g : β → γ) (h1: Surjective f) (h2 : Surjective g) :
-Surjective (g ∘ f) := by
+/-- The composition of surjective functions is surjective -/
+theorem surjective_comp {f : α → β} {g : β → γ} (h1 : Surjective f) (h2 : Surjective g)
+  : Surjective (g ∘ f) := by
   -- SAMPLE SOLUTION
+  unfold Surjective
   intro z
   rw [Surjective] at h2
   specialize h2 z
@@ -76,10 +62,16 @@ Surjective (g ∘ f) := by
   -- END SAMPLE SOLUTION
   done
 
-/- Injectivity composition -/
-example (f : α → β) (g : β → γ) (h1: Injective f) (h2 : Injective g) :
-Injective (g ∘ f) := by
+/-
+Some tactics (notably `rw` and `simp`) accept an `at` parameter that indicates whether it should
+work on a particular hypothesis or goal. These usually also accept `at *`, which means to try to
+work on the goal and *all* hypotheses. Try using `rw [Injective] at *` in this proof.
+-/
+/-- The composition of injective functions is injective -/
+theorem injective_comp {f : α → β} {g : β → γ} (h1 : Injective f) (h2 : Injective g)
+  : Injective (g ∘ f) := by
   -- SAMPLE SOLUTION
+  rw [Injective] at *
   intros a1 a2 h
   apply h1
   apply h2
@@ -87,15 +79,37 @@ Injective (g ∘ f) := by
   -- END SAMPLE SOLUTION
   done
 
+/-
+Another tactic you can try is `change`, which allows changing the type of the goal (or another
+hypothesis) to something that is definitionally equivalent. While `unfold` will always expand the
+definition of some particular thing, `change` allows you to "fold" it back, as well as modify
+multiple things at once. Try doing `change Injective (g ∘ f) ∧ Surjective (g ∘ f)` in this proof.
+
+Hint: The tactic `constructor` may also be useful here.
+-/
+/-- The composition of bijective functions is bijective -/
+theorem bijective_comp {f : α → β} {g : β → γ} (h1 : Bijective f) (h2 : Bijective g)
+  : Bijective (g ∘ f) := by
+  -- SAMPLE SOLUTION
+  change Injective (g ∘ f) ∧ Surjective (g ∘ f)
+  obtain ⟨hf_inj, hf_surj⟩ := h1
+  obtain ⟨hg_inj, hg_surj⟩ := h2
+  constructor
+  · apply injective_comp
+    · apply hf_inj
+    · apply hg_inj
+  · apply surjective_comp
+    · apply hf_surj
+    · apply hg_surj
+  -- END SAMPLE SOLUTION
+  done
 
 /-
-
-Working backwards - Tip: A new tactic, `rcases` may be helpful with proving this. Hover over
-`rcases` to see syntax and usage. This particular tactic peforms cases recursively and can take
-in arguments as is the norm with `cases`.
-
+Hint: A new tactic, `rcases` may be helpful with proving this. Hover over `rcases` to see syntax and
+usage. This particular tactic peforms cases recursively and can take in arguments as is the norm
+with `cases`.
 -/
-example (f : α → β) (g : β → γ) : Surjective (g ∘ f) → Surjective g := by
+example {f : α → β} {g : β → γ} : Surjective (g ∘ f) → Surjective g := by
   -- SAMPLE SOLUTION
   intros h z
   rcases h z with ⟨x, rfl⟩
@@ -106,113 +120,101 @@ example (f : α → β) (g : β → γ) : Surjective (g ∘ f) → Surjective g 
 
 /-
 
-Corollary: bijectivity composition
-
-Obviously, this one can be made easier based on the previous two proofs we just completed. So,
-let's turn those into theorems in this same namespace that we can `apply` them for this next
-bijectivitiy example.
-
--/
-theorem injective_comp (f : α → β) (g : β → γ) (h1 : Injective f)
-(h2 : Injective g) : Injective (g ∘ f) := by
-  intros a1 a2 h
-  apply h1
-  apply h2
-  exact h
-  done
-
-theorem surjective_comp (f : α → β) (g : β → γ) (h1 : Surjective f)
-(h2 : Surjective g) : Surjective (g ∘ f) := by
-  intro z
-  rw [Surjective] at h2
-  specialize h2 z
-  obtain ⟨y, hy⟩ := h2
-  obtain ⟨x, hx⟩ := h1 y
-  use x
-  rw [← hy, ← hx]
-  rfl
-
-
-/-
-
-You may want to read up more about the tactic `constructor` that works to split a logical `∧`
-into its two different parts. Alternatively, you could use `And.intro` with `apply`.
-
--/
-example (f : α → β) (g : β → γ) (h1 : Bijective f) (h2 : Bijective g) :
-Bijective (g ∘ f) := by
-  -- SAMPLE SOLUTION
-  obtain ⟨ finv, hf⟩ := h1
-  obtain ⟨ginv, hg⟩ := h2
-  rw [Bijective]
-  constructor
-  · apply injective_comp
-    · apply finv
-    · apply ginv
-  · apply surjective_comp
-    · apply hf
-    · apply hg
-  -- END SAMPLE SOLUTION
-  done
-
-
-/-
-
-In the same spirit, let's turn that bijective composition proof into a theorem, but now it is
-your turn to do that. This may help you further understand how L∃∀N categorizes its different
-types
-
--/
-theorem bijective_comp (f : α → β) (g : β → γ) (h1 : Bijective f)
-(h2 : Bijective g) : Bijective (g ∘ f) := by
-  -- SAMPLE SOLUTION
-  obtain ⟨finv, hf⟩ := h1
-  obtain ⟨ginv, hg⟩ := h2
-  rw [Bijective]
-  constructor
-  · apply injective_comp
-    · apply finv
-    · apply ginv
-  · apply surjective_comp
-    · apply hf
-    · apply hg
-  -- END SAMPLE SOLUTION
-  done
-
-
-/-
-
 You just proved lots about two injective maps `f, g` and the composition of those maps `g ∘ f`.
-Nice to see all those classic L∃∀N tactics again, right? Make sure you are fully comfortable with
+
+Nice to see all those classic Lean tactics again, right? Make sure you are fully comfortable with
 the tactics `intros`, `apply`, `exact`, `rw`, `cases`, `specialize`. See `Chapter 0` for a
 refresher. These are basic, but before moving on to the next chapter, it is necessary to be quite
 familiar with them.
 
-Another crucial tactic you saw in earlier chapters was `have`. Here is the same theorem about
-surjectivity composition that you proved earlier. However, try using the `have` tactic with this
-one for practice. We've gotten you started below:
-
 -/
-theorem surjective_comp_have (f : α → β) (g : β → γ) (h1 : Surjective f)
-(h2 : Surjective g) : Surjective (g ∘ f) := by
+
+/-
+Hint: another new useful tactic is `choose`, which invokes the axiom of choice in Lean. Given a
+hypothesis `h : ∀ (x : α), ∃ (y : β), p x y`, `choose f hf using h` makes new objects `f : α → β`
+and `hf : ∀ (x : α), p x (f x)`.
+-/
+/-- Bijective functions are invertible -/
+theorem inv_from_bijective {f : α → β} (h : Bijective f)
+  : ∃ (g : β → α), g ∘ f = id ∧ f ∘ g = id := by
   -- SAMPLE SOLUTION
-  intro z
-  have h3 := h2 z
-  obtain ⟨y, hy⟩ := h3
-  have h4 := h1 y
-  obtain ⟨x, hx⟩ := h4
-  use x
-  rw [← hy, ← hx]
-  rfl
+  rcases h with ⟨h_inj, h_surj⟩
+  choose g hg using h_surj
+  use g
+  constructor
+  all_goals ext x -- TODO: explain?
+  all_goals simp
+  · apply h_inj
+    rw [hg (f x)]
+  · exact hg x
   -- END SAMPLE SOLUTION
   done
 
+/-- Invertible functions are bijective -/
+theorem bijective_from_inv {f : α → β} (h : ∃ (g : β → α), g ∘ f = id ∧ f ∘ g = id)
+  : Bijective f := by
+  -- SAMPLE SOLUTION
+  obtain ⟨g, ⟨h₁, h₂⟩⟩ := h
+  constructor
+  · intro x y h
+    change id x = id y
+    rw [←h₁]
+    repeat rw [Function.comp_apply]
+    rw [h]
+  · intro y
+    use g y
+    rw [← @Function.comp_apply _ _ _ f, h₂]
+    rfl
+  -- END SAMPLE SOLUTION
+  done
+
+/-- A function is bijective iff it is invertible -/
+theorem bijective_iff_inv {f : α → β} : Bijective f ↔ ∃ (g : β → α), g ∘ f = id ∧ f ∘ g = id :=
+  ⟨inv_from_bijective, bijective_from_inv⟩
+
+
 /-
-
-That's all we 'have' for this refresher! Hopefully you have a grasp on our definitions of
-injectivity and surjectivity in Lean because proofs are about to get a bit more advanced in this
-chapter and in later chapters
-
-## GOOD LUCK!!
-
+This definition is marked as `noncomputable` because `Exists.choose` invokes the axiom of choice.
+Since Lean can't evaluate the axiom of choice in a program (i.e., you can't use `#eval` on it), we
+need to explicitly opt-in to using it in definitions by marking them as `noncomputable`.
 -/
+/-- The inverse of a bijective function -/
+noncomputable def inv_of_bijective {f : α → β} (h : Bijective f) : β → α :=
+  (inv_from_bijective h).choose
+
+/-- Show that `inv_of_bijective` actually produces an inverse -/
+noncomputable def inv_of_bijective_spec {f : α → β} (h : Bijective f)
+  : (inv_of_bijective h) ∘ f = id ∧ f ∘ (inv_of_bijective h) = id :=
+  (inv_from_bijective h).choose_spec
+
+/-- The inverse of a bijective function is a bijection -/
+theorem bijective_inv {f : α → β} (h : Bijective f) : Bijective (inv_of_bijective h) := by
+  unfold inv_of_bijective
+  have hg := (inv_from_bijective h).choose_spec
+  /-
+  The tactic `set` here defines `g` as `(inv_from_bijective h).choose` and automatically tries to
+  replace all instances of `(inv_from_bijective h).choose` in the goal and context with `g`.
+  -/
+  set g := (inv_from_bijective h).choose
+  /- Try to finish out this proof yourself -/
+  -- SAMPLE SOLUTION
+  apply bijective_from_inv
+  use f
+  exact hg.symm
+  -- END SAMPLE SOLUTION
+  done
+
+
+/-- The inverse map of a group is bijective -/
+theorem Group.inv_bijective {G : Type*} [Group G] : Bijective (ι : G → G) := by
+  -- SAMPLE SOLUTION
+  constructor
+  · intros x y h
+    apply left_cancel (ι x)
+    nth_rw 2 [h]
+    rw [inv_op, inv_op]
+  · intro y
+    use ι y
+    exact inv_inv y
+  -- END SAMPLE SOLUTION
+  done

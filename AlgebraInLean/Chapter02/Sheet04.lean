@@ -82,28 +82,29 @@ suffices to prove that φ is a homomorphism. That may be useful going forward wi
 -/
 
 /- A brief definition of our φ: -/
-def φ (x : ℤ) : ℤ := -x
+def int_neg (x : ℤ) : ℤ := -x
 /- φ : G → G, x ↦ -x -/
 
 /- Show that φ is a group automorphism -/
-theorem φ_automorphism : ∀ x y : ℤ, φ (x + y) = φ x + φ y ∧ Bijective φ := by
+theorem int_neg_automorphism : ∀ x y : ℤ, int_neg (x + y) = int_neg x + int_neg y ∧
+Bijective int_neg := by
   -- SAMPLE SOLUTION
   intros x y
   constructor
   /- Prove homomorphism -/
-  · unfold φ
+  · unfold int_neg
     rw [neg_add]
   /- Prove Bijectivity -/
   · rw [Bijective]
     constructor
     /- Injectivity -/
     · intros x y h
-      unfold φ at h
+      unfold int_neg at h
       exact neg_inj.mp h
     /- Surjectivity -/
     · intro z
       use -z
-      unfold φ
+      unfold int_neg
       rw [neg_neg]
   -- END SAMPLE SOLUTION
   done
@@ -125,9 +126,9 @@ meaning:
 
 ψ : G → G, x ↦ gxg⁻¹ is a group automorphism. Let's prove this!
 
-As with before, a brief definition of our ψ:
-
 -/
+
+/- As with before, a brief definition of our ψ: -/
 def Conjugate (g x : G) : G := μ (μ g x) (ι g)
 /- We define this specifically to be `Conjugate`, however we will also refer to this mapping
 as ψ. It is common to see φ and ψ to represent these homomorphic and automorphic maps, but since
@@ -193,7 +194,3 @@ since such a proof will be useful later when learning about group actions and au
 groups (meaning this sheet will likely be referenced in later chapters as one to come back to)!
 
 -/
-
-
-/- That's all we have for morphisms. Feel free to move on to Chapter 3: Subgroups!
-## HAVE FUN! -/

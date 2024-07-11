@@ -10,8 +10,8 @@ Morphisms are structure-preserving maps between objects in a category. Think of 
 bucket filled with a certain mathematical object (i.e. groups, vector spaces, sets) and their
 corresponding morphisms (group homomorphisms, linear transformations, and functions respectively).
 
-In category theory---which is surprisingly the study of categories---morphisms serve as "arrows"
-between objects and adhere to certain composition and identity rules.
+In category theory, morphisms serve as "arrows" between objects and adhere to certain composition
+and identity rules.
 
 Examples of morphisms you may have seen before are functions between sets, homomorphisms between
 algebraic structures, continuous functions between topological spaces, etc.
@@ -49,28 +49,13 @@ the syntax. Don't let it scare you!
 
 -/
 
-/- For all g ∈ G, (g⁻¹)⁻¹ = g -/
-theorem inv_inv_eq_self : ∀ g : G, ι (ι g) = g := by
-  -- SAMPLE SOLUTION
-  intro g
-  have hq : ∀ (a : G), μ (ι a) a = μ a (ι a)
-  · intro a
-    rw [inv_op a]
-    rw [op_inv a]
-  specialize hq (ι g)
-  rw [inv_op (ι g)] at hq
-  symm at hq
-  rw [← inv_op g] at hq
-  rw [mul_left_eq (ι g) (ι (ι g)) g hq]
-  -- END SAMPLE SOLUTION
-
 /- For all a, b ∈ G, a⁻¹ = b⁻¹ → a = b -/
 example : ∀ a b : G, ι a = ι b → a = b := by
   -- SAMPLE SOLUTION
   intro a b
   intro hinv
   have hinj : ∀ (g : G), ι (ι g) = g
-  · apply inv_inv_eq_self
+  · apply inv_inv
   rw [← hinj a, ← hinj b]
   rw [hinv]
   -- END SAMPLE SOLUTION
@@ -81,7 +66,7 @@ theorem inv_inj : Injective (ι: G → G) := by
   unfold Injective
   have hinv : ∀ (x : G), ι (ι x) = x
   · intro x
-    rw [inv_inv_eq_self x]
+    rw [inv_inv x]
   intro a b hab
   rw [← hinv a, ← hinv b, hab]
   -- END SAMPLE SOLUTION
@@ -240,7 +225,7 @@ theorem hom_inv_to_inv (φ : G → H) (hp : Homomorphism φ) (g : G) : φ (ι g)
   rw [h2] at h1
   rw [hom_id_to_id φ hp g] at h1
   rw [two_sided_inv (φ (ι g)) (φ g) h1]
-  rw [inv_inv_eq_self]
+  rw [inv_inv]
   -- END SAMPLE SOLUTION
 
 

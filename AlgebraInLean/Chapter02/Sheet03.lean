@@ -82,19 +82,19 @@ Consider the bijection ℤ → ℤ that maps x to x + 1. Is this an isomorphism?
 break?
 
 -/
-example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
+example : ℤ ≃+ ℤ := by
+  set φ : ℤ → ℤ := λ x ↦ x + 1 with h1
   -- SAMPLE SOLUTION
   let hom_map : ℤ ≃ ℤ := by
     constructor
     have ha : Function.LeftInverse (fun x => x - 1) φ
     · intro x
-      rw [h1 x]
+      rw [h1]
       exact Int.add_sub_cancel x 1
     exact ha
     have hb : Function.RightInverse (fun x => x - 1) φ
     · intro x
-      rw [h1 (x - 1)]
-      linarith
+      simp [h1]
     exact hb
   constructor
   intro x y
@@ -102,6 +102,7 @@ example (φ : ℤ → ℤ) (h1 : ∀ x, φ x = x + 1) : ℤ ≃+ ℤ := by
   rw [hc]
   sorry
   -- END SAMPLE SOLUTION
+
 
 /-
 
@@ -114,7 +115,7 @@ group of integers to itself, the map being the function that takes an integer x 
 
 /-
 
-example (φ : _ → _) (h1 : ∀ _) : _ ≃_ _ := by
+example (φ : _ → _ ) (h1 : ∀ _ ) : _ ≃_ _ := by
   let hom_map : _ ≃ _ := by
   { constructor
     have ha : Function.LeftInverse φ φ
