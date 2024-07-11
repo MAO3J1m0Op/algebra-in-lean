@@ -209,7 +209,7 @@ def Pows (x : G) : Subgroup G where
   inv_closure := by
     intro g ⟨a, ha⟩
     use -a
-    have : ∀ i : G, μ i g = 𝕖 → i = ι g := sorry -- inverse unique
+    have : ∀ (g i : G), μ i g = 𝕖 → i = ι g := inv_unique_left
     apply this
     rw [←ha, gpow_neg, inv_op]
 
