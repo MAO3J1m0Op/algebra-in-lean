@@ -192,8 +192,7 @@ def Subgroup_Criterion (S : Set G) (he : ∃ (s : G), s ∈ S)
     have hc3 := hc
     have hc4 := hc
     specialize hc3 a (ι b)
-    have ht : ι (ι b) = b := sorry -- FIXME use inverse of inverse equals self
-    rw [ht] at hc3
+    rw [inv_inv] at hc3
     have hf : b ∈ S → ι b ∈ S := by
       intro hb
       rw [← id_op (ι b)]
