@@ -3,11 +3,9 @@
 This is the repository for Algebra In Lean (AIL), an interactive problem set
 that takes users through an advanced course in Lean through the lens of abstract
 algebra. The goal of this problem set is to introduce users to formalization and
-Lean 4 while also assisting in writing rigorous proofs in This is the repository
-for Algebra In Lean (AIL), an interactive problem set that takes users through
-an advanced course in Lean through the lens of abstract algebra. After an
-introduction to logic-based reasoning in Lean, each chapter takes users through
-various topics in group theory. Akin to Kevin Buzzard’s [Formalising
+Lean 4 while also assisting in writing rigorous proofs in abstract algebra.
+After an introduction to logic-based reasoning in Lean, each chapter takes users
+through various topics in group theory. Akin to Kevin Buzzard’s [Formalising
 Mathematics](https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024)
 at Imperial College London, AIL includes chapters on group axioms,
 homomorphisms, and subgroups, each separated into problem sheets. These problem
