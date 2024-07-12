@@ -65,10 +65,10 @@ There are two ways to access the blueprint:
 * https://mao3j1m0op.github.io/algebra-in-lean/blueprint.pdf
 
 ## Documentation
-+
-+We host [web documentation][Docs] for each sheet (and dependencies).
-+
-+[Docs]: https://mao3j1m0op.github.io/algebra-in-lean/docs/
+
+We host [web documentation][Docs] for each sheet (and dependencies).
+
+[Docs]: https://mao3j1m0op.github.io/algebra-in-lean/docs/
 
 ## Credits
 
