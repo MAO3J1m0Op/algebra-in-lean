@@ -52,12 +52,12 @@ course inside a subdirectory called `AlgebraInLean`.
 ## Contributors:
 
 * Will Harris
-* Justin Morrill
-* Dominic King
-* Adam Kern
 * Clara Henne
-* Arim Lim
 * William Ho
+* Adam Kern
+* Dominic King
+* Arim Lim
+* Justin Morrill
 * Stavan Jain
 * Anoushka Sinha
 * Ricardo Prado Cunha
