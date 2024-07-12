@@ -2,24 +2,24 @@
 
 This is the repository for Algebra In Lean (AIL), an interactive problem set
 that takes users through an advanced course in Lean through the lens of abstract
-algebra. The goal of this problem set is to introduce users to formalization
-and Lean 4 while also assisting in writing rigorous proofs in
-This is the repository for Algebra In Lean (AIL), an interactive problem set
-that takes users through an advanced course in Lean through the lens of
-abstract algebra. The goal of this problem set is to introduce users to
-formalization and Lean 4 while also assisting in writing rigorous proofs in
-group theory. Beginning with introductions to logic-based reasoning in Lean,
-each chapter takes users through various topics in group theory. Akin to Kevin
-Buzzard’s [Formalising
+algebra. The goal of this problem set is to introduce users to formalization and
+Lean 4 while also assisting in writing rigorous proofs in This is the repository
+for Algebra In Lean (AIL), an interactive problem set that takes users through
+an advanced course in Lean through the lens of abstract algebra. The goal of
+this problem set is to introduce users to formalization and Lean 4 while also
+assisting in writing rigorous proofs in group theory. After an introduction to
+logic-based reasoning in Lean, each chapter takes users through various topics
+in group theory. Akin to Kevin Buzzard’s [Formalising
 Mathematics](https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024)
 at Imperial College London, AIL includes chapters on group axioms,
 homomorphisms, and subgroups, each separated into problem sheets. These problem
 sheets include both the formalization of mathematical structures and exercises
+on proving related theorems. Buzzard’s [Formalising Mathematics
+course](https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024)
+at the Imperial College London, AIL includes chapters on group axioms,
+homomorphisms, and subgroups, each separated into problem sheets. These problem
+sheets include both the formalization of mathematical structures and exercises
 on proving related theorems.
-Buzzard’s [Formalising Mathematics course](https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024) at the Imperial College London, AIL
-includes chapters on group axioms, homomorphisms, and subgroups, each separated
-into problem sheets. These problem sheets include both the formalization of
-mathematical structures and exercises on proving related theorems.
 
 Also included in AIL is the [Lean
 Blueprint](https://mao3j1m0op.github.io/algebra-in-lean/blueprint/), which
