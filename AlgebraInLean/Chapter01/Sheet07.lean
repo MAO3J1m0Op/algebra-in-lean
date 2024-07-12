@@ -6,7 +6,7 @@ set_option linter.unusedTactic false
 
 /-
 The last group we will cover in this section is the symmetric group. This is defined as the set of
-all permutatins of a set of n elements. This is formalized as the set of all bijections of a finite
+all permutations of a set of n elements. This is formalized as the set of all bijections of a finite
 set of size n onto itself. The group operation, therefore, is function composition.
 
 For example, S3 has 6 elements, which permute the tuple (1, 2, 3) into one of: (1, 2, 3), (1, 3, 2),
