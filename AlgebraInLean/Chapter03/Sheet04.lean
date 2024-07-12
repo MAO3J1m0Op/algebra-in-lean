@@ -2,8 +2,6 @@ import AlgebraInLean.Chapter03.Sheet03
 
 namespace AlgebraInLean
 
-namespace Subgroups
-
 variable {G : Type*} [Group G]
 
 /--
@@ -323,11 +321,5 @@ theorem Pows_card_eq_order (x : G) : Nat.card (Pows x) = order x := by
     rw [←Set.infinite_coe_iff, ←Equiv.infinite_iff e]
     exact Int.infinite
   done
-
-def Homomorphism {G G' : Type*} [Group G] [Group G'] (φ : G → G') : Prop :=
-  ∀ a b : G, μ (φ a) (φ b) = φ (μ a b)
-
-def Isomorphic {G G' : Type*} [Group G] [Group G'] (φ : G → G') : Prop :=
-  Function.Bijective φ ∧ Homomorphism φ
 
 -- TODO: Create isomorphism between Cn and Pows n

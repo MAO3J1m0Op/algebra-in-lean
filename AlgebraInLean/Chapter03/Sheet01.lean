@@ -1,8 +1,8 @@
-import AlgebraInLean.Chapter01.Sheet07
+import AlgebraInLean.Chapter02.Sheet04
+
+set_option linter.unusedTactic false
 
 namespace AlgebraInLean
-
-namespace Subgroups
 
 /--
 If G is a group, then a subgroup H of G is a subset of G that is itself a group under G's group

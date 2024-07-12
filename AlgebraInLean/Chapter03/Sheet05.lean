@@ -2,42 +2,7 @@ import AlgebraInLean.Chapter03.Sheet04
 
 namespace AlgebraInLean
 
-namespace Subgroups
-
 variable {G G' : Type*} [Group G] [Group G']
-
-/--
-Based on what we know about homomorphisms and group identities, it should be that a homomorphism
-maps the identity of the domain to the identity of the codomain. Let's prove it.
--/
-theorem homomorphism_id_map_id (φ : G → G') (hφ : Homomorphism φ) : φ (𝕖 : G) = (𝕖 : G') := by
-  -- EXERCISE
-  have h1 : φ 𝕖 = μ (φ 𝕖) (φ 𝕖) := by
-    rw [hφ, op_id]
-  have h2 : φ 𝕖 = μ (φ 𝕖) (φ 𝕖) → μ (φ 𝕖) (ι (φ 𝕖)) = μ (μ (φ 𝕖) (φ 𝕖) ) (ι (φ 𝕖)) := by
-    intro he
-    rw [← he]
-  apply h2 at h1
-  rw[op_assoc, op_inv, op_id] at h1
-  symm
-  exact h1
-
-/--
-One property that follows directly from the last is that for any a ∈ G, φ(a⁻¹) = φ(a)⁻¹.
-We can show this by using φ(𝕖) = φ(a · a⁻¹) = φ(a) · φ(a⁻¹) and the uniqe identity property.
--/
-theorem homomorphism_id_inv (φ : G → G') (hφ : Homomorphism φ) : ∀ a : G, φ (ι a) = ι (φ a) := by
-  -- EXERCISE
-  intro a
-  have h1 : φ 𝕖 = 𝕖 := by
-    apply homomorphism_id_map_id
-    exact hφ
-  have h2 : φ (μ a (ι a)) = μ (φ a) (φ (ι a)) := by
-    rw [hφ]
-  rw [op_inv, h1] at h2
-  symm at h2
-  apply inv_unique_right (φ a) (φ (ι a)) at h2
-  exact h2
 
 /--
 This naturally leads to the idea of the kernel of a homomorphism. Generally, when a group G acts on
@@ -51,13 +16,13 @@ def Kernel (φ : G → G') (h : Homomorphism φ) : Subgroup G where
   has_id := by
     suffices : φ 𝕖 = 𝕖
     · exact this
-    exact homomorphism_id_map_id φ h
+    exact hom_id_to_id φ h
   mul_closure := by
     intro a b ha hb
     rw [Set.mem_setOf_eq, ←h, ha, hb, id_op]
   inv_closure := by
     intro a ha
-    rw [Set.mem_setOf_eq, homomorphism_id_inv φ, ha, inv_id]
+    rw [Set.mem_setOf_eq, hom_inv_to_inv φ, ha, inv_id]
     exact h
 
 /--
@@ -72,7 +37,7 @@ def Image (φ : G → G') (h : Homomorphism φ) : Subgroup G' where
   -- EXERCISES
   has_id := by
     use 𝕖
-    rw [homomorphism_id_map_id φ]
+    rw [hom_id_to_id φ]
     exact h
   mul_closure := by
     intro a b ⟨x, hx⟩ ⟨y, hy⟩
@@ -81,18 +46,8 @@ def Image (φ : G → G') (h : Homomorphism φ) : Subgroup G' where
   inv_closure := by
     intro a ⟨x, hx⟩
     use ι x
-    rw [←hx, homomorphism_id_inv φ]
+    rw [←hx, hom_inv_to_inv φ]
     exact h
-
-/--
-The conjugate of an element n by g is defined as the specific left and right operations g · n · g⁻¹.
-
-Note that g and n are in group G so the conjugate also exists in G.
--/
-def conjugate (g n : G) : G := μ (μ g n) (ι g)
-
-@[simp]
-theorem conjugate_def {g n : G}: conjugate g n = μ (μ g n) (ι g) := by rfl
 
 /-
 Let's give `simp` access to some simple theorems.
@@ -103,14 +58,14 @@ Firstly, conjugating an element g by 𝕖 gives g back. Can you see why this wor
 theorem conjugate_by_id : conjugate (𝕖 : G) = id := by
   -- EXERCISE
   funext g
-  rw [conjugate_def, id_op, inv_id, op_id]
+  rw [conjugate, id_op, inv_id, op_id]
   rfl
 
 /-- Secondly, conjugating 𝕖 by any element yields the identity. This uses the `op_inv` property. -/
 @[simp]
 theorem conjugate_id (g : G) : conjugate g 𝕖 = 𝕖 := by
   -- EXERCISE
-  rw [conjugate_def, op_id, op_inv]
+  rw [conjugate, op_id, op_inv]
 
 /--
 Thirdly, the conjugate of `a · b` is just conjugate of `a` composed with conjugate of `b`.
@@ -120,18 +75,16 @@ Can you figure out how g · (a · b) · g⁻¹ = (g · a · g⁻¹) · (g · b �
 @[simp]
 theorem conjugate_op (a b : G) : conjugate (μ a b) = conjugate a ∘ conjugate b := by
   funext s
-  rw [conjugate_def, Function.comp_apply, inv_anticomm]
-  repeat rw [conjugate_def]
+  rw [conjugate, Function.comp_apply, inv_anticomm]
+  repeat rw [conjugate]
   repeat rw [op_assoc]
 
 /--
 We'll use capital `Conjugate` to define conjugating a set by an element g. This notation is
 equivalent to the set {g · s · g⁻¹ | s ∈ S}, that is {conjugate s | s : S}.
 -/
-def Conjugate (g : G) (S : Set G) : Set G := conjugate g '' S
-
 @[simp]
-theorem Conjugate_def {g : G} {S : Set G} : Conjugate g S = conjugate g '' S := by rfl
+def Conjugate (g : G) (S : Set G) : Set G := conjugate g '' S
 
 /--
 We define a subgroup to be `normal` if the subgroup is closed under conjugation with any element of
@@ -157,7 +110,7 @@ theorem Kernel_normal (φ : G → G') (h : Homomorphism φ) : normal (Kernel φ 
   intro g k hk
   suffices : φ (conjugate g k) = 𝕖
   · exact this
-  rw [conjugate_def, ←h, ←h, hk, op_id, h, op_inv, homomorphism_id_map_id φ h]
+  rw [conjugate, ←h, ←h, hk, op_id, h, op_inv, hom_id_to_id φ h]
 
 /--
 The normalizer of a set S (of a group G) is the set of all elements in G that when conjugated with S
@@ -169,20 +122,20 @@ def Normalizer (S : Set G) : Subgroup G where
   -- EXERCISES? These are hard...
   has_id := by
     intro s _
-    rw [Conjugate_def, conjugate_by_id]
+    rw [Conjugate, conjugate_by_id]
     simp
   mul_closure := by
     intro a b ha hb s hs
     specialize ha s hs
     specialize hb s hs
-    rw [Conjugate_def] at *
+    rw [Conjugate] at *
     rw [conjugate_op, Set.image_comp, hb, ha]
   inv_closure := by
     intro a ha s hs
     nth_rw 1 [←ha s hs]
-    rw [Conjugate_def]
+    rw [Conjugate]
     funext x
-    rw [Conjugate_def, ←Set.image_comp, ←conjugate_op, inv_op, conjugate_by_id, Set.image_id]
+    rw [Conjugate, ←Set.image_comp, ←conjugate_op, inv_op, conjugate_by_id, Set.image_id]
 
 /--
 The centralizer of a set S (of a group G) is the set of all elements in G that commute with all
@@ -250,14 +203,14 @@ theorem homomorphism_inj_iff_kernel_trivial (φ : G → G') (h : Homomorphism φ
     · intro x hx
       change x = 𝕖
       apply hinj
-      rw [homomorphism_id_map_id φ h]
+      rw [hom_id_to_id φ h]
       exact hx
     · apply Minimal_smallest
   · intro hk x y hfeq
     have h1 : φ (μ x (ι y)) = μ (φ x) (φ (ι y)) := by
       rw [h]
     have h2 : (φ (ι y)) = ι (φ y):= by
-      apply homomorphism_id_inv
+      apply hom_inv_to_inv
       exact h
     rw [hfeq, h2, op_inv] at h1
     have h3 : μ x (ι y) ∈ Kernel φ h := by
@@ -298,10 +251,10 @@ theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
   ext x
   constructor
   · intro h
-    rw [Conjugate_def] at h
+    rw [Conjugate] at h
     obtain ⟨y , h₁, h₂⟩ :=  h
     rw [← h₂]
-    rw [conjugate_def]
+    rw [conjugate]
     apply Subgroup.mul_closure
     · apply Subgroup.mul_closure
       · exact hg
@@ -309,7 +262,7 @@ theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
     · apply Subgroup.inv_closure
       exact hg
   · intro h
-    rw [Conjugate_def]
+    rw [Conjugate]
     use μ (μ (ι g) (x)) g
     constructor
     · apply Subgroup.mul_closure
@@ -318,6 +271,6 @@ theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
           exact hg
         exact h
       exact hg
-    · simp only [conjugate_def, op_assoc, op_inv, op_id]
+    · simp only [conjugate, op_assoc, op_inv, op_id]
       rw [← op_assoc]
       simp only [op_inv, id_op]

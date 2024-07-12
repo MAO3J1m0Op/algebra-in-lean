@@ -2,7 +2,7 @@ import AlgebraInLean.Chapter03.Sheet01
 
 namespace AlgebraInLean
 
-namespace Subgroups
+set_option linter.unusedTactic false
 
 /-
 In this sheet, we build the theory of repeated application of the group operation. If the
