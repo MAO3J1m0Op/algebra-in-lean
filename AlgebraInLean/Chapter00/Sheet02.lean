@@ -14,6 +14,7 @@ set_option linter.unusedTactic false
 /-
 The `linter.unusedVariables` command ignores unused variables warnings in select sheets.
 -/
+
 set_option linter.unusedVariables false
 /-this allows us to define variables that go on to be unused in an exercise-/
 

@@ -43,12 +43,14 @@ class Group (G : Type*) where
   op_id : ∀ (a : G), op a id = a
 
   /--𝕖⬝ a = a -/
+
   id_op : ∀ (a : G), op id a = a
 
   /-- For `x : G`, `inv x` is its inverse, with the property described below -/
   inv : G → G
 
   /-- a⁻¹ ⬝ a =𝕖-/
+
   inv_op : ∀ (a : G), op (inv a) a = id
 
   /-
@@ -77,12 +79,14 @@ def 𝕖 : G := Group.id
 theorem op_id : ∀ (a : G), μ a 𝕖 = a := Group.op_id
 
 /--𝕖⬝ a = a -/
+
 theorem id_op : ∀ (a : G), μ 𝕖 a = a := Group.id_op
 
 /-- The inverse map of the gorup -/
 def ι [Group G] : G → G := Group.inv
 
 /-- a⁻¹ ⬝ a =𝕖-/
+
 theorem inv_op [Group G] (a : G) : μ (ι a) a = 𝕖 := Group.inv_op a
 
 /-
@@ -90,7 +94,9 @@ Now, we can start writing proofs with groups. Walk through this example, making 
 every step.
 -/
 
+
 /-- a ⬝ a⁻¹ =𝕖-/
+
 theorem op_inv [Group G] (a : G) : μ a (ι a) = 𝕖 := by
   rw [←id_op (μ a _)]
   rw [←inv_op (ι a)]

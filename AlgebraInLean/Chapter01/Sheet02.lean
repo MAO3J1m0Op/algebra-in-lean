@@ -79,7 +79,9 @@ definitions.
 
 Since the previous proof of `op_inv` used the other definition of `Group`, it needs to be re-proved.
 -/
+
 /-- a ⬝ a⁻¹ =𝕖-/
+
 theorem op_inv [Group α] (a : α) : μ a (ι a) = 𝕖 := by
   -- sorry
   -- SAMPLE SOLUTION
@@ -95,6 +97,7 @@ theorem op_inv [Group α] (a : α) : μ a (ι a) = 𝕖 := by
 /- Try to prove a theorem using the new definitions. -/
 /-- a ⬝ b = a ⬝ c ⇒ b = c -/
 theorem op_left_cancel [Group α] (a b c : α) (h : μ a b = μ a c) : b = c := by
+
   -- sorry
   -- SAMPLE SOLUTION
   rw [←id_op b, ←id_op c, ←inv_op a, op_assoc, op_assoc, h]
