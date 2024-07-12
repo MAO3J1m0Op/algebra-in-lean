@@ -6,12 +6,53 @@ set_option linter.unusedTactic false
 
 section MonoidOrder
 
-/--
-Classical logic relies on the Law of Excluded Middle, which states that every proposition is either
-true or false. In other terms, for any proposition `p`, either `p` is true or its negation `¬p` is
-true. In Lean, the story is more complicated, as Lean is a programming language meaning it must be
-capable of producing a program evaluatable by a computer. So if we were to write a function
-including the snippet below, where `p` is an arbitrary `Prop`:
+/-
+## Challenge Sheet
+
+Let M be a monoid, and let x : M. The order of x is the smallest nonzero natural number n such that
+xⁿ = e if such an n exists. Otherwise, the order of x is defined to be 0. How would you implement
+this definition in Lean?
+
+A starting point would be to consider the proposition
+-/
+
+def isFiniteOrder {M : Type*} [Monoid M] (x : M): Prop := ∃ (n : ℕ), n ≠ 0 ∧ mpow x n = 𝕖
+
+/-
+If this proposition is true, we can access the value of n that yields xⁿ = e. But we do not simply
+want any `n : ℕ` that satisfies mpow x n = 𝕖, we want the smallest! After a quick search of the Nat
+namespace in mathlib, there appears to be a function `Nat.find`, that takes in a proposition `h` and
+returns the smallest natural number that satisfies `h`.
+
+Then, we could use an if statement to define `order`: if `h : isFiniteOrder x`, then `order x` is
+`Nat.find h`. Else, `order x` should be 0.
+
+Try uncommenting the following lines to see if this idea works:
+
+def order {M : Type*} [Monoid M] (x : M) : ℕ := if h : isFiniteOrder x then Nat.find h else 0
+
+The issue is subtle.
+
+The definition above asserts that `if h : isFiniteOrder x then Nat.find h else 0` has type `ℕ`.
+However, when Lean type-checks this definition, it doesn't know whether the proposition
+`isFiniteOrder x` is true or false, and so it can't decide what the type of the entire if-block
+above is either.
+
+You may object to this: if `isFiniteOrder x` is true, then the expression is the natural number
+returned by Nat.find and if `isFiniteOrder x` is false, then the expression is the natural number 0.
+In either case, the expression has type `ℕ`. Shouldn't Lean be able to figure this out?
+
+Implicit in this intuition is the idea that every proposition is either true or false, even if we
+don't necessarily have a way to compute the result. In other words, for any proposition `p`, either
+`p` is true or its negation `¬p` is true. However, this seemingly trivial claim, called the Law of
+the Excluded Middle, is not always true in constructive mathematics! Moreover, Lean's foundations for
+proving theorems is constructive: if you want to prove a proposition `p`, you have to construct a
+term that has type p (i.e., a term of type `p` is a proof of `p`).
+
+Meanwhile, classical logic asserts the Law of Excluded Middle as an axiom. In Lean, the story is complicated.
+Since Lean is a programming language it must be capable of producing a program that can be
+evaulated by a computer. So if we were to write a function including the snippet below, where `p` is
+an arbitrary `Prop`:
 
 ```
 if p then 1 else 0
@@ -30,30 +71,33 @@ For further reading, consult the documentation on the below definitions:
 * `Classical` namespace
 -/
 noncomputable def order {M : Type*} [Monoid M] (x : M) : ℕ := by
-  classical exact if h : ∃ (n : ℕ), n ≠ 0 ∧ mpow x n = 𝕖 then Nat.find h else 0
+  classical exact if h : isFiniteOrder x then Nat.find h else 0
 
 variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
 
 /-
 If a tactic fails with an error pertaining to failure to synthesize instance of `Decidable`,
-`DecidablePred`, or other type classes belonging to the decidable family, prefixing the
-failing tactic with the `classical` tactic should remove these errors. It does so by using
-noncomputable instances of these type classes implemented on all `Prop`s. Keep this in mind
-for this and future exercises. Similarly, you may find `split_ifs` to be a helpful tactic.
+`DecidablePred`, or other type classes belonging to the decidable family, prefixing the failing
+tactic with the `classical` tactic should remove these errors. `classical` works by running the
+tactics in scope where all propositions are decidable (i.e., every proposition is an isntance of the
+type-class Classical.propDecidable). Keep this in mind for this and future exercises. Similarly, you
+may find `split_ifs` and `Nat.find_spec` to be helpful tactics.
 -/
 
-theorem mpow_order_zero (h₀ : order x = 0) : mpow x n = 𝕖 → n = 0 := by
+/-- If xⁿ = e → n = 0 -/
+lemma mpow_order_zero (h₀ : order x = 0) : mpow x n = 𝕖 → n = 0 := by
   -- EXERCISE (*.5)
   intro hn
   dsimp [order] at h₀
   split_ifs at h₀ with h
   · absurd h₀
-    classical have : ¬(Nat.find h) = 0 ∧ mpow x (Nat.find h) = 𝕖 := Nat.find_spec h
-    exact this.left
+    classical have hFinite : ¬(Nat.find h) = 0 ∧ mpow x (Nat.find h) = 𝕖 := Nat.find_spec h
+    exact hFinite.left
   · contrapose! h
     use n
 
-theorem mpow_order : mpow x (order x) = 𝕖 := by
+/-- If n is the order of x, then xⁿ = e -/
+lemma mpow_order : mpow x (order x) = 𝕖 := by
   -- EXERCISE (*.5)
   set n := order x with hn
   dsimp [order] at hn
@@ -62,19 +106,22 @@ theorem mpow_order : mpow x (order x) = 𝕖 := by
   · rfl
   done
 
-theorem order_nonzero (h : order x ≠ 0) : ∃ n ≠ 0, mpow x n = 𝕖 := by
+/-- If the order of x is nonzero, then there exists an n : ℕ such that xⁿ = e -/
+lemma order_nonzero (h : order x ≠ 0) : ∃ n ≠ 0, mpow x n = 𝕖 := by
   use order x
   apply And.intro h
   exact mpow_order x
 
-theorem mpow_mod_order : mpow x (m % order x) = mpow x m := by
+/-- Let m be the order x. Write m = nq + r with 0 ≤ r < m. Then, xʳ = xⁿ  -/
+lemma mpow_mod_order : mpow x (m % order x) = mpow x m := by
   -- EXERCISE (*)
   set n := order x
   nth_rw 2 [←Nat.mod_add_div m n]
   rw [mpow_add, mpow_mul, mpow_order, mpow_id, op_id]
   done
 
-theorem order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
+/-- Let n be the order of x. xᵐ = e ↔ n | m -/
+lemma order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
   apply Iff.intro
   · intro hm
     by_cases hm0 : m = 0
@@ -93,7 +140,7 @@ theorem order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
         · nth_rw 2 [hn] at this
           classical apply Nat.find_min h this
           apply And.intro
-          · rw [←Nat.dvd_iff_mod_eq_zero]
+          · rw [ne_eq, ←Nat.dvd_iff_mod_eq_zero n m]
             exact hnm
           · rw [mpow_mod_order, hm]
       · exfalso
@@ -104,6 +151,7 @@ theorem order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
     rw [mpow_mul, mpow_order, mpow_id]
   done
 
+/-- Let m be the order of x and let n : ℕ with n ≠ 0. If m ≠ 0, then the order of xⁿ is nonzero -/
 lemma mpow_nonzero_order (n : ℕ) (hn : n ≠ 0) (h : order x ≠ 0) : order (mpow x n) ≠ 0 := by
   have : ∃ m ≠ 0, mpow x m = 𝕖
   · exact order_nonzero x h
@@ -136,6 +184,7 @@ lemma inverse_of_nonzero_order (h : order x ≠ 0) : ∃ (y : M), μ x y = 𝕖 
 --   : y = y' := by
 --   sorry
 
+/-- Suppose m, n < `order x`. If xᵐ = xⁿ, then m = n -/
 lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
   : mpow x m = mpow x n → m = n := by
   -- EXERCISE (**)
@@ -162,7 +211,8 @@ lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
     linarith
   done
 
-theorem mod_order_eq_of_mpow_eq (h : order x ≠ 0)
+/-- Let r ≠ 0 be the order of x. If xᵐ = xⁿ, then m is congruent to n (mod r) -/
+lemma mod_order_eq_of_mpow_eq (h : order x ≠ 0)
   -- EXERCISE (*)
   : mpow x m = mpow x n → m % (order x) = n % (order x) := by
   intro heq
@@ -181,10 +231,12 @@ section GroupOrder
 
 variable {G : Type*} [Group G] (x : G)
 
-theorem gpow_order : gpow x (order x) = 𝕖 := by
+/-- Let n be the order x. Then, xⁿ = e -/
+lemma gpow_order : gpow x (order x) = 𝕖 := by
   rw [gpow_ofNat, mpow_order]
 
-theorem gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n = 0 := by
+/-- Suppose the order of x is 0. Then, xⁿ = e, then n = 0 -/
+lemma gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n = 0 := by
   intro h
   cases n with
   | ofNat n =>
@@ -200,7 +252,8 @@ theorem gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n =
     -- linarith
     -- exact h₀
 
-theorem gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
+/-- Let m be the order x. Write m = nq + r with 0 ≤ r < m. Then, xʳ = xⁿ  -/
+lemma gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
   -- EXERCISE (**)
   cases n with
   | ofNat n =>
@@ -209,7 +262,8 @@ theorem gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
   | negSucc n =>
     sorry
 
-theorem gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = gpow x n) : m = n := by
+/-- Suppose the order of x is 0. Then xᵐ = xⁿ → m = n-/
+lemma gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = gpow x n) : m = n := by
   induction n using Int.induction_on generalizing m with
   | hz =>
     apply gpow_order_zero x h
@@ -223,7 +277,7 @@ theorem gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = g
 --   : order x = 0 := by
 --   sorry
 
-theorem mod_order_eq_of_gpow_eq {m n : ℤ}
+lemma mod_order_eq_of_gpow_eq {m n : ℤ}
   : gpow x m = gpow x n → m % (order x) = n % (order x) := by
   sorry
 

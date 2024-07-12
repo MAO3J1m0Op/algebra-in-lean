@@ -5,12 +5,13 @@ namespace AlgebraInLean
 set_option linter.unusedTactic false
 
 /-
-In this sheet, we build the theory of repeated application of the group operation. If the
-group operation is multiplication, the functions we define in this sheet are equivalent to
-exponentiation.
+## Challenge Sheet
 
-First, we define the power function `mpow` for monoids. Since monoids do not have a notion of
-inverses, we consider only natural numbers as input.
+In this sheet, we build the theory of repeated application of the group operation. If the group
+operation is multiplication, the functions we define in this sheet are equivalent to exponentiation.
+
+First, we define the power function `mpow` for monoids. Let M be a Monoid and x ∈ M. Since monoids
+do not have a notion of inverses, we only define xⁿ for n ∈ ℕ.
 -/
 section Mpow
 
@@ -19,28 +20,33 @@ We define this function inductively. `mpow x n` gives the element equal to multi
 identity element `n` times by `x`.
 -/
 def mpow {M : Type*} [Monoid M] (x : M) : ℕ → M
-| Nat.zero => 𝕖
-| Nat.succ n => μ (mpow x n) x
+| Nat.zero => 𝕖   -- m⁰ = 𝕖
+| Nat.succ n => μ (mpow x n) x  -- m ^ (n + 1) = m * m ^ n
 
 variable {M : Type*} [Monoid M] (x : M) (m n : ℕ)
 
+-- These are true by definition
 @[simp]
-theorem mpow_zero : mpow x 0 = 𝕖 := rfl
+lemma mpow_zero : mpow x 0 = 𝕖 := rfl
 
 @[simp]
-theorem mpow_succ_right : mpow x (n+1) = μ (mpow x n) x := rfl
+lemma mpow_succ_right : mpow x (n+1) = μ (mpow x n) x := rfl
 
+/-- x¹ = x -/
 @[simp]
-theorem mpow_one : mpow x 1 = x := by
+lemma mpow_one : mpow x 1 = x := by
   -- EXERCISE (DIFFICULTY *)
   rw [mpow, mpow_zero, id_op]
 
-theorem mpow_two : mpow x 2 = μ x x := by
+/-- x² = x * x -/
+lemma mpow_two : mpow x 2 = μ x x := by
   -- EXERCISE (*)
   rw [mpow, mpow_one]
 
 -- Induction will prove helpful for the following exercises.
-theorem mpow_succ_left : mpow x (n+1) = μ x (mpow x n) := by
+
+/-- x ^ (n + 1) = x * x ^ n-/
+lemma mpow_succ_left : mpow x (n+1) = μ x (mpow x n) := by
   -- EXERCISE (*)
   induction n with
   | zero => rw [zero_add, mpow_one, mpow_zero, op_id]
@@ -49,14 +55,16 @@ theorem mpow_succ_left : mpow x (n+1) = μ x (mpow x n) := by
     nth_rw 2 [mpow_succ_right]
     rw [ih, op_assoc]
 
-theorem mpow_add : mpow x (m + n) = μ (mpow x m) (mpow x n) := by
+/--  x ^ (m + n) = x ^ m * x ^ n -/
+lemma mpow_add : mpow x (m + n) = μ (mpow x m) (mpow x n) := by
   -- EXERCISE (*)
   induction n with
   | zero => rw [mpow_zero, op_id, Nat.add_zero]
   | succ n ih =>
     rw [←Nat.add_assoc, mpow_succ_right, mpow_succ_right, ←op_assoc, ih]
 
-theorem mpow_mul : mpow x (m * n) = mpow (mpow x m) n := by
+/-- x ^ (m * n) = (x ^ m) ^ n-/
+lemma mpow_mul : mpow x (m * n) = mpow (mpow x m) n := by
   -- EXERCISE (*)
   induction n with
   | zero =>
@@ -65,15 +73,16 @@ theorem mpow_mul : mpow x (m * n) = mpow (mpow x m) n := by
     simp_rw [Nat.mul_succ, mpow_add, ih, mpow_one]
   done
 
+/-- e ^ n = e -/
 @[simp]
-theorem mpow_id : mpow 𝕖 n = (𝕖 : M) := by
+lemma mpow_id : mpow 𝕖 n = (𝕖 : M) := by
   -- EXERCISE (*)
   induction n with
   | zero => rfl
   | succ n ih => rw [mpow_succ_right, ih, op_id]
   done
 
-theorem mpow_comm_self : μ (mpow x n) x = μ x (mpow x n) := by
+lemma mpow_comm_self : μ (mpow x n) x = μ x (mpow x n) := by
   induction n with
   | zero => rw [mpow_zero, op_id, id_op]
   | succ n ih =>
@@ -81,7 +90,7 @@ theorem mpow_comm_self : μ (mpow x n) x = μ x (mpow x n) := by
     rw [op_assoc, ih]
   done
 
-theorem mpow_comm_mpow : μ (mpow x n) (mpow x m) = μ (mpow x m) (mpow x n) := by
+lemma mpow_comm_mpow : μ (mpow x n) (mpow x m) = μ (mpow x m) (mpow x n) := by
   induction n with
   | zero => rw [mpow_zero, op_id, id_op]
   | succ n ih =>
@@ -92,11 +101,16 @@ theorem mpow_comm_mpow : μ (mpow x n) (mpow x m) = μ (mpow x m) (mpow x n) := 
 
 end Mpow
 
+/-
+This concludes our theory of monoid powers. Are there any other properties you think monoid
+powers should have? Try to state and prove them!
+-/
+
 section Gpow
 
 /--
 Now, we define the power function for groups. Since groups have inverses, there becomes a natural
-notion of negative exponentiation. Notice that `Int` has two constructors.
+notion of negative exponentiation. Notice that `Int` has two constructors of type `Nat → Int`.
 -/
 def gpow {G : Type*} [Group G] (x : G) : ℤ → G
 /- The integer type can be constructed using natural numbers. This is done through an inductive type
@@ -119,7 +133,7 @@ lemma gpow_ofNat (n : ℕ) : gpow x ↑n = mpow x n := rfl
 
 lemma gpow_negSucc (n : ℕ) : gpow x (Int.negSucc n) = mpow (ι x) (n+1) := rfl
 
-theorem inv_mpow (n : ℕ) : ι (mpow x n) = mpow (ι x) n := by
+lemma inv_mpow (n : ℕ) : ι (mpow x n) = mpow (ι x) n := by
   induction n with
   | zero =>
     simp_rw [mpow_zero]
@@ -189,7 +203,7 @@ lemma gpow_pred {n : ℤ} : μ (gpow x n) (ι x) = gpow x (n - 1) := by
     rw [←mpow_succ_right]
   done
 
-theorem gpow_add {m n : ℤ} : μ (gpow x m) (gpow x n) = gpow x (m + n) := by
+lemma gpow_add {m n : ℤ} : μ (gpow x m) (gpow x n) = gpow x (m + n) := by
   -- EXERCISE (*)
   -- Adapted from Mathlib (see the proof of `zpow_add`).
   induction n using Int.induction_on with
