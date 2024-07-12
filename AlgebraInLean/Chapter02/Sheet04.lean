@@ -56,7 +56,7 @@ structure" looks like in the next chapter (keep an eye out for orders!).
 
 /- You may be able to intuitively discern that all automorphisms are also isomoprhisms.
 Lets do a brief exercise to prove this before jumping into some more complex examples. -/
-theorem aut_isomoprhism (φ : G → G) (h : Automorphism φ) : Isomorphism φ := by
+theorem aut_isomorphism (φ : G → G) (h : Automorphism φ) : Isomorphism φ := by
   -- SAMPLE SOLUTION
   obtain ⟨h_endomorphism, h_bijective⟩ := h
   unfold Isomorphism

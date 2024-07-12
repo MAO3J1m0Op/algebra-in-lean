@@ -2,7 +2,7 @@
 
 \begin{definition}[Homomorphism]
     \label{definition : Homomorphism}
-    \lean{Homomorphism}
+    \lean{AlgebraInLean.Homomorphism}
     \leanok
     \uses{definition : Group}
     A homomorphism is a map \( \phi \) from a group \( G \) to a group \( H \), for
@@ -15,7 +15,7 @@
 
 \begin{definition}[Isomorphism]
     \label{definition : Isomorphism}
-    \lean{Isomorphism}
+    \lean{AlgebraInLean.Isomorphism}
     \leanok
     \uses{definition : Group, definition : Homomorphism, definition : Bijective}
     An \emph{isomorphism} \( \phi \) from a group \( G \) to a group \( H \) is a bijective homomorphism.
@@ -23,7 +23,7 @@
 
 \begin{theorem}
     \label{theorem : hom_id_to_id}
-    \lean{hom_id_to_id}
+    \lean{AlgebraInLean.hom_id_to_id}
     \leanok
     \uses{definition : Group, definition : Homomorphism}
     Suppose \( \phi : G \rightarrow H \) is a homomorphism. Then \(
@@ -32,7 +32,7 @@
 
 \begin{theorem}
     \label{theorem : hom_inv_to_inv}
-    \lean{hom_inv_to_inv}
+    \lean{AlgebraInLean.hom_inv_to_inv}
     \leanok
     \uses{definition : Group, definition : Homomorphism}
     Suppose \( \phi : G \rightarrow H \) is a homomorphism. If \(g \in G \),
