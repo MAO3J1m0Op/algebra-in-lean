@@ -6,21 +6,21 @@ algebra. The goal of this problem set is to introduce users to formalization and
 Lean 4 while also assisting in writing rigorous proofs in abstract algebra.
 After an introduction to logic-based reasoning in Lean, each chapter takes users
 through various topics in group theory. Akin to Kevin Buzzard’s [Formalising
-Mathematics](https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024)
-at Imperial College London, AIL includes chapters on group axioms,
-homomorphisms, and subgroups, each separated into problem sheets. These problem
-sheets include both the formalization of mathematical structures and exercises
-on proving related theorems.
+Mathematics][FM] at Imperial College London, AIL includes chapters on group
+axioms, homomorphisms, and subgroups, each separated into problem sheets. These
+problem sheets include both the formalization of mathematical structures and
+exercises on proving related theorems.
 
-Also included in AIL is the [Lean
-Blueprint](https://mao3j1m0op.github.io/algebra-in-lean/blueprint/), which
-provides a dependency graph of lemmas and definitions, a top-down view of
-formalization progress, and a bottom-up view of individualized nodes. While this
-problem set presents an extensive introduction to the formalization of algebra
-and group theory mathematics, there is much left for future contributors. We
-hope that others will add to the problem set in the future, including examples
-related to quotient groups, group actions, Sylow theorems, ring theory, and much
-more.
+Also included in AIL is the [Lean Blueprint][LB], which provides a dependency
+graph of lemmas and definitions, a top-down view of formalization progress, and
+a bottom-up view of individualized nodes. While this problem set presents an
+extensive introduction to the formalization of algebra and group theory
+mathematics, there is much left for future contributors. We hope that others
+will add to the problem set in the future, including examples related to
+quotient groups, group actions, Sylow theorems, ring theory, and much more.
+
+[FM]: https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024
+[LB]: https://mao3j1m0op.github.io/algebra-in-lean/blueprint/
 
 ## Local installation
 
@@ -40,7 +40,7 @@ Now open the folder `algebra-in-lean` which you just created, using
 VS Code's "open folder" functionality. You will find all the exercises for the
 course inside a subdirectory called `AlgebraInLean`.
 
-## Contributors:
+## Contributors
 
 * Will Harris
 * Clara Henne
@@ -49,9 +49,13 @@ course inside a subdirectory called `AlgebraInLean`.
 * Dominic King
 * Arim Lim
 * Justin Morrill
+
+## Project Managers
+
+* Ricardo Prado Cunha
 * Stavan Jain
 * Anoushka Sinha
-* Ricardo Prado Cunha
+
 
 ## Blueprint
 
@@ -59,6 +63,12 @@ There are two ways to access the blueprint:
 
 * https://mao3j1m0op.github.io/algebra-in-lean/blueprint/
 * https://mao3j1m0op.github.io/algebra-in-lean/blueprint.pdf
+
+## Documentation
++
++We host [web documentation][Docs] for each sheet (and dependencies).
++
++[Docs]: https://mao3j1m0op.github.io/algebra-in-lean/docs/
 
 ## Credits
 
