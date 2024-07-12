@@ -1,0 +1,11 @@
+Algebra in Lean
+Copyright 2024 Formalizing Mathematics, Duke University
+
+Portions of this work are created by Kevin Buzzard at Imperial College London  
+for Formalising Mathematics 2024 (Released under Apache 2.0 license).
+
+This work includes the Lean Blueprint developed by Patrick Massot (Released
+under Apache 2.0 license).
+
+Portions of ths work are modeled after Mathlib 4 (Released under Apache 2.0
+license).
