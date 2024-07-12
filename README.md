@@ -27,7 +27,7 @@ more.
 First you need to install Lean 4. Instructions for doing that are
 [here](https://leanprover-community.github.io/get_started.html#regular-install).
 
-Then you will need to clone this repository from github onto your computer. Open
+Then you will need to clone this repository from GitHub onto your computer. Open
 up the same command line which you used to install Lean 4 and type:
 
 ```bash
