@@ -41,10 +41,10 @@ class Monoid (α : Type*) extends Semigroup α where
 /-- The identity element of a monoid or derived structure -/
 def 𝕖 [Monoid α] : α := Monoid.id
 
-/-- a ⬝𝕖= a -/
+/-- a ⬝ 𝕖 = a -/
 theorem op_id [Monoid α] : ∀ (a : α), μ a 𝕖 = a := Monoid.op_id
 
-/--𝕖⬝ a = a -/
+/-- 𝕖 ⬝ a = a -/
 theorem id_op [Monoid α] : ∀ (a : α), μ 𝕖 a = a := Monoid.id_op
 
 /-- Commutative monoids have the additional property that the operation is commutative -/
@@ -79,9 +79,7 @@ definitions.
 
 Since the previous proof of `op_inv` used the other definition of `Group`, it needs to be re-proved.
 -/
-
-/-- a ⬝ a⁻¹ =𝕖-/
-
+/-- a ⬝ a⁻¹ = 𝕖 -/
 theorem op_inv [Group α] (a : α) : μ a (ι a) = 𝕖 := by
   -- sorry
   -- SAMPLE SOLUTION

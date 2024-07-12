@@ -16,3 +16,8 @@ import AlgebraInLean.Chapter02.Sheet01
 import AlgebraInLean.Chapter02.Sheet02
 import AlgebraInLean.Chapter02.Sheet03
 import AlgebraInLean.Chapter02.Sheet04
+import AlgebraInLean.Chapter03.Sheet01
+import AlgebraInLean.Chapter03.Sheet02
+import AlgebraInLean.Chapter03.Sheet03
+import AlgebraInLean.Chapter03.Sheet04
+import AlgebraInLean.Chapter03.Sheet05

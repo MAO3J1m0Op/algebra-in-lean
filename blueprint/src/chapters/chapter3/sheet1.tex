@@ -1,0 +1,31 @@
+\section{Defining the Subgroup}
+
+\begin{definition}
+    \label{definition : Subgroup}
+    \lean{AlgebraInLean.Subgroup}
+    \leanok
+    \uses{definition : Group}
+    Let $G$ be a group. A \textit{subgroup} $H$ of $G$ is a subset that is itself a group under the group operation of $G$. This requires that the subgroup satisfies three operations.
+
+    \begin{enumerate}
+        \item The identity of $G$ is contained within $H$.
+        \item $H$ must be closed under $G$'s group operation: for any $a,b \in H$, $\mu(a,b) \in H$.
+        \item $H$ must be closed under $G$'s inversion operation: for any $a \in H$, $\iota(a) \in H$.
+    \end{enumerate}
+\end{definition}
+
+\begin{definition}
+    \label{definition : Maximal}
+    \lean{AlgebraInLean.Maximal}
+    \leanok
+    \uses{definition : Subgroup}
+    For any group $G$, the \textit{maximal} subgroup $H$ is the group that contains every element of $G$.
+\end{definition}
+
+\begin{definition}
+    \label{definition : Minimal}
+    \lean{AlgebraInLean.Minimal}
+    \leanok
+    \uses{definition : Subgroup}
+    For any group $G$, the \textit{minimal} subgroup $H$ is the group that contains exclusively the identity of $G$.
+\end{definition}

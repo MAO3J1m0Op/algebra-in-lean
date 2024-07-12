@@ -173,7 +173,7 @@ to inverses.
 -/
 
 /- Suppose φ : G → H is a homomorphism. Then φ(e) = e. -/
-theorem hom_id_to_id (φ : G → H) (hp : Homomorphism φ) (a : G) : φ 𝕖 = 𝕖 := by
+theorem hom_id_to_id (φ : G → H) (hp : Homomorphism φ) : φ 𝕖 = 𝕖 := by
   -- SAMPLE SOLUTION
   have h₁ : φ (μ 𝕖 𝕖) = μ (φ 𝕖) (φ 𝕖) := by
     rw [Homomorphism_def] at hp
@@ -223,7 +223,7 @@ theorem hom_inv_to_inv (φ : G → H) (hp : Homomorphism φ) (g : G) : φ (ι g)
   have h2 : φ (μ (ι g) g) = φ 𝕖
   · rw [inv_op]
   rw [h2] at h1
-  rw [hom_id_to_id φ hp g] at h1
+  rw [hom_id_to_id φ hp] at h1
   rw [two_sided_inv (φ (ι g)) (φ g) h1]
   rw [inv_inv]
   -- END SAMPLE SOLUTION

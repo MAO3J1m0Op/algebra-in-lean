@@ -36,21 +36,19 @@ class Group (G : Type*) where
   /-- (a ⬝ b) ⬝ c = a ⬝ (b ⬝ c) -/
   op_assoc : ∀ (a b c : G), op (op a b) c = op a (op b c)
 
-  /-- The identity element of the group (denoted "e"), with properties described below -/
+  /-- The identity element of the group (denoted "𝕖"), with properties described below -/
   id : G
 
   /-- a ⬝ 𝕖 = a -/
   op_id : ∀ (a : G), op a id = a
 
-  /--𝕖⬝ a = a -/
-
+  /-- 𝕖 ⬝ a = a -/
   id_op : ∀ (a : G), op id a = a
 
   /-- For `x : G`, `inv x` is its inverse, with the property described below -/
   inv : G → G
 
-  /-- a⁻¹ ⬝ a =𝕖-/
-
+  /-- a⁻¹ ⬝ a = 𝕖 -/
   inv_op : ∀ (a : G), op (inv a) a = id
 
   /-
@@ -75,18 +73,16 @@ theorem op_assoc : ∀ (a b c : G), μ (μ a b) c = μ a (μ b c) := Group.op_as
 /-- The identity element of the group -/
 def 𝕖 : G := Group.id
 
-/-- a ⬝𝕖= a -/
+/-- a ⬝ 𝕖 = a -/
 theorem op_id : ∀ (a : G), μ a 𝕖 = a := Group.op_id
 
-/--𝕖⬝ a = a -/
-
+/-- 𝕖 ⬝ a = a -/
 theorem id_op : ∀ (a : G), μ 𝕖 a = a := Group.id_op
 
-/-- The inverse map of the gorup -/
+/-- The inverse map of the group -/
 def ι [Group G] : G → G := Group.inv
 
-/-- a⁻¹ ⬝ a =𝕖-/
-
+/-- a⁻¹ ⬝ a = 𝕖 -/
 theorem inv_op [Group G] (a : G) : μ (ι a) a = 𝕖 := Group.inv_op a
 
 /-
