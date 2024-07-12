@@ -271,9 +271,9 @@ def gpowMap (x : G) (n : ℤ) : Pows x := by
 
 def finPowMap (x : G) (n : ℕ) (k : Fin n) : Pows x := gpowMap x k
 
-theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0)
+theorem gpowMap_bijective_of_order_zero {x : G} (h : order x = 0)
   -- EXERCISE
-  : Function.Bijective (gpowMap x) := by
+  : Bijective (gpowMap x) := by
   apply And.intro
   · intro a b heq
     apply gpow_inj_of_order_zero x
@@ -287,8 +287,8 @@ theorem gpowMap_bijective_of_order_zero (x : G) (h : order x = 0)
     unfold gpowMap
     congr
 
-theorem finPowMap_order_bijective (x : G) (h : order x ≠ 0)
-  : Function.Bijective (finPowMap x (order x)) := by
+theorem finPowMap_order_bijective {x : G} (h : order x ≠ 0)
+  : Bijective (finPowMap x (order x)) := by
   -- EXERCISE
   apply And.intro
   · intro ⟨a, ha⟩ ⟨b, hb⟩ heq
@@ -330,7 +330,7 @@ theorem Pows_card_eq_order (x : G) : Nat.card (Pows x) = order x := by
     apply Nat.card_eq_of_equiv_fin
     apply Equiv.symm
     apply Equiv.ofBijective (finPowMap x (order x))
-    apply finPowMap_order_bijective x
+    apply finPowMap_order_bijective
     exact h
   · -- EXERCISE
     rw [ne_eq, Decidable.not_not] at h
@@ -338,10 +338,34 @@ theorem Pows_card_eq_order (x : G) : Nat.card (Pows x) = order x := by
     apply Set.Infinite.card_eq_zero
     have e : ℤ ≃ Pows x
     · apply Equiv.ofBijective (gpowMap x)
-      apply gpowMap_bijective_of_order_zero x
+      apply gpowMap_bijective_of_order_zero
       exact h
     rw [←Set.infinite_coe_iff, ←Equiv.infinite_iff e]
     exact Int.infinite
   done
 
--- TODO: Create isomorphism between Cn and Pows n
+theorem Pows_iso_Int_of_zero_order {x : G} (hx : order x = 0)
+  : ∃ (φ : ℤ → Pows x), Isomorphism φ := by
+  use gpowMap x
+  apply And.intro
+  · intro a b
+    dsimp [gpowMap, μ, Magma.op]
+    simp_rw [←gpow_add]
+    rfl
+  · exact gpowMap_bijective_of_order_zero hx
+
+theorem Pows_iso_Cn_order (x : G) [h : NeZero (order x)]
+  : ∃ (φ : Fin (order x) → Pows x), Isomorphism φ := by
+  use finPowMap x (order x)
+  apply And.intro
+  · intro a b
+    have : μ a b = Fin.add a b := rfl
+    rw [this]
+    dsimp [Fin.add, finPowMap, gpowMap]
+    simp_rw [gpow_mod_order]
+    congr
+    simp_rw [gpow_ofNat, mpow_add]
+    rfl
+  · apply finPowMap_order_bijective
+    symm
+    exact NeZero.ne' (order x)
