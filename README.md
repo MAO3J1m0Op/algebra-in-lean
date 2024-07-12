@@ -52,10 +52,9 @@ course inside a subdirectory called `AlgebraInLean`.
 
 ## Project Managers
 
-* Ricardo Prado Cunha
 * Stavan Jain
+* Ricardo Prado Cunha
 * Anoushka Sinha
-
 
 ## Blueprint
 
@@ -82,4 +81,4 @@ We thank Dr. Colleen Robles for organizing and managing this project.
 We thank the Duke's Math+ program and Mathematics department for providing the
 opportunity and the resources to work on this project.
 
-This work was partially supported by NSF grants DMS-2003404 and ****
+This work was partially supported by the NSF grant DMS-2003404
