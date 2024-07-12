@@ -99,13 +99,17 @@ Now, we define the power function for groups. Since groups have inverses, there 
 notion of negative exponentiation. Notice that `Int` has two constructors.
 -/
 def gpow {G : Type*} [Group G] (x : G) : ℤ → G
-/- `Int.ofNat` covers the positive end of the integers. -/
+/- The integer type can be constructed using natural numbers. This is done through an inductive type
+with two constructors, indicating the two possible states of an integer (those being negative and
+nonnegative). The constructor `Int.ofNat` covers the nonnegative end of the integers (those that are
+equivalent to a `Nat`, hence the name `ofNat`). -/
 | Int.ofNat n => mpow x n
 /-
 Since the integer zero is already covered by `Int.ofNat 0`, it is not helpful for the negative
 constructor to have its own notion of zero. Instead, the negative constructor offsets the provided
 natural number by one before negating it. So, (0 : ℕ) maps to (-1 : ℤ), (1 : ℕ) maps to (-2 : ℤ),
-and so on. Keep this in mind as you work with `gpow`.
+and so on. This warrants the name `negSucc`, as in "the negation of the successor of the inputted
+natural number". Keep this in mind as you work with `gpow`.
 -/
 | Int.negSucc n => mpow (ι x) (n+1)
 

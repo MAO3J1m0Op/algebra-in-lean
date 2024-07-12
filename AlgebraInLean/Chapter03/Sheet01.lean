@@ -44,6 +44,9 @@ instance : Coe (Subgroup G) (Set G) := ⟨λ H ↦ H.carrier⟩
 This instance permits the use of `H : Subgroup G`. An element `a : H`, will have two properties:
 `a.val`, which is of type `G`, and `a.property`, which is the hypothesis that `a.val ∈ H`. Under the
 hood, this uses the built in `Subtype` type.
+
+The underscore after the type (`Type _`) indicates, similarly to `Type*`, that Lean should infer the
+universe level of the type as necessary.
 -/
 instance : CoeSort (Subgroup G) (Type _) := ⟨λ H ↦ H.carrier⟩
 /-
