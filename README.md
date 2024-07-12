@@ -14,11 +14,6 @@ Mathematics](https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics
 at Imperial College London, AIL includes chapters on group axioms,
 homomorphisms, and subgroups, each separated into problem sheets. These problem
 sheets include both the formalization of mathematical structures and exercises
-on proving related theorems. Buzzard’s [Formalising Mathematics
-course](https://www.ma.imperial.ac.uk/~buzzard/xena/formalising-mathematics-2024)
-at the Imperial College London, AIL includes chapters on group axioms,
-homomorphisms, and subgroups, each separated into problem sheets. These problem
-sheets include both the formalization of mathematical structures and exercises
 on proving related theorems.
 
 Also included in AIL is the [Lean
