@@ -64,14 +64,14 @@ course inside a subdirectory called `AlgebraInLean`.
 
 ## Credits
 
-We thank Kevin Buzzard and his
-[formalising-mathematics-2024](https://github.com/ImperialCollegeLondon/formalising-mathematics-2024?tab=readme-ov-file)
-repository for inspiring much of the infrastructure of this interactive problem
+We thank Kevin Buzzard and his repository
+https://github.com/ImperialCollegeLondon/formalising-mathematics-2024
+for inspiring much of the infrastructure of this interactive problem
 set.
 
 We thank Dr. Colleen Robles for organizing and managing this project.
 
-We thank the Math+ program and the Duke Mathematics department for providing the
+We thank the Duke's Math+ program and Mathematics department for providing the
 opportunity and the resources to work on this project.
 
 This work was partially supported by NSF grants DMS-2003404 and ****
