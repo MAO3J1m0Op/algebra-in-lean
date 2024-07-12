@@ -90,7 +90,9 @@ Now, we can start writing proofs with groups. Walk through this example, making 
 every step.
 -/
 
+
 /-- a ⬝ a⁻¹ =𝕖-/
+
 theorem op_inv [Group G] (a : G) : μ a (ι a) = 𝕖 := by
   rw [←id_op (μ a _)]
   rw [←inv_op (ι a)]

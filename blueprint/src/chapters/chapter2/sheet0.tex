@@ -1,0 +1,32 @@
+\section{Maps}
+
+\begin{definition}[Injective]
+    \label{definition : Injective}
+    \lean{AlgebraInLean.Injective}
+    \leanok
+    Given a function \( f \) mapping from a set \( X \) to a set \( Y \):
+    \[
+        \forall x,~ x' \in X,~ f(x) = f(x') \implies x = x'.
+    \]
+    Otherwise known as a ``one-to-one'' function.
+\end{definition}
+
+\begin{definition}[Surjective]
+    \label{definition : Surjective}
+    \lean{AlgebraInLean.Surjective}
+    \leanok
+    Given a function \( f \) mapping from a set \( X \) to a set \( Y \):
+    \[
+        \forall y \in Y,~ \exists x \in X,~ f(x) = y
+    \]
+    Otherwise known as an ``onto'' function.
+\end{definition}
+
+\begin{definition}[Bijective]
+    \label{definition : Bijective}
+    \lean{AlgebraInLean.Bijective}
+    \leanok
+    \uses{definition : Surjective, definition : Injective}
+    A bijective function is one that is both injective and surjective.
+\end{definition}
+
