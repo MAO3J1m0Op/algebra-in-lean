@@ -40,7 +40,7 @@ Then you will need to clone this repository from github onto your computer. Open
 up the same command line which you used to install Lean 4 and type:
 
 ```bash
-git clone git@https://github.com/MAO3J1m0Op/algebra-in-lean.git
+git clone https://github.com/MAO3J1m0Op/algebra-in-lean.git
 cd algebra-in-lean
 lake exe cache get
 ```
