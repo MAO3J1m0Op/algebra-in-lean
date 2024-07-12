@@ -89,9 +89,9 @@ instance {H : Subgroup G} : Group H where
   id := ⟨𝕖, H.has_id⟩
 
   /-
-  Recall that the next two fields are proofs. If you ever forget the type signature of a
-  structure field, you may either scroll to consult the definition, or alternatively, if one
-  is viewing this document in Visual Studio Code, one may hover over the name of the field.
+  Recall that the next two fields are proofs. If you ever forget the type signature of a structure
+  field, you may either scroll to consult the definition, or alternatively, if one is viewing this
+  document in Visual Studio Code, one may hover over the name of the field.
   -/
   id_op := by
     intro a
@@ -124,7 +124,7 @@ subgroup.
 def Maximal (G : Type*) [Group G] : Subgroup G where
   carrier := Set.univ
 
-  -- Try to come up with one-line solutions for each of the below proofs
+  -- Try to come up with one-line solutions for each of the below proofs.
   --PROOFS BELOW ARE SOLUTIONS
   has_id := by
     exact trivial
@@ -200,7 +200,7 @@ def Subgroup_Criterion (S : Set G) (he : ∃ (s : G), s ∈ S)
     rw [inv_inv] at hc3
     have hf : b ∈ S → ι b ∈ S := by
       intro hb
-      rw [← id_op (ι b)]
+      rw [←id_op (ι b)]
       specialize hc4 𝕖 b
       apply hc4
       have h1 : 𝕖 ∈ S := by

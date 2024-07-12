@@ -144,8 +144,6 @@ The centralizer of a set S (of a group G) is the set of all elements in G that c
 elements of S. This can be thought of a measure of how close a group is to being abelian.
 -/
 def Centralizer (S : Set G) : Subgroup G where
-  -- FIXME : all are written with primitive group axioms. If more robust
-  -- ones are provided in ch. 1, we can work to use those instead.
   carrier := {g | ∀ s ∈ S, μ g s = μ s g}
   has_id := by
     intro s _
@@ -154,7 +152,6 @@ def Centralizer (S : Set G) : Subgroup G where
     intro a b ha hb s hs
     rw [op_assoc, hb, ←op_assoc, ha, op_assoc] <;> exact hs
   inv_closure := by
-    -- Nasty, but works
     intro a ha s hs
     symm
     rw [←op_id s, ←op_inv a]
@@ -222,7 +219,7 @@ theorem homomorphism_inj_iff_kernel_trivial (φ : G → G') (h : Homomorphism φ
       trivial
     have h5 : μ x (ι y) = 𝕖 → μ (μ x (ι y)) y = μ 𝕖 y := by
       intro ht
-      rw[ht]
+      rw [ht]
     apply h5 at h4
     rw [id_op, op_assoc, inv_op, op_id] at h4
     exact h4
@@ -274,5 +271,5 @@ theorem subgroup_normalizer_self (H : Subgroup G) : H ≤ Normalizer H := by
         exact h
       exact hg
     · simp only [conjugate, op_assoc, op_inv, op_id]
-      rw [← op_assoc]
+      rw [←op_assoc]
       simp only [op_inv, id_op]
