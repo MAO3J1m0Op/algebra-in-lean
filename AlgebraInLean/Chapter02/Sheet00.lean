@@ -172,7 +172,6 @@ theorem bijective_from_inv {f : α → β} (h : ∃ (g : β → α), g ∘ f = i
 theorem bijective_iff_inv {f : α → β} : Bijective f ↔ ∃ (g : β → α), g ∘ f = id ∧ f ∘ g = id :=
   ⟨inv_from_bijective, bijective_from_inv⟩
 
-
 /-
 This definition is marked as `noncomputable` because `Exists.choose` invokes the axiom of choice.
 Since Lean can't evaluate the axiom of choice in a program (i.e., you can't use `#eval` on it), we
@@ -203,7 +202,6 @@ theorem bijective_inv {f : α → β} (h : Bijective f) : Bijective (inv_of_bije
   exact hg.symm
   -- END SAMPLE SOLUTION
   done
-
 
 /-- The inverse map of a group is bijective -/
 theorem Group.inv_bijective {G : Type*} [Group G] : Bijective (ι : G → G) := by

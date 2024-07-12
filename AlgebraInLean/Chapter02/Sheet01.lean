@@ -232,8 +232,8 @@ theorem hom_inv_to_inv (φ : G → H) (hp : Homomorphism φ) (g : G) : φ (ι g)
 /-
 
 You have two options on where to go next. If you're familiar with basic modular arithmetic
-(including gcds, lcms, and the Euclidean algorithm), you can go straight to Sheet2. If you would
-like a refresher, or simply to see how these concepts are implemented in Lean, feel free to go to
-the sheet named `Sheet02.lean`.
+(including greatest common denominators, lowest common multiples, and the Euclidean algorithm), you
+can go straight to `Sheet02`. If you would like a refresher, or simply to see how these concepts are
+implemented in Lean, feel free to go to the sheet named `Sheet02.lean`.
 
 -/
