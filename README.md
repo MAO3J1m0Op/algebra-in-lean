@@ -58,7 +58,7 @@ We thank Kevin Buzzard and his
 repository for inspiring much of the infrastructure of this interactive problem
 set.
 
-We thank Dr. Colleen Robles for organizing and managing this project
+We thank Dr. Colleen Robles for organizing and managing this project.
 
 We thank the Math+ program and the Duke Mathematics department for providing the
 opportunity and the resources to work on this project.
