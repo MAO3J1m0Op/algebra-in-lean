@@ -53,6 +53,13 @@ course inside a subdirectory called `AlgebraInLean`.
 * Anoushka Sinha
 * Ricardo Prado Cunha
 
+## Blueprint
+
+There are two ways to access the blueprint:
+
+* https://mao3j1m0op.github.io/algebra-in-lean/blueprint/
+* https://mao3j1m0op.github.io/algebra-in-lean/blueprint.pdf
+
 ## Credits
 
 We thank Kevin Buzzard and his repository
