@@ -2,6 +2,8 @@ import AlgebraInLean.Chapter03.Sheet03
 
 namespace AlgebraInLean
 
+set_option linter.unusedTactic false
+
 variable {G : Type*} [Group G]
 
 /--

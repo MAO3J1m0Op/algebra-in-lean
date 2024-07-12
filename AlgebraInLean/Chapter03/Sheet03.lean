@@ -2,6 +2,8 @@ import AlgebraInLean.Chapter03.Sheet02
 
 namespace AlgebraInLean
 
+set_option linter.unusedTactic false
+
 section MonoidOrder
 
 /--
