@@ -106,12 +106,6 @@ lemma mpow_order : mpow x (order x) = 𝕖 := by
   · rfl
   done
 
-/-- If the order of x is nonzero, then there exists an n : ℕ such that xⁿ = e -/
-lemma order_nonzero (h : order x ≠ 0) : ∃ n ≠ 0, mpow x n = 𝕖 := by
-  use order x
-  apply And.intro h
-  exact mpow_order x
-
 /-- Let m be the order x. Write m = nq + r with 0 ≤ r < m. Then, xʳ = xⁿ  -/
 lemma mpow_mod_order : mpow x (m % order x) = mpow x m := by
   -- EXERCISE (*)
@@ -151,21 +145,57 @@ lemma order_divides_iff_mpow_id : mpow x m = 𝕖 ↔ order x ∣ m := by
     rw [mpow_mul, mpow_order, mpow_id]
   done
 
+/-- The order of x is nonzero if and only if there exists an n : ℕ such that xⁿ = e -/
+lemma order_nonzero_iff : order x ≠ 0 ↔ ∃ n ≠ 0, mpow x n = 𝕖 := by
+  apply Iff.intro
+  · intro h
+    use order x
+    apply And.intro h
+    exact mpow_order x
+  · intro ⟨n, hn⟩
+    by_contra! h₀
+    absurd hn.left
+    rw [←Nat.zero_dvd, ←h₀, ←order_divides_iff_mpow_id]
+    exact hn.right
+
+/-- The order of the identity element, 𝕖, in any monoid is 1. -/
+lemma order_id : order (𝕖 : M) = 1 := by
+  unfold order
+  split
+  · case _ h =>
+    unfold isFiniteOrder at h
+    classical rw [Nat.find_eq_iff]
+    apply And.intro
+    · apply And.intro
+      · exact Nat.one_ne_zero
+      · exact mpow_id 1
+    · intro n hn
+      rw [and_iff_not_or_not, not_not]
+      left
+      push_neg
+      exact Nat.lt_one_iff.mp hn
+  · case _ h =>
+    absurd h
+    use 1
+    apply And.intro
+    · exact Nat.one_ne_zero
+    · exact mpow_id 1
+
 /-- Let m be the order of x and let n : ℕ with n ≠ 0. If m ≠ 0, then the order of xⁿ is nonzero -/
-lemma mpow_nonzero_order (n : ℕ) (hn : n ≠ 0) (h : order x ≠ 0) : order (mpow x n) ≠ 0 := by
-  have : ∃ m ≠ 0, mpow x m = 𝕖
-  · exact order_nonzero x h
-  obtain ⟨m, hm⟩ := this
-  suffices : ∃ k ≠ 0, mpow (mpow x k) m = 𝕖
-  · obtain ⟨k, hk⟩ := this
-    suffices : order x ∣ k
-    · sorry
-    sorry
-  use n
+lemma mpow_nonzero_order (n : ℕ) (h : order x ≠ 0) : order (mpow x n) ≠ 0 := by
+  obtain ⟨m, hm⟩ := (order_nonzero_iff x).mp h
+  suffices : ∃ k ≠ 0, mpow (mpow x n) k = 𝕖
+  · rw [order_nonzero_iff]
+    exact this
+  use m
   apply And.intro
-  · exact hn
+  · exact hm.left
   · rw [←mpow_mul, mul_comm, mpow_mul, hm.right, mpow_id]
 
+/-
+In any monoid, if the order of x is nonzero, then there is an element y that serves as both a left
+and right inverse to x.
+-/
 lemma inverse_of_nonzero_order (h : order x ≠ 0) : ∃ (y : M), μ x y = 𝕖 ∧ μ y x = 𝕖 := by
   use mpow x (order x - 1)
   apply And.intro
@@ -179,10 +209,6 @@ lemma inverse_of_nonzero_order (h : order x ≠ 0) : ∃ (y : M), μ x y = 𝕖 
     rw [Nat.sub_add_cancel]
     · exact mpow_order x
     · exact Nat.one_le_iff_ne_zero.mpr h
-
--- lemma inv_unique_of_nonzero_order {y y' : M} (h : order x ≠ 0) (hy : μ x y = 𝕖) (hy' : μ x y' = 𝕖)
---   : y = y' := by
---   sorry
 
 /-- Suppose m, n < `order x`. If xᵐ = xⁿ, then m = n -/
 lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
@@ -198,15 +224,25 @@ lemma mpow_inj_of_lt_order (hm : m < order x) (hn : n < order x)
     exact hk
   apply Nat.eq_zero_of_dvd_of_lt
   · rw [←order_divides_iff_mpow_id x]
-    rw [←mpow_mod_order]
-    rw [←op_id (mpow x (k % order x))]
-    have this : ∃ y : M, μ (mpow x m) y = 𝕖 := sorry
-    obtain ⟨y, hy⟩ := this
-    rw [←hy, ←op_assoc, ←mpow_add]
-    have : k % order x = k := sorry
-    rw [this, add_comm, hk, hy]
-    sorry
-
+    have op_cancel_left : ∀ u v : M, μ (mpow x m) u = μ (mpow x m) v → u = v
+    · intro u v heq
+      rw [←id_op u, ←id_op v]
+      have : ∃ (x' : M), μ x' (mpow x m) = 𝕖
+      · have : order x ≠ 0 := by linarith
+        by_cases hm' : m = 0
+        · use 𝕖
+          rw [id_op, hm', mpow_zero]
+        · have this := mpow_nonzero_order x m this
+          obtain ⟨x', hx'⟩ := inverse_of_nonzero_order (mpow x m) this
+          use x'
+          exact hx'.right
+      obtain ⟨x', op_inv⟩ := this
+      repeat rw [←op_inv]
+      repeat rw [op_assoc]
+      congr
+    apply op_cancel_left
+    rw [op_id, ←mpow_add, hk]
+    exact Eq.symm h
   · rw [←hk] at hn
     linarith
   done
@@ -231,26 +267,37 @@ section GroupOrder
 
 variable {G : Type*} [Group G] (x : G)
 
-/-- Let n be the order x. Then, xⁿ = e -/
+/-- Let n be the order x. Then, xⁿ = 𝕖 -/
 lemma gpow_order : gpow x (order x) = 𝕖 := by
   rw [gpow_ofNat, mpow_order]
 
-/-- Suppose the order of x is 0. Then, xⁿ = e, then n = 0 -/
+/- For any integer n, 𝕖ⁿ = 𝕖, if 𝕖 is the identity of a group G. -/
+lemma gpow_id (n : ℤ) : gpow (𝕖 : G) n = 𝕖 := by
+  cases n with
+  | ofNat n => rw [Int.ofNat_eq_coe, gpow_ofNat, mpow_id]
+  | negSucc n =>
+    rw [gpow_negSucc, mpow_succ_right, inv_id, op_id, mpow_id]
+
+/-- Suppose the order of x is 0. Then if xⁿ = 𝕖, n = 0 -/
 lemma gpow_order_zero {n : ℤ} (h₀ : order x = 0) : gpow x n = 𝕖 → n = 0 := by
   intro h
   cases n with
   | ofNat n =>
+    -- EXERCISE (*)
     congr
     exact mpow_order_zero x n h₀ h
   | negSucc n =>
-    -- TODO: this is not elegant
-    have inv_inj : ∀ a b : G, ι a = ι b → a = b := sorry -- inverse injective
-    rw [gpow_negSucc, mpow_succ_right, ←inv_id] at h
-    sorry
-    -- apply inv_inj at h
-    -- apply mpow_order_zero at h
-    -- linarith
-    -- exact h₀
+    -- EXERCISE (**)
+    exfalso
+    absurd h₀
+    push_neg
+    rw [order_nonzero_iff]
+    use n + 1
+    apply And.intro
+    · exact Ne.symm (Nat.zero_ne_add_one n)
+    · apply inv_inj
+      rw [inv_id, inv_mpow]
+      exact h
 
 /-- Let m be the order x. Write m = nq + r with 0 ≤ r < m. Then, xʳ = xⁿ  -/
 lemma gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
@@ -260,7 +307,9 @@ lemma gpow_mod_order {n : ℤ} : gpow x (n % order x) = gpow x n := by
     have : (n : ℤ) % (↑(order x)) = (n % order x : ℕ) := rfl
     rw [Int.ofNat_eq_coe, this, gpow_ofNat, gpow_ofNat, mpow_mod_order]
   | negSucc n =>
-    sorry
+    nth_rw 2 [←Int.emod_add_ediv (Int.negSucc n) (order x)]
+    rw [←gpow_add, gpow_mul, gpow_order, gpow_id, op_id]
+  done
 
 /-- Suppose the order of x is 0. Then xᵐ = xⁿ → m = n-/
 lemma gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = gpow x n) : m = n := by
@@ -269,16 +318,60 @@ lemma gpow_inj_of_order_zero {m n : ℤ} (h : order x = 0) (heq : gpow x m = gpo
     apply gpow_order_zero x h
     exact heq
   | hp n ih =>
-    sorry
+    rw [←Int.sub_add_cancel m 1]
+    congr 1
+    apply ih
+    rw [←gpow_pred, heq, gpow_succ, op_assoc, op_inv, op_id]
   | hn n ih =>
-    sorry
+    rw [←Int.add_sub_cancel m 1]
+    congr 1
+    apply ih
+    rw [gpow_succ, heq, ←gpow_pred, op_assoc, inv_op, op_id]
 
--- theorem order_zero_of_gpow_inj (hinj : ∀ m n : ℤ, gpow x m = gpow x n → m = n)
---   : order x = 0 := by
---   sorry
+/-
+This lemma has nothing to do with `order`, but is essential to the following theorem.
+If `m` is a positive integer, then every integer is congruent [MOD m] to some natural number.
+-/
+lemma emod_has_nat {m : ℕ} (n : ℤ) (hm : 0 < m) : ∃ (n' : ℕ), n % m = n' % m := by
+  cases n with
+  | ofNat n =>
+    use n
+    rfl
+  | negSucc n =>
+    use m - 1 - n % m
+    rw [Int.natCast_sub, Int.natCast_sub]
+    · rw [Int.ofNat_emod n m, Nat.cast_one]
+      rw [←@Int.negSucc_emod n m]
+      symm
+      apply Int.emod_emod
+      rw [Int.ofNat_pos]
+      exact hm
+    · exact hm
+    · apply Nat.le_sub_one_of_lt
+      apply Nat.mod_lt
+      exact hm
 
+/--
+The capstone theorem of `gpow`: let r = order x. Then if two integers `m` and `n` satisfy xᵐ = xⁿ,
+then m ≡ n [MOD order x]. If r = 0, then m = n.
+-/
 lemma mod_order_eq_of_gpow_eq {m n : ℤ}
   : gpow x m = gpow x n → m % (order x) = n % (order x) := by
-  sorry
+  intro h
+  by_cases h₀ : order x = 0
+  · rw [h₀]
+    simp
+    exact gpow_inj_of_order_zero x h₀ h
+  · obtain ⟨m', hm'⟩ := emod_has_nat m (Nat.zero_lt_of_ne_zero h₀)
+    obtain ⟨n', hn'⟩ := emod_has_nat n (Nat.zero_lt_of_ne_zero h₀)
+    rw [hm', hn']
+    repeat rw [←Int.ofNat_emod]
+    congr 1
+    apply mod_order_eq_of_mpow_eq x m' n' h₀
+    rw [←mpow_mod_order x m', ←mpow_mod_order x n']
+    repeat rw [←gpow_ofNat, Int.ofNat_emod]
+    rw [←hm', ←hn']
+    repeat rw [gpow_mod_order]
+    exact h
 
 end GroupOrder

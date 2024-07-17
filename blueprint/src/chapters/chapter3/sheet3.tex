@@ -7,3 +7,14 @@
     \uses{definition : mpow}
     Let $M$ be a monoid and $x \in M$. Then the \textit{order} of $x$, denoted $|x|$, is the smallest $n \in \mathbb{N}$ satisfying $x^n = \mathbb{e}$. If no such $n$ exists, then we define the order of $x$ to be zero.
 \end{definition}
+
+\begin{theorem}
+    \label{theorem : mod_order_eq_of_gpow_eq}
+    \lean{AlgebraInLean.mod_order_eq_of_gpow_eq}
+    \leanok
+    \uses{definition : gpow, definition : order}
+    Let $G$ be a group and $x \in G$. Suppose that for two integers $m$ and $n$,
+    $x^m = x^n$. Then $m \equiv n$ (mod $|x|$). Note that if two integers
+    are equivalent mod 0, then they are equal, implying that if $|x| = 0$, then
+    the power function over $\mathbb{Z}$ is injective.
+\end{theorem}
