@@ -80,3 +80,5 @@ We thank Dr. Colleen Robles for organizing and managing this project.
 
 We thank the Duke's Math+ program and Mathematics department for providing the
 opportunity and the resources to work on this project.
+
+This work was supported by the NSF grants DMS-2003404, DMS-2231514 and the Duke Math+ fund.
