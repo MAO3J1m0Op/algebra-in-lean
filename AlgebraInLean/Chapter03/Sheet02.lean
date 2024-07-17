@@ -236,6 +236,14 @@ lemma gpow_sub (m n : ℤ) : μ (gpow x m) (ι (gpow x n)) = gpow x (m - n) := b
   -- EXERCISE (*)
   rw [sub_eq_add_neg, ←gpow_add, gpow_neg]
 
+
+lemma gpow_mul (m n : ℤ) : gpow x (m * n) = gpow (gpow x m) n := by
+  -- EXERCISE (*)
+  induction n using Int.induction_on with
+  | hz => rw [mul_zero, gpow_zero, gpow_zero]
+  | hp n ih => rw [mul_add, mul_one, ←gpow_add, gpow_succ, ih]
+  | hn n ih => rw [Int.mul_sub, mul_one, ←gpow_sub, ←gpow_pred, ih]
+
 -- The first thing we will prove about `gpow` is that subgroups are closed under the function.
 theorem gpow_closure {H : Subgroup G} {n : ℤ}: x ∈ H → gpow x n ∈ H := by
   -- EXERCISE (*)
