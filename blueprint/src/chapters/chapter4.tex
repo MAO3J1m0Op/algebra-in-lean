@@ -1,0 +1,186 @@
+% TODO: Move statements to individual sheet files once this chapter is
+% partitioned into sheets.
+
+\chapter{Quotients}
+
+This chapter is a work in progress. On this branch (\verb|ch4/quotients|), we
+use the Lean blueprint to outline the goals of this chapter and our progress
+towards these goals.
+
+\begin{definition}
+    \label{definition : Coset}
+    \uses{definition : Subgroup}
+    Let $H$ be a subgroup of some group $G$, and let $a \in G$. Then the
+    \emph{left coset} of $H$ represented by $a$ is the set
+
+    \begin{equation*}
+        aH := \left\{ ah \,\middle|\, h \in H \right\}
+    \end{equation*}
+
+    Alternatively, this could be defined as the image of left-multiplication by
+    $a$ (the function $f(x) = \mu(a, x)$) over $H$.
+\end{definition}
+
+Optionally, right cosets could be discussed briefly as well.
+
+\begin{theorem}
+    \label{theorem : Coset_partition}
+    \uses{definition : Coset}
+    For any subgroup $H$ of $G$, the relation $a \sim b \iff aH = bH$ forms an
+    equivalence class over $G$.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : Coset.op_repr_indep}
+    \uses{definition : Coset, theorem : Coset_partition, definition : normal}
+    Let $H$ be a subgroup of $G$, and let $u,u',v,v' \in G$ such that $uH =
+    u'H$, while $vH = v'H$. The coset formed by multiplication of two coset
+    representatives is independent of the representatives chosen (that is,
+    $(uv)H = (u'v')H$), if and only if $H$ is a normal subgroup.
+\end{theorem}
+
+This theorem leads to a natural definition.
+
+\begin{definition}
+    \label{definition : Coset.op}
+    \uses{theorem : Coset.op_repr_indep}
+    Let $uH$ and $vH$ be cosets of $H$ in group $G$. If $H$ is a normal
+    subgroup, then we define the operation $\mu$ of cosets to be
+
+    \begin{equation*}
+        \mu(uH, vH) := (uv)H.
+    \end{equation*}
+\end{definition}
+
+\begin{theorem}
+    \label{theorem : quotientGroup}
+    \uses{definition : Coset.op, definition : Group}
+    The set of all cosets of $H$ in $G$ form a group under the operation defined
+    in \ref{definition : Coset.op}. This group is denoted $G/H$.
+\end{theorem}
+
+\begin{definition}
+    \label{definition : quotNaturalProj}
+    \uses{theorem : quotientGroup, definition : Homomorphism}
+    Let $K$ be a normal subgroup of $G$. Define $\pi : G \rightarrow G/K$ where
+    $\pi(a) = aK$ to be the \emph{natural projection} of $G$ onto $G/K$.
+
+    This map is a group homomorphism with kernel $K$.
+\end{definition}
+
+\begin{theorem}
+    \label{theorem : int_mod_iso_cyclic}
+    \uses{theorem : quotientGroup, definition : Cn}
+
+    \begin{equation*}
+        \mathbb{Z}/n\mathbb{Z} \cong C_n
+    \end{equation*}
+\end{theorem}
+
+\begin{definition}
+    \label{definition : Index}
+    \uses{definition : Coset, theorem : Coset_partition}
+    The \emph{index} of a subgroup $H$ in $G$, denoted $[H\,:\,G]$, is defined
+    as the number of cosets of $H$ in $G$. If there are an infinite number of
+    cosets of $H$ in $G$, then $[H\,:\,G] = 0$
+\end{definition}
+
+\begin{theorem}
+    \label{theorem : card_subgroup_mul_index_eq_card_group}
+    \uses{definition : Index}
+    Let $H$ be a subgroup of $G$. Define $|X| = 0$ for any set $X$ if $X$ is
+    infinite. Then
+
+    \begin{equation*}
+        |H|[H\,:\,G] = |G|.
+    \end{equation*}
+\end{theorem}
+
+\begin{corollary}[Lagrange's Theorem]
+    \label{theorem : card_subgroup_dvd_card_group_of_finite_group}
+    \uses{theorem : card_subgroup_mul_index_eq_card_group}
+    Let $G$ be a finite group. Then if $H$ is a subgroup of $G$, $|H| \mid |G|$.
+\end{corollary}
+
+\begin{theorem}[First Isomorphism Theorem]
+    \label{theorem : image_homomorphism_iso_quot_ker}
+    \uses{
+        theorem : Kernel_normal,
+        definition : Image,
+        definition : Isomorphism,
+        definition : quotNaturalProj
+    }
+    Let $G$ and $H$ be groups and $\phi : G \rightarrow H$ be a group
+    homomorphism. Then the image of $\phi$ is isomorphic to the quotient group
+    $G/\text{ker}(\phi)$.
+\end{theorem}
+
+\begin{definition}
+    \label{definition : Subgroup.op}
+    \uses{definition : Subgroup}
+    The \emph{product} of two subgroups $S$ and $T$ of $G$ is defined as
+
+    \begin{equation*}
+        ST := \left\{ \mu(s, t) \;\middle|\; s \in S, t \in T \right\}
+    \end{equation*}
+\end{definition}
+
+\begin{theorem}
+    \label{theorem : Subgroup.op_subgroup}
+    \uses{definition : Subgroup.op, definition : normal}
+    The product of two subgroups $ST$, is itself a subgroup if and only if $ST =
+    TS$, or either $S$ or $T$ is a normal subgroup.
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : Subgroup.op_card}
+    \uses{definition : Subgroup.op}
+    \begin{equation*}
+        |ST| = \frac{|S||T|}{|S \cap T|}
+    \end{equation*}
+\end{theorem}
+
+\begin{theorem}
+    \label{theorem : Intersect_normal_of_normal}
+    \uses{definition : normal}
+    If $S$ is a subgroup of $G$ and $N$ is a normal subgroup of $G$, then $S
+    \cap N$ is a normal subgroup of $S$.
+\end{theorem}
+
+\begin{theorem}[Second/Diamond Isomorphism Theorem]
+    \label{theorem : prod_mod_normal_iso_mod_inter_normal}
+    \uses{
+        definition : Isomorphism,
+        definition : quotNaturalProj,
+        theorem : Subgroup.op_subgroup,
+        theorem : Intersect_normal_of_normal
+    }
+
+    Let $G$ be a group, and let $S$ be a subgroup of $G$ while $N$ be a
+    normal subgroup of $G$. Then
+
+    \begin{equation*}
+        (SN) / n \cong S/(S \cap N)
+    \end{equation*}
+\end{theorem}
+
+\begin{theorem}[Third Isomorphism Theorem]
+    \label{theorem : quotient_normal_cancel}
+    \uses{definition : Isomorphism, definition : quotNaturalProj}
+    Let $G$ be a group and $N$ and $K$ be normal subgroups of $G$. Then if $N
+    \subset K \subset G$, then $(G/N)/(K/N) \cong G/K$.
+\end{theorem}
+
+\begin{theorem}[Lattice Theorem/Fourth Isomorphism Theorem]
+    \label{theorem : lattice}
+    \uses{
+        theorem : image_homomorphism_iso_quot_ker,
+        theorem : prod_mod_normal_iso_mod_inter_normal,
+        theorem : quotient_normal_cancel
+    }
+
+    Let $G$ be a group and $K$ be a normal subgroup. Then the natural projection
+    $\pi : G \rightarrow G/K$ (\ref{definition : quotNaturalProj}) defines a
+    bijection between the set of all subgroups of $G$ containing $K$, and the
+    set of all subgroups of $G/K$.
+\end{theorem}
