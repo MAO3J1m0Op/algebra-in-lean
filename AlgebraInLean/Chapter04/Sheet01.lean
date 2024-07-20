@@ -8,8 +8,7 @@ def Coset (H : Subgroup G) (a : G) : Set G := μ a '' H
 
 variable {H : Subgroup G}
 
-theorem Coset.subgroup_eq_id : Coset H (𝕖 : G) = H := by
-  ext x
+theorem Coset.mem_subgroup_iff_mem_id (x : G) : x ∈ Coset H 𝕖 ↔ x ∈ H := by
   apply Iff.intro
   · intro hx
     obtain ⟨a, ha⟩ := hx
@@ -20,6 +19,10 @@ theorem Coset.subgroup_eq_id : Coset H (𝕖 : G) = H := by
     apply And.intro
     · exact hx
     · rw [id_op]
+
+theorem Coset.subgroup_eq_id : Coset H (𝕖 : G) = H := by
+  ext x
+  exact Coset.mem_subgroup_iff_mem_id x
 
 variable {H : Subgroup G}
 
@@ -73,7 +76,7 @@ theorem coset_mem_def (u v n : G) : n ∈ H → v ∈ Coset H u → μ v n ∈ C
   · exact hvn.left
   · exact hn
 
-theorem coset_mem_symm (u v : G) : u ∈ Coset H v → v ∈ Coset H u := by
+theorem Coset.mem_symm (u v : G) : u ∈ Coset H v → v ∈ Coset H u := by
   intro hu
   obtain ⟨n, hn⟩ := hu
   use ι n
@@ -81,7 +84,7 @@ theorem coset_mem_symm (u v : G) : u ∈ Coset H v → v ∈ Coset H u := by
   · exact H.inv_closure hn.left
   · rw [←hn.right, op_assoc, op_inv, op_id]
 
-theorem coset_eq_iff_mem_symm (u v : G) : Coset H u = Coset H v ↔ u ∈ Coset H v := by
+theorem Coset.eq_iff_mem_symm (u v : G) : Coset H u = Coset H v ↔ u ∈ Coset H v := by
   apply Iff.intro
   · intro heq
     rw [←heq]
@@ -103,6 +106,10 @@ theorem coset_eq_of_share_mem (a u v : G) (ha : a ∈ (Coset H u) ∩ (Coset H v
 theorem coset_eq_iff_NAME_TBD (u v : G) : Coset H u = Coset H v ↔ μ u (ι v) ∈ H := by
   apply Iff.intro
   · intro heq
+    rw [←Coset.mem_subgroup_iff_mem_id]
+    apply Coset.mem_symm
+
+
     sorry
   · intro h
     ext x
